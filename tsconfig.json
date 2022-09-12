@@ -8,8 +8,27 @@
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
+    /* https://www.typescriptlang.org/docs/handbook/compiler-options.html" */
+    //	Report an error when not all code paths in function return a value.    
     "noImplicitReturns": true,
+    // Report errors on unused locals.
+    "noUnusedLocals": true,
+    // When the noImplicitAny flag is true and the TypeScript compiler cannot infer the type, it still generates the JavaScript files
+    // "noImplicitAny": true,
+    // aise error on this expressions with an implied any type
+    "noImplicitThis": true,    
+    // can reports errors for fall-through cases in switch statement where the case clause is non-empty.
+    // ,"noFallthroughCasesInSwitch": true
+    // the null and undefined values are not in the domain of every type and are only assignable to themselves and any
+    // https://christianliebel.com/2017/05/angular-typescript-writing-safer-code-with-strictnullchecks/
+    // https://www.tsmean.com/articles/learn-typescript/strict-null-checks-best-practice/
+    "strictNullChecks": true,
+    // Report errors on unused parameters
+    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    // false raises compiler errors about unreachable code
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
@@ -25,8 +44,10 @@
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
+    // When true (recommended), reports an error for a supplied parameter whose injection type cannot be determined
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
+    // When true, enables strict template type checking in Angular version 9. Strict mode is only available when using Ivy.
     "strictTemplates": true
   }
 }
