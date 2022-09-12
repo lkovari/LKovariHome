@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "gitbuild": "ng build --configuration production --aot --base-href /LKovariHome/dist",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -29,6 +30,7 @@
     "@angular/cli": "~14.2.2",
     "@angular/compiler-cli": "^14.2.0",
     "@types/jasmine": "~4.0.0",
+    "gh-pages": "^4.0.0",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
