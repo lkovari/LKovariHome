@@ -5,8 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "gitbuild": "ng build --configuration production --aot --base-href /LKovariHome/dist",
     "watch": "ng build --watch --configuration development",
+    "gitbuild": "ng build --configuration production --aot --base-href /LKovariHome/dist",
     "test": "ng test"
   },
   "private": true,
