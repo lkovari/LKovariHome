@@ -29,5 +29,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## known bugs or To Do List
 - set to true : "strictPropertyInitialization": false,
 - use date pipe at lastUpdateDate
-- if the sidemenu appeared and the screen resized hid the side menu and show the hamburger icon
-- the side menu flip over the content
+- not navigating to About-me
