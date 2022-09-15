@@ -25,3 +25,9 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## known bugs or To Do List
+- set to true : "strictPropertyInitialization": false,
+- use date pipe at lastUpdateDate
+- if the sidemenu appeared and the screen resized hid the side menu and show the hamburger icon
+- the side menu flip over the content

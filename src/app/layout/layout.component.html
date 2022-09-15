@@ -1,0 +1,33 @@
+<!--app-layout-content>
+    <mat-toolbar>
+        <div fxShow="true" fxHide.gt-sm>
+            <button mat-icon-button (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </div>
+    </mat-toolbar>
+    <mat-sidenav-container autosize>
+        <mat-sidenav #sidenav role="navigation" mode="side" opened="true">
+            <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+            <main>
+                <router-outlet></router-outlet>
+            </main>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</app-layout-content-->
+<app-layout-content>
+    <mat-sidenav-container>
+        <mat-sidenav #sidenav role="navigation">
+            <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+            <main>
+                <router-outlet></router-outlet>
+            </main>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</app-layout-content>

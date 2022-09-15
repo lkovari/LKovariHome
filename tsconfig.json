@@ -29,6 +29,7 @@
     // false raises compiler errors about unreachable code
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
+    "strictPropertyInitialization": false,
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,

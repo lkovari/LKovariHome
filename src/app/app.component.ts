@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'LKovariHome';
+  /*
+  @HostListener('contextmenu', ['$event'])
+  onRightClick(event) {
+    console.log('Right click functionality blocked.');
+    event.preventDefault();
+  }
+  */
+
 }
