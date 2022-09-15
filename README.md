@@ -26,7 +26,12 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
-## known bugs or To Do List
+## Known bugs and/or To Do List
 - set to true : "strictPropertyInitialization": false,
 - use date pipe at lastUpdateDate
 - not navigating to About-me
+
+## Original values
+-angular.json production build
+    "maximumWarning": "500kb",
+    "maximumError": "1mb"
