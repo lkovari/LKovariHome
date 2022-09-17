@@ -1,4 +1,5 @@
 .header-content {
+    width: 100%;
     a {
         text-decoration: none;
         color: white;
@@ -14,18 +15,9 @@
         margin: 0;
     }
     
-    mat-toolbar{
+    mat-toolbar {
         border-radius: 3px;
-    }
-    
-    .home-url {
-        // padding-right: 0.5rem;
-    }
-
-}
-
-@media(max-width: 959px) {
-    mat-toolbar{
-        border-radius: 0px;
+        width: 100%;
     }
 }
+

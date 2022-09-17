@@ -1,14 +1,11 @@
 <mat-nav-list>
-    <a mat-list-item [routerLink]="['/home']" (click)="onSidenavClose()">
+    <a mat-list-item [routerLink]="['/layout-pages/home']" (click)="onSidenavClose()">
       <mat-icon>home</mat-icon> <span class="nav-caption">Home</span>
     </a>
-    <a mat-list-item [routerLink]="['/about-me']" (click)="onSidenavClose()">
+    <a mat-list-item [routerLink]="['/layout-pages/about-me']" (click)="onSidenavClose()">
       <mat-icon>assignment_ind</mat-icon> <span class="nav-caption">About Me</span>
     </a>
-    <a mat-list-item [routerLink]="['/menu-item1']" (click)="onSidenavClose()">
-      <mat-icon>assignment_ind</mat-icon><span class="nav-caption">Menu Item 1</span>
-    </a>
-    <a mat-list-item [routerLink]="['/menu-item2']" (click)="onSidenavClose()">
-      <mat-icon>assignment_ind</mat-icon><span class="nav-caption">Menu Item 2</span>
+    <a mat-list-item [routerLink]="['/layout-pages/awards']" (click)="onSidenavClose()">
+      <mat-icon>assignment_ind</mat-icon><span class="nav-caption">Awards</span>
     </a>
   </mat-nav-list>

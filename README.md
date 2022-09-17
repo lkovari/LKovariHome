@@ -27,11 +27,31 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 ## Known bugs and/or To Do List
+- Generating index html...1 rules skipped due to selector errors: legend+* -> Cannot read property 'type' of undefined
 - set to true : "strictPropertyInitialization": false,
 - use date pipe at lastUpdateDate
-- not navigating to About-me
+- not navigating to not-found 
 
-## Original values
--angular.json production build
+
+## Would be good or better
+- hidden side nav when press the hamburger (menu) icon floating abouve the content, instead of shift right the content
+  
+## Original values which changed.
+-1. angular.json production build
     "maximumWarning": "500kb",
     "maximumError": "1mb"
+
+-2. angular.json below the production added
+           "optimization": {
+              "scripts": true,
+              "styles": {
+                "minify": true,
+                "inlineCritical": false
+                },
+              "fonts": true
+            },
+to eliminate the following warning
+Generating index html...1 rules skipped due to selector errors: legend+* -> Cannot read property 'type' of undefined
+
+-3. angular.json architect\build\options\styles
+replaced "node_modules/bootstrap/scss/bootstrap.css" with "node_modules/bootstrap/scss/bootstrap.scss",
