@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { Subscription } from 'rxjs/internal/Subscription';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-sidenav-list',

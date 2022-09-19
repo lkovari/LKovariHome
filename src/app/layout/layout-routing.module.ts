@@ -4,6 +4,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { AboutMeComponent } from "../layout-pages/about-me/about-me.component";
 import { AwardsComponent } from "../layout-pages/awards/awards.component";
 import { HomeComponent } from "../layout-pages/home/home.component";
+
 import { LayoutComponent } from "./layout.component";
 
 const routes: Routes = [

@@ -9,7 +9,6 @@ import * as angular from '@angular/forms';
 export class HomeComponent implements OnInit {
   lastUpdateDate = new Date('09/18/2022 01:36 AM');
   angularVersion: any;
-
   constructor() { }
 
   ngOnInit(): void {

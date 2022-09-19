@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -9,7 +10,10 @@ const routes: Routes = [
 
 @NgModule({
   // https://angular.io/guide/router#!#browser-url-styles
-  imports: [RouterModule.forRoot(routes, { useHash: true, enableTracing: true, relativeLinkResolution: 'legacy' })],
+  imports: [
+    CommonModule,
+    RouterModule.forRoot(routes, { useHash: true, enableTracing: true, relativeLinkResolution: 'legacy' })
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
