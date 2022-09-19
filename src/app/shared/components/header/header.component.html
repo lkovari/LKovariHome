@@ -1,8 +1,14 @@
 <div class="header-content">
-    <mat-toolbar color="primary">
+    <mat-toolbar color="primary" class="toolbar-align">
         <div>
             <a [routerLink]="['/home']">Home</a>
             of L.Kővári
+        </div>
+        <div class="line-style">
+            <label class="last-update">Last update: {{ lastUpdateDate | date:'MM/dd/yyyy HH:mm' }}</label>
+        </div>
+        <div class="line-style">
+            <label class="last-update">Built with Angular v{{ angularVersion }}</label>
         </div>
     </mat-toolbar>
 </div>

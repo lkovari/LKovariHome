@@ -9,12 +9,19 @@
         color: lightgray;
     }
     
-    .navigation-items{
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
+    .toolbar-align {
+        display: block;
+        line-height: 1.5rem;
+        .line-style {
+            line-height: 0.5rem;
+            .last-update {
+                color: yellow;
+                font-size: 0.6rem;
+                line-height: 0.5rem;
+            }    
+        }
     }
-    
+  
     mat-toolbar {
         border-radius: 3px;
         width: 100%;
