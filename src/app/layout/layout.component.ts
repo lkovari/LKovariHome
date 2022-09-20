@@ -21,15 +21,18 @@ export class LayoutComponent implements OnInit {
       const currentMediaChange = changes[0];
       if (currentMediaChange.mqAlias === 'xs') {
         if (this.sidenav) {
+          this.sidenav.mode = 'over';
           this.sidenav.close();
           console.log('>>>>>>> sidenav opened');
         }
       } else {
         if (this.sidenav) {
+          this.sidenav.mode = 'side';
           this.sidenav.open();
           console.log('>>>>>>> sidenav closed');
         }
-      }   
+      }
+      // this.sidenav.toggle();
     }); 
   }
 
@@ -42,8 +45,13 @@ export class LayoutComponent implements OnInit {
   
   private initializeSideNav() {
     if (window.innerWidth < this.SCREEN_WIDTH_LIMIT) {
+      this.sidenav.mode = 'over';
       this.sidenav.close();
+    } else {
+      this.sidenav.mode = 'side';
+      this.sidenav.open();
     }
+    
   }
   
   ngAfterViewInit(): void {

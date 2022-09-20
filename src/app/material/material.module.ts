@@ -7,7 +7,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -20,7 +20,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatIconModule,
     MatToolbarModule,
     MatTabsModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatTooltipModule
   ],
  exports: [
   MatMenuModule,
@@ -29,7 +30,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   MatIconModule,
   MatToolbarModule,
   MatTabsModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatTooltipModule
  ] 
 })
 export class MaterialModule { }
