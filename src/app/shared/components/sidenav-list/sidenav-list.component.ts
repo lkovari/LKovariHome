@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./sidenav-list.component.scss']
 })
 export class SidenavListComponent implements OnInit {
-  @Output() sidenavClose = new EventEmitter();
+  @Output() sidenavClose = new EventEmitter<void>();
   mediaObserverAsObservable: Subscription;
   private isWidthXs = false;
 
