@@ -1,6 +1,6 @@
 {
   "name": "lkovari-home",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -26,7 +26,7 @@
     "bootstrap": "^5.2.3",
     "lodash": "^4.17.21",
     "rxjs": "~7.5.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.13.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.2.8",

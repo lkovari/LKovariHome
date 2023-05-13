@@ -7082,9 +7082,9 @@
     "y18n" "^5.0.5"
     "yargs-parser" "^21.1.1"
 
-"zone.js@~0.11.4", "zone.js@~0.11.4 || ~0.12.0 || ~0.13.0":
-  "integrity" "sha512-82bctBg2hKcEJ21humWIkXRlLBBmrc3nN7DFh5LGGhcyycO2S7FN8NmdvlcKaGFDNVL4/9kFLmwmInTavdJERA=="
-  "resolved" "https://registry.npmjs.org/zone.js/-/zone.js-0.11.8.tgz"
-  "version" "0.11.8"
+"zone.js@~0.11.4 || ~0.12.0 || ~0.13.0", "zone.js@~0.13.0":
+  "integrity" "sha512-7m3hNNyswsdoDobCkYNAy5WiUulkMd3+fWaGT9ij6iq3Zr/IwJo4RMCYPSDjT+r7tnPErmY9sZpKhWQ8S5k6XQ=="
+  "resolved" "https://registry.npmjs.org/zone.js/-/zone.js-0.13.0.tgz"
+  "version" "0.13.0"
   dependencies:
     "tslib" "^2.3.0"
