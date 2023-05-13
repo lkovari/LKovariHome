@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "gitbuild": "ng build --configuration production --aot --base-href /LKovariHome/dist",
+    "gitbuild": "ng build --configuration production --aot --base-href /LKovariHome/",
+    "gitdeploy": "gh-pages -d dist",
     "test": "ng test"
   },
   "private": true,
