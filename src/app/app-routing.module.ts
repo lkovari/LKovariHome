@@ -12,7 +12,7 @@ const routes: Routes = [
   // https://angular.io/guide/router#!#browser-url-styles
   imports: [
     CommonModule,
-    RouterModule.forRoot(routes, { useHash: true, enableTracing: true, relativeLinkResolution: 'legacy' })
+    RouterModule.forRoot(routes, { useHash: true, enableTracing: true })
   ],
   exports: [RouterModule]
 })
