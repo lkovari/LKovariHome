@@ -7,8 +7,8 @@ import * as angular from '@angular/forms';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('09/23/2022 10:12 PM');
-  lastUpdateTooltip = 'optimized side-nav hide or show';
+  lastUpdateDate = new Date('05/13/2023 08:29 PM');
+  lastUpdateTooltip = 'updateed to v15';
   angularVersion: any;
 
   constructor() { }
