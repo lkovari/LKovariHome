@@ -36,7 +36,7 @@ export class SidenavListComponent implements OnInit {
         items: [
             {
                 label: 'v16 news',
-                icon: 'pi pi-folder',
+                icon: 'pi pi-box',
                 items: [
                     {
                         label: 'Signals',
@@ -60,7 +60,7 @@ export class SidenavListComponent implements OnInit {
                   },
                   {
                       label: 'Feature #2',
-                      icon: 'pi pi-video'
+                      icon: 'pi pi-book'
                   }
               ]
             }
