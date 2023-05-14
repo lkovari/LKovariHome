@@ -188,7 +188,7 @@
   dependencies:
     "tslib" "^2.3.0"
 
-"@angular/core@^16.0.0 || ^17.0.0", "@angular/core@^16.0.1", "@angular/core@>=15.0.2", "@angular/core@~16.0.0", "@angular/core@16.0.1":
+"@angular/core@^16.0.0", "@angular/core@^16.0.0 || ^17.0.0", "@angular/core@^16.0.1", "@angular/core@>=15.0.2", "@angular/core@~16.0.0", "@angular/core@16.0.1":
   "integrity" "sha512-3s4XBbzWgyWcjI0WFlNDKRxsbm4J+OKIL4mJCM9r8gWwno9y0K/giziAm9YMIJ4VOBIvrcMbOh85o44FCk8cRA=="
   "resolved" "https://registry.npmjs.org/@angular/core/-/core-16.0.1.tgz"
   "version" "16.0.1"
@@ -1247,6 +1247,46 @@
   "integrity" "sha512-qU25Ma1I3NqTSHJUOKi9sAH1/Mzuvlke0ioMJRthLXKm7JiSKVwFghlGbDLOO2sARECGhja4xYfRAZNPAkooYg=="
   "resolved" "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.17.18.tgz"
   "version" "0.17.18"
+
+"@fortawesome/angular-fontawesome@^0.13.0":
+  "integrity" "sha512-gzSPRdveOXNO7NIiMgTyB46aiHG0i98KinnAEqHXi8qzraM/kCcHn/0y3f4MhemX6kftwsFli0IU8RyHmtXlSQ=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/angular-fontawesome/-/angular-fontawesome-0.13.0.tgz"
+  "version" "0.13.0"
+  dependencies:
+    "tslib" "^2.4.1"
+
+"@fortawesome/fontawesome-common-types@6.4.0":
+  "integrity" "sha512-HNii132xfomg5QVZw0HwXXpN22s7VBHQBv9CeOu9tfJnhsWQNd2lmTNi8CSrnw5B+5YOmzu1UoPAyxaXsJ6RgQ=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-6.4.0.tgz"
+  "version" "6.4.0"
+
+"@fortawesome/fontawesome-svg-core@^6.4.0", "@fortawesome/fontawesome-svg-core@~1.2.27 || ~1.3.0-beta2 || ^6.1.0":
+  "integrity" "sha512-Bertv8xOiVELz5raB2FlXDPKt+m94MQ3JgDfsVbrqNpLU9+UE2E18GKjLKw+d3XbeYPqg1pzyQKGsrzbw+pPaw=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-6.4.0.tgz"
+  "version" "6.4.0"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.4.0"
+
+"@fortawesome/free-brands-svg-icons@^6.4.0":
+  "integrity" "sha512-qvxTCo0FQ5k2N+VCXb/PZQ+QMhqRVM4OORiO6MXdG6bKolIojGU/srQ1ptvKk0JTbRgaJOfL2qMqGvBEZG7Z6g=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/free-brands-svg-icons/-/free-brands-svg-icons-6.4.0.tgz"
+  "version" "6.4.0"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.4.0"
+
+"@fortawesome/free-regular-svg-icons@^6.4.0":
+  "integrity" "sha512-ZfycI7D0KWPZtf7wtMFnQxs8qjBXArRzczABuMQqecA/nXohquJ5J/RCR77PmY5qGWkxAZDxpnUFVXKwtY/jPw=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-6.4.0.tgz"
+  "version" "6.4.0"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.4.0"
+
+"@fortawesome/free-solid-svg-icons@^6.4.0":
+  "integrity" "sha512-kutPeRGWm8V5dltFP1zGjQOEAzaLZj4StdQhWVZnfGFCvAPVvHh8qk5bRrU4KXnRRRNni5tKQI9PBAdI6MP8nQ=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-6.4.0.tgz"
+  "version" "6.4.0"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.4.0"
 
 "@gar/promisify@^1.1.3":
   "integrity" "sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw=="
@@ -5741,6 +5781,11 @@
   "resolved" "https://registry.npmjs.org/pretty-bytes/-/pretty-bytes-5.6.0.tgz"
   "version" "5.6.0"
 
+"primeicons@^6.0.1":
+  "integrity" "sha512-KDeO94CbWI4pKsPnYpA1FPjo79EsY9I+M8ywoPBSf9XMXoe/0crjbUK7jcQEDHuc0ZMRIZsxH3TYLv4TUtHmAA=="
+  "resolved" "https://registry.npmjs.org/primeicons/-/primeicons-6.0.1.tgz"
+  "version" "6.0.1"
+
 "primeng@^16.0.0-rc.1":
   "integrity" "sha512-IJZFG+geLeA26rbL9MjiuIE6C/zUiwyNRgkx7f4w0OzpGw+Z0n4sHPxU5ZuCngV21T6SHLRUfsb7/HtaJSw2Pw=="
   "resolved" "https://registry.npmjs.org/primeng/-/primeng-16.0.0-rc.1.tgz"
@@ -6707,7 +6752,7 @@
     "v8-compile-cache-lib" "^3.0.1"
     "yn" "3.1.1"
 
-"tslib@^2.1.0", "tslib@^2.3.0", "tslib@^2.5.0", "tslib@2.5.0":
+"tslib@^2.1.0", "tslib@^2.3.0", "tslib@^2.4.1", "tslib@^2.5.0", "tslib@2.5.0":
   "integrity" "sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg=="
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.5.0.tgz"
   "version" "2.5.0"

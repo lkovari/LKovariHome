@@ -1,14 +1,40 @@
-a {
-    text-decoration: none;
-    color: white;
+.side-nav-layout {
+    .mat-side-nav-style {
+        .layout-content {
+            height: 40rem;
+        }
+        mat-sidenav::ng-deep {
+            height: 40rem;
+        }
+
+        
+        a {
+            text-decoration: none;
+            color: white;
+        }
+        
+        a:hover, a:active{
+            color: lightgray;
+        }
+        
+        .nav-caption{
+            display: inline-block;
+            padding-left: 6px;
+        }
+    }
+    .bottom-menu-section {
+        position: fixed;
+        bottom: 30px;
+        .slide-menu-style {
+
+        }
+        p-slidemenu::ng-deep {
+            .p-slidemenu {
+                width: 15.5rem;
+                border: none;
+            }
+        }
+    }
+
 }
 
-a:hover, a:active{
-    color: lightgray;
-}
-
-.nav-caption{
-    display: inline-block;
-    padding-left: 6px;
-    vertical-align: super;
-}
