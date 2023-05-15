@@ -54,7 +54,7 @@ export class SidenavListComponent implements OnInit {
               icon: 'pi pi-box',
               items: [
                   {
-                      label: 'Stanfalone',
+                      label: 'Standalone form',
                       icon: 'pi pi-book',
                       routerLink: 'angular-news-pages/angular-news-v15-standalone'
                   },

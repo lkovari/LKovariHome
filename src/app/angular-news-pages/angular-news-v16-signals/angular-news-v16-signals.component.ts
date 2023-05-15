@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./angular-news-v16-signals.component.scss'],
 })
 export class AngularNewsV16SignalsComponent implements OnInit {
-
+  githubLogoPath: string;
   form = this.formBuilder.group({
     quantity: this.formBuilder.control(0, [
       Validators.required
@@ -18,7 +18,7 @@ export class AngularNewsV16SignalsComponent implements OnInit {
     writeoff: this.formBuilder.control(0, [ ]),
     amount: this.formBuilder.control({ value: 0, disabled: true }),
   });
-
+  statusText: string;
   quantitySignal = signal(0);
   paymentSignal = signal(0);
   writeoffSignal = signal(0);
@@ -33,12 +33,15 @@ export class AngularNewsV16SignalsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.amountSignal()
+    this.githubLogoPath = 'assets/logos/GitHub-Mark-32px.png';
     this.form.valueChanges.subscribe((value) => {
       this.quantitySignal.set(value.quantity!);
       this.paymentSignal.set(value.payment!);
       this.writeoffSignal.set(value.writeoff!);
       console.log(value);
+    });
+    this.form.statusChanges.subscribe((status) => {
+      this.statusText = status;
     });
   }
 

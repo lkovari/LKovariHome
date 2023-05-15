@@ -4,11 +4,9 @@
     padding: 1rem;
   }
   .example-area {
-    display: flex;
-    flex-direction: row;
     .primeng-layout {
+      float: left;
       @extend .sub-layout;
-      flex-grow: 1;
       .primeng-container {
         border: solid 1px blue;
         border-radius: 3px;
@@ -16,9 +14,10 @@
       }
     }
     .material-layout {
+      float: left;
       @extend .sub-layout;
-      flex-grow: 1;
       .material-container {
+        display: grid;
         border: solid 1px blue;
         border-radius: 3px;
         padding: 1rem;
@@ -26,8 +25,6 @@
     }
   }
   .input-style {
-    line-height: 10px;
-    width: 5rem;
     padding: 0.3rem;
   }
   .align-title {
