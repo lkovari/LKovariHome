@@ -26,9 +26,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SharedModule
   ],
   exports: [
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
     HeaderComponent,
     SidenavListComponent,
     MaterialModule,

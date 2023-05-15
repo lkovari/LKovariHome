@@ -1,4 +1,8 @@
 .home-content {
+    vertical-align: middle;
+    padding: 0.5rem;
+    height: calc(100vh - 102px);
+    width: auto;
 
     section div p{
         color: #3f51b5;
@@ -17,6 +21,14 @@
         .align-welcome {
             text-align: center;
         }
+    }
+
+    .copyright_msg {
+        color: black;
+        text-align: center;
+        position: absolute;
+        bottom: 1rem;
+        width: 100%;
     }
         
 }

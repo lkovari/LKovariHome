@@ -1,0 +1,22 @@
+.angular-signals-layout {
+    .sub-layout {
+        border: solid 1px blue;
+        border-radius: 3px;
+        height: 40rem;
+    }
+    .example-area {
+        display: flex;
+        flex-direction: row;
+        .primeng-layout {
+            @extend .sub-layout;
+            flex-grow: 1;
+        }
+        .material-layout {
+            @extend .sub-layout;        
+            flex-grow: 1;
+        }
+    }
+    .align-title {
+        text-align: center;
+    }
+}

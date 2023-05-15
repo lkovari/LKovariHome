@@ -1,1 +1,29 @@
-<p>Angular v16 practical information about Signals.</p>
+<div class="angular-signals-layout">
+  <section fxLayout="column" fxFlexAlign="stretch">
+    <div class="home-screen">
+      <div fxFlexAlign="center" class="align-title">
+        <p>About Angular <a href="https://angular.io/guide/signals">Signals</a></p>
+      </div>
+    </div>
+  </section>
+  <h6>There is a following example, simple arithmetic calculations</h6>
+  <div class="col-md-12 example-area">
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate autocomplete="off">
+        <div class="col-md-6 primeng-layout">
+            <label>PrimeNg</label>
+            <div>
+                <div class="row">
+                    <label id="quantityLabel" for="quantityInput">Quantity</label>
+                    <input id="quantityInput" class="form-control" type="number" formControlName="quantity">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 material-layout">
+            <label>Material</label>
+            <div>
+    
+            </div>
+        </div>
+    </form>
+  </div>
+</div>
