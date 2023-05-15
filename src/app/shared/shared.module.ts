@@ -5,7 +5,6 @@ import { LayoutContentComponent } from './components/layout-content/layout-conte
 
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material/material.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -25,8 +24,6 @@ import { SlideMenuModule } from 'primeng/slidemenu';
     SlideMenuModule
   ],
   exports: [
-    FormsModule,
-    ReactiveFormsModule,
     RouterModule,
     HeaderComponent,
     SidenavListComponent,

@@ -2,28 +2,112 @@
   <section fxLayout="column" fxFlexAlign="stretch">
     <div class="home-screen">
       <div fxFlexAlign="center" class="align-title">
-        <p>About Angular <a href="https://angular.io/guide/signals">Signals</a></p>
+        <h1>
+          About Angular <a href="https://angular.io/guide/signals">Signals</a>
+        </h1>
       </div>
     </div>
   </section>
-  <h6>There is a following example, simple arithmetic calculations</h6>
-  <div class="col-md-12 example-area">
-    <form [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate autocomplete="off">
-        <div class="col-md-6 primeng-layout">
-            <label>PrimeNg</label>
-            <div>
-                <div class="row">
-                    <label id="quantityLabel" for="quantityInput">Quantity</label>
-                    <input id="quantityInput" class="form-control" type="number" formControlName="quantity">
-                </div>
-            </div>
+  <h3>
+    There is a following example, simple arithmetic calculations with
+    <a href="https://angular.io/guide/signals">Signals</a>
+  </h3>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSubmit(form)"
+    novalidate
+    autocomplete="off"
+  >
+    <div class="col-md-12 example-area">
+      <div class="col-md-6 primeng-layout">
+        <label>With PrimeNg UI Component</label>
+        <div class="primeng-container">
+          <div>
+            <label id="quantityLabel" for="quantityInput">Quantity</label>
+            <p-inputNumber
+              id="quantityInput"
+              class="input-style"
+              type="number"
+              formControlName="quantity"
+            ></p-inputNumber>
+          </div>
+          <div>
+            <label id="paymentLabel" for="paymentInput">Payment</label>
+            <p-inputNumber
+              id="paymentInput"
+              class="input-style"
+              type="number"
+              formControlName="payment"
+            ></p-inputNumber>
+          </div>
+          <div>
+            <label id="writeoffLabel" for="writeoffInput">Writeoff</label>
+            <p-inputNumber
+              id="writeoffInput"
+              class="input-style"
+              type="number"
+              formControlName="writeoff"
+            ></p-inputNumber>
+          </div>
+          <div>
+            <label id="amountLabel" for="amountInput">Amount</label>
+            <p-inputNumber
+              id="amountInput"
+              class="input-style"
+              type="number"
+              formControlName="amount"
+            ></p-inputNumber>
+          </div>
         </div>
-        <div class="col-md-6 material-layout">
-            <label>Material</label>
-            <div>
-    
-            </div>
+      </div>
+      <div class="col-md-6 material-layout">
+        <label>With Material UI Component</label>
+        <div class="material-container">
+          <mat-form-field>
+            <mat-label id="quantityLabelM" for="quantityInputM"
+              >Quantity</mat-label
+            >
+            <input
+              matInput
+              id="quantityInputM"
+              type="number"
+              formControlName="quantity"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label id="paymentLabelM" for="paymentInputM"
+              >Payment</mat-label
+            >
+            <input
+              matInput
+              id="paymentInputM"
+              type="number"
+              formControlName="payment"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label id="writeoffLabelM" for="writeoffInputM"
+              >Writeoff</mat-label
+            >
+            <input
+              matInput
+              id="writeoffInputM"
+              type="number"
+              formControlName="writeoff"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label id="amountLabelM" for="amountInput">AmountM</mat-label>
+            <input
+              matInput
+              i
+              id="amountInputM"
+              type="number"
+              formControlName="amount"
+            />
+          </mat-form-field>
         </div>
-    </form>
-  </div>
+      </div>
+    </div>
+  </form>
 </div>

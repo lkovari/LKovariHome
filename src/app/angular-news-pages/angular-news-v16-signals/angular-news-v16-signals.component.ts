@@ -1,4 +1,4 @@
-import { Component, OnInit, Signal } from '@angular/core';
+import { Component, OnInit, Signal, computed, effect, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -7,41 +7,38 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./angular-news-v16-signals.component.scss'],
 })
 export class AngularNewsV16SignalsComponent implements OnInit {
-  quantityMin = 1;
-  paymentMin = 10;
-  writeoffMin = 0;
+
   form = this.formBuilder.group({
-    quantity: this.formBuilder.control(null, [
-      Validators.required,
-      Validators.min(this.quantityMin),
+    quantity: this.formBuilder.control(0, [
+      Validators.required
     ]),
-    payment: this.formBuilder.control(null, [
-      Validators.required,
-      Validators.min(this.paymentMin),
+    payment: this.formBuilder.control(0, [
+      Validators.required
     ]),
-    writeoff: this.formBuilder.control(null, [
-      Validators.min(this.writeoffMin),
-    ]),
-    amount: this.formBuilder.control(null, []),
+    writeoff: this.formBuilder.control(0, [ ]),
+    amount: this.formBuilder.control({ value: 0, disabled: true }),
   });
 
-  quantitySignal: Signal<number>;
-  paymentSignal: Signal<number>;
-  writeoffSignal: Signal<number>;
-  amountSignal: Signal<number>;
+  quantitySignal = signal(0);
+  paymentSignal = signal(0);
+  writeoffSignal = signal(0);
+  amountSignal: Signal<number> = computed(() => (this.paymentSignal() * this.quantitySignal()) - this.writeoffSignal());
 
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {
+    effect(() => {
+      this.form.controls.amount.setValue(this.amountSignal());
+      console.log(`The current Amount is: ${this.amountSignal()}`);
+    }, { allowSignalWrites: true });    
+  }
 
   ngOnInit(): void {
     //this.amountSignal()
     this.form.valueChanges.subscribe((value) => {
-      /*
-      this.quantitySignal.set(signal(value.quantity));
-      this.paymentSignal = signal(value.payment);
-      this.writeoffSignal = signal(value.writeoff);
-      */
-     console.log(value);
+      this.quantitySignal.set(value.quantity!);
+      this.paymentSignal.set(value.payment!);
+      this.writeoffSignal.set(value.writeoff!);
+      console.log(value);
     });
   }
 

@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('05/14/2023 06:10 PM');
-  lastUpdateTooltip = 'added Material and PrimeNG menu';
+  lastUpdateDate = new Date('05/15/2023 02:43 AM');
+  lastUpdateTooltip = 'Angular 16 Signals example (Material and PrimeNG)';
   angularVersion: any;
 
   constructor() { }

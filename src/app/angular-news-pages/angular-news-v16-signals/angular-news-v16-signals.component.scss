@@ -1,22 +1,36 @@
 .angular-signals-layout {
-    .sub-layout {
+  .sub-layout {
+    height: 20rem;
+    padding: 1rem;
+  }
+  .example-area {
+    display: flex;
+    flex-direction: row;
+    .primeng-layout {
+      @extend .sub-layout;
+      flex-grow: 1;
+      .primeng-container {
         border: solid 1px blue;
         border-radius: 3px;
-        height: 40rem;
+        padding: 1rem;
+      }
     }
-    .example-area {
-        display: flex;
-        flex-direction: row;
-        .primeng-layout {
-            @extend .sub-layout;
-            flex-grow: 1;
-        }
-        .material-layout {
-            @extend .sub-layout;        
-            flex-grow: 1;
-        }
+    .material-layout {
+      @extend .sub-layout;
+      flex-grow: 1;
+      .material-container {
+        border: solid 1px blue;
+        border-radius: 3px;
+        padding: 1rem;
+      }
     }
-    .align-title {
-        text-align: center;
-    }
+  }
+  .input-style {
+    line-height: 10px;
+    width: 5rem;
+    padding: 0.3rem;
+  }
+  .align-title {
+    text-align: center;
+  }
 }

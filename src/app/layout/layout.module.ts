@@ -9,7 +9,6 @@ import { SidenavListComponent } from '../shared/components/sidenav-list/sidenav-
 import { LayoutContentComponent } from '../shared/components/layout-content/layout-content.component';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,8 +16,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
     RouterModule,
     LayoutRoutingModule,
     MaterialModule,
