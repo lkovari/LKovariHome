@@ -18,7 +18,7 @@ export class AngularNewsV16SignalsComponent implements OnInit {
     writeoff: this.formBuilder.control(0, [ ]),
     amount: this.formBuilder.control({ value: 0, disabled: true }),
   });
-  statusText: string;
+  statusText = "VALID";
   quantitySignal = signal(0);
   paymentSignal = signal(0);
   writeoffSignal = signal(0);
