@@ -1,20 +1,43 @@
 <div class="side-nav-layout">
-    <mat-nav-list class="mat-side-nav-style">
-      <a mat-list-item [routerLink]="['/layout-pages/home']" (click)="onSidenavClose()">
-        <fa-icon [icon]="['fas', 'home']"></fa-icon> <span class="nav-caption">Home</span>
-      </a>
-      <a mat-list-item [routerLink]="['/layout-pages/about-me']" (click)="onSidenavClose()">
-        <fa-icon [icon]="['fas', 'person']"></fa-icon> <span class="nav-caption">About Me</span>
-      </a>
-      <a mat-list-item [routerLink]="['/layout-pages/awards']" (click)="onSidenavClose()">
-        <fa-icon [icon]="['fas', 'award']"></fa-icon><span class="nav-caption">Awards</span>
-      </a>
-      <a mat-list-item href="https://lkovari.github.io/KLHome" (click)="onSidenavClose()">
-        <fa-icon [icon]="['fas', 'globe']"></fa-icon><span class="nav-caption">My old tech. website</span>
-      </a>
-    </mat-nav-list>
+  <mat-nav-list class="mat-side-nav-style">
+    <a
+      mat-list-item
+      [routerLink]="['/layout-pages/home']"
+      (click)="onSidenavClose()"
+    >
+      <fa-icon [icon]="['fas', 'home']"></fa-icon>
+      <span class="nav-caption">Home</span>
+    </a>
+    <a
+      mat-list-item
+      [routerLink]="['/layout-pages/about-me']"
+      (click)="onSidenavClose()"
+    >
+      <fa-icon [icon]="['fas', 'person']"></fa-icon>
+      <span class="nav-caption">About Me</span>
+    </a>
+    <a
+      mat-list-item
+      [routerLink]="['/layout-pages/awards']"
+      (click)="onSidenavClose()"
+    >
+      <fa-icon [icon]="['fas', 'award']"></fa-icon
+      ><span class="nav-caption">Awards</span>
+    </a>
+    <a
+      mat-list-item
+      href="https://lkovari.github.io/KLHome"
+      (click)="onSidenavClose()"
+    >
+      <fa-icon [icon]="['fas', 'globe']"></fa-icon
+      ><span class="nav-caption">Tech Stack & Codes</span>
+    </a>
+  </mat-nav-list>
   <div class="bottom-menu-section">
-    <p-slideMenu styleClass="slide-menu-style" [model]="menuItems" [viewportHeight]="300"></p-slideMenu>
+    <p-slideMenu
+      styleClass="slide-menu-style"
+      [model]="menuItems"
+      [viewportHeight]="200"
+    ></p-slideMenu>
   </div>
-  
 </div>

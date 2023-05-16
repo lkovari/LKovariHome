@@ -9,9 +9,8 @@ import { AwardsRoutingModule } from './awards-routing.module';
 
 
 @NgModule({
-  declarations: [
-    AwardsComponent
-  ],
+  declarations: [ AwardsComponent ],
+  exports: [ AwardsComponent ],
   imports: [
     CommonModule,
     FormsModule,
