@@ -44,8 +44,28 @@ export class SidenavListComponent implements OnInit {
                         routerLink: '/angular-news-pages/angular-news-v16-signals'
                     },
                     {
-                        label: 'Features #2',
+                        label: 'Required inputs',
                         icon: 'pi pi-book'
+                    },
+                    {
+                      label: 'DestroyRef',
+                      icon: 'pi pi-book'
+                    },
+                    {
+                      label: 'provideServiceWorker',
+                      icon: 'pi pi-book'
+                    },
+                    {
+                      label: 'Styles removal opt-in',
+                      icon: 'pi pi-book'
+                    },
+                    {
+                      label: 'RxJS interoperability',
+                      icon: 'pi pi-book'
+                    },
+                    {
+                      label: 'Hydration enhanced',
+                      icon: 'pi pi-book'
                     }
                 ]
             },
@@ -54,12 +74,32 @@ export class SidenavListComponent implements OnInit {
               icon: 'pi pi-box',
               items: [
                   {
-                      label: 'Standalone form',
+                      label: 'Standalone Components API',
                       icon: 'pi pi-book',
                       routerLink: 'angular-news-pages/angular-news-v15-standalone'
                   },
                   {
-                      label: 'Feature #2',
+                      label: 'Create a multi-route application',
+                      icon: 'pi pi-book'
+                  },
+                  {
+                      label: 'Directive composition API',
+                      icon: 'pi pi-book'
+                  },
+                  {
+                      label: 'NgOptimizedImage',
+                      icon: 'pi pi-book'
+                  },
+                  {
+                      label: 'Functional router guards',
+                      icon: 'pi pi-book'
+                  },
+                  {
+                      label: 'Router unwraps default imports',
+                      icon: 'pi pi-book'
+                  },
+                  {
+                      label: 'Functional router guards',
                       icon: 'pi pi-book'
                   }
               ]
