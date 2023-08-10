@@ -30,7 +30,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - Generating index html...1 rules skipped due to selector errors: legend+* -> Cannot read property 'type' of undefined
 - set to true : "strictPropertyInitialization": false,
 - use date pipe at lastUpdateDate
-- not navigating to not-found 
+
 
 
 ## Would be good or better

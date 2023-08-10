@@ -1,0 +1,37 @@
+.digits-game-layout {
+    .digits-game-title {
+        padding-top: 1rem;
+        font-size: x-large;
+        text-align: center;
+    }
+    .warning-message {
+        @extend .digits-game-title;
+        color: orange;
+    }
+    .title-bar {
+        padding-top: 2rem;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-content: stretch;
+        align-items: center;    
+
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 28px;
+        font-weight: 300;
+
+        .title-bar-name {
+            order: 0;
+            flex: 0 1 auto;
+            align-self: auto;           
+        }
+        .title-bar-date {
+            order: 0;
+            flex: 0 1 auto;
+            align-self: auto;            
+        }
+    }
+}

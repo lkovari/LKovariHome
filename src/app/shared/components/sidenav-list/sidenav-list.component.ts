@@ -125,6 +125,11 @@ export class SidenavListComponent implements OnInit {
                   ]
               }
           ]
+      },
+      {
+        label: 'Digits',
+        icon: 'pi pi-th-large',
+        routerLink: '/digits/digits-game'
       }              
     ];
   }

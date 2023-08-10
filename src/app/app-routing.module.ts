@@ -5,8 +5,9 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: '', loadChildren: () => import('./layout/layout.module').then(m => m.LayoutModule) },
   { path: '', loadChildren: () => import('./angular-news/angular-news.module').then(m => m.AngularNewsModule) },
+  { path: '', loadChildren: () => import('./digits/digits.module').then(m => m.DigitsModule) },
   { path: 'not-found', loadChildren: () => import('./not-found/not-found.module').then(m => m.NotFoundModule) },
-  { path: '**', redirectTo: 'layout-pages/home' }
+  { path: '**', redirectTo: 'not-found' }
 ];
 
 @NgModule({

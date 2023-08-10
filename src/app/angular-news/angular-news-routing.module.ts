@@ -15,7 +15,6 @@ const routes: Routes = [
         loadChildren: () => 
         import('../angular-news-pages/angular-news-v15-standalone/angular-news-v15-standalone.module')
         .then(m => m.AngularNewsV15StandaloneModule) },
-
       ]
     }];
   
