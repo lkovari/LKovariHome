@@ -6,8 +6,8 @@ import * as angular from '@angular/forms';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('08/10/2023 05:24 PM');
-  lastUpdateTooltip = 'unique page for Numbers game';
+  lastUpdateDate = new Date('08/11/2023 09:49 AM');
+  lastUpdateTooltip = 'Numbers game styles and additional components';
   angularVersion: any;
 
   constructor() { }

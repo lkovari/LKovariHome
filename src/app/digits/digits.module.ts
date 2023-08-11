@@ -5,12 +5,14 @@ import { DigitsRoutingModule } from './digits-routing.module';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { GameStageLevelsComponent } from './components/game-stage-levels/game-stage-levels.component';
 
 
 
 @NgModule({
   declarations: [
-    DigitsGameComponent
+    DigitsGameComponent,
+    GameStageLevelsComponent
   ],
   imports: [
     CommonModule,
