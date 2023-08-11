@@ -1,6 +1,7 @@
 @import "../../digit-styles.scss";
 
 .game-stage-level-layout {
+
     .warning-message {
         @extend .digit-font-settings;
         @extend .digits-border-horizontal;
@@ -9,5 +10,21 @@
         text-align: center;
         color: orange;
         padding-left: calc(50% - 115px);
+    }
+    .stage-levels {
+        max-width: calc(100vw - 77%);
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        //justify-content: space-between;
+        //align-content: stretch;
+        align-items: center;        
+        .stage-level {
+            border: 1px solid #d4d4d4;
+            padding:0 10px 0 10px;
+            order: 0;
+            flex: 0 1 auto;
+            align-self: auto;
+        }
     }
 }

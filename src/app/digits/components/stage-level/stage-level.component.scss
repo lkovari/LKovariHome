@@ -1,0 +1,22 @@
+.stage-level-layout {
+    .stage-level-font {
+        font-size: 10px;
+    }
+    .stage-level-number-unselected {
+        @extend .stage-level-font;
+        font-weight: 200;
+    }
+    .stage-level-number-selected {
+        @extend .stage-level-font;
+        font-weight: 400;
+    }
+    .stage-level-asterisk-unselected {
+        color: blue;
+    }
+    .stage-level-asterisk-selected {
+        color: darkblue;
+    }
+    .stage-level-completed {
+
+    }
+}

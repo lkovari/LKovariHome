@@ -6,13 +6,15 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { GameStageLevelsComponent } from './components/game-stage-levels/game-stage-levels.component';
+import { StageLevelComponent } from './components/stage-level/stage-level.component';
 
 
 
 @NgModule({
   declarations: [
     DigitsGameComponent,
-    GameStageLevelsComponent
+    GameStageLevelsComponent,
+    StageLevelComponent
   ],
   imports: [
     CommonModule,
