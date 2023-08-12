@@ -1,11 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { IStack } from '../../models/stack.interface';
-import { IGameOperation } from '../../models/game-operation.interface';
 import { Stack } from '../../models/stack.model';
 import { IGameParameters } from '../../models/game-parameters.interface';
 import { IGameOperator } from '../../models/game-operator.interface';
 import { IGameOperand } from '../../models/game-operand.interface';
-import { GameOperation } from '../../models/game.operation.model';
 import { EvaluateArythmeticOperation } from './evaluate-arythmetic-operation';
 
 @Component({
@@ -14,6 +12,7 @@ import { EvaluateArythmeticOperation } from './evaluate-arythmetic-operation';
   styleUrls: ['./game-arithmetic-operations.component.scss'],
 })
 export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
+
   operators: IGameOperator[] = new Array<IGameOperator>(
     { selected: false, caption: '<', operator: '<', icon: 'pi pi-history' },
     { selected: false, caption: '+', operator: '+', icon: 'pi pi-plus' },
@@ -23,7 +22,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
   );
   @Input() gameParameters: IGameParameters;
 
-  private history: IStack<IGameOperation> | undefined;
+  private history: IStack<IGameParameters> | undefined;
 
   private selectedOperandA: IGameOperand | null;
   private selectedOperandB: IGameOperand | null;
@@ -51,14 +50,14 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
   }
   
   ngOnInit(): void {
-    this.history = new Stack<IGameOperation>();
+    this.history = new Stack<IGameParameters>();
   }
 
-  addOperation(gameOperation: IGameOperation) {
-    this.history!.push(gameOperation);
+  addOperation(gameParameters: IGameParameters) {
+    this.history!.push(gameParameters);
   }
 
-  removeLastOperation(): IGameOperation | undefined {
+  removeLastOperation(): IGameParameters | undefined {
     return this.history!.pop();
   }
 
@@ -74,11 +73,14 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
     }
     var selectedOperator = this.getSelectedOperator();
     if (this.selectedOperandA && this.selectedOperandB && selectedOperator) {
-      var operands = new Array<number>(this.selectedOperandA.value, this.selectedOperandB.value);
+      let clonedGameParameters = EvaluateArythmeticOperation.cloneGameParameters(this.gameParameters);
+ 
       var result = EvaluateArythmeticOperation.evaluate(this.selectedOperandA.value, this.selectedOperandB.value, selectedOperator.operator);
+      /*
       var gameOperator = new GameOperation(
         operands, selectedOperator.operator, result);
-      this.history?.push(gameOperator);
+      */
+      this.history?.push(clonedGameParameters);
       operand.value = result;
       let operandToDisable = this.gameParameters.operands.find(o => o.value == this.selectedOperandA!.value);
       operandToDisable!.disabled = true;
@@ -92,6 +94,16 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
 
   onOperatorButtonClick(operator: IGameOperator) {
     operator.selected = !operator.selected;
+    if (operator.operator === this.operators[0].operator) {
+      if (this.history!.size() > 0) {
+        this.gameParameters = this.history!.pop()!;
+        this.clearSelectionOfOperators();
+        this.clearSelectionOfOperands();        
+      } else {
+        console.log("History is empty!");
+      }
+    }
+
     console.log(`Caption ${operator.caption} Selected ${operator.selected}`);
   }
 
