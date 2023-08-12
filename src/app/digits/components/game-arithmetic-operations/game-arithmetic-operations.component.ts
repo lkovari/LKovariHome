@@ -143,7 +143,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
     }
     operator.selected = !operator.selected;
     if (operator.operator === DigitsConstants.OPERATOR_REV) {
-      this.removeLastOperation();
+      this.revertLastOperation();
     }
 
     console.log(`Caption ${operator.caption} Selected ${operator.selected}`);

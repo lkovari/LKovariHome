@@ -6,7 +6,18 @@ import { IStack } from './models/stack.interface';
 import { IGameOperation } from './models/game-operation.interface';
 import { MessageService } from 'primeng/api';
 import { GameArithmeticOperationsComponent } from './components/game-arithmetic-operations/game-arithmetic-operations.component';
+/*
+  Known bugs:
+  - when invalid operation is happened then got stuck the operand as disabled
+  ToDo
+  - collect all operations to a separated list to show the result which will be share
+  - store somewhere based on the current date the state of the game to easily able to continue the user
+  - generate random numbers for different stages
+  - share the final result
 
+  Optional
+  - consider the lodash deep copy usage
+*/
 @Component({
   selector: 'app-digits-game',
   templateUrl: './digits-game.component.html',
@@ -92,10 +103,10 @@ export class DigitsGameComponent implements OnInit {
   }
 
   private formatOperations(executedOperations: IStack<IGameOperation>): string {
-    let result = "";
+    let result = "Executed Operations:\n";
     while (executedOperations.size() > 0) {
       const gameOperation = executedOperations.pop();
-      result += gameOperation?.operands[0] + ' ' + gameOperation?.operator + ' ' + gameOperation?.operands[1] + ' = ' + gameOperation?.result + "; ";
+      result += gameOperation?.operands[0] + ' ' + gameOperation?.operator + ' ' + gameOperation?.operands[1] + ' = ' + gameOperation?.result + "\n";
     }
     return result;
   }
