@@ -19,13 +19,15 @@
       display: flex;
 
       .operand {
-        width: 33%;
-        height: 103px;
-        border: 2px dashed black;
+        // width: 45%;
+        width: 111px;
+        height: 111px;
+        border: 4px dashed black;
         border-radius: 50%;
-        padding: 30px 26px 26px 26px;
-        text-align: center;
+        padding: 32px 26px 26px 20px;
+        /* text-align: center; */
         margin: 3px;
+        font-size: 36px;
       }
     }
   }
@@ -56,10 +58,6 @@
     font-size: 45px;
     width: 45px;
     height: 45px;
-  }
-  .clean-button {
-    // padding: 0;
-    // border: none;
-    // background: none;
+    padding-top: 9px;
   }
 }

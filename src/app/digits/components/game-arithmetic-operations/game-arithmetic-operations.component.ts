@@ -7,6 +7,7 @@ import { IGameOperand } from '../../models/game-operand.interface';
 import { EvaluateArythmeticOperation } from './evaluate-arythmetic-operation';
 import { IGameOperation } from '../../models/game-operation.interface';
 import { GameOperation } from '../../models/game.operation.model';
+import { DigitsConstants } from '../../digits-constants';
 
 @Component({
   selector: 'app-game-arithmetic-operations',
@@ -14,15 +15,18 @@ import { GameOperation } from '../../models/game.operation.model';
   styleUrls: ['./game-arithmetic-operations.component.scss'],
 })
 export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
+  
   operators: IGameOperator[] = new Array<IGameOperator>(
-    { selected: false, caption: '<', operator: '<', icon: 'pi pi-history' },
-    { selected: false, caption: '+', operator: '+', icon: 'pi pi-plus' },
-    { selected: false, caption: '-', operator: '-', icon: 'pi pi-minus' },
-    { selected: false, caption: '*', operator: '*', icon: 'pi pi-times' },
-    { selected: false, caption: ':', operator: ':', icon: 'pi pi-times' }
+    { selected: false, caption: DigitsConstants.OPERATOR_REV, operator: DigitsConstants.OPERATOR_REV, icon: 'pi pi-history' },
+    { selected: false, caption: DigitsConstants.OPERATOR_ADD, operator: DigitsConstants.OPERATOR_ADD, icon: 'pi pi-plus' },
+    { selected: false, caption: DigitsConstants.OPERATOR_SUB, operator: DigitsConstants.OPERATOR_SUB, icon: 'pi pi-minus' },
+    { selected: false, caption: DigitsConstants.OPERATOR_MUL, operator: DigitsConstants.OPERATOR_MUL, icon: 'pi pi-times' },
+    { selected: false, caption: DigitsConstants.OPERATOR_DIV, operator: DigitsConstants.OPERATOR_DIV, icon: 'pi pi-times' }
   );
+
   @Input() gameParameters: IGameParameters;
   @Output() onExpectedResultReached = new EventEmitter<IStack<IGameOperation>>();
+  @Output() onInvalidOperationExecuted = new EventEmitter<number>();
 
   private history: IStack<IGameParameters> | undefined;
   private operationHistory: IStack<IGameOperation> | undefined;
@@ -63,6 +67,22 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
     this.operationHistory = new Stack<IGameOperation>();
   }
 
+  public revertLastOperation() {
+    if (this.history!.size() > 0) {
+      this.gameParameters = this.history!.pop()!;
+    } else {
+      console.log('History is empty!');
+    }
+    this.clearSelectionOfOperators();
+    this.clearSelectionOfOperands();
+  }
+
+  public enableOfAllOperands() {
+    this.gameParameters.operands.forEach((operand) => {
+      operand.disabled = false;
+    });
+  }
+
   removeLastOperation(): IGameParameters | undefined {
     return this.history!.pop();
   }
@@ -84,13 +104,17 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
       let clonedGameParameters =
         EvaluateArythmeticOperation.cloneGameParameters(this.gameParameters);
 
-      var result = EvaluateArythmeticOperation.evaluate(
+      let result = EvaluateArythmeticOperation.evaluate(
         this.selectedOperandA.value,
         this.selectedOperandB.value,
         selectedOperator.operator
       );
       
       this.addStateToHistory(clonedGameParameters);
+
+      if (result === Number.MIN_VALUE) {
+        this.onInvalidOperationExecuted.emit(result);
+      }
 
       let gameOperand = new Array<number>(this.selectedOperandA.value, this.selectedOperandB.value);
       let gameOperation = new GameOperation(gameOperand, selectedOperator.operator, result);
@@ -99,7 +123,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
       if (this.isTheExpectedResultReached(result)) {
         this.onExpectedResultReached.emit(this.operationHistory);
       }
-            
+
       operand.value = result;
       let operandToDisable = this.gameParameters.operands.find(
         (o) => o.value == this.selectedOperandA!.value
@@ -114,18 +138,12 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
   }
 
   onOperatorButtonClick(operator: IGameOperator) {
-    if (!this.selectedOperandA && operator.operator !== this.operators[0].operator) {
+    if (!this.selectedOperandA && operator.operator !== DigitsConstants.OPERATOR_REV) {
       return;
     }
     operator.selected = !operator.selected;
-    if (operator.operator === this.operators[0].operator) {
-      if (this.history!.size() > 0) {
-        this.gameParameters = this.history!.pop()!;
-      } else {
-        console.log('History is empty!');
-      }
-      this.clearSelectionOfOperators();
-      this.clearSelectionOfOperands();
+    if (operator.operator === DigitsConstants.OPERATOR_REV) {
+      this.removeLastOperation();
     }
 
     console.log(`Caption ${operator.caption} Selected ${operator.selected}`);
