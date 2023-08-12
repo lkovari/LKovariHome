@@ -3,6 +3,8 @@ import { IStack } from '../../models/stack.interface';
 import { IGameOperation } from '../../models/game-operation.interface';
 import { Stack } from '../../models/stack.model';
 import { IGameParameters } from '../../models/game-parameters.interface';
+import { IGameOperator } from '../../models/game-operator.interface';
+import { IGameOperand } from '../../models/game-operand.interface';
 
 @Component({
   selector: 'app-game-arithmetic-operations',
@@ -10,7 +12,13 @@ import { IGameParameters } from '../../models/game-parameters.interface';
   styleUrls: ['./game-arithmetic-operations.component.scss']
 })
 export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
-  operators: string[] = new Array<string>( 'pi pi-history', 'fa fa-plus', 'fa fa-minus', 'fa-solid fa-xmark', 'fa fa-div');
+  operators: IGameOperator[] = new Array<IGameOperator>( 
+    { selected: false, caption: '<', operand: '<', icon: 'pi pi-history' },
+    { selected: false, caption: '+', operand: '+', icon: 'pi pi-plus' },
+    { selected: false, caption: '-', operand: '-', icon: 'pi pi-minus' },
+    { selected: false, caption: '*', operand: '*', icon: 'pi pi-times' },
+    { selected: false, caption: ':', operand: ':', icon: 'pi pi-times' },
+  );
   @Input() gameParameters: IGameParameters;
 
   private history: IStack<IGameOperation> | undefined;
@@ -27,11 +35,13 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
     return this.history!.pop();
   }
 
-  onOperandButtonClick(operand: number) {
-    console.log(operand);
+  onOperandButtonClick(operand: IGameOperand) {
+    operand.selected = !operand.selected;
+    console.log(`Value ${operand.value} Selected ${operand.selected}`);
   }
-  onOperatorButtonClick(operator: string) {
-    console.log(operator);
+  onOperatorButtonClick(operator: IGameOperator) {
+    operator.selected = !operator.selected;
+    console.log(`Caption ${operator.caption} Selected ${operator.selected}`);
   }
 
   ngOnDestroy(): void {
