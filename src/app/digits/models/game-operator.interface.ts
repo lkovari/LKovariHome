@@ -1,6 +1,6 @@
 export interface IGameOperator {
     selected: boolean;
     caption: string;
-    operand: string;
+    operator: string;
     icon: string;
 }

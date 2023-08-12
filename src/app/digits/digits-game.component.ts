@@ -29,12 +29,12 @@ export class DigitsGameComponent implements OnInit {
   private generateRandomGameParameters(): IGameParameters[] {
     return new Array<IGameParameters>( 
       { result: 161, operands: new Array<IGameOperand>( 
-        { selected: false, value: 2 },
-        { selected: false, value: 5 },
-        { selected: false, value: 9 },
-        { selected: false, value: 10 },
-        { selected: false, value: 11 },
-        { selected: false, value: 25 }
+        { selected: false, disabled: false, value: 2 },
+        { selected: false, disabled: false,value: 5 },
+        { selected: false, disabled: false,value: 9 },
+        { selected: false, disabled: false,value: 10 },
+        { selected: false, disabled: false,value: 11 },
+        { selected: false, disabled: false,value: 25 }
       ) }
     );
   }
