@@ -1,7 +1,8 @@
 @import "digit-styles.scss";
 
 .digits-game-layout {
-    height: 100vh;
+    height: 98vh;
+    width: 100vw;
     border: 5px solid rgb(204, 0, 255);
     .digits-game-title {
         @extend .digit-font-settings;
@@ -44,7 +45,13 @@
     }
     .tool-bar {
         @extend .digit-font-settings;
-        @extend .digits-border-horizontal;
-        height: 70px;
+        //@extend .digits-border-horizontal;
+        height: 52px;
+    }
+    
+    // Extra small devices (phones, 600px and down) 
+    @media only screen and (max-width: 600px) {
+        height: 101vh;
+        width: 101vw;
     }
 }

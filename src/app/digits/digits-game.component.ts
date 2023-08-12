@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IStageLevel } from './models/stage-level.interface';
+import { IGameParameters } from './models/game-parameters.interface';
 
 @Component({
   selector: 'app-digits-game',
@@ -10,20 +11,33 @@ export class DigitsGameComponent implements OnInit {
   currentDate = new Date();
 
   stageLevels: IStageLevel[] = [];
+  gameParameters: IGameParameters[] = [];
+  stageIndex: number = 0;
 
   constructor() {}
 
-  private initializeStadeLevels() {
+  private initializeStageLevels() {
     this.stageLevels = new Array<IStageLevel>( 
-      { selected: true, index: 0, value: 150, completed: false },
-      { selected: false, index: 1, value: 250, completed: false },
-      { selected: false, index: 2, value: 350, completed: false },
+      { selected: false, index: 0, value: 150, completed: true },
+      { selected: false, index: 1, value: 250, completed: true },
+      { selected: true, index: 2, value: 350, completed: false },
       { selected: false, index: 3, value: 450, completed: false },
       { selected: false, index: 4, value: 550, completed: false });
   }
   
+  private generateRandomGameParameters(): IGameParameters[] {
+    return new Array<IGameParameters>( 
+      { result: 161, operands: new Array<number>( 2, 5, 9, 10, 11, 25) } 
+    ) ;
+  }
+
+  private initializeGameParameters() {
+    this.gameParameters = this.generateRandomGameParameters();
+  }
+
   ngOnInit(): void {
-    this.initializeStadeLevels();
+    this.initializeStageLevels();
+    this.initializeGameParameters();
   }
 
 }

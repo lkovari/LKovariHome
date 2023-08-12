@@ -29,6 +29,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "bootstrap": "^5.2.3",
+    "font-awesome": "^4.7.0",
     "lodash": "^4.17.21",
     "primeicons": "^6.0.1",
     "primeng": "^16.0.0-rc.1",

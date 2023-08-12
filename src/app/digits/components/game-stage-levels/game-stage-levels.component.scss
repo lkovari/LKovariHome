@@ -12,12 +12,12 @@
         padding-left: calc(50% - 115px);
     }
     .stage-levels {
-        max-width: calc(100vw - 77%);
+        // max-width: calc(100vw - 85.4%);
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
-        //justify-content: space-between;
-        //align-content: stretch;
+        // justify-content: space-between;
+        // align-content: stretch;
         align-items: center;        
         .stage-level {
             border: 1px solid #d4d4d4;
@@ -26,5 +26,12 @@
             flex: 0 1 auto;
             align-self: auto;
         }
+    }
+    .next-to-stage-levels {
+        position: absolute;
+        left: 295px;
+        width: calc(100vw - 290px);
+        height: 52px;
+        border: 1px solid #d4d4d4;
     }
 }

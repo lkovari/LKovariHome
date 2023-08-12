@@ -1,0 +1,22 @@
+<div class="game-arithmetic-operations-layout">
+  <div>
+    <label class="expected-result">{{ gameParameters.result }}</label>
+  </div>
+  <div class="operands-container">
+    <div class="three-operands">
+      <ng-container *ngFor="let operand of gameParameters.operands; let ix = index">
+        <button type="button" class="operand clean-button" *ngIf="ix < 3" (click)="onOperandButtonClick(operand)">{{ operand }}</button>
+      </ng-container>
+    </div>
+    <div class="three-operands">
+      <ng-container *ngFor="let operand of gameParameters.operands; let ix = index">
+        <button type="button" class="operand clean-button" *ngIf="ix > 2" (click)="onOperandButtonClick(operand)">{{ operand }}</button>
+      </ng-container>
+    </div>
+  </div>
+  <div class="operators-container">
+    <ng-container *ngFor="let operator of operators">
+        <button type="button" class="clean-button" (click)="onOperatorButtonClick(operator)"><i class="operator-content" [ngClass]=operator></i></button> 
+    </ng-container>
+  </div>
+</div>

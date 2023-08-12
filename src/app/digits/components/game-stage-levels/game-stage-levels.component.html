@@ -4,9 +4,11 @@
     </div>
     <ng-template #HAS_STAGE_LEVELS>
         <div class="stage-levels">
-            <div class="stage-level" *ngFor="let stageLevel of stageLevels; index as ix" [ngStyle]="{'border-bottom': stageLevel.selected ? '1px solid blue' : '1px solid #d4d4d4' }">
+            <div class="stage-level" *ngFor="let stageLevel of stageLevels; index as ix" 
+            [ngStyle]="{'border-bottom': stageLevel.selected ? 'none' : '1px solid #d4d4d4' }">
                 <app-stage-level [stageLevel]="stageLevel"></app-stage-level>
             </div>
+            <div class="next-to-stage-levels"></div>
         </div>
     </ng-template>
 </div>
