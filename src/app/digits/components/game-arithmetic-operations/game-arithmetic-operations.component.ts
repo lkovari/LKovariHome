@@ -25,9 +25,14 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
 
   private history: IStack<IGameOperation> | undefined;
 
+  private selectedOperandA: IGameOperand | null;
+  private selectedOperandB: IGameOperand | null;
+
+  /*
   private getSelectedOperand(): IGameOperand | undefined {
     return this.gameParameters.operands.find((o) => o.selected);
   }
+  */
 
   private getSelectedOperator(): IGameOperator | undefined {
     return this.operators.find((o) => o.selected);
@@ -59,18 +64,28 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
 
   onOperandButtonClick(operand: IGameOperand) {
     operand.selected = !operand.selected;
-    var selectedOperand = this.getSelectedOperand();
+
+    if (!this.selectedOperandA) {
+      this.selectedOperandA = operand;
+    } else {
+      if (!this.selectedOperandB) {
+        this.selectedOperandB = operand;
+      }
+    }
     var selectedOperator = this.getSelectedOperator();
-    if (selectedOperand && selectedOperator) {
-      var operands = new Array<number>(selectedOperand!.value, operand.value);
-      var result = EvaluateArythmeticOperation.evaluate(selectedOperand!.value, operand.value, selectedOperator.operator);
+    if (this.selectedOperandA && this.selectedOperandB && selectedOperator) {
+      var operands = new Array<number>(this.selectedOperandA.value, this.selectedOperandB.value);
+      var result = EvaluateArythmeticOperation.evaluate(this.selectedOperandA.value, this.selectedOperandB.value, selectedOperator.operator);
       var gameOperator = new GameOperation(
         operands, selectedOperator.operator, result);
       this.history?.push(gameOperator);
       operand.value = result;
-      selectedOperand.disabled = true;
+      let operandToDisable = this.gameParameters.operands.find(o => o.value == this.selectedOperandA!.value);
+      operandToDisable!.disabled = true;
       this.clearSelectionOfOperators();
       this.clearSelectionOfOperands();
+      this.selectedOperandA = null;
+      this.selectedOperandB = null;
     }
     console.log(`Value ${operand.value} Selected ${operand.selected}`);
   }
