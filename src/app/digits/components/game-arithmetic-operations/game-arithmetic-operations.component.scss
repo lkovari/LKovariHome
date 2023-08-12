@@ -41,24 +41,25 @@
     order: 0;
     flex: 0 1 auto;
     align-self: auto;
-    font-size: 60px;
-    padding: 2px;
+    font-size: 55px;
+    width: 60px;
+    height: 60px;
+    border: 2px solid black;
+    border-radius: 50%;
+    margin: 3px 3px 3px 3px;
+    padding: 3px 0px 0px 0px;
+    text-align: center;
+    color: blue;
+    background-color: black;
   }
-  .operator-selected {
-    background-color: lightseagreen;
-  }
-  .operator-unselected {
-    background-color: white;
-  }  
-  .operand-selected {
-    background-color: cadetblue;
-  }
-  .operand-unselected {
-    background-color: white;
+  .operator-content-icon {
+    font-size: 45px;
+    width: 45px;
+    height: 45px;
   }
   .clean-button {
-    padding: 0;
-    border: none;
-    background: none;
+    // padding: 0;
+    // border: none;
+    // background: none;
   }
 }

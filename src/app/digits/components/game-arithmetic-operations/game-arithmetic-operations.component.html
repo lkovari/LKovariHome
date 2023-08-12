@@ -22,10 +22,10 @@
   </div>
   <div class="operators-container">
     <ng-container *ngFor="let operator of operators">
-        <button type="button" class="clean-button" 
+        <button type="button" class="operator-content clean-button" 
             [ngStyle]="{'background-color': operator.selected ? 'lightseagreen' : 'white' }"
             (click)="onOperatorButtonClick(operator)">
-            <i class="operator-content" [ngClass]=operator.icon></i>
+            <i class="operator-content-icon" [ngClass]=operator.icon></i>
         </button>
     </ng-container>
   </div>
