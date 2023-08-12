@@ -7,7 +7,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { GameStageLevelsComponent } from './components/game-stage-levels/game-stage-levels.component';
 import { StageLevelComponent } from './components/stage-level/stage-level.component';
 import { GameArithmeticOperationsComponent } from './components/game-arithmetic-operations/game-arithmetic-operations.component';
-
+import { ToastModule } from 'primeng/toast';
+import { MessagesModule } from 'primeng/messages';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,8 @@ import { GameArithmeticOperationsComponent } from './components/game-arithmetic-
   imports: [
     CommonModule,
     RouterModule,
+    ToastModule,
+    MessagesModule,
     DigitsRoutingModule,
     FlexLayoutModule
   ]

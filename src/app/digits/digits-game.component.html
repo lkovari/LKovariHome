@@ -1,4 +1,5 @@
 <div class="digits-game-layout">
+    <p-toast position="top-center" closable="true"></p-toast>
     <div class="digits-game-title">
         This is a daily numbers puzzle, similar to the <a class="anchor-underline-off" href="https://www.nytimes.com/games/digits">NY Times Digits</a>, which unfortunatelly discontinued at August 8, 2023
     </div>
@@ -15,6 +16,8 @@
         <app-game-stage-levels [stageLevels]="stageLevels" ></app-game-stage-levels>
     </div>
     <div>
-        <app-game-arithmetic-operations [gameParameters]="gameParameters[stageIndex]"></app-game-arithmetic-operations>
+        <app-game-arithmetic-operations 
+        [gameParameters]="gameParameters[stageIndex]"
+        (onExpectedResultReached)="onExpectedResultReached($event)"></app-game-arithmetic-operations>
     </div>
 </div>

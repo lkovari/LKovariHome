@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { IStageLevel } from './models/stage-level.interface';
 import { IGameParameters } from './models/game-parameters.interface';
 import { IGameOperand } from './models/game-operand.interface';
+import { IStack } from './models/stack.interface';
+import { IGameOperation } from './models/game-operation.interface';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-digits-game',
   templateUrl: './digits-game.component.html',
-  styleUrls: ['./digits-game.component.scss']
+  styleUrls: ['./digits-game.component.scss'],
+  providers: [MessageService]
 })
 export class DigitsGameComponent implements OnInit {
   currentDate = new Date();
@@ -15,7 +19,7 @@ export class DigitsGameComponent implements OnInit {
   gameParameters: IGameParameters[] = [];
   stageIndex: number = 0;
 
-  constructor() {}
+  constructor(private messageService: MessageService) {}
 
   private initializeStageLevels() {
     this.stageLevels = new Array<IStageLevel>( 
@@ -43,9 +47,27 @@ export class DigitsGameComponent implements OnInit {
     this.gameParameters = this.generateRandomGameParameters();
   }
 
+  private formatOperations(executedOperations: IStack<IGameOperation>): string {
+    let result = "Executed Operations: ";
+    while (executedOperations.size() > 0) {
+      const gameOperation = executedOperations.pop();
+      result += gameOperation?.operands[0] + ' ' + gameOperation?.operator + ' ' + gameOperation?.operands[1] + ' = ' + gameOperation?.result + "; ";
+    }
+    return result;
+  }
+
+  private showSuccessMessage(message: string) {
+    this.messageService.add({ sticky: true, severity: 'success', summary: 'Success', detail: message });    
+  }  
+
   ngOnInit(): void {
     this.initializeStageLevels();
     this.initializeGameParameters();
+  }
+
+  onExpectedResultReached(executedOperations: IStack<IGameOperation>) {
+    const executedOperationsAsText = this.formatOperations(executedOperations);
+    this.showSuccessMessage(executedOperationsAsText);
   }
 
 }
