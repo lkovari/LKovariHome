@@ -9,7 +9,7 @@ import { GenerateGameParameters } from './generate-game-parameters';
 
 /*
   Known bugs:
-  - when invalid operation is happened then got stuck the operand as disabled
+  - when the result is equals with anothe operand able to select both in same time (missing an Id from the model to more exact identification)
   ToDo
   - collect all operations to a separated list to show the result which will be share
   - store somewhere based on the current date the state of the game to easily able to continue the user
@@ -23,10 +23,11 @@ import { GenerateGameParameters } from './generate-game-parameters';
   selector: 'app-digits-game',
   templateUrl: './digits-game.component.html',
   styleUrls: ['./digits-game.component.scss'],
-  providers: [MessageService]
+  providers: [MessageService],
 })
 export class DigitsGameComponent implements OnInit {
-  @ViewChild('arithmeticOperations', { static: true }) arithmeticComponent: GameArithmeticOperationsComponent;
+  @ViewChild('arithmeticOperations', { static: true })
+  arithmeticComponent: GameArithmeticOperationsComponent;
   private readonly LAST_STAGE = 4;
   private generateGameParameters: GenerateGameParameters;
   currentDate = new Date();
@@ -37,17 +38,16 @@ export class DigitsGameComponent implements OnInit {
 
   constructor(private messageService: MessageService) {}
 
-
-
   private initializeStageLevels() {
-    this.stageLevels = new Array<IStageLevel>( 
+    this.stageLevels = new Array<IStageLevel>(
       { selected: true, index: 0, value: 96, completed: false },
       { selected: false, index: 1, value: 161, completed: false },
       { selected: false, index: 2, value: 275, completed: false },
       { selected: false, index: 3, value: 355, completed: false },
-      { selected: false, index: 4, value: 404, completed: false });
+      { selected: false, index: 4, value: 404, completed: false }
+    );
   }
-  
+
   /*
   private generateRandomGameParameters(): IGameParameters[] {
     return new Array<IGameParameters>( 
@@ -108,34 +108,58 @@ export class DigitsGameComponent implements OnInit {
   }
   */
   private formatOperations(executedOperations: IStack<IGameOperation>): string {
-    let result = "Completed: Executed Operations:\n";
+    let result = 'Completed! Executed Operations:\n';
     let ix = executedOperations.size();
     while (executedOperations.size() > 0) {
       const gameOperation = executedOperations.pop();
-      result += ix + '. ' + gameOperation?.operands[0] + ' ' + gameOperation?.operator + ' ' + gameOperation?.operands[1] + ' = ' + gameOperation?.result + "\n";
+      result +=
+        ix +
+        '. ' +
+        gameOperation?.operands[0] +
+        ' ' +
+        gameOperation?.operator +
+        ' ' +
+        gameOperation?.operands[1] +
+        ' = ' +
+        gameOperation?.result +
+        '\n';
       --ix;
     }
     return result;
   }
 
   private showSuccessMessage(message: string) {
-    this.messageService.add({ severity: 'success', summary: 'Congratulation!', detail: message });    
-  }  
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Congratulation!',
+      detail: message,
+    });
+  }
 
   private showErrorMessage(message: string) {
-    this.messageService.add({ severity: 'error', summary: 'Error!', detail: message });    
-  }  
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error!',
+      detail: message,
+    });
+  }
 
   private setupStages() {
     let ix = 0;
-    this.gameParameters.forEach(gp => {
+    this.gameParameters.forEach((gp) => {
       this.stageLevels[ix].value = gp.result;
       ++ix;
     });
   }
 
   ngOnInit(): void {
-    alert("This \"Numbers\" game is under construction it's a prototype only!");
+    alert(
+      `This "Numbers" game is under construction it\'s a prototype only!
+        -bug:when the result is equals with anothe operand able to select both in same time (missing an Id from the model to more exact identification)
+        -todo:end of the game should implement sharing
+        -todo:save the state of the game into cookie to easily continue, end of cookie at midnight
+        -todo:the game parameter generation algorythm generate too big numbers as result`
+    );
     this.initializeStageLevels();
     this.generateGameParameters = new GenerateGameParameters();
     this.gameParameters = this.generateGameParameters.generateStageNumbers();
