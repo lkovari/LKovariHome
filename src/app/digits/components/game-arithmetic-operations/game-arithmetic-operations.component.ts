@@ -139,7 +139,10 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
       }
     }
     var selectedOperator = this.getSelectedOperator();
-    if (this.selectedOperandA && this.selectedOperandB && selectedOperator) {
+    if (this.selectedOperandA && this.selectedOperandB && !selectedOperator) {
+      this.selectedOperandB.selected = false;
+      this.selectedOperandB = null;
+    }else if (this.selectedOperandA && this.selectedOperandB && selectedOperator) {
       let clonedGameParameters =
         EvaluateArythmeticOperation.cloneGameParameters(this.gameParameters);
 
