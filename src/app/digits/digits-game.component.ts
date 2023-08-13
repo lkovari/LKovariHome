@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IStageLevel } from './models/stage-level.interface';
 import { IGameParameters } from './models/game-parameters.interface';
-import { IGameOperand } from './models/game-operand.interface';
 import { IStack } from './models/stack.interface';
 import { IGameOperation } from './models/game-operation.interface';
 import { MessageService } from 'primeng/api';
 import { GameArithmeticOperationsComponent } from './components/game-arithmetic-operations/game-arithmetic-operations.component';
+import { GenerateGameParameters } from './generate-game-parameters';
+
 /*
   Known bugs:
   - when invalid operation is happened then got stuck the operand as disabled
@@ -14,6 +15,7 @@ import { GameArithmeticOperationsComponent } from './components/game-arithmetic-
   - store somewhere based on the current date the state of the game to easily able to continue the user
   - generate random numbers for different stages
   - share the final result
+  - should generate unique operands
 
   Optional
   - consider the lodash deep copy usage
@@ -26,7 +28,8 @@ import { GameArithmeticOperationsComponent } from './components/game-arithmetic-
 })
 export class DigitsGameComponent implements OnInit {
   @ViewChild('arithmeticOperations', { static: true }) arithmeticComponent: GameArithmeticOperationsComponent;
-
+  private readonly LAST_STAGE = 4;
+  private generateGameParameters: GenerateGameParameters;
   currentDate = new Date();
 
   stageLevels: IStageLevel[] = [];
@@ -34,6 +37,8 @@ export class DigitsGameComponent implements OnInit {
   stageIndex: number = 0;
 
   constructor(private messageService: MessageService) {}
+
+
 
   private initializeStageLevels() {
     this.stageLevels = new Array<IStageLevel>( 
@@ -44,6 +49,7 @@ export class DigitsGameComponent implements OnInit {
       { selected: false, index: 4, value: 404, completed: false });
   }
   
+  /*
   private generateRandomGameParameters(): IGameParameters[] {
     return new Array<IGameParameters>( 
       { result: 96, operands: new Array<IGameOperand>( 
@@ -88,7 +94,7 @@ export class DigitsGameComponent implements OnInit {
       ) }                        
     );
   }
-
+  */
   private stageToCompleted(lastPage: boolean) {
     this.stageLevels[this.stageIndex].completed = true;
     this.stageLevels[this.stageIndex].selected = false;
@@ -97,11 +103,11 @@ export class DigitsGameComponent implements OnInit {
       this.stageLevels[this.stageIndex].selected = true;
     }
   }
-
+  /*
   private initializeGameParameters() {
     this.gameParameters = this.generateRandomGameParameters();
   }
-
+  */
   private formatOperations(executedOperations: IStack<IGameOperation>): string {
     let result = "Executed Operations:\n";
     while (executedOperations.size() > 0) {
@@ -119,16 +125,27 @@ export class DigitsGameComponent implements OnInit {
     this.messageService.add({ severity: 'error', summary: 'Error!', detail: message });    
   }  
 
+  private setupStages() {
+    let ix = 0;
+    this.gameParameters.forEach(gp => {
+      this.stageLevels[ix].value = gp.result;
+      ++ix;
+    });
+  }
+
   ngOnInit(): void {
     this.initializeStageLevels();
-    this.initializeGameParameters();
+    this.generateGameParameters = new GenerateGameParameters();
+    this.gameParameters = this.generateGameParameters.generateStageNumbers();
+    this.setupStages();
+    // this.initializeGameParameters();
   }
 
   onExpectedResultReached(executedOperations: IStack<IGameOperation>) {
     const executedOperationsAsText = this.formatOperations(executedOperations);
     this.showSuccessMessage('You are reach the expected result!');
     alert(executedOperationsAsText);
-    this.stageToCompleted(this.stageIndex === 4);
+    this.stageToCompleted(this.stageIndex === this.LAST_STAGE);
     this.arithmeticComponent.clearHistory();
   }
 
