@@ -219,9 +219,11 @@ export class GenerateGameParameters {
     let stageResult = this.calculateResult(this.operands);
     let result = new GameParameters();
     result.result = stageResult;
+    let idSeq = 0;
     originalOperands.forEach(op => {
-        let gameOperand = new GameOperand(false, false, op);
+        let gameOperand = new GameOperand(idSeq, false, false, op);
         result.operands.push(gameOperand);
+        ++idSeq;
     });
     return result;
   }

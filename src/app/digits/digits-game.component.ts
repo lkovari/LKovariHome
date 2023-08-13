@@ -9,7 +9,7 @@ import { GenerateGameParameters } from './generate-game-parameters';
 
 /*
   Known bugs:
-  - when the result is equals with anothe operand able to select both in same time (missing an Id from the model to more exact identification)
+  
   ToDo
   - collect all operations to a separated list to show the result which will be share
   - store somewhere based on the current date the state of the game to easily able to continue the user
@@ -155,7 +155,6 @@ export class DigitsGameComponent implements OnInit {
   ngOnInit(): void {
     alert(
       `This "Numbers" game is under construction it\'s a prototype only!
-        -bug:when the result is equals with anothe operand able to select both in same time (missing an Id from the model to more exact identification)
         -todo:end of the game should implement sharing
         -todo:save the state of the game into cookie to easily continue, end of cookie at midnight
         -todo:the game parameter generation algorythm generate too big numbers as result`

@@ -42,9 +42,9 @@ export class EvaluateArythmeticOperation {
      */
     public static cloneGameParameters(gameParameters: IGameParameters): IGameParameters {
         let clonedGameParameters = new GameParameters();
-        clonedGameParameters.result = gameParameters.result;        
+        clonedGameParameters.result = gameParameters.result;
         gameParameters.operands.forEach((o: IGameOperand) => {
-            let clonedGameOperands = new GameOperand(false, false, -1);
+            let clonedGameOperands = new GameOperand(o.id, false, false, -1);
             Object.assign(clonedGameOperands, o);
             clonedGameParameters.operands.push(clonedGameOperands);
         });

@@ -129,11 +129,11 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
   onOperandButtonClick(operand: IGameOperand) {
     operand.selected = !operand.selected;
     if (!operand.selected) {
-      if (this.selectedOperandB && this.selectedOperandB.value === operand.value) {
+      if (this.selectedOperandB && this.selectedOperandB.id === operand.id) {
         this.selectedOperandB.selected = false;
         this.selectedOperandB = null;
         return;
-      } else if (this.selectedOperandA && this.selectedOperandA.value === operand.value) {
+      } else if (this.selectedOperandA && this.selectedOperandA.id === operand.id) {
         this.selectedOperandA.selected = false;
         this.selectedOperandA = null;
         return;
@@ -142,7 +142,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
     if (!this.selectedOperandA) {
       this.selectedOperandA = operand;
     } else {
-      if (this.selectedOperandA.value !== operand.value) {
+      if (this.selectedOperandA.id !== operand.id) {
         if (!this.selectedOperandB) {
           this.selectedOperandB = operand;
         }
@@ -184,7 +184,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
 
         operand.value = result;
         let operandToDisable = this.gameParameters.operands.find(
-          (o) => o.value == this.selectedOperandA!.value
+          (o) => o.id == this.selectedOperandA!.id
         );
         operandToDisable!.disabled = true;
         this.clearSelectionOfOperators();
