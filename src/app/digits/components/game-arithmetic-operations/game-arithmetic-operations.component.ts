@@ -207,6 +207,17 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
     operator.selected = !operator.selected;
     if (operator.operator === DigitsConstants.OPERATOR_REV) {
       this.revertLastOperation();
+      let clonedGameParameters = EvaluateArythmeticOperation.cloneGameParameters(this.gameParameters);
+      let operands = new Array<number>();
+      clonedGameParameters.operands.forEach((op) =>{
+        operands.push(op.value);
+      });
+      let gameOperation = new GameOperation(
+        operands,
+        operator.operator,
+        this.gameParameters.result
+      );
+      this.addGameOperationToOperationHistory(gameOperation);      
     }
 
     console.log(`Caption ${operator.caption} Selected ${operator.selected}`);
