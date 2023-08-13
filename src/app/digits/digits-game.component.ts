@@ -135,7 +135,6 @@ export class DigitsGameComponent implements OnInit {
   onInvalidOperationExecuted(value: number) {
     this.showErrorMessage('Invalid Operation Executed!');
     this.arithmeticComponent.revertLastOperation();
-    this.arithmeticComponent.enableOfAllOperands();
     console.log(value);
   }
 }

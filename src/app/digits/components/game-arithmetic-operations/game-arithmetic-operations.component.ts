@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { IStack } from '../../models/stack.interface';
 import { Stack } from '../../models/stack.model';
 import { IGameParameters } from '../../models/game-parameters.interface';
@@ -15,17 +22,43 @@ import { DigitsConstants } from '../../digits-constants';
   styleUrls: ['./game-arithmetic-operations.component.scss'],
 })
 export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
-  
   operators: IGameOperator[] = new Array<IGameOperator>(
-    { selected: false, caption: DigitsConstants.OPERATOR_REV, operator: DigitsConstants.OPERATOR_REV, icon: 'pi pi-history' },
-    { selected: false, caption: DigitsConstants.OPERATOR_ADD, operator: DigitsConstants.OPERATOR_ADD, icon: 'pi pi-plus' },
-    { selected: false, caption: DigitsConstants.OPERATOR_SUB, operator: DigitsConstants.OPERATOR_SUB, icon: 'pi pi-minus' },
-    { selected: false, caption: DigitsConstants.OPERATOR_MUL, operator: DigitsConstants.OPERATOR_MUL, icon: 'pi pi-times' },
-    { selected: false, caption: DigitsConstants.OPERATOR_DIV, operator: DigitsConstants.OPERATOR_DIV, icon: 'pi pi-times' }
+    {
+      selected: false,
+      caption: DigitsConstants.OPERATOR_REV,
+      operator: DigitsConstants.OPERATOR_REV,
+      icon: 'pi pi-history',
+    },
+    {
+      selected: false,
+      caption: DigitsConstants.OPERATOR_ADD,
+      operator: DigitsConstants.OPERATOR_ADD,
+      icon: 'pi pi-plus',
+    },
+    {
+      selected: false,
+      caption: DigitsConstants.OPERATOR_SUB,
+      operator: DigitsConstants.OPERATOR_SUB,
+      icon: 'pi pi-minus',
+    },
+    {
+      selected: false,
+      caption: DigitsConstants.OPERATOR_MUL,
+      operator: DigitsConstants.OPERATOR_MUL,
+      icon: 'pi pi-times',
+    },
+    {
+      selected: false,
+      caption: DigitsConstants.OPERATOR_DIV,
+      operator: DigitsConstants.OPERATOR_DIV,
+      icon: 'pi pi-times',
+    }
   );
 
   @Input() gameParameters: IGameParameters;
-  @Output() onExpectedResultReached = new EventEmitter<IStack<IGameOperation>>();
+  @Output() onExpectedResultReached = new EventEmitter<
+    IStack<IGameOperation>
+  >();
   @Output() onInvalidOperationExecuted = new EventEmitter<number>();
 
   private history: IStack<IGameParameters> | undefined;
@@ -75,6 +108,8 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
     }
     this.clearSelectionOfOperators();
     this.clearSelectionOfOperands();
+    this.selectedOperandA = null;
+    this.selectedOperandB = null;
   }
 
   public enableOfAllOperands() {
@@ -113,36 +148,47 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
         this.selectedOperandB.value,
         selectedOperator.operator
       );
-      
+
       this.addStateToHistory(clonedGameParameters);
 
       if (result === Number.MIN_VALUE) {
         this.onInvalidOperationExecuted.emit(result);
+      } else {
+        let gameOperand = new Array<number>(
+          this.selectedOperandA.value,
+          this.selectedOperandB.value
+        );
+        let gameOperation = new GameOperation(
+          gameOperand,
+          selectedOperator.operator,
+          result
+        );
+        this.addGameOperationToOperationHistory(gameOperation);
+
+        if (this.isTheExpectedResultReached(result)) {
+          this.onExpectedResultReached.emit(this.operationHistory);
+        }
+
+        operand.value = result;
+        let operandToDisable = this.gameParameters.operands.find(
+          (o) => o.value == this.selectedOperandA!.value
+        );
+        operandToDisable!.disabled = true;
+        this.clearSelectionOfOperators();
+        this.clearSelectionOfOperands();
+        this.selectedOperandA = null;
+        this.selectedOperandB = null;
       }
-
-      let gameOperand = new Array<number>(this.selectedOperandA.value, this.selectedOperandB.value);
-      let gameOperation = new GameOperation(gameOperand, selectedOperator.operator, result);
-      this.addGameOperationToOperationHistory(gameOperation);
-
-      if (this.isTheExpectedResultReached(result)) {
-        this.onExpectedResultReached.emit(this.operationHistory);
-      }
-
-      operand.value = result;
-      let operandToDisable = this.gameParameters.operands.find(
-        (o) => o.value == this.selectedOperandA!.value
-      );
-      operandToDisable!.disabled = true;
-      this.clearSelectionOfOperators();
-      this.clearSelectionOfOperands();
-      this.selectedOperandA = null;
-      this.selectedOperandB = null;
     }
+
     console.log(`Value ${operand.value} Selected ${operand.selected}`);
   }
 
   onOperatorButtonClick(operator: IGameOperator) {
-    if (!this.selectedOperandA && operator.operator !== DigitsConstants.OPERATOR_REV) {
+    if (
+      !this.selectedOperandA &&
+      operator.operator !== DigitsConstants.OPERATOR_REV
+    ) {
       return;
     }
     operator.selected = !operator.selected;
