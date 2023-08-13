@@ -13,9 +13,8 @@ import { GenerateGameParameters } from './generate-game-parameters';
   ToDo
   - collect all operations to a separated list to show the result which will be share
   - store somewhere based on the current date the state of the game to easily able to continue the user
-  - generate random numbers for different stages
+  - fine tuning of generating random numbers for different stages
   - share the final result
-  - should generate unique operands
 
   Optional
   - consider the lodash deep copy usage
@@ -109,10 +108,12 @@ export class DigitsGameComponent implements OnInit {
   }
   */
   private formatOperations(executedOperations: IStack<IGameOperation>): string {
-    let result = "Executed Operations:\n";
+    let result = "Completed: Executed Operations:\n";
+    let ix = executedOperations.size();
     while (executedOperations.size() > 0) {
       const gameOperation = executedOperations.pop();
-      result += gameOperation?.operands[0] + ' ' + gameOperation?.operator + ' ' + gameOperation?.operands[1] + ' = ' + gameOperation?.result + "\n";
+      result += ix + '. ' + gameOperation?.operands[0] + ' ' + gameOperation?.operator + ' ' + gameOperation?.operands[1] + ' = ' + gameOperation?.result + "\n";
+      --ix;
     }
     return result;
   }
@@ -134,11 +135,11 @@ export class DigitsGameComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    alert("This \"Numbers\" game is under construction it's a prototype only!");
     this.initializeStageLevels();
     this.generateGameParameters = new GenerateGameParameters();
     this.gameParameters = this.generateGameParameters.generateStageNumbers();
     this.setupStages();
-    // this.initializeGameParameters();
   }
 
   onExpectedResultReached(executedOperations: IStack<IGameOperation>) {
