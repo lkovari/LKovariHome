@@ -128,7 +128,17 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
 
   onOperandButtonClick(operand: IGameOperand) {
     operand.selected = !operand.selected;
-
+    if (!operand.selected) {
+      if (this.selectedOperandB && this.selectedOperandB.value === operand.value) {
+        this.selectedOperandB.selected = false;
+        this.selectedOperandB = null;
+        return;
+      } else if (this.selectedOperandA && this.selectedOperandA.value === operand.value) {
+        this.selectedOperandA.selected = false;
+        this.selectedOperandA = null;
+        return;
+      }
+    }
     if (!this.selectedOperandA) {
       this.selectedOperandA = operand;
     } else {

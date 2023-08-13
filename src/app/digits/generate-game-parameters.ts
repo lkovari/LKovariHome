@@ -1,5 +1,6 @@
 import { EvaluateArythmeticOperation } from './components/game-arithmetic-operations/evaluate-arythmetic-operation';
 import { DigitsConstants } from './digits-constants';
+import { GenerateUniqueNumber } from './generate-unique-number';
 import { GameOperand } from './models/game-operand.model';
 import { IGameParameters } from './models/game-parameters.interface';
 import { GameParameters } from './models/game-parameters.model';
@@ -144,75 +145,77 @@ export class GenerateGameParameters {
   }
 
   private generateGameParameter(stageIndex: number): IGameParameters {
-    let operand1 = 0;
-    let operand2 = 0;
-    let operand3 = 0;
-    let operand4 = 0;
-    let operand5 = 0;
-    let operand6 = 0;
+    let generateUniqueNumber = new GenerateUniqueNumber();
     switch (stageIndex) {
       case 0: {
-        operand1 = this.generateNumber(1, 5);
-        operand2 = this.generateNumber(1, 5);
-        operand3 = this.generateNumber(1, 5);
-        operand4 = this.generateNumber(1, 5);
-        operand5 = this.generateNumber(5, 10);
-        operand6 = this.generateNumber(10, 25);
+        generateUniqueNumber.generateNumber(1, 5);
+        generateUniqueNumber.generateNumber(1, 5);
+        generateUniqueNumber.generateNumber(1, 5);
+        generateUniqueNumber.generateNumber(1, 5);
+        generateUniqueNumber.generateNumber(1, 5);
+        generateUniqueNumber.generateNumber(5, 10);
+        generateUniqueNumber.generateNumber(10, 25);
         break;
       }
       case 1: {
-        operand1 = this.generateNumber(1, 5);
-        operand2 = this.generateNumber(1, 5);
-        operand3 = this.generateNumber(1, 5);
-        operand4 = this.generateNumber(5, 10);
-        operand5 = this.generateNumber(10, 15);
-        operand6 = this.generateNumber(10, 25);
+        generateUniqueNumber.generateNumber(1, 5);
+        generateUniqueNumber.generateNumber(1, 5);
+        generateUniqueNumber.generateNumber(1, 5);
+        generateUniqueNumber.generateNumber(5, 10);
+        generateUniqueNumber.generateNumber(10, 15);
+        generateUniqueNumber.generateNumber(10, 25);
         break;
       }
       case 2: {
-        operand1 = this.generateNumber(1, 5);
-        operand2 = this.generateNumber(1, 5);
-        operand3 = this.generateNumber(5, 10);
-        operand4 = this.generateNumber(5, 15);
-        operand5 = this.generateNumber(10, 20);
-        operand6 = this.generateNumber(10, 25);
+        generateUniqueNumber.generateNumber(1, 5);
+        generateUniqueNumber.generateNumber(1, 5);
+        generateUniqueNumber.generateNumber(5, 10);
+        generateUniqueNumber.generateNumber(5, 15);
+        generateUniqueNumber.generateNumber(10, 20);
+        generateUniqueNumber.generateNumber(10, 25);
         break;
       }
       case 3: {
-        operand1 = this.generateNumber(1, 5);
-        operand2 = this.generateNumber(5, 10);
-        operand3 = this.generateNumber(5, 15);
-        operand4 = this.generateNumber(10, 15);
-        operand5 = this.generateNumber(10, 20);
-        operand6 = this.generateNumber(10, 25);
+        generateUniqueNumber.generateNumber(1, 5);
+        generateUniqueNumber.generateNumber(5, 10);
+        generateUniqueNumber.generateNumber(5, 15);
+        generateUniqueNumber.generateNumber(10, 15);
+        generateUniqueNumber.generateNumber(10, 20);
+        generateUniqueNumber.generateNumber(10, 25);
         break;
       }
       case 4: {
-        operand1 = this.generateNumber(1, 10);
-        operand2 = this.generateNumber(5, 10);
-        operand3 = this.generateNumber(5, 15);
-        operand4 = this.generateNumber(10, 15);
-        operand5 = this.generateNumber(10, 25);
-        operand6 = this.generateNumber(10, 25);
+        generateUniqueNumber.generateNumber(1, 10);
+        generateUniqueNumber.generateNumber(5, 10);
+        generateUniqueNumber.generateNumber(5, 15);
+        generateUniqueNumber.generateNumber(10, 15);
+        generateUniqueNumber.generateNumber(10, 25);
+        generateUniqueNumber.generateNumber(10, 25);
         break;
       }
     }
+    let generatedNumbers = generateUniqueNumber.getGeneratedNumbers();
+    generatedNumbers = generatedNumbers.sort((a: number, b: number) =>{
+        return a - b;
+    });
     let originalOperands = new Array<number>(
-      operand1,
-      operand2,
-      operand3,
-      operand4,
-      operand5,
-      operand6
+        generatedNumbers[0],
+        generatedNumbers[1],
+        generatedNumbers[2],
+        generatedNumbers[3],
+        generatedNumbers[4],
+        generatedNumbers[5]
     );
     this.operands = new Array<number>(
-      operand1,
-      operand2,
-      operand3,
-      operand4,
-      operand5,
-      operand6
+        generatedNumbers[0],
+        generatedNumbers[1],
+        generatedNumbers[2],
+        generatedNumbers[3],
+        generatedNumbers[4],
+        generatedNumbers[5]
     );
+    generateUniqueNumber.clearGeneratedNumbers();
+
     let stageResult = this.calculateResult(this.operands);
     let result = new GameParameters();
     result.result = stageResult;
@@ -229,6 +232,9 @@ export class GenerateGameParameters {
       let gameParameter = this.generateGameParameter(ix);
       result.push(gameParameter);
     }
+    result = result.sort((a: IGameParameters, b: IGameParameters) => {
+      return a.result - b.result;
+    });    
     return result;
   }
 }
