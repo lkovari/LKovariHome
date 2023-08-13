@@ -83,6 +83,10 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
     });
   }
 
+  public clearHistory() {
+    this.history?.clear();
+  }
+
   removeLastOperation(): IGameParameters | undefined {
     return this.history!.pop();
   }

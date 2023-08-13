@@ -129,6 +129,7 @@ export class DigitsGameComponent implements OnInit {
     this.showSuccessMessage('You are reach the expected result!');
     alert(executedOperationsAsText);
     this.stageToCompleted(this.stageIndex === 4);
+    this.arithmeticComponent.clearHistory();
   }
 
   onInvalidOperationExecuted(value: number) {
