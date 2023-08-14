@@ -25,7 +25,7 @@
         <button type="button" class="operator-content" 
             [ngStyle]="{'background-color': operator.selected ? 'lightseagreen' : 'white' }"
             (click)="onOperatorButtonClick(operator)">
-            <label class="operator-content-icon">{{ operator.caption }}</label>
+            <label class="operator-content-icon"><mat-icon svgIcon="{{ operator.icon }}"></mat-icon></label>
         </button>
     </ng-container>
   </div>

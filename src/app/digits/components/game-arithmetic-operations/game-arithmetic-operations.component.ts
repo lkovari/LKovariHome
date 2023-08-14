@@ -15,6 +15,8 @@ import { EvaluateArythmeticOperation } from './evaluate-arythmetic-operation';
 import { IGameOperation } from '../../models/game-operation.interface';
 import { GameOperation } from '../../models/game.operation.model';
 import { DigitsConstants } from '../../digits-constants';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-game-arithmetic-operations',
@@ -27,38 +29,36 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
       selected: false,
       caption: DigitsConstants.OPERATOR_REV,
       operator: DigitsConstants.OPERATOR_REV,
-      icon: 'pi pi-history',
+      icon: 'revert',
     },
     {
       selected: false,
       caption: DigitsConstants.OPERATOR_ADD,
       operator: DigitsConstants.OPERATOR_ADD,
-      icon: 'pi pi-plus',
+      icon: 'addition',
     },
     {
       selected: false,
       caption: DigitsConstants.OPERATOR_SUB,
       operator: DigitsConstants.OPERATOR_SUB,
-      icon: 'pi pi-minus',
+      icon: 'substraction',
     },
     {
       selected: false,
       caption: DigitsConstants.OPERATOR_MUL,
       operator: DigitsConstants.OPERATOR_MUL,
-      icon: 'pi pi-times',
+      icon: 'multiplication',
     },
     {
       selected: false,
       caption: DigitsConstants.OPERATOR_DIV,
       operator: DigitsConstants.OPERATOR_DIV,
-      icon: 'pi pi-times',
+      icon: 'division',
     }
   );
 
   @Input() gameParameters: IGameParameters;
-  @Output() onExpectedResultReached = new EventEmitter<
-    IStack<IGameOperation>
-  >();
+  @Output() onExpectedResultReached = new EventEmitter<IStack<IGameOperation>>();
   @Output() onInvalidOperationExecuted = new EventEmitter<number>();
 
   private history: IStack<IGameParameters> | undefined;
@@ -67,6 +67,13 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
   private selectedOperandA: IGameOperand | null;
   private selectedOperandB: IGameOperand | null;
 
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    iconRegistry.addSvgIcon('revert',  sanitizer.bypassSecurityTrustResourceUrl('assets/icons/rotate-left-solid.svg'));
+    iconRegistry.addSvgIcon('addition',  sanitizer.bypassSecurityTrustResourceUrl('assets/icons/plus-solid.svg'));
+    iconRegistry.addSvgIcon('substraction',  sanitizer.bypassSecurityTrustResourceUrl('assets/icons/minus-solid.svg'));
+    iconRegistry.addSvgIcon('multiplication',  sanitizer.bypassSecurityTrustResourceUrl('assets/icons/xmark-solid.svg'));
+    iconRegistry.addSvgIcon('division',  sanitizer.bypassSecurityTrustResourceUrl('assets/icons/divide-solid.svg'));
+  }
   private getSelectedOperator(): IGameOperator | undefined {
     return this.operators.find((o) => o.selected);
   }
@@ -198,10 +205,8 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
   }
 
   onOperatorButtonClick(operator: IGameOperator) {
-    if (
-      !this.selectedOperandA &&
-      operator.operator !== DigitsConstants.OPERATOR_REV
-    ) {
+    if (!this.selectedOperandA && operator.operator !== DigitsConstants.OPERATOR_REV) {
+      operator.selected = false;
       return;
     }
     operator.selected = !operator.selected;

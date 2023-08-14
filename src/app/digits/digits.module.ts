@@ -9,6 +9,7 @@ import { StageLevelComponent } from './components/stage-level/stage-level.compon
 import { GameArithmeticOperationsComponent } from './components/game-arithmetic-operations/game-arithmetic-operations.component';
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MessagesModule } from 'primeng/messages';
     ToastModule,
     MessagesModule,
     DigitsRoutingModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatIconModule
   ]
 })
 export class DigitsModule { }
