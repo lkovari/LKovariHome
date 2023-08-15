@@ -31,6 +31,7 @@
     "bootstrap": "^5.2.3",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.21",
+    "ngx-cookie-service": "^16.0.0",
     "primeicons": "^6.0.1",
     "primeng": "^16.0.0-rc.1",
     "rxjs": "~7.8.1",

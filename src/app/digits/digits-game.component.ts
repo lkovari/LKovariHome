@@ -6,28 +6,30 @@ import { IGameOperation } from './models/game-operation.interface';
 import { MessageService } from 'primeng/api';
 import { GameArithmeticOperationsComponent } from './components/game-arithmetic-operations/game-arithmetic-operations.component';
 import { GenerateGameParameters } from './generate-game-parameters';
+import { CookieData } from './models/cookie-data.model';
+import { ICookieData } from './models/cookie-data.interface';
+import { CookieService } from 'ngx-cookie-service';
 
 /*
   Known bugs:
   
   ToDo
   - collect all operations to a separated list to show the result which will be share
-  - store somewhere based on the current date the state of the game to easily able to continue the user
   - fine tuning of generating random numbers for different stages
   - share the final result
 
   Optional
-  - consider the lodash deep copy usage
+  - consider the lodash deep copy usage or use the JSON.parse(JSON.stringify(data)) to clone object
 */
 @Component({
   selector: 'app-digits-game',
   templateUrl: './digits-game.component.html',
   styleUrls: ['./digits-game.component.scss'],
-  providers: [MessageService],
+  providers: [MessageService, CookieService],
 })
 export class DigitsGameComponent implements OnInit {
-  @ViewChild('arithmeticOperations', { static: true })
-  arithmeticComponent: GameArithmeticOperationsComponent;
+  @ViewChild('arithmeticOperations', { static: true }) arithmeticComponent: GameArithmeticOperationsComponent;
+  readonly COOKIE_LK_DIGITS = 'CookieLKNumbers';
   private readonly LAST_STAGE = 4;
   private generateGameParameters: GenerateGameParameters;
   currentDate = new Date();
@@ -35,8 +37,10 @@ export class DigitsGameComponent implements OnInit {
   stageLevels: IStageLevel[] = [];
   gameParameters: IGameParameters[] = [];
   stageIndex: number = 0;
+  cookieData: ICookieData;
 
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService,
+    private cookieService: CookieService) {}
 
   private initializeStageLevels() {
     this.stageLevels = new Array<IStageLevel>(
@@ -48,52 +52,6 @@ export class DigitsGameComponent implements OnInit {
     );
   }
 
-  /*
-  private generateRandomGameParameters(): IGameParameters[] {
-    return new Array<IGameParameters>( 
-      { result: 96, operands: new Array<IGameOperand>( 
-        { selected: false, disabled: false, value: 1 },
-        { selected: false, disabled: false,value: 2 },
-        { selected: false, disabled: false,value: 3 },
-        { selected: false, disabled: false,value: 5 },
-        { selected: false, disabled: false,value: 10 },
-        { selected: false, disabled: false,value: 25 }
-      ) },
-      { result: 161, operands: new Array<IGameOperand>( 
-        { selected: false, disabled: false, value: 2 },
-        { selected: false, disabled: false,value: 5 },
-        { selected: false, disabled: false,value: 9 },
-        { selected: false, disabled: false,value: 10 },
-        { selected: false, disabled: false,value: 11 },
-        { selected: false, disabled: false,value: 25 }
-      ) },
-      { result: 275, operands: new Array<IGameOperand>( 
-        { selected: false, disabled: false, value: 3 },
-        { selected: false, disabled: false,value: 5 },
-        { selected: false, disabled: false,value: 8 },
-        { selected: false, disabled: false,value: 15 },
-        { selected: false, disabled: false,value: 20 },
-        { selected: false, disabled: false,value: 25 }
-      ) },
-      { result: 355, operands: new Array<IGameOperand>( 
-        { selected: false, disabled: false, value: 3 },
-        { selected: false, disabled: false,value: 5 },
-        { selected: false, disabled: false,value: 8 },
-        { selected: false, disabled: false,value: 9 },
-        { selected: false, disabled: false,value: 15 },
-        { selected: false, disabled: false,value: 20 }
-      ) },
-      { result: 404, operands: new Array<IGameOperand>( 
-        { selected: false, disabled: false, value: 9 },
-        { selected: false, disabled: false,value: 11 },
-        { selected: false, disabled: false,value: 19 },
-        { selected: false, disabled: false,value: 20 },
-        { selected: false, disabled: false,value: 23 },
-        { selected: false, disabled: false,value: 25 }
-      ) }                        
-    );
-  }
-  */
   private stageToCompleted(lastPage: boolean) {
     this.stageLevels[this.stageIndex].completed = true;
     this.stageLevels[this.stageIndex].selected = false;
@@ -102,11 +60,7 @@ export class DigitsGameComponent implements OnInit {
       this.stageLevels[this.stageIndex].selected = true;
     }
   }
-  /*
-  private initializeGameParameters() {
-    this.gameParameters = this.generateRandomGameParameters();
-  }
-  */
+
   private formatOperations(executedOperations: IStack<IGameOperation>): string {
     let result = 'Completed! Executed Operations:\n';
     let ix = executedOperations.size();
@@ -152,17 +106,52 @@ export class DigitsGameComponent implements OnInit {
     });
   }
 
+  private storeGameState() {
+    let cookieData = new CookieData();
+    let currentDate = new Date();
+    cookieData.storeDate = currentDate.toLocaleDateString();
+    cookieData.stageIndex = this.stageIndex;
+    cookieData.stageLevels = this.stageLevels;
+    cookieData.gameParameters = this.gameParameters;
+    let cookieDataAsText = cookieData.cookieData2Text();
+    this.cookieService.set(this.COOKIE_LK_DIGITS, cookieDataAsText);
+  }
+
+  private restoreGameState(): ICookieData | null {
+    let cookie = this.cookieService.get(this.COOKIE_LK_DIGITS);
+    let cookieData: CookieData | null;
+    if (!cookie || cookie == "") {
+      console.log("Unable to retrieve the Game State");
+      cookieData = null;
+    } else {
+      cookieData = new CookieData();
+      cookieData = cookieData.text2CookieData(cookie);
+    }
+    return cookieData;
+  }
+
   ngOnInit(): void {
     alert(
       `This "Numbers" game is under construction it\'s a prototype only!
-        -todo:end of the game should implement sharing
-        -todo:save the state of the game into cookie to easily continue, end of cookie at midnight
-        -todo:the game parameter generation algorythm generate too big numbers as result`
+        -todo:end of the game should implement sharing`
     );
     this.initializeStageLevels();
     this.generateGameParameters = new GenerateGameParameters();
     this.gameParameters = this.generateGameParameters.generateStageNumbers();
     this.setupStages();
+
+    let gameState = this.restoreGameState();
+    if (!gameState) {
+      this.storeGameState();
+    } else {
+      this.stageIndex = gameState.stageIndex;
+      let currentDateAsText = new Date().toLocaleDateString();
+      if (currentDateAsText === gameState.storeDate) {
+        this.stageIndex = gameState.stageIndex;
+        this.stageLevels = gameState.stageLevels;
+        this.gameParameters = gameState.gameParameters;
+      }
+    }
   }
 
   onExpectedResultReached(executedOperations: IStack<IGameOperation>) {
@@ -170,6 +159,7 @@ export class DigitsGameComponent implements OnInit {
     this.showSuccessMessage('You are reach the expected result!');
     alert(executedOperationsAsText);
     this.stageToCompleted(this.stageIndex === this.LAST_STAGE);
+    this.storeGameState();
     this.arithmeticComponent.clearHistory();
   }
 
@@ -177,5 +167,9 @@ export class DigitsGameComponent implements OnInit {
     this.showErrorMessage('Invalid Operation Executed!');
     this.arithmeticComponent.revertLastOperation();
     console.log(value);
+  }
+
+  onDeleteCookie() {
+    this.cookieService.deleteAll();
   }
 }
