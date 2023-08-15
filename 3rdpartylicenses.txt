@@ -656,6 +656,9 @@ THE SOFTWARE.
 font-awesome
 (OFL-1.1 AND MIT)
 
+ngx-cookie-service
+MIT
+
 primeicons
 MIT
 MIT License
