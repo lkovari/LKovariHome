@@ -656,7 +656,13 @@ THE SOFTWARE.
 font-awesome
 (OFL-1.1 AND MIT)
 
+ngx-clipboard
+MIT
+
 ngx-cookie-service
+MIT
+
+ngx-window-token
 MIT
 
 primeicons
