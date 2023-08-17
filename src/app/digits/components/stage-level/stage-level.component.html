@@ -2,7 +2,7 @@
     <div [ngClass]="{ 'stage-level-number-unselected':!stageLevel.selected, 'stage-level-number-selected':stageLevel.selected}" 
     style="text-align: center;">
     <div *ngIf="stageLevel.completed; else NOT_COMPLETED">
-        <span class="stage-level-completed">
+        <span class="stage-level-completed-value">
             {{ stageLevel.value }}
         </span>
     </div>

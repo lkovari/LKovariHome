@@ -1,13 +1,21 @@
 .game-arithmetic-operations-layout {
   padding-left: 0px;
-  margin: 2rem 1rem 1rem 1rem;
+  margin: 0 1rem 1rem 1rem;
   text-align: center;
+  .usage-instruction {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 13px;
+    font-family: "Roboto";
+    letter-spacing: 0.02em;   
+    padding-bottom: 20px;
+  }
   .expected-result {
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
     font-size: 55px;
     font-weight: 500;
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
   }
   .operands-container {
     font-family: Arial, Helvetica, sans-serif;
@@ -23,7 +31,7 @@
       .operand {
         width: 90px;
         height: 90px;
-        border: 4px dashed black;
+        border: 4px dashed blue;
         border-radius: 50%;
         padding: 32px 26px 26px 20px;
         margin: 3px;
@@ -46,15 +54,14 @@
     flex: 0 1 auto;
     align-self: auto;
     font-size: 55px;
-    width: 64px;
-    height: 64px;
-    border: 4px solid black;
+    width: 57px;
+    height: 57px;
+    border: 4px solid #6b6b6b;
     border-radius: 50%;
     margin: 3px 3px 3px 3px;
     padding: 3px 0px 0px 0px;
     text-align: center;
     color: blue;
-    background-color: black;
   }
   .operator-content-icon {
     font-size: 45px;

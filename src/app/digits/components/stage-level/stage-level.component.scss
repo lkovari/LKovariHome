@@ -14,10 +14,15 @@
         color: blue;
     }
     .stage-level-asterisk-selected {
-        color: darkblue;
+        color: #ec09eb
     }
     .stage-level-completed {
         color: green;
         opacity: 0.5;
+    }
+    .stage-level-completed-value {
+        @extend .stage-level-completed;
+        font-weight: 500;
+        color: black;
     }
 }

@@ -9,14 +9,12 @@ import { GenerateGameParameters } from './generate-game-parameters';
 import { CookieData } from './models/cookie-data.model';
 import { ICookieData } from './models/cookie-data.interface';
 import { CookieService } from 'ngx-cookie-service';
-
+import { Clipboard } from '@angular/cdk/clipboard'
 /*
   Known bugs:
   
   ToDo
-  - collect all operations to a separated list to show the result which will be share and put into cookie storage
-  - fine tuning of generating random numbers for different stages
-  - share the final result
+  - share copy to clipboard does not works.
 
   Optional
   - consider the lodash deep copy usage or use the JSON.parse(JSON.stringify(data)) to clone object
@@ -40,7 +38,8 @@ export class DigitsGameComponent implements OnInit {
   cookieData: ICookieData;
 
   constructor(private messageService: MessageService,
-    private cookieService: CookieService) {}
+    private cookieService: CookieService,
+    private clipboard: Clipboard) {}
 
   private initializeStageLevels() {
     this.stageLevels = new Array<IStageLevel>(
@@ -151,7 +150,7 @@ export class DigitsGameComponent implements OnInit {
   ngOnInit(): void {
     alert(
       `This "Numbers" game is under construction it\'s a prototype only!
-        -todo:end of the game should implement sharing`
+        -known bug: sharing (copy to clipboard) does not works`
     );
     this.initializeStageLevels();
     this.generateGameParameters = new GenerateGameParameters();
@@ -162,12 +161,9 @@ export class DigitsGameComponent implements OnInit {
     if (!gameState) {
       this.storeGameState();
     } else {
-      //let currentDateAsText = new Date().toLocaleDateString();
-      //if (currentDateAsText === gameState.storeDate) {
-        this.stageIndex = gameState.stageIndex;
-        this.stageLevels = gameState.stageLevels;
-        this.gameParameters = gameState.gameParameters;
-      //}
+      this.stageIndex = gameState.stageIndex;
+      this.stageLevels = gameState.stageLevels;
+      this.gameParameters = gameState.gameParameters;
     }
   }
 
@@ -177,8 +173,17 @@ export class DigitsGameComponent implements OnInit {
     this.stageLevels[this.stageIndex].summary = stageSummary;
     this.showSuccessMessage('You are reach the expected result!');
     alert(executedOperationsAsText);
+    this.clipboard.copy(executedOperationsAsText);
     this.stageToCompleted(this.stageIndex === this.LAST_STAGE);
     this.storeGameState();
+    if (this.stageIndex === this.LAST_STAGE) {
+      let allStageSummary = "Genius!\n";
+      this.stageLevels.forEach(stage => {
+        allStageSummary += stage.summary;
+      });
+      this.clipboard.copy(allStageSummary);
+      alert(allStageSummary);
+    }
     this.arithmeticComponent.clearHistory();
   }
 

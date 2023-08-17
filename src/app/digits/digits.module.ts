@@ -10,6 +10,7 @@ import { GameArithmeticOperationsComponent } from './components/game-arithmetic-
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { MatIconModule } from '@angular/material/icon';
+import { ClipboardModule } from '@angular/cdk/clipboard'
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MatIconModule } from '@angular/material/icon';
     MessagesModule,
     DigitsRoutingModule,
     FlexLayoutModule,
-    MatIconModule
+    MatIconModule,
+    ClipboardModule
   ]
 })
 export class DigitsModule { }

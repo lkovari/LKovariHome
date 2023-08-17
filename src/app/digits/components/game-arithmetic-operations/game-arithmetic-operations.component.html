@@ -1,4 +1,5 @@
 <div class="game-arithmetic-operations-layout">
+  <div class="usage-instruction">Use the any combination of number to reach the target:</div>
   <div>
     <label class="expected-result">{{ gameParameters.result }}</label>
   </div>
@@ -6,7 +7,7 @@
     <div class="three-operands">
       <ng-container *ngFor="let operand of gameParameters.operands; let ix = index">
         <button type="button" *ngIf="ix < 3" class="operand" [disabled]="operand.disabled"
-            [ngStyle]="{'background-color': operand.selected ? 'cadetblue' : 'white' }"
+            [ngStyle]="{'background-color': operand.selected ? '#3b82f640' : 'white' }"
             (click)="onOperandButtonClick(operand)">{{ operand.value }}
         </button>
       </ng-container>
@@ -14,7 +15,7 @@
     <div class="three-operands">
       <ng-container *ngFor="let operand of gameParameters.operands; let ix = index">
         <button type="button" *ngIf="ix > 2" class="operand" [disabled]="operand.disabled"
-            [ngStyle]="{'background-color': operand.selected ? 'cadetblue' : 'white' }"
+            [ngStyle]="{'background-color': operand.selected ? '#3b82f640' : 'white' }"
             (click)="onOperandButtonClick(operand)">{{ operand.value }}
         </button>
       </ng-container>
