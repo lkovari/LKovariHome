@@ -139,8 +139,8 @@ export class DigitsGameComponent implements OnInit {
 
   ngOnInit(): void {
     alert(
-      `This "Numbers" game is under construction it\'s a prototype only!
-        -known bug: sharing (copy to clipboard) does not works`
+      `This "Numbers" game is a prototype only!
+        -currently no known bugs, I open for any feedback!`
     );
     this.initializeStageLevels();
     this.generateGameParameters = new GenerateGameParameters();
@@ -151,7 +151,7 @@ export class DigitsGameComponent implements OnInit {
     if (!gameState) {
       this.storeGameState();
     } else {
-      this.stageIndex = 3;//gameState.stageIndex;
+      this.stageIndex = gameState.stageIndex;
       this.stageLevels = gameState.stageLevels;
       this.gameParameters = gameState.gameParameters;
     }
