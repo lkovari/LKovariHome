@@ -5,11 +5,13 @@ export class StageLevel implements IStageLevel {
     index: number;
     value: number;
     completed: boolean;
+    summary: string;
 
-    constructor(selected: boolean, index: number, value: number, completed: boolean) {
+    constructor(selected: boolean, index: number, value: number, completed: boolean, summary: string) {
         this.selected = selected;
         this.index = index;
         this.value = value;
         this.completed = completed;
+        this,this.summary = summary;
     }    
 }

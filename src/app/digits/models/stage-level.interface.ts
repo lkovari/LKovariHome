@@ -3,4 +3,5 @@ export interface IStageLevel {
     index: number;
     value: number;
     completed: boolean;
+    summary: string;
 }

@@ -6,6 +6,9 @@ export class Stack<T> implements IStack<T> {
     constructor(private capacity: number = Infinity) {
         // Nothing to do    
     }
+    peekBy(itemIndex: number): T | undefined {
+        return this.itemStorage[itemIndex];
+    }
     
     clear(): void {
         this.itemStorage.splice(0, this.itemStorage.length);
@@ -27,6 +30,7 @@ export class Stack<T> implements IStack<T> {
     peek(): T | undefined {
         return this.itemStorage[this.size() - 1];
     }
+
 
     size(): number {
         return this.itemStorage.length;    

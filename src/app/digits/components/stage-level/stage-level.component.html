@@ -11,13 +11,13 @@
     </ng-template>
     </div>
     <div>
-        <div *ngIf="stageLevel.selected; else STAGE_LEVEL_NOT_SELECTED" style="text-align: center; display: flex;">
+        <div *ngIf="stageLevel.selected; else STAGE_LEVEL_NOT_SELECTED" style="display: flex; justify-content: center;">
             <span class="stage-level-asterisk-selected" *ngFor="let star of stars">
                 <i class="pi pi-star-fill" style="font-size: 10px"></i>
             </span>
         </div>
         <ng-template #STAGE_LEVEL_NOT_SELECTED>
-            <div style="text-align: center; display: flex;">
+            <div style="display: flex; justify-content: center;">
                 <div *ngIf="stageLevel.completed; else NOT_COMPLETED">
                     <span class="stage-level-asterisk-unselected stage-level-completed" *ngFor="let star of stars">
                         <i class="pi pi-star-fill" style="font-size: 10px"></i>

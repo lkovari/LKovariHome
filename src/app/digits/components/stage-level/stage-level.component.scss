@@ -1,10 +1,10 @@
 .stage-level-layout {
     .stage-level-font {
-        font-size: 11px;
+        font-size: 17px;
     }
     .stage-level-number-unselected {
         @extend .stage-level-font;
-        font-weight: 300;
+        font-weight: 400;
     }
     .stage-level-number-selected {
         @extend .stage-level-font;

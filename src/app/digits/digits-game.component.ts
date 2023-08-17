@@ -14,7 +14,7 @@ import { CookieService } from 'ngx-cookie-service';
   Known bugs:
   
   ToDo
-  - collect all operations to a separated list to show the result which will be share
+  - collect all operations to a separated list to show the result which will be share and put into cookie storage
   - fine tuning of generating random numbers for different stages
   - share the final result
 
@@ -44,11 +44,11 @@ export class DigitsGameComponent implements OnInit {
 
   private initializeStageLevels() {
     this.stageLevels = new Array<IStageLevel>(
-      { selected: true, index: 0, value: 96, completed: false },
-      { selected: false, index: 1, value: 161, completed: false },
-      { selected: false, index: 2, value: 275, completed: false },
-      { selected: false, index: 3, value: 355, completed: false },
-      { selected: false, index: 4, value: 404, completed: false }
+      { selected: true, index: 0, value: 96, completed: false, summary: "" },
+      { selected: false, index: 1, value: 161, completed: false, summary: ""  },
+      { selected: false, index: 2, value: 275, completed: false, summary: ""  },
+      { selected: false, index: 3, value: 355, completed: false, summary: ""  },
+      { selected: false, index: 4, value: 404, completed: false, summary: ""  }
     );
   }
 
@@ -63,11 +63,11 @@ export class DigitsGameComponent implements OnInit {
 
   private formatOperations(executedOperations: IStack<IGameOperation>): string {
     let result = 'Completed! Executed Operations:\n';
-    let ix = executedOperations.size();
-    while (executedOperations.size() > 0) {
-      const gameOperation = executedOperations.pop();
+    let ix = executedOperations.size() - 1;
+    while (ix >= 0) {
+      const gameOperation = executedOperations.peekBy(ix);
       result +=
-        ix +
+        (ix + 1) +
         '. ' +
         gameOperation?.operands[0] +
         ' ' +
@@ -79,6 +79,16 @@ export class DigitsGameComponent implements OnInit {
         '\n';
       --ix;
     }
+    return result;
+  }
+
+  private createSummaryOfTHeOperations(stageIndex: number, executedOperations: IStack<IGameOperation>): string {
+    let result = this.stageLevels[stageIndex].value + ' -> '
+    while (executedOperations.size() > 0) {
+      const gameOperation = executedOperations.pop();
+      result += '' + gameOperation?.operator;
+    }
+    result += '\n';
     return result;
   }
 
@@ -114,7 +124,15 @@ export class DigitsGameComponent implements OnInit {
     cookieData.stageLevels = this.stageLevels;
     cookieData.gameParameters = this.gameParameters;
     let cookieDataAsText = cookieData.cookieData2Text();
-    this.cookieService.set(this.COOKIE_LK_DIGITS, cookieDataAsText);
+    let expires = new Date();
+    //expires.setDate(expires.getDate() + 1); // nex day
+    expires.setHours(23,59,59,999); // midnight
+    //expires.setMinutes(expires.getMinutes() + 1);
+    //const path = "/LKovariHome/#/digits/digits-game";
+    //const domain = "https://lkovari.github.io/";
+    //let domain = window.location.hostname;
+    //console.log(domain + " " + path);
+    this.cookieService.set(this.COOKIE_LK_DIGITS, cookieDataAsText, expires);
   }
 
   private restoreGameState(): ICookieData | null {
@@ -144,18 +162,19 @@ export class DigitsGameComponent implements OnInit {
     if (!gameState) {
       this.storeGameState();
     } else {
-      this.stageIndex = gameState.stageIndex;
-      let currentDateAsText = new Date().toLocaleDateString();
-      if (currentDateAsText === gameState.storeDate) {
+      //let currentDateAsText = new Date().toLocaleDateString();
+      //if (currentDateAsText === gameState.storeDate) {
         this.stageIndex = gameState.stageIndex;
         this.stageLevels = gameState.stageLevels;
         this.gameParameters = gameState.gameParameters;
-      }
+      //}
     }
   }
 
   onExpectedResultReached(executedOperations: IStack<IGameOperation>) {
     const executedOperationsAsText = this.formatOperations(executedOperations);
+    const stageSummary = this.createSummaryOfTHeOperations(this.stageIndex, executedOperations);
+    this.stageLevels[this.stageIndex].summary = stageSummary;
     this.showSuccessMessage('You are reach the expected result!');
     alert(executedOperationsAsText);
     this.stageToCompleted(this.stageIndex === this.LAST_STAGE);
