@@ -10,7 +10,7 @@ import { GameArithmeticOperationsComponent } from './components/game-arithmetic-
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { MatIconModule } from '@angular/material/icon';
-import { ClipboardModule } from '@angular/cdk/clipboard'
+import { ClipboardModule } from 'ngx-clipboard';
 
 @NgModule({
   declarations: [

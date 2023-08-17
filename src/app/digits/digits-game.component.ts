@@ -9,7 +9,8 @@ import { GenerateGameParameters } from './generate-game-parameters';
 import { CookieData } from './models/cookie-data.model';
 import { ICookieData } from './models/cookie-data.interface';
 import { CookieService } from 'ngx-cookie-service';
-import { Clipboard } from '@angular/cdk/clipboard'
+import { ClipboardService } from 'ngx-clipboard';
+
 /*
   Known bugs:
   
@@ -28,7 +29,6 @@ import { Clipboard } from '@angular/cdk/clipboard'
 export class DigitsGameComponent implements OnInit {
   @ViewChild('arithmeticOperations', { static: true }) arithmeticComponent: GameArithmeticOperationsComponent;
   readonly COOKIE_LK_DIGITS = 'CookieLKNumbers';
-  private readonly LAST_STAGE = 4;
   private generateGameParameters: GenerateGameParameters;
   currentDate = new Date();
 
@@ -39,7 +39,7 @@ export class DigitsGameComponent implements OnInit {
 
   constructor(private messageService: MessageService,
     private cookieService: CookieService,
-    private clipboard: Clipboard) {}
+    private clipboardService: ClipboardService) {}
 
   private initializeStageLevels() {
     this.stageLevels = new Array<IStageLevel>(
@@ -51,13 +51,9 @@ export class DigitsGameComponent implements OnInit {
     );
   }
 
-  private stageToCompleted(lastPage: boolean) {
+  private stageToCompleted() {
     this.stageLevels[this.stageIndex].completed = true;
     this.stageLevels[this.stageIndex].selected = false;
-    if (!lastPage) {
-      this.stageIndex++;
-      this.stageLevels[this.stageIndex].selected = true;
-    }
   }
 
   private formatOperations(executedOperations: IStack<IGameOperation>): string {
@@ -124,13 +120,7 @@ export class DigitsGameComponent implements OnInit {
     cookieData.gameParameters = this.gameParameters;
     let cookieDataAsText = cookieData.cookieData2Text();
     let expires = new Date();
-    //expires.setDate(expires.getDate() + 1); // nex day
     expires.setHours(23,59,59,999); // midnight
-    //expires.setMinutes(expires.getMinutes() + 1);
-    //const path = "/LKovariHome/#/digits/digits-game";
-    //const domain = "https://lkovari.github.io/";
-    //let domain = window.location.hostname;
-    //console.log(domain + " " + path);
     this.cookieService.set(this.COOKIE_LK_DIGITS, cookieDataAsText, expires);
   }
 
@@ -161,7 +151,7 @@ export class DigitsGameComponent implements OnInit {
     if (!gameState) {
       this.storeGameState();
     } else {
-      this.stageIndex = gameState.stageIndex;
+      this.stageIndex = 3;//gameState.stageIndex;
       this.stageLevels = gameState.stageLevels;
       this.gameParameters = gameState.gameParameters;
     }
@@ -173,17 +163,22 @@ export class DigitsGameComponent implements OnInit {
     this.stageLevels[this.stageIndex].summary = stageSummary;
     this.showSuccessMessage('You are reach the expected result!');
     alert(executedOperationsAsText);
-    this.clipboard.copy(executedOperationsAsText);
-    this.stageToCompleted(this.stageIndex === this.LAST_STAGE);
-    this.storeGameState();
-    if (this.stageIndex === this.LAST_STAGE) {
+    this.clipboardService.copy(executedOperationsAsText);
+    this.stageToCompleted();
+    let isItTheLastPage = this.stageIndex === this.stageLevels.length - 1;
+    if (isItTheLastPage) {
       let allStageSummary = "Genius!\n";
       this.stageLevels.forEach(stage => {
         allStageSummary += stage.summary;
       });
-      this.clipboard.copy(allStageSummary);
+      this.clipboardService.copy(allStageSummary);
       alert(allStageSummary);
     }
+    if (!isItTheLastPage) {
+      this.stageIndex++;
+      this.stageLevels[this.stageIndex].selected = true;
+    }
+    this.storeGameState();
     this.arithmeticComponent.clearHistory();
   }
 
