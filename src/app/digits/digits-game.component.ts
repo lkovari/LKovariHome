@@ -140,7 +140,7 @@ export class DigitsGameComponent implements OnInit {
   ngOnInit(): void {
     alert(
       `This "Numbers" game is a prototype only!
-        -currently no known bugs, I open for any feedback!`
+        -known bug, Error with Permissions-Policy header: Origin trial controlled feature not enabled: 'interest-cohort'`
     );
     this.initializeStageLevels();
     this.generateGameParameters = new GenerateGameParameters();
