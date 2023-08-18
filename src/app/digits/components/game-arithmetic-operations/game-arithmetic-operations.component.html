@@ -15,7 +15,7 @@
     <div class="three-operands">
       <ng-container *ngFor="let operand of gameParameters.operands; let ix = index">
         <button type="button" *ngIf="ix > 2" class="operand" [disabled]="operand.disabled"
-            [ngStyle]="{'background-color': operand.selected ? 'rgb(190 209 253 / 59%)' : 'white' }"
+            [ngStyle]="{'background-color': operand.selected ? 'rgb(190 209 253 / 59%)' : 'transparent' }"
             (click)="onOperandButtonClick(operand)">{{ operand.value }}
         </button>
       </ng-container>

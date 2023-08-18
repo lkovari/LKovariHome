@@ -12,12 +12,10 @@
         padding-left: calc(50% - 115px);
     }
     .stage-levels {
-        // max-width: calc(100vw - 85.4%);
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: center;
-        // align-content: stretch;
         align-items: center;        
         .stage-level {
             border: 1px solid #d4d4d4;
@@ -26,12 +24,5 @@
             flex: 1 1 auto;
             align-self: auto;
         }
-    }
-    .next-to-stage-levels {
-        position: absolute;
-        left: 284px;
-        width: calc(100vw - 284px);
-        height: 52px;
-        border: 1px solid #d4d4d4;
     }
 }
