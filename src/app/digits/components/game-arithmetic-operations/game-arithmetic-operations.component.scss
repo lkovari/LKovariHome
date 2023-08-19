@@ -1,7 +1,5 @@
 .game-arithmetic-operations-layout {
-  padding-left: 0px;
-  margin: 0 1rem 1rem 1rem;
-  text-align: center;
+   text-align: center;
   .usage-instruction {
     font-size: 13px;
     font-weight: 500;
@@ -29,7 +27,7 @@
         height: 90px;
         border: 4px dashed blue;
         border-radius: 50%;
-        /* padding: 32px 23px 30px 20px; */
+        padding: 32px 23px 30px 20px;
         font-size: 26px;
         font-weight: 550;
         margin: 4px 10px 4px 10px;
@@ -47,10 +45,11 @@
     justify-content: center;
     align-content: center;
     align-items: center;
+    max-width: 100%;
   }
   .operator-content {
     order: 0;
-    flex: 0 1 auto;
+    flex: 0 1 57px;
     align-self: auto;
     font-size: 55px;
     width: 57px;
