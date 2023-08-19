@@ -45,11 +45,11 @@
     justify-content: center;
     align-content: center;
     align-items: center;
-    max-width: 100%;
+    max-width: 50%;
   }
   .operator-content {
     order: 0;
-    flex: 0 1 57px;
+    flex: 0 1 auto;
     align-self: auto;
     font-size: 55px;
     width: 57px;
