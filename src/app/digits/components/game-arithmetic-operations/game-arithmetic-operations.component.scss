@@ -51,18 +51,19 @@
     flex: 0 1 auto;
     align-self: auto; 
     /* font-size: 55px; */
-    /* width: 57px !important; */
-    /* height: 57px !important; */
-    /* border: 4px solid #6b6b6b; */
+    width: 57px;
+    height: 57px;
+    border: 4px solid #6b6b6b;
     border-radius: 50%;
     /* margin: 3px 3px 3px 3px; */
     /* text-align: center; */
-    /* color: blue; */
+    color: blue;
   }
   .operator-content-icon {
     width: 30px;
     height: 30px;
     font-weight: 500;
+    vertical-align: middle;
   }
   .revert-button {
     background-color: rgb(219, 251, 221);
