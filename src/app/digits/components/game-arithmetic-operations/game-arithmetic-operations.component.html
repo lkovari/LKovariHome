@@ -23,7 +23,7 @@
   </div>
   <div class="operators-container">
     <ng-container *ngFor="let operator of operators; let ix = index">
-        <button type="button" class="operator-content " 
+        <button type="button" class="operator-content" 
           [ngClass]="ix === 0 ? 'revert-button' : 'arithmetic-operation-button'"
           (click)="onOperatorButtonClick(operator)">
           <mat-icon class="operator-content-icon" svgIcon="{{ operator.icon }}"></mat-icon>
