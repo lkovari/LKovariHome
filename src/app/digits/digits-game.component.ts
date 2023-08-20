@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject} from '@angular/core';
 import { IStageLevel } from './models/stage-level.interface';
 import { IGameParameters } from './models/game-parameters.interface';
 import { IStack } from './models/stack.interface';
@@ -10,6 +10,13 @@ import { CookieData } from './models/cookie-data.model';
 import { ICookieData } from './models/cookie-data.interface';
 import { CookieService } from 'ngx-cookie-service';
 import { ClipboardService } from 'ngx-clipboard';
+import { IPuzzleData } from './models/puzzle-data.interface';
+import { PuzzleData } from './models/puzzle-data.model';
+import { PuzzleDataStage } from './models/puzzle-data-stage.model';
+//import { Firestore, collectionData, collection, doc, setDoc, getFirestore, getDoc } from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, DocumentData} from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { IPuzzleDataStage } from './models/puzzle-data-stage.interface';
 
 /*
   Known bugs:
@@ -36,10 +43,14 @@ export class DigitsGameComponent implements OnInit {
   gameParameters: IGameParameters[] = [];
   stageIndex: number = 0;
   cookieData: ICookieData;
+  puzzleRawData$: Observable<DocumentData[]>;
+  firestore: Firestore = inject(Firestore);
+  todayPuzzleData: IPuzzleData;
 
   constructor(private messageService: MessageService,
     private cookieService: CookieService,
-    private clipboardService: ClipboardService) {}
+    private clipboardService: ClipboardService) {
+    }
 
   private initializeStageLevels() {
     this.stageLevels = new Array<IStageLevel>(
@@ -111,7 +122,7 @@ export class DigitsGameComponent implements OnInit {
     });
   }
 
-  private storeGameState() {
+  private storeGameStateToCookie() {
     let cookieData = new CookieData();
     let currentDate = new Date();
     cookieData.storeDate = currentDate.toLocaleDateString();
@@ -124,7 +135,7 @@ export class DigitsGameComponent implements OnInit {
     this.cookieService.set(this.COOKIE_LK_DIGITS, cookieDataAsText, expires);
   }
 
-  private restoreGameState(): ICookieData | null {
+  private restoreGameStateFromCookie(): ICookieData | null {
     let cookie = this.cookieService.get(this.COOKIE_LK_DIGITS);
     let cookieData: CookieData | null;
     if (!cookie || cookie == "") {
@@ -137,24 +148,145 @@ export class DigitsGameComponent implements OnInit {
     return cookieData;
   }
 
+  private mapPuzzleDataToGameParameters(puzzleData: IPuzzleData) {
+    puzzleData.stages.forEach((puzzleDataStage: IPuzzleDataStage) => {
+      let gameParameters = this.gameParameters.find((param: IGameParameters) => {
+          return param.stageIndex === puzzleDataStage.stageIndex;
+      });
+      if (gameParameters) {
+        gameParameters.result = puzzleDataStage.expectedValue;
+        let ix = 0;
+        gameParameters.operands.forEach(operand => {
+          operand.value = puzzleDataStage.operands[ix];
+          ix++;
+        });
+        // stages
+        this.initializeStageLevels();
+        let stageLevel = this.stageLevels.find(level =>{
+          return level.index === puzzleDataStage.stageIndex;
+        });
+        if (stageLevel) {
+          stageLevel.value == puzzleDataStage.expectedValue;
+        }
+      }
+    });
+  }
+
+  private mapGameParametersToPuzzleData(gameParameterValues: IGameParameters[]): IPuzzleData {
+    let puzzleData = new PuzzleData();
+    puzzleData.day = new Date();
+    puzzleData.day.setHours(23,59,59,999); // midnight
+    
+    gameParameterValues.forEach(gameParameters => {
+      let puzzleDataStage = new PuzzleDataStage();
+      puzzleDataStage.stageIndex = gameParameters.stageIndex;
+      puzzleDataStage.expectedValue = gameParameters.result;
+      let operandValues = new Array<number>();
+      gameParameters.operands.forEach(gameOperand => {
+        operandValues.push(gameOperand.value)
+      });
+      puzzleDataStage.operands = operandValues,
+      puzzleData.stages.push(puzzleDataStage);
+    });
+    return puzzleData;
+  }
+
+  private isDateSame(dateA: Date, dateB: Date): boolean {
+    return dateA.getFullYear() === dateB.getFullYear() && dateA.getMonth() === dateB.getMonth()
+    && dateA.getDate() === dateB.getDate();
+  }
+
+  /*
+  updateDoc(_id: string, _value: string) {
+    let doc = collection(this.firestore, 'puzzledata', ref => ref.where('id', '==', _id));
+    doc.snapshotChanges().pipe(
+      map(actions => actions.map(a => {                                                      
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))).subscribe((_doc: any) => {
+       let id = _doc[0].payload.doc.id; //first result of query [0]
+       getDoc(`puzzledata/${id}`).update({rating: _value});
+      })
+  }
+  */
+
   ngOnInit(): void {
+    this.initializeStageLevels();
     alert(
       `This "Numbers" game is a prototype only!
         -known bug, Error with Permissions-Policy header: Origin trial controlled feature not enabled: 'interest-cohort'`
     );
-    this.initializeStageLevels();
-    this.generateGameParameters = new GenerateGameParameters();
-    this.gameParameters = this.generateGameParameters.generateStageNumbers();
-    this.setupStages();
-
-    let gameState = this.restoreGameState();
-    if (!gameState) {
-      this.storeGameState();
+    let gameState = this.restoreGameStateFromCookie();
+    if (gameState) {
+      const cookieDate = new Date(gameState!.storeDate);
+      if (this.isDateSame(cookieDate, new Date())) {
+        this.stageIndex = gameState.stageIndex;
+        this.stageLevels = gameState.stageLevels;
+        this.gameParameters = gameState.gameParameters;
+        this.setupStages();
+        console.log("Game state restored from cookie");
+      } else {
+        this.generateGameParameters = new GenerateGameParameters();
+        this.gameParameters = this.generateGameParameters.generateStageNumbers();
+        this.storeGameStateToCookie();
+        this.setupStages();
+        let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
+        console.log("Date mismatch which restored from cookie " + puzzleData);
+        // TODO store puzzleData to DB.
+      }
     } else {
-      this.stageIndex = gameState.stageIndex;
-      this.stageLevels = gameState.stageLevels;
-      this.gameParameters = gameState.gameParameters;
-    }
+      console.log("No game state in cookie");
+      this.generateGameParameters = new GenerateGameParameters();
+      this.gameParameters = this.generateGameParameters.generateStageNumbers();
+
+      const itemCollection = collection(this.firestore, 'puzzledata');
+      this.puzzleRawData$ = collectionData(itemCollection);
+      this.puzzleRawData$.subscribe(data =>{
+        if (data && data.length > 0) {
+          const jsonString = data[0]['data'];
+          this.todayPuzzleData = JSON.parse(jsonString);
+          if (this.todayPuzzleData) {
+            console.log("Puzzle Data retrieved from DB");
+            this.todayPuzzleData.day = new Date(this.todayPuzzleData.day);
+            const today = new Date();
+            if (this.todayPuzzleData.day && this.isDateSame(this.todayPuzzleData.day, today)) {
+              console.log("Puzzle Data day date is matched, restore puzzle data to Game Parameters");
+              this.mapPuzzleDataToGameParameters(this.todayPuzzleData);
+              this.storeGameStateToCookie();
+              this.setupStages();
+            } else {
+              console.log("Puzzle Data day date is Not matched, generate new game parameters");
+              this.generateGameParameters = new GenerateGameParameters();
+              this.gameParameters = this.generateGameParameters.generateStageNumbers();
+              this.storeGameStateToCookie();
+              this.setupStages();
+              let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
+              console.log(JSON.stringify(puzzleData));
+              // TODO Store puzzle data to db.  
+            }
+          } else {
+            console.log("No Puzzle Data retrieved from DB, generate new game parameters");
+            this.generateGameParameters = new GenerateGameParameters();
+            this.gameParameters = this.generateGameParameters.generateStageNumbers();
+            this.storeGameStateToCookie();            
+            this.setupStages();
+            let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
+            console.log(JSON.stringify(puzzleData));
+            // TODO Store puzzle data to db.  
+          }
+        } else {
+          console.log("No Puzzle Data retrieved from DB, generate new game parameters");
+          this.generateGameParameters = new GenerateGameParameters();
+          this.gameParameters = this.generateGameParameters.generateStageNumbers();
+          this.storeGameStateToCookie();            
+          this.setupStages();
+          let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
+          console.log(JSON.stringify(puzzleData));
+          // TODO Store puzzle data to db.  
+        }
+      });         
+    }    
   }
 
   onExpectedResultReached(executedOperations: IStack<IGameOperation>) {
@@ -178,7 +310,7 @@ export class DigitsGameComponent implements OnInit {
       this.stageIndex++;
       this.stageLevels[this.stageIndex].selected = true;
     }
-    this.storeGameState();
+    this.storeGameStateToCookie();
     this.arithmeticComponent.clearHistory();
   }
 
@@ -190,5 +322,9 @@ export class DigitsGameComponent implements OnInit {
 
   onDeleteCookie() {
     this.cookieService.deleteAll();
+  }
+
+  onUpdatePuzzleData() {
+    console.log("Will update puzzle data");
   }
 }

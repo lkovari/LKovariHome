@@ -284,6 +284,7 @@ export class GenerateGameParameters {
     let result = new Array<IGameParameters>();
     for (let ix = 0; ix < 5; ix++) {
       let gameParameter = this.generateGameParameter(ix);
+      gameParameter.stageIndex = ix;
       result.push(gameParameter);
     }
     result = result.sort((a: IGameParameters, b: IGameParameters) => {

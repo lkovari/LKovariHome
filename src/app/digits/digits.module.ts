@@ -11,7 +11,9 @@ import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { MatIconModule } from '@angular/material/icon';
 import { ClipboardModule } from 'ngx-clipboard';
-
+import { environment } from 'src/environments/environment';
+import { provideFirebaseApp, initializeApp, getApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 @NgModule({
   declarations: [
     DigitsGameComponent,
@@ -27,7 +29,9 @@ import { ClipboardModule } from 'ngx-clipboard';
     DigitsRoutingModule,
     FlexLayoutModule,
     MatIconModule,
-    ClipboardModule
+    ClipboardModule,
+    provideFirebaseApp(() => initializeApp(environment.firebasePuzzleData)),
+    provideFirestore(() => getFirestore(getApp()))
   ]
 })
 export class DigitsModule { }
