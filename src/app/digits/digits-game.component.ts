@@ -124,8 +124,7 @@ export class DigitsGameComponent implements OnInit {
 
   private storeGameStateToCookie() {
     let cookieData = new CookieData();
-    let currentDate = new Date();
-    cookieData.storeDate = currentDate.toLocaleDateString();
+    cookieData.storeDate = new Date();
     cookieData.stageIndex = this.stageIndex;
     cookieData.stageLevels = this.stageLevels;
     cookieData.gameParameters = this.gameParameters;

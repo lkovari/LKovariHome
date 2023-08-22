@@ -3,7 +3,7 @@ import { IGameParameters } from "./game-parameters.interface";
 import { IStageLevel } from "./stage-level.interface";
 
 export class CookieData implements ICookieData {
-    storeDate: string;
+    storeDate: Date;
     stageIndex: number;
     stageLevels: IStageLevel[];
     gameParameters: IGameParameters[];
