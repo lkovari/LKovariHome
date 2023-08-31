@@ -195,10 +195,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/fire@^7.6.1":
-  version "7.6.1"
-  resolved "https://registry.npmjs.org/@angular/fire/-/fire-7.6.1.tgz"
-  integrity sha512-ThNdY6gHprBRkuBDRt9zrYd/Ybl01NWb52GaKCQDmJZhklxelyRskhFhYWeZ0WRD5yhA0WBbRBbpDdfAnMEqgA==
+"@angular/fire@^16.0.0-canary.4172abd":
+  version "16.0.0-canary.4172abd"
+  resolved "https://registry.npmjs.org/@angular/fire/-/fire-16.0.0-canary.4172abd.tgz"
+  integrity sha512-bV6+UUro+DJvRMZWMoeNUBHFVZ4NbvL0wPfqX3Lic4pbvmPHxvrgKWjseVN4ZrKehHjvu744HSaKQ6B1BuVBRg==
   dependencies:
     "@angular-devkit/schematics" "^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0"
     "@schematics/angular" "^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0"
@@ -5413,7 +5413,7 @@ find-up@^5.0.0:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
 
-firebase@^10.2.0:
+firebase@^10.0.0, firebase@^10.2.0:
   version "10.2.0"
   resolved "https://registry.npmjs.org/firebase/-/firebase-10.2.0.tgz"
   integrity sha512-pmegHB73xrZFNR02nvBxLbxM5+9Z0njimf+7uCjjEDVW7ZNdhhTgFpB0qecqpJ5uGKy6Tkavzc8LfcGkNpPgjg==
@@ -5445,7 +5445,7 @@ firebase@^10.2.0:
     "@firebase/storage-compat" "0.3.2"
     "@firebase/util" "1.9.3"
 
-firebase@^9.0.0, firebase@^9.8.0:
+firebase@^9.8.0:
   version "9.23.0"
   resolved "https://registry.npmjs.org/firebase/-/firebase-9.23.0.tgz"
   integrity sha512-/4lUVY0lUvBDIaeY1q6dUYhS8Sd18Qb9CgWkPZICUo9IXpJNCEagfNZXBBFCkMTTN5L5gx2Hjr27y21a9NzUcA==
@@ -8651,11 +8651,9 @@ run-parallel@^1.1.9:
     queue-microtask "^1.2.2"
 
 rxfire@^6.0.0:
-  version "6.0.3"
-  resolved "https://registry.npmjs.org/rxfire/-/rxfire-6.0.3.tgz"
-  integrity sha512-77nkyffHh7jgfi1YA/N9RI+kWxYpgKk6GRML1lyersvaqbJt4hkvWwk1rWib9Rb5Lr5mT+Ha45lu7nM79sJCZA==
-  dependencies:
-    tslib "^1.9.0 || ~2.1.0"
+  version "6.0.4"
+  resolved "https://registry.npmjs.org/rxfire/-/rxfire-6.0.4.tgz"
+  integrity sha512-s/1SkWLA1SIKqQl3DFKkKRYHda4z8YeGBY/v2IWsN3EqHEParKV1+WXDkxhOhra2NDlv5GB0WAbeO3QE8kPkmg==
 
 "rxjs@^6.0.0 || ^7.0.0", "rxjs@^6.0.0 || ^7.5.0", "rxjs@^6.5.3 || ^7.4.0", rxjs@^7.5.5, "rxjs@~6.6.0 || ^7.0.0", rxjs@~7.8.1, rxjs@7.8.1:
   version "7.8.1"
@@ -9489,11 +9487,6 @@ ts-node@>=10:
     make-error "^1.1.1"
     v8-compile-cache-lib "^3.0.1"
     yn "3.1.1"
-
-"tslib@^1.9.0 || ~2.1.0":
-  version "2.1.0"
-  resolved "https://registry.npmjs.org/tslib/-/tslib-2.1.0.tgz"
-  integrity sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
 
 tslib@^1.9.0:
   version "1.14.1"

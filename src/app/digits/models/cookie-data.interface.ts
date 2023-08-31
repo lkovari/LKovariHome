@@ -5,5 +5,6 @@ export interface ICookieData {
     storeDate: Date;
     stageIndex: number;
     stageLevels: IStageLevel[];
+    completed: boolean;
     gameParameters: IGameParameters[];
 }

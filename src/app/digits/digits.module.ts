@@ -12,8 +12,9 @@ import { MessagesModule } from 'primeng/messages';
 import { MatIconModule } from '@angular/material/icon';
 import { ClipboardModule } from 'ngx-clipboard';
 import { environment } from 'src/environments/environment';
-import { provideFirebaseApp, initializeApp, getApp } from '@angular/fire/app';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { NumbersFirestoreService } from './services/numbers-firestore.service';
 @NgModule({
   declarations: [
     DigitsGameComponent,
@@ -30,8 +31,9 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
     FlexLayoutModule,
     MatIconModule,
     ClipboardModule,
-    provideFirebaseApp(() => initializeApp(environment.firebasePuzzleData)),
-    provideFirestore(() => getFirestore(getApp()))
-  ]
+    AngularFireModule.initializeApp(environment.firebasePuzzleData),
+    AngularFirestoreModule,
+  ],
+  providers: [ NumbersFirestoreService ]
 })
 export class DigitsModule { }

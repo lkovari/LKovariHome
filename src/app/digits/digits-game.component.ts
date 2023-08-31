@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, inject} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { IStageLevel } from './models/stage-level.interface';
 import { IGameParameters } from './models/game-parameters.interface';
 import { IStack } from './models/stack.interface';
@@ -11,18 +11,19 @@ import { ICookieData } from './models/cookie-data.interface';
 import { CookieService } from 'ngx-cookie-service';
 import { ClipboardService } from 'ngx-clipboard';
 import { IPuzzleData } from './models/puzzle-data.interface';
+import { map } from 'rxjs';
+import { NumbersFirestoreService } from './services/numbers-firestore.service';
+import { IFirestorePuzzleData } from './models/firestore-puzzle-data.interface';
+import { IPuzzleDataStage } from './models/puzzle-data-stage.interface';
 import { PuzzleData } from './models/puzzle-data.model';
 import { PuzzleDataStage } from './models/puzzle-data-stage.model';
-//import { Firestore, collectionData, collection, doc, setDoc, getFirestore, getDoc } from '@angular/fire/firestore';
-import { Firestore, collectionData, collection, DocumentData} from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { IPuzzleDataStage } from './models/puzzle-data-stage.interface';
 
 /*
   Known bugs:
   
   ToDo
   - share copy to clipboard does not works.
+  - issue with @angular/fire is: https://stackoverflow.com/questions/74868274/issue-with-importing-angularfirestoremodule-this-type-parameter-might-need-an currently in use the version "^16.0.0-canary.4172abd"
 
   Optional
   - consider the lodash deep copy usage or use the JSON.parse(JSON.stringify(data)) to clone object
@@ -43,13 +44,17 @@ export class DigitsGameComponent implements OnInit {
   gameParameters: IGameParameters[] = [];
   stageIndex: number = 0;
   cookieData: ICookieData;
-  puzzleRawData$: Observable<DocumentData[]>;
-  firestore: Firestore = inject(Firestore);
+  //puzzleRawData$: Observable<DocumentData[]>;
+  //firestore: Firestore = inject(Firestore);
+  firestorePuzzleDataItems: IFirestorePuzzleData[];
+  firestorePuzzleData: IFirestorePuzzleData;
   todayPuzzleData: IPuzzleData;
+  todayPuzzleDataItems: IPuzzleData[] = [];
 
   constructor(private messageService: MessageService,
     private cookieService: CookieService,
-    private clipboardService: ClipboardService) {
+    private clipboardService: ClipboardService,
+    private numbersFirestoreService: NumbersFirestoreService) {
     }
 
   private initializeStageLevels() {
@@ -127,6 +132,7 @@ export class DigitsGameComponent implements OnInit {
     cookieData.storeDate = new Date();
     cookieData.stageIndex = this.stageIndex;
     cookieData.stageLevels = this.stageLevels;
+    cookieData.completed = this.stageIndex === this.stageLevels.length - 1;
     cookieData.gameParameters = this.gameParameters;
     let cookieDataAsText = cookieData.cookieData2Text();
     let expires = new Date();
@@ -146,7 +152,7 @@ export class DigitsGameComponent implements OnInit {
     }
     return cookieData;
   }
-
+  
   private mapPuzzleDataToGameParameters(puzzleData: IPuzzleData) {
     puzzleData.stages.forEach((puzzleDataStage: IPuzzleDataStage) => {
       let gameParameters = this.gameParameters.find((param: IGameParameters) => {
@@ -189,32 +195,24 @@ export class DigitsGameComponent implements OnInit {
     });
     return puzzleData;
   }
-
+  
   private isDateSame(dateA: Date, dateB: Date): boolean {
     return dateA.getFullYear() === dateB.getFullYear() && dateA.getMonth() === dateB.getMonth()
     && dateA.getDate() === dateB.getDate();
   }
 
-  /*
-  updateDoc(_id: string, _value: string) {
-    let doc = collection(this.firestore, 'puzzledata', ref => ref.where('id', '==', _id));
-    doc.snapshotChanges().pipe(
-      map(actions => actions.map(a => {                                                      
-        const data = a.payload.doc.data();
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      }))).subscribe((_doc: any) => {
-       let id = _doc[0].payload.doc.id; //first result of query [0]
-       getDoc(`puzzledata/${id}`).update({rating: _value});
-      })
+  private updatePuzzleDataInDb(puzzleData: IPuzzleData) {
+    this.firestorePuzzleData.data = JSON.stringify(puzzleData);
+    this.numbersFirestoreService.update(this.firestorePuzzleData.id!, { data: this.firestorePuzzleData.data })
+    .then(() => console.log('The Puzzle Data was updated successfully!'))
+    .catch(err => console.log(err));   
   }
-  */
 
   ngOnInit(): void {
     this.initializeStageLevels();
     alert(
       `This "Numbers" game is a prototype only!
-        -known bug, Error with Permissions-Policy header: Origin trial controlled feature not enabled: 'interest-cohort'`
+        -no known bugs, except for Origin trial controlled feature not enabled: 'interest-cohort'`
     );
     let gameState = this.restoreGameStateFromCookie();
     if (gameState) {
@@ -224,67 +222,67 @@ export class DigitsGameComponent implements OnInit {
         this.stageLevels = gameState.stageLevels;
         this.gameParameters = gameState.gameParameters;
         this.setupStages();
+        if (gameState.completed) {
+          let isItTheLastPage = this.stageIndex === this.stageLevels.length - 1;
+          if (isItTheLastPage) {
+            let allStageSummary = "Genius!\n";
+            this.stageLevels.forEach(stage => {
+              allStageSummary += stage.summary;
+            });
+            this.clipboardService.copy(allStageSummary);
+            alert(allStageSummary);       
+          }     
+          return;
+        }
         console.log("Game state restored from cookie");
       } else {
         this.generateGameParameters = new GenerateGameParameters();
         this.gameParameters = this.generateGameParameters.generateStageNumbers();
         this.storeGameStateToCookie();
         this.setupStages();
-        let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
-        console.log("Date mismatch which restored from cookie " + puzzleData);
+         let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
+         console.log("Date mismatch which restored from cookie " + puzzleData);
         // TODO store puzzleData to DB.
+        this.updatePuzzleDataInDb(puzzleData);
       }
     } else {
       console.log("No game state in cookie");
       this.generateGameParameters = new GenerateGameParameters();
       this.gameParameters = this.generateGameParameters.generateStageNumbers();
-
-      const itemCollection = collection(this.firestore, 'puzzledata');
-      this.puzzleRawData$ = collectionData(itemCollection);
-      this.puzzleRawData$.subscribe(data =>{
-        if (data && data.length > 0) {
-          const jsonString = data[0]['data'];
-          this.todayPuzzleData = JSON.parse(jsonString);
-          if (this.todayPuzzleData) {
-            console.log("Puzzle Data retrieved from DB");
-            this.todayPuzzleData.day = new Date(this.todayPuzzleData.day);
-            const today = new Date();
-            if (this.todayPuzzleData.day && this.isDateSame(this.todayPuzzleData.day, today)) {
-              console.log("Puzzle Data day date is matched, restore puzzle data to Game Parameters");
-              this.mapPuzzleDataToGameParameters(this.todayPuzzleData);
-              this.storeGameStateToCookie();
-              this.setupStages();
-            } else {
-              console.log("Puzzle Data day date is Not matched, generate new game parameters");
-              this.generateGameParameters = new GenerateGameParameters();
-              this.gameParameters = this.generateGameParameters.generateStageNumbers();
-              this.storeGameStateToCookie();
-              this.setupStages();
-              let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
-              console.log(JSON.stringify(puzzleData));
-              // TODO Store puzzle data to db.  
-            }
-          } else {
-            console.log("No Puzzle Data retrieved from DB, generate new game parameters");
-            this.generateGameParameters = new GenerateGameParameters();
-            this.gameParameters = this.generateGameParameters.generateStageNumbers();
-            this.storeGameStateToCookie();            
-            this.setupStages();
-            let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
-            console.log(JSON.stringify(puzzleData));
-            // TODO Store puzzle data to db.  
-          }
+      let locale = navigator.language;
+      this.numbersFirestoreService.getAll().snapshotChanges().pipe(
+        map(changes =>
+          changes.map(c =>
+            ({ id: c.payload.doc.id, ...c.payload.doc.data() })
+          )
+        )
+      ).subscribe(data => {
+        this.firestorePuzzleDataItems = data;
+        let localizedPuzzleData = data.filter(pd => {
+          return pd.locale === locale;
+        });
+        this.firestorePuzzleData = localizedPuzzleData[0];
+        this.todayPuzzleData = JSON.parse(this.firestorePuzzleData.data);
+        console.log("Puzzle Data retrieved from DB");
+        const today = new Date();
+        const storedDay = new Date(this.todayPuzzleData.day);
+        if (this.todayPuzzleData.day && this.isDateSame(storedDay, today)) {
+          console.log("Puzzle Data day date is matched, restore puzzle data to Game Parameters");
+          this.mapPuzzleDataToGameParameters(this.todayPuzzleData);
+          this.storeGameStateToCookie();
+          this.setupStages();
         } else {
-          console.log("No Puzzle Data retrieved from DB, generate new game parameters");
+          console.log("Puzzle Data day date is Not matched, generate new game parameters");
           this.generateGameParameters = new GenerateGameParameters();
           this.gameParameters = this.generateGameParameters.generateStageNumbers();
-          this.storeGameStateToCookie();            
+          this.storeGameStateToCookie();
           this.setupStages();
           let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
           console.log(JSON.stringify(puzzleData));
-          // TODO Store puzzle data to db.  
+          // TODO Store puzzle data to db. 
+          this.updatePuzzleDataInDb(puzzleData);
         }
-      });         
+      });      
     }    
   }
 
@@ -292,9 +290,9 @@ export class DigitsGameComponent implements OnInit {
     const executedOperationsAsText = this.formatOperations(executedOperations);
     const stageSummary = this.createSummaryOfTHeOperations(this.stageIndex, executedOperations);
     this.stageLevels[this.stageIndex].summary = stageSummary;
+    this.clipboardService.copy(executedOperationsAsText);
     this.showSuccessMessage('You are reach the expected result!');
     alert(executedOperationsAsText);
-    this.clipboardService.copy(executedOperationsAsText);
     this.stageToCompleted();
     let isItTheLastPage = this.stageIndex === this.stageLevels.length - 1;
     if (isItTheLastPage) {

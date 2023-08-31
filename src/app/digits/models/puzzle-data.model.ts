@@ -2,7 +2,8 @@ import { IPuzzleDataStage } from "./puzzle-data-stage.interface";
 import { IPuzzleData } from "./puzzle-data.interface";
 
 export class PuzzleData implements IPuzzleData {
+    id?: string;
     day: Date;
-    location: string;
+    locale: string;
     stages: IPuzzleDataStage[] = [];
 }

@@ -6,8 +6,8 @@ import * as angular from '@angular/forms';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('08/22/2023 08:39 AM');
-  lastUpdateTooltip = 'Numbers: parse date...';
+  lastUpdateDate = new Date('08/31/2023 10:57 PM');
+  lastUpdateTooltip = 'save game state to firestore DB. and restore that.';
   angularVersion: any;
 
   constructor() { }
