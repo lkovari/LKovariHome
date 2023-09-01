@@ -56,3 +56,26 @@
         width: 101vw;
     }
 }
+
+
+::ng-deep {
+    .p-dialog {
+        border: 2px solid;
+        border-radius: 25px;
+        border-color: deepskyblue;
+    }
+    .p-dialog .p-dialog-header {
+        background-color: aliceblue;
+        background-image: none;
+        border-top-right-radius: 25px;
+        border-top-left-radius: 25px;
+    }
+    .p-dialog .p-dialog-content:last-of-type {
+        background-color: aliceblue;
+        background-image: none;
+        border-bottom-right-radius: 25px;
+        border-bottom-left-radius: 25px;
+    }
+}
+
+

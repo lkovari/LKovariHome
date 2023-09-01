@@ -15,6 +15,8 @@ import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { NumbersFirestoreService } from './services/numbers-firestore.service';
+import { DialogModule } from 'primeng/dialog';
+
 @NgModule({
   declarations: [
     DigitsGameComponent,
@@ -33,6 +35,7 @@ import { NumbersFirestoreService } from './services/numbers-firestore.service';
     ClipboardModule,
     AngularFireModule.initializeApp(environment.firebasePuzzleData),
     AngularFirestoreModule,
+    DialogModule
   ],
   providers: [ NumbersFirestoreService ]
 })

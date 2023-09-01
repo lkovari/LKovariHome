@@ -44,12 +44,16 @@ export class DigitsGameComponent implements OnInit {
   gameParameters: IGameParameters[] = [];
   stageIndex: number = 0;
   cookieData: ICookieData;
-  //puzzleRawData$: Observable<DocumentData[]>;
-  //firestore: Firestore = inject(Firestore);
   firestorePuzzleDataItems: IFirestorePuzzleData[];
   firestorePuzzleData: IFirestorePuzzleData;
   todayPuzzleData: IPuzzleData;
   todayPuzzleDataItems: IPuzzleData[] = [];
+  splashVisible = false;
+  gameCompletedVisible = false;
+  splashMessage = `This "Numbers" game is a prototype only! No known bugs, except for Origin trial controlled feature not enabled: 'interest-cohort'`;
+  gameCompletedMessage = ``;
+  allGameCompletedMessage = ``;
+  allGameCompletedVisible = false;
 
   constructor(private messageService: MessageService,
     private cookieService: CookieService,
@@ -210,10 +214,12 @@ export class DigitsGameComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeStageLevels();
+    /*
     alert(
       `This "Numbers" game is a prototype only!
         -no known bugs, except for Origin trial controlled feature not enabled: 'interest-cohort'`
     );
+    */
     let gameState = this.restoreGameStateFromCookie();
     if (gameState) {
       const cookieDate = new Date(gameState!.storeDate);
@@ -230,10 +236,14 @@ export class DigitsGameComponent implements OnInit {
               allStageSummary += stage.summary;
             });
             this.clipboardService.copy(allStageSummary);
-            alert(allStageSummary);       
-          }     
-          return;
-        }
+            //alert(allStageSummary);       
+            this.allGameCompletedMessage = allStageSummary;
+            this.allGameCompletedVisible = true;
+            //return;
+          }   
+        } else {
+          this.splashVisible = true;
+        }  
         console.log("Game state restored from cookie");
       } else {
         this.generateGameParameters = new GenerateGameParameters();
@@ -286,13 +296,16 @@ export class DigitsGameComponent implements OnInit {
     }    
   }
 
+
   onExpectedResultReached(executedOperations: IStack<IGameOperation>) {
     const executedOperationsAsText = this.formatOperations(executedOperations);
     const stageSummary = this.createSummaryOfTHeOperations(this.stageIndex, executedOperations);
     this.stageLevels[this.stageIndex].summary = stageSummary;
     this.clipboardService.copy(executedOperationsAsText);
     this.showSuccessMessage('You are reach the expected result!');
-    alert(executedOperationsAsText);
+    //alert(executedOperationsAsText);
+    this.gameCompletedMessage = executedOperationsAsText;
+    this.gameCompletedVisible = true;
     this.stageToCompleted();
     let isItTheLastPage = this.stageIndex === this.stageLevels.length - 1;
     if (isItTheLastPage) {
@@ -301,7 +314,9 @@ export class DigitsGameComponent implements OnInit {
         allStageSummary += stage.summary;
       });
       this.clipboardService.copy(allStageSummary);
-      alert(allStageSummary);
+      // alert(allStageSummary);
+      this.allGameCompletedMessage = allStageSummary;
+      this.allGameCompletedVisible = true;
     }
     if (!isItTheLastPage) {
       this.stageIndex++;

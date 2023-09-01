@@ -22,3 +22,14 @@
         (onInvalidOperationExecuted)="onInvalidOperationExecuted($event)"></app-game-arithmetic-operations>
     </div>
 </div>
+<p-dialog id="splashscreen" header="Numbers Game" [(visible)]="splashVisible" [style]="{width: '80vw'}">
+    <p> {{ splashMessage }} </p>
+</p-dialog>    
+<p-dialog id="stagecompleted" header="Game Completed" [(visible)]="gameCompletedVisible" [style]="{width: '80vw'}">
+    <p> {{ gameCompletedMessage }} </p>
+</p-dialog>  
+<p-dialog id="allStagecompleted" header="Genius! All Game Completed" [(visible)]="allGameCompletedVisible" 
+    [modal]="true" [closable]="false"
+    [style]="{width: '80vw'}">
+    <p> {{ allGameCompletedMessage }} </p>
+</p-dialog>  
