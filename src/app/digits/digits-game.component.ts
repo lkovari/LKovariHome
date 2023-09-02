@@ -17,6 +17,7 @@ import { IFirestorePuzzleData } from './models/firestore-puzzle-data.interface';
 import { IPuzzleDataStage } from './models/puzzle-data-stage.interface';
 import { PuzzleData } from './models/puzzle-data.model';
 import { PuzzleDataStage } from './models/puzzle-data-stage.model';
+import { FirestorePuzzleData } from './models/firestore-puzzle-data.model';
 
 /*
   Known bugs:
@@ -148,7 +149,7 @@ export class DigitsGameComponent implements OnInit {
     let cookie = this.cookieService.get(this.COOKIE_LK_DIGITS);
     let cookieData: CookieData | null;
     if (!cookie || cookie == "") {
-      console.log("Unable to retrieve the Game State");
+      console.log("INFO: Unable to retrieve the Game State");
       cookieData = null;
     } else {
       cookieData = new CookieData();
@@ -208,20 +209,41 @@ export class DigitsGameComponent implements OnInit {
   private updatePuzzleDataInDb(puzzleData: IPuzzleData) {
     this.firestorePuzzleData.data = JSON.stringify(puzzleData);
     this.numbersFirestoreService.update(this.firestorePuzzleData.id!, { data: this.firestorePuzzleData.data })
-    .then(() => console.log('The Puzzle Data was updated successfully!'))
+    .then(() => console.log('INFO: The Game Data was updated successfully in DB!'))
     .catch(err => console.log(err));   
+  }
+
+  private createPuzzleDataInDb(firestorePuzzleData: IFirestorePuzzleData) {
+    this.numbersFirestoreService.create(firestorePuzzleData)
+    .then(() => {
+      console.log('INFO: The Puzzle Data was created successfully in DB!')
+    });
+  }
+
+  private currentLocaleAlreadyStoredInDb(): boolean {
+    let currentLocale = navigator.language;
+    const foundItem =  this.firestorePuzzleDataItems.find(pd => {
+      return pd.locale === currentLocale;
+    });
+    return foundItem !== undefined;
+  }
+
+  private upsertGameDataInDb(puzzleData: IPuzzleData) {
+    if (this.currentLocaleAlreadyStoredInDb()) {
+      this.updatePuzzleDataInDb(puzzleData);
+    } else {
+      const firestorePuzzleData = new FirestorePuzzleData();
+      firestorePuzzleData.locale = navigator.language;
+      firestorePuzzleData.data = JSON.stringify(puzzleData);                  
+      this.createPuzzleDataInDb(firestorePuzzleData);
+    }    
   }
 
   ngOnInit(): void {
     this.initializeStageLevels();
-    /*
-    alert(
-      `This "Numbers" game is a prototype only!
-        -no known bugs, except for Origin trial controlled feature not enabled: 'interest-cohort'`
-    );
-    */
     let gameState = this.restoreGameStateFromCookie();
     if (gameState) {
+      console.log("INFO: Game state restored from cookie");
       const cookieDate = new Date(gameState!.storeDate);
       if (this.isDateSame(cookieDate, new Date())) {
         this.stageIndex = gameState.stageIndex;
@@ -236,27 +258,26 @@ export class DigitsGameComponent implements OnInit {
               allStageSummary += stage.summary;
             });
             this.clipboardService.copy(allStageSummary);
-            //alert(allStageSummary);       
             this.allGameCompletedMessage = allStageSummary;
             this.allGameCompletedVisible = true;
-            //return;
+            console.log("INFO: All Games completed show completed modal");
           }   
         } else {
+          console.log("INFO: All Games incomplete show splash");
           this.splashVisible = true;
         }  
-        console.log("Game state restored from cookie");
       } else {
         this.generateGameParameters = new GenerateGameParameters();
         this.gameParameters = this.generateGameParameters.generateStageNumbers();
         this.storeGameStateToCookie();
         this.setupStages();
          let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
-         console.log("Date mismatch which restored from cookie " + puzzleData);
-        // TODO store puzzleData to DB.
-        this.updatePuzzleDataInDb(puzzleData);
+         console.log("INFO: Date mismatch which restored from cookie " + puzzleData);
+        // TODO check first in the DB!
+        this.upsertGameDataInDb(puzzleData);
       }
     } else {
-      console.log("No game state in cookie");
+      console.log("INFO: No game state in cookie, try to get if from DB.");
       this.generateGameParameters = new GenerateGameParameters();
       this.gameParameters = this.generateGameParameters.generateStageNumbers();
       let locale = navigator.language;
@@ -268,29 +289,40 @@ export class DigitsGameComponent implements OnInit {
         )
       ).subscribe(data => {
         this.firestorePuzzleDataItems = data;
-        let localizedPuzzleData = data.filter(pd => {
+        let localizedPuzzleData = data.find(pd => {
           return pd.locale === locale;
         });
-        this.firestorePuzzleData = localizedPuzzleData[0];
-        this.todayPuzzleData = JSON.parse(this.firestorePuzzleData.data);
-        console.log("Puzzle Data retrieved from DB");
-        const today = new Date();
-        const storedDay = new Date(this.todayPuzzleData.day);
-        if (this.todayPuzzleData.day && this.isDateSame(storedDay, today)) {
-          console.log("Puzzle Data day date is matched, restore puzzle data to Game Parameters");
-          this.mapPuzzleDataToGameParameters(this.todayPuzzleData);
-          this.storeGameStateToCookie();
-          this.setupStages();
+        if (localizedPuzzleData) {
+          this.firestorePuzzleData = localizedPuzzleData!;
+          this.todayPuzzleData = JSON.parse(this.firestorePuzzleData.data);
+          console.log("INFO: Game Data retrieved from DB.");
+          const today = new Date();
+          const storedDay = new Date(this.todayPuzzleData.day);
+          if (this.todayPuzzleData.day && this.isDateSame(storedDay, today)) {
+            console.log("INFO: Game Data day date is matched, apply Game data");
+            this.mapPuzzleDataToGameParameters(this.todayPuzzleData);
+            this.storeGameStateToCookie();
+            this.setupStages();
+          } else {
+            console.log("INFO: Game Data day of date is Not matched, generate new game parameters");
+            this.generateGameParameters = new GenerateGameParameters();
+            this.gameParameters = this.generateGameParameters.generateStageNumbers();
+            this.storeGameStateToCookie();
+            this.setupStages();
+            let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
+            this.upsertGameDataInDb(puzzleData);
+          }
         } else {
-          console.log("Puzzle Data day date is Not matched, generate new game parameters");
+          console.log("INFO: Game Data not found in the DB. by locale");
           this.generateGameParameters = new GenerateGameParameters();
           this.gameParameters = this.generateGameParameters.generateStageNumbers();
           this.storeGameStateToCookie();
           this.setupStages();
           let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
-          console.log(JSON.stringify(puzzleData));
-          // TODO Store puzzle data to db. 
-          this.updatePuzzleDataInDb(puzzleData);
+          const firestorePuzzleData = new FirestorePuzzleData();
+          firestorePuzzleData.locale = navigator.language;
+          firestorePuzzleData.data = JSON.stringify(puzzleData);          
+          this.createPuzzleDataInDb(firestorePuzzleData);
         }
       });      
     }    
