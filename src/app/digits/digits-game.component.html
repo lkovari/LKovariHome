@@ -22,14 +22,22 @@
         (onInvalidOperationExecuted)="onInvalidOperationExecuted($event)"></app-game-arithmetic-operations>
     </div>
 </div>
-<p-dialog id="splashscreen" header="Numbers Game" [(visible)]="splashVisible" [style]="{width: '80vw'}">
-    <p> {{ splashMessage }} </p>
+<p-dialog id="splashscreen" header="Welcome to the Numbers Game" [(visible)]="splashVisible" >
+    <p>Numbers" game is a prototype only!</p>
+    <p>No known bugs, except for Origin trial controlled feature not enabled: 'interest-cohort</p>
 </p-dialog>    
-<p-dialog id="stagecompleted" header="Game Completed" [(visible)]="gameCompletedVisible" [style]="{width: '80vw'}">
-    <p> {{ gameCompletedMessage }} </p>
+<p-dialog id="stagecompleted" header="Game Completed" [(visible)]="gameCompletedVisible" >
+    <div>
+        <li class="li-no-bullet" *ngFor="let mess of gameCompletedMessages; let ix = index">
+            {{ mess }}
+        </li>
+    </div>
 </p-dialog>  
 <p-dialog id="allStagecompleted" header="Genius! All Game Completed" [(visible)]="allGameCompletedVisible" 
-    [modal]="true" [closable]="false"
-    [style]="{width: '80vw'}">
-    <p> {{ allGameCompletedMessage }} </p>
+    [modal]="true" [closable]="false">
+    <div>
+        <li class="li-no-bullet" *ngFor="let gameMess of allGameCompletedMessage; let ix = index">
+            {{ gameMess }}
+        </li>
+    </div>
 </p-dialog>  

@@ -50,11 +50,12 @@ export class DigitsGameComponent implements OnInit {
   todayPuzzleData: IPuzzleData;
   todayPuzzleDataItems: IPuzzleData[] = [];
   splashVisible = false;
+  gameCompletedMessages: string[] = [];
   gameCompletedVisible = false;
-  splashMessage = `This "Numbers" game is a prototype only! No known bugs, except for Origin trial controlled feature not enabled: 'interest-cohort'`;
-  gameCompletedMessage = ``;
-  allGameCompletedMessage = ``;
+  //gameCompletedMessage = ``;
+  allGameCompletedMessage: string[] = [];
   allGameCompletedVisible = false;
+  splashWidth = '80vw';
 
   constructor(private messageService: MessageService,
     private cookieService: CookieService,
@@ -100,8 +101,11 @@ export class DigitsGameComponent implements OnInit {
 
   private createSummaryOfTHeOperations(stageIndex: number, executedOperations: IStack<IGameOperation>): string {
     let result = this.stageLevels[stageIndex].value + ' -> '
+    this.gameCompletedMessages = [];
+    //this.gameCompletedMessages.push(this.stageLevels[stageIndex].value + ' -> ');
     while (executedOperations.size() > 0) {
       const gameOperation = executedOperations.pop();
+      this.gameCompletedMessages.push(gameOperation?.operands[0] +' '+ gameOperation!.operator + ' ' + gameOperation?.operands[1] + ' = ' + gameOperation?.result);
       result += '' + gameOperation?.operator;
     }
     result += '\n';
@@ -256,9 +260,9 @@ export class DigitsGameComponent implements OnInit {
             let allStageSummary = "Genius!\n";
             this.stageLevels.forEach(stage => {
               allStageSummary += stage.summary;
+              this.allGameCompletedMessage
             });
             this.clipboardService.copy(allStageSummary);
-            this.allGameCompletedMessage = allStageSummary;
             this.allGameCompletedVisible = true;
             console.log("INFO: All Games completed show completed modal");
           }   
@@ -335,19 +339,18 @@ export class DigitsGameComponent implements OnInit {
     this.stageLevels[this.stageIndex].summary = stageSummary;
     this.clipboardService.copy(executedOperationsAsText);
     this.showSuccessMessage('You are reach the expected result!');
-    //alert(executedOperationsAsText);
-    this.gameCompletedMessage = executedOperationsAsText;
     this.gameCompletedVisible = true;
     this.stageToCompleted();
     let isItTheLastPage = this.stageIndex === this.stageLevels.length - 1;
     if (isItTheLastPage) {
       let allStageSummary = "Genius!\n";
+      this.allGameCompletedMessage = [];
+      this.allGameCompletedMessage.push("Genius!");
       this.stageLevels.forEach(stage => {
         allStageSummary += stage.summary;
+        this.allGameCompletedMessage.push(stage.summary);
       });
       this.clipboardService.copy(allStageSummary);
-      // alert(allStageSummary);
-      this.allGameCompletedMessage = allStageSummary;
       this.allGameCompletedVisible = true;
     }
     if (!isItTheLastPage) {
