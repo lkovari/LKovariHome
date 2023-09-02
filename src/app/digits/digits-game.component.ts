@@ -24,6 +24,7 @@ import { FirestorePuzzleData } from './models/firestore-puzzle-data.model';
   
   ToDo
   - share copy to clipboard does not works.
+  - tight in generateNewGameAndStore() to the proper place
   - issue with @angular/fire is: https://stackoverflow.com/questions/74868274/issue-with-importing-angularfirestoremodule-this-type-parameter-might-need-an currently in use the version "^16.0.0-canary.4172abd"
 
   Optional
@@ -38,7 +39,7 @@ import { FirestorePuzzleData } from './models/firestore-puzzle-data.model';
 export class DigitsGameComponent implements OnInit {
   @ViewChild('arithmeticOperations', { static: true }) arithmeticComponent: GameArithmeticOperationsComponent;
   readonly COOKIE_LK_DIGITS = 'CookieLKNumbers';
-  private generateGameParameters: GenerateGameParameters;
+  private generateGameParameters = new GenerateGameParameters();
   currentDate = new Date();
 
   stageLevels: IStageLevel[] = [];
@@ -102,7 +103,6 @@ export class DigitsGameComponent implements OnInit {
   private createSummaryOfTHeOperations(stageIndex: number, executedOperations: IStack<IGameOperation>): string {
     let result = this.stageLevels[stageIndex].value + ' -> '
     this.gameCompletedMessages = [];
-    //this.gameCompletedMessages.push(this.stageLevels[stageIndex].value + ' -> ');
     while (executedOperations.size() > 0) {
       const gameOperation = executedOperations.pop();
       this.gameCompletedMessages.push(gameOperation?.operands[0] +' '+ gameOperation!.operator + ' ' + gameOperation?.operands[1] + ' = ' + gameOperation?.result);
@@ -243,6 +243,32 @@ export class DigitsGameComponent implements OnInit {
     }    
   }
 
+  private collectAllOperations(): boolean {
+    let isItTheLastPage = this.stageIndex === this.stageLevels.length - 1;
+    if (isItTheLastPage) {
+      let allStageSummary = "Genius!\n";
+      this.allGameCompletedMessage = [];
+      this.allGameCompletedMessage.push("Genius!");
+      this.stageLevels.forEach(stage => {
+        allStageSummary += stage.summary;
+        this.allGameCompletedMessage.push(stage.summary);
+      });
+      this.clipboardService.copy(allStageSummary);
+      this.allGameCompletedVisible = true;
+    }
+    return isItTheLastPage;
+  }
+
+  // TODO tight in generateNewGameAndStore() to the proper place
+  /*
+  private generateNewGameAndStore() {
+    this.gameParameters = this.generateGameParameters.generateStageNumbers();
+    this.storeGameStateToCookie();
+    this.setupStages();
+    let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
+    this.upsertGameDataInDb(puzzleData);    
+  }
+  */
   ngOnInit(): void {
     this.initializeStageLevels();
     let gameState = this.restoreGameStateFromCookie();
@@ -255,15 +281,8 @@ export class DigitsGameComponent implements OnInit {
         this.gameParameters = gameState.gameParameters;
         this.setupStages();
         if (gameState.completed) {
-          let isItTheLastPage = this.stageIndex === this.stageLevels.length - 1;
+          const isItTheLastPage = this.collectAllOperations();
           if (isItTheLastPage) {
-            let allStageSummary = "Genius!\n";
-            this.stageLevels.forEach(stage => {
-              allStageSummary += stage.summary;
-              this.allGameCompletedMessage
-            });
-            this.clipboardService.copy(allStageSummary);
-            this.allGameCompletedVisible = true;
             console.log("INFO: All Games completed show completed modal");
           }   
         } else {
@@ -271,7 +290,6 @@ export class DigitsGameComponent implements OnInit {
           this.splashVisible = true;
         }  
       } else {
-        this.generateGameParameters = new GenerateGameParameters();
         this.gameParameters = this.generateGameParameters.generateStageNumbers();
         this.storeGameStateToCookie();
         this.setupStages();
@@ -282,7 +300,6 @@ export class DigitsGameComponent implements OnInit {
       }
     } else {
       console.log("INFO: No game state in cookie, try to get if from DB.");
-      this.generateGameParameters = new GenerateGameParameters();
       this.gameParameters = this.generateGameParameters.generateStageNumbers();
       let locale = navigator.language;
       this.numbersFirestoreService.getAll().snapshotChanges().pipe(
@@ -309,7 +326,6 @@ export class DigitsGameComponent implements OnInit {
             this.setupStages();
           } else {
             console.log("INFO: Game Data day of date is Not matched, generate new game parameters");
-            this.generateGameParameters = new GenerateGameParameters();
             this.gameParameters = this.generateGameParameters.generateStageNumbers();
             this.storeGameStateToCookie();
             this.setupStages();
@@ -318,7 +334,6 @@ export class DigitsGameComponent implements OnInit {
           }
         } else {
           console.log("INFO: Game Data not found in the DB. by locale");
-          this.generateGameParameters = new GenerateGameParameters();
           this.gameParameters = this.generateGameParameters.generateStageNumbers();
           this.storeGameStateToCookie();
           this.setupStages();
@@ -341,18 +356,7 @@ export class DigitsGameComponent implements OnInit {
     this.showSuccessMessage('You are reach the expected result!');
     this.gameCompletedVisible = true;
     this.stageToCompleted();
-    let isItTheLastPage = this.stageIndex === this.stageLevels.length - 1;
-    if (isItTheLastPage) {
-      let allStageSummary = "Genius!\n";
-      this.allGameCompletedMessage = [];
-      this.allGameCompletedMessage.push("Genius!");
-      this.stageLevels.forEach(stage => {
-        allStageSummary += stage.summary;
-        this.allGameCompletedMessage.push(stage.summary);
-      });
-      this.clipboardService.copy(allStageSummary);
-      this.allGameCompletedVisible = true;
-    }
+    const isItTheLastPage = this.collectAllOperations();
     if (!isItTheLastPage) {
       this.stageIndex++;
       this.stageLevels[this.stageIndex].selected = true;
@@ -372,6 +376,6 @@ export class DigitsGameComponent implements OnInit {
   }
 
   onUpdatePuzzleData() {
-    console.log("Will update puzzle data");
+    // this.generateNewGameAndStore();
   }
 }

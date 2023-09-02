@@ -49,9 +49,6 @@
         //@extend .digits-border-horizontal;
         height: 52px;
     }
-    .li-no-bullet {
-        list-style: none;
-    }
     // Extra small devices (phones, 600px and down) 
     @media only screen and (max-width: 600px) {
         height: 101vh;
@@ -97,6 +94,11 @@
         background-image: none;
         border-bottom-right-radius: 25px;
         border-bottom-left-radius: 25px;
+    }
+    li.li-no-bullet {
+        list-style-position: revert;
+        list-style-image: initial;
+        list-style-type: decimal-leading-zero;
     }
 }
 

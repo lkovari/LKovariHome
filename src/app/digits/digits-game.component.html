@@ -26,14 +26,15 @@
     <p>Numbers" game is a prototype only!</p>
     <p>No known bugs, except for Origin trial controlled feature not enabled: 'interest-cohort</p>
 </p-dialog>    
-<p-dialog id="stagecompleted" header="Game Completed" [(visible)]="gameCompletedVisible" >
+<p-dialog id="gameCompleted" header="Game Completed" [(visible)]="gameCompletedVisible" >
     <div>
+        Your solution:
         <li class="li-no-bullet" *ngFor="let mess of gameCompletedMessages; let ix = index">
             {{ mess }}
         </li>
     </div>
 </p-dialog>  
-<p-dialog id="allStagecompleted" header="Genius! All Game Completed" [(visible)]="allGameCompletedVisible" 
+<p-dialog id="allGamesCompleted" header="Genius! All Game Completed" [(visible)]="allGameCompletedVisible" 
     [modal]="true" [closable]="false">
     <div>
         <li class="li-no-bullet" *ngFor="let gameMess of allGameCompletedMessage; let ix = index">
