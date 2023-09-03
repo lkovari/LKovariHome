@@ -1,14 +1,14 @@
 @import "digit-styles.scss";
 
 .digits-game-layout {
-    height: 100vh;
+    height: 98vh;
     width: 50vw;
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    margin: auto;
+    margin: auto;    
     background: rgba(235, 249, 253, 0.25);
     border: 1px solid lightgray;
     .digits-game-title {
@@ -59,8 +59,8 @@
     }
     // Extra small devices (phones, 600px and down) 
     @media only screen and (max-width: 600px) {
-        height: 101vh;
-        width: 101vw;
+        height: 90vh;
+        width: 99vw;
         ::ng-deep {
             .p-dialog {
                 width: 80vw;
@@ -73,6 +73,14 @@
         .p-dialog {
             width: 20vw;
         }
+    }
+    .digits-game-layout {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;    
     }
 }
 
