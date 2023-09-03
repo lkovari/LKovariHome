@@ -1,7 +1,7 @@
 <div class="digits-game-layout">
     <p-toast position="top-center" closable="true"></p-toast>
     <div class="digits-game-title">
-        This is a daily numbers puzzle, similar to the <a class="anchor-underline-off" href="https://www.nytimes.com/games/digits">NY Times Digits</a>, which unfortunatelly discontinued at August 8, 2023
+        This is a daily numbers puzzle, similar to the <a class="anchor-underline-off" href="https://www.nytimes.com/games/digits">NY Times Digits</a>, which unfortunately discontinued at August 8, 2023
     </div>
     <!--div class="warning-message">This page is under construction.</div-->
     <div class="title-bar">
@@ -22,23 +22,24 @@
         (onInvalidOperationExecuted)="onInvalidOperationExecuted($event)"></app-game-arithmetic-operations>
     </div>
 </div>
-<p-dialog id="splashscreen" header="Welcome to the Numbers Game" [(visible)]="splashVisible" >
-    <p>Numbers" game is a prototype only!</p>
-    <p>No known bugs, except for Origin trial controlled feature not enabled: 'interest-cohort</p>
+<p-dialog id="splashscreen" header="Welcome to the Numbers Game" [(visible)]="splashVisible" [modal]="true">
+    <p>"Numbers" game is a prototype only!</p>
+    <p>I'm open for any feedback! (ujtordaikovari@gmail.com) </p>
 </p-dialog>    
-<p-dialog id="gameCompleted" header="Game Completed" [(visible)]="gameCompletedVisible" >
+<p-dialog id="gameCompleted" header="Game Completed" [(visible)]="gameCompletedModalVisible"
+    [modal]="true" (onHide)="onGameCompletedHide()">
     <div>
         Your solution:
-        <li class="li-no-bullet" *ngFor="let mess of gameCompletedMessages; let ix = index">
+        <li class="li-no-bullet" *ngFor="let mess of gameCompletedModalMessages; let ix = index">
             {{ mess }}
         </li>
     </div>
 </p-dialog>  
-<p-dialog id="allGamesCompleted" header="All Game Completed Genius!" [(visible)]="allGameCompletedVisible" 
+<p-dialog id="allGamesCompleted" header="All Game Completed Genius!" [(visible)]="allGameCompletedModalVisible" 
     [modal]="true" [closable]="false">
     <div>
         Congratulation! Your Solutions:
-        <li class="li-no-bullet" *ngFor="let gameMess of allGameCompletedMessage; let ix = index">
+        <li class="li-no-bullet" *ngFor="let gameMess of allGameCompletedModalMessage; let ix = index">
             {{ gameMess }}
         </li>
     </div>

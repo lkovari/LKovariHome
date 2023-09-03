@@ -51,11 +51,10 @@ export class DigitsGameComponent implements OnInit {
   todayPuzzleData: IPuzzleData;
   todayPuzzleDataItems: IPuzzleData[] = [];
   splashVisible = false;
-  gameCompletedMessages: string[] = [];
-  gameCompletedVisible = false;
-  //gameCompletedMessage = ``;
-  allGameCompletedMessage: string[] = [];
-  allGameCompletedVisible = false;
+  gameCompletedModalMessages: string[] = [];
+  gameCompletedModalVisible = false;
+  allGameCompletedModalMessage: string[] = [];
+  allGameCompletedModalVisible = false;
   splashWidth = '80vw';
 
   constructor(private messageService: MessageService,
@@ -102,10 +101,10 @@ export class DigitsGameComponent implements OnInit {
 
   private createSummaryOfTHeOperations(stageIndex: number, executedOperations: IStack<IGameOperation>): string {
     let result = this.stageLevels[stageIndex].value + ' -> '
-    this.gameCompletedMessages = [];
+    this.gameCompletedModalMessages = [];
     while (executedOperations.size() > 0) {
       const gameOperation = executedOperations.pop();
-      this.gameCompletedMessages.push(gameOperation?.operands[0] +' '+ gameOperation!.operator + ' ' + gameOperation?.operands[1] + ' = ' + gameOperation?.result);
+      this.gameCompletedModalMessages.push(gameOperation?.operands[0] +' '+ gameOperation!.operator + ' ' + gameOperation?.operands[1] + ' = ' + gameOperation?.result);
       result += '' + gameOperation?.operator;
     }
     result += '\n';
@@ -141,7 +140,7 @@ export class DigitsGameComponent implements OnInit {
     cookieData.storeDate = new Date();
     cookieData.stageIndex = this.stageIndex;
     cookieData.stageLevels = this.stageLevels;
-    cookieData.completed = this.stageIndex === this.stageLevels.length - 1;
+    cookieData.completed = this.allGameCompleted() && this.stageIndex === this.stageLevels.length - 1;
     cookieData.gameParameters = this.gameParameters;
     let cookieDataAsText = cookieData.cookieData2Text();
     let expires = new Date();
@@ -243,17 +242,25 @@ export class DigitsGameComponent implements OnInit {
     }    
   }
 
+  private allGameCompleted(): boolean {
+    let allLevelsCompleted = true;
+    this.stageLevels.forEach((stageLevel: IStageLevel) => {
+      allLevelsCompleted = allLevelsCompleted  && stageLevel.completed;
+    });
+    return allLevelsCompleted;
+  }
+
   private collectAllOperations(): boolean {
-    let isItTheLastPage = this.stageIndex === this.stageLevels.length - 1;
+    let isItTheLastPage = this.allGameCompleted() && this.stageIndex === this.stageLevels.length - 1;
     if (isItTheLastPage) {
       let allStageSummary = "Genius!\n";
-      this.allGameCompletedMessage = [];
+      this.allGameCompletedModalMessage = [];
       this.stageLevels.forEach(stage => {
         allStageSummary += stage.summary;
-        this.allGameCompletedMessage.push(stage.summary);
+        this.allGameCompletedModalMessage.push(stage.summary);
       });
       this.clipboardService.copy(allStageSummary);
-      this.allGameCompletedVisible = true;
+      this.allGameCompletedModalVisible = true;
     }
     return isItTheLastPage;
   }
@@ -372,8 +379,11 @@ export class DigitsGameComponent implements OnInit {
     this.stageLevels[this.stageIndex].summary = stageSummary;
     this.clipboardService.copy(executedOperationsAsText);
     this.showSuccessMessage('You are reach the expected result!');
-    this.gameCompletedVisible = true;
+    this.gameCompletedModalVisible = true;
     this.stageToCompleted();
+  }
+
+  onGameCompletedHide() {
     const isItTheLastPage = this.collectAllOperations();
     if (!isItTheLastPage) {
       this.stageIndex++;
