@@ -6,7 +6,7 @@ import * as angular from '@angular/forms';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('09/3/2023 08:47 PM');
+  lastUpdateDate = new Date('09/3/2023 10:04 PM');
   lastUpdateTooltip = 'operands hoover and other UI. cosmetics';
   angularVersion: any;
 
