@@ -248,7 +248,6 @@ export class DigitsGameComponent implements OnInit {
     if (isItTheLastPage) {
       let allStageSummary = "Genius!\n";
       this.allGameCompletedMessage = [];
-      this.allGameCompletedMessage.push("Genius!");
       this.stageLevels.forEach(stage => {
         allStageSummary += stage.summary;
         this.allGameCompletedMessage.push(stage.summary);
@@ -260,7 +259,6 @@ export class DigitsGameComponent implements OnInit {
   }
 
   // TODO tight in generateNewGameAndStore() to the proper place
-  /*
   private generateNewGameAndStore() {
     this.gameParameters = this.generateGameParameters.generateStageNumbers();
     this.storeGameStateToCookie();
@@ -268,7 +266,26 @@ export class DigitsGameComponent implements OnInit {
     let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
     this.upsertGameDataInDb(puzzleData);    
   }
-  */
+
+  private loadGameDataFromDB() {
+    let locale = navigator.language;
+    this.numbersFirestoreService.getAll().snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c =>
+          ({ id: c.payload.doc.id, ...c.payload.doc.data() })
+        )
+      )
+    ).subscribe(data => {
+      this.firestorePuzzleDataItems = data;
+      let localizedPuzzleData = data.find(pd => {
+        return pd.locale === locale;
+      });
+      if (localizedPuzzleData) {
+        this.firestorePuzzleData = localizedPuzzleData!;
+      }
+    });    
+  }
+
   ngOnInit(): void {
     this.initializeStageLevels();
     let gameState = this.restoreGameStateFromCookie();
@@ -287,6 +304,7 @@ export class DigitsGameComponent implements OnInit {
           }   
         } else {
           console.log("INFO: All Games incomplete show splash");
+          this.loadGameDataFromDB();
           this.splashVisible = true;
         }  
       } else {
@@ -376,6 +394,6 @@ export class DigitsGameComponent implements OnInit {
   }
 
   onUpdatePuzzleData() {
-    // this.generateNewGameAndStore();
+    this.generateNewGameAndStore();
   }
 }

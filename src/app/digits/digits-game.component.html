@@ -34,9 +34,10 @@
         </li>
     </div>
 </p-dialog>  
-<p-dialog id="allGamesCompleted" header="Genius! All Game Completed" [(visible)]="allGameCompletedVisible" 
+<p-dialog id="allGamesCompleted" header="All Game Completed Genius!" [(visible)]="allGameCompletedVisible" 
     [modal]="true" [closable]="false">
     <div>
+        Congratulation! Your Solutions:
         <li class="li-no-bullet" *ngFor="let gameMess of allGameCompletedMessage; let ix = index">
             {{ gameMess }}
         </li>
