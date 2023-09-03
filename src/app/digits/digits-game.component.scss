@@ -2,10 +2,17 @@
 
 .digits-game-layout {
     height: 98vh;
-    width: 100vw;
-    //border: 5px solid rgb(204, 0, 255);
+    width: 50vw;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;    
+    // border: 1px solid lightgray;
+    background: aliceblue;
+    border: 2px solid lightblue;
     .digits-game-title {
-        //@extend .digit-font-settings;
         @extend .digits-border-horizontal; 
    
         text-align: center;
