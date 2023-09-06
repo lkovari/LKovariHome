@@ -14,6 +14,5 @@ export class GameStageLevelsComponent  implements OnInit {
   ngOnInit(): void {
     this.NO_STAGE_LEVELS = !this.stageLevels 
       || (this.stageLevels && this.stageLevels.length != this.MAXSTAGE_LEVELS);
-
   }  
 }

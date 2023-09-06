@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IStageLevel } from './models/stage-level.interface';
 import { IGameParameters } from './models/game-parameters.interface';
 import { IStack } from './models/stack.interface';
@@ -11,13 +11,14 @@ import { ICookieData } from './models/cookie-data.interface';
 import { CookieService } from 'ngx-cookie-service';
 import { ClipboardService } from 'ngx-clipboard';
 import { IPuzzleData } from './models/puzzle-data.interface';
-import { map } from 'rxjs';
+import { Subscription, map } from 'rxjs';
 import { NumbersFirestoreService } from './services/numbers-firestore.service';
 import { IFirestorePuzzleData } from './models/firestore-puzzle-data.interface';
 import { IPuzzleDataStage } from './models/puzzle-data-stage.interface';
 import { PuzzleData } from './models/puzzle-data.model';
 import { PuzzleDataStage } from './models/puzzle-data-stage.model';
 import { FirestorePuzzleData } from './models/firestore-puzzle-data.model';
+import { StageCommunicationService } from './services/stage-communication.service';
 
 /*
   Known bugs:
@@ -36,7 +37,7 @@ import { FirestorePuzzleData } from './models/firestore-puzzle-data.model';
   styleUrls: ['./digits-game.component.scss'],
   providers: [MessageService, CookieService],
 })
-export class DigitsGameComponent implements OnInit {
+export class DigitsGameComponent implements OnInit, OnDestroy {
   @ViewChild('arithmeticOperations', { static: true }) arithmeticComponent: GameArithmeticOperationsComponent;
   readonly COOKIE_LK_DIGITS = 'CookieLKNumbers';
   private generateGameParameters = new GenerateGameParameters();
@@ -56,11 +57,20 @@ export class DigitsGameComponent implements OnInit {
   allGameCompletedModalMessage: string[] = [];
   allGameCompletedModalVisible = false;
   splashWidth = '80vw';
+  updateStageLevel: Subscription;
 
   constructor(private messageService: MessageService,
     private cookieService: CookieService,
     private clipboardService: ClipboardService,
-    private numbersFirestoreService: NumbersFirestoreService) {
+    private numbersFirestoreService: NumbersFirestoreService,
+    private stageCommunicationService: StageCommunicationService) {
+      this.updateStageLevel = this.stageCommunicationService.getUpdatedStageLevel().subscribe({
+        next: (v) => {
+          console.log('StageLevel updated ' + v.index);
+        },
+        error: (e) => console.error('StageLevel updated ' + e),
+        complete: () => console.info('StageLevel updated Complete') 
+      });
     }
 
   private initializeStageLevels() {
@@ -294,6 +304,7 @@ export class DigitsGameComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(`Browser locale: ${navigator.language}`);
     this.initializeStageLevels();
     let gameState = this.restoreGameStateFromCookie();
     if (gameState) {
@@ -372,6 +383,9 @@ export class DigitsGameComponent implements OnInit {
     }    
   }
 
+  ngOnDestroy(): void {
+    this.updateStageLevel.unsubscribe();
+  }
 
   onExpectedResultReached(executedOperations: IStack<IGameOperation>) {
     const executedOperationsAsText = this.formatOperations(executedOperations);

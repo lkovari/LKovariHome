@@ -1,14 +1,14 @@
 <div class="stage-level-layout">
     <div [ngClass]="{ 'stage-level-number-unselected':!stageLevel.selected, 'stage-level-number-selected':stageLevel.selected}" 
-    style="text-align: center;">
-    <div *ngIf="stageLevel.completed; else NOT_COMPLETED">
-        <span class="stage-level-completed-value">
+        style="text-align: center;">
+        <div *ngIf="stageLevel.completed; else NOT_COMPLETED" (click)="onStageClick()">
+            <span class="stage-level-completed-value enable-stage-click">
+                {{ stageLevel.value }}
+            </span>
+        </div>
+        <ng-template #NOT_COMPLETED class="disable-stage-click">
             {{ stageLevel.value }}
-        </span>
-    </div>
-    <ng-template #NOT_COMPLETED>
-        {{ stageLevel.value }}
-    </ng-template>
+        </ng-template>
     </div>
     <div>
         <div *ngIf="stageLevel.selected; else STAGE_LEVEL_NOT_SELECTED" style="display: flex; justify-content: center;">
@@ -18,13 +18,13 @@
         </div>
         <ng-template #STAGE_LEVEL_NOT_SELECTED>
             <div style="display: flex; justify-content: center;">
-                <div *ngIf="stageLevel.completed; else NOT_COMPLETED">
-                    <span class="stage-level-asterisk-unselected stage-level-completed" *ngFor="let star of stars">
+                <div *ngIf="stageLevel.completed; else NOT_COMPLETED" (click)="onStageClick()">
+                    <span class="stage-level-asterisk-unselected stage-level-completed enable-stage-click" *ngFor="let star of stars">
                         <i class="pi pi-star-fill" style="font-size: 10px"></i>
                     </span>
                 </div>
                 <ng-template #NOT_COMPLETED>
-                    <span class="stage-level-asterisk-unselected" *ngFor="let star of stars">
+                    <span class="stage-level-asterisk-unselected disable-stage-click" *ngFor="let star of stars">
                         <i class="pi pi-star" style="font-size: 10px"></i>
                     </span>
                 </ng-template>
