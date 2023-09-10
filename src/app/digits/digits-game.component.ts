@@ -270,6 +270,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
         this.allGameCompletedModalMessage.push(stage.summary);
       });
       this.clipboardService.copy(allStageSummary);
+      this.storeGameStateToCookie();
       this.allGameCompletedModalVisible = true;
     }
     return isItTheLastPage;
@@ -282,25 +283,6 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
     this.setupStages();
     let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
     this.upsertGameDataInDb(puzzleData);    
-  }
-
-  private loadGameDataFromDB() {
-    let locale = navigator.language;
-    this.numbersFirestoreService.getAll().snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c =>
-          ({ id: c.payload.doc.id, ...c.payload.doc.data() })
-        )
-      )
-    ).subscribe(data => {
-      this.firestorePuzzleDataItems = data;
-      let localizedPuzzleData = data.find(pd => {
-        return pd.locale === locale;
-      });
-      if (localizedPuzzleData) {
-        this.firestorePuzzleData = localizedPuzzleData!;
-      }
-    });    
   }
 
   ngOnInit(): void {
@@ -322,7 +304,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
           }   
         } else {
           console.log("INFO: All Games incomplete show splash");
-          this.loadGameDataFromDB();
+          // this.loadGameDataFromDB();
           this.splashVisible = true;
         }  
       } else {
@@ -393,8 +375,8 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
     this.stageLevels[this.stageIndex].summary = stageSummary;
     this.clipboardService.copy(executedOperationsAsText);
     this.showSuccessMessage('You are reach the expected result!');
-    this.gameCompletedModalVisible = true;
     this.stageToCompleted();
+    this.gameCompletedModalVisible = true;
   }
 
   onGameCompletedHide() {
