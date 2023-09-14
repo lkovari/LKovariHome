@@ -17,19 +17,19 @@
     </div>
     <div>
         <app-game-arithmetic-operations #arithmeticOperations
-        [gameParameters]="gameParameters[stageIndex]"
-        (onExpectedResultReached)="onExpectedResultReached($event)"
-        (onInvalidOperationExecuted)="onInvalidOperationExecuted($event)"></app-game-arithmetic-operations>
+            [gameParameters]="gameParameters[stageIndex]"
+            (onExpectedResultReached)="onExpectedResultReached($event)"
+            (onInvalidOperationExecuted)="onInvalidOperationExecuted($event)">
+        </app-game-arithmetic-operations>
     </div>
 </div>
-<p-dialog id="splashscreen" header="Welcome to the Numbers Game" [(visible)]="splashVisible" [modal]="true">
-    <p>"Numbers" game is a prototype only!</p>
-    <p>I'm open for any feedback! (ujtordaikovari@gmail.com) </p>
+<p-dialog id="splashscreen" header="Welcome to the Numbers Puzzle Game" [(visible)]="splashVisible" [modal]="true">
+    <p>I'm open to any feedback! (laszlo.kovary@gmail.com)</p>
 </p-dialog>    
 <p-dialog id="gameCompleted" header="Game Completed" [(visible)]="gameCompletedModalVisible"
-    [modal]="true" (onHide)="onGameCompletedHide()">
+    [modal]="true">
     <div>
-        Your solution:
+        You reach the number {{ gameParameters[stageIndex].result }}! Your solution:
         <li class="li-no-bullet" *ngFor="let mess of gameCompletedModalMessages; let ix = index">
             {{ mess }}
         </li>

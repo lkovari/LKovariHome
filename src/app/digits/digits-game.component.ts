@@ -377,9 +377,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
     this.showSuccessMessage('You are reach the expected result!');
     this.stageToCompleted();
     this.gameCompletedModalVisible = true;
-  }
 
-  onGameCompletedHide() {
     const isItTheLastPage = this.collectAllOperations();
     if (!isItTheLastPage) {
       this.stageIndex++;
