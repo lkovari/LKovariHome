@@ -58,6 +58,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
   allGameCompletedModalVisible = false;
   splashWidth = '80vw';
   updateStageLevel: Subscription;
+  reachedValue: number;
 
   constructor(private messageService: MessageService,
     private cookieService: CookieService,
@@ -376,15 +377,18 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
     this.clipboardService.copy(executedOperationsAsText);
     this.showSuccessMessage('You are reach the expected result!');
     this.stageToCompleted();
+    this.reachedValue = this.gameParameters[this.stageIndex].result;
     this.gameCompletedModalVisible = true;
+  }
 
+  onHideGameCompletedDialog() {
     const isItTheLastPage = this.collectAllOperations();
     if (!isItTheLastPage) {
       this.stageIndex++;
       this.stageLevels[this.stageIndex].selected = true;
     }
     this.storeGameStateToCookie();
-    this.arithmeticComponent.clearHistory();
+    this.arithmeticComponent.clearHistory();    
   }
 
   onInvalidOperationExecuted(value: number) {
