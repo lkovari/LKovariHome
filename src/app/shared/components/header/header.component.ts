@@ -6,8 +6,8 @@ import * as angular from '@angular/forms';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('09/18/2023 11:04 PM');
-  lastUpdateTooltip = 'try to implement button animation';
+  lastUpdateDate = new Date('09/19/2023 11:04 PM');
+  lastUpdateTooltip = 'revert animation';
   angularVersion: any;
 
   constructor() { }

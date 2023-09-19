@@ -25,7 +25,6 @@ import { StageCommunicationService } from './services/stage-communication.servic
   
   ToDo
   - share copy to clipboard does not works.
-  - tight in generateNewGameAndStore() to the proper place
   - issue with @angular/fire is: https://stackoverflow.com/questions/74868274/issue-with-importing-angularfirestoremodule-this-type-parameter-might-need-an currently in use the version "^16.0.0-canary.4172abd"
 
   Optional

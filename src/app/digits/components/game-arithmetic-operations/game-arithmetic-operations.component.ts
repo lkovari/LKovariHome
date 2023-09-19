@@ -74,34 +74,6 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
 
   private selectedOperandA: IGameOperand | null;
   private selectedOperandB: IGameOperand | null;
-  public selectedOperandRectA = new DOMRect(915, 219.3125, 90, 90);
-  public selectedOperandRectB = new DOMRect(1025, 324.3125, 90, 90);
-
-  private _buttonFromALeft: string;
-  get buttonFromALeft(): string {
-    this._buttonFromALeft = '' + this.selectedOperandRectA.x + 'px';
-    return this._buttonFromALeft;
-  }
-
-  private _buttonFromATop: string;
-  get buttonFromATop(): string {
-    this._buttonFromATop = '' + Math.round(this.selectedOperandRectA.y) +'px';
-    return this._buttonFromATop;
-  }
-
-  private _buttonToBLeft: string;
-  get buttonToBLeft(): string {
-    this._buttonToBLeft = '' + this.selectedOperandRectB.x + 'px';
-    return this._buttonToBLeft;
-  }
-
-  private _buttonToBTop: string;
-  get buttonToBTop(): string {
-    this._buttonToBTop = '' + Math.round(this.selectedOperandRectB.y) + 'px';
-    return this._buttonToBTop;
-  }
-
-  buttonMoveDirection = 'buttonFromA';
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon('revert',  sanitizer.bypassSecurityTrustResourceUrl('assets/icons/rotate-left-solid.svg'));
@@ -161,7 +133,6 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
     this.clearSelectionOfOperands();
     this.selectedOperandA = null;
     this.selectedOperandB = null;
-    this.buttonMoveDirection = "buttonFromA";
   }
 
   public enableOfAllOperands() {
@@ -178,7 +149,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
     return this.history!.pop();
   }
 
-  onOperandButtonClick(eventTarget: any, operand: IGameOperand) {
+  onOperandButtonClick(operand: IGameOperand) {
     operand.selected = !operand.selected;
     if (!operand.selected) {
       if (this.selectedOperandB && this.selectedOperandB.id === operand.id) {
@@ -193,16 +164,10 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
     }
     if (!this.selectedOperandA) {
       this.selectedOperandA = operand;
-      this.buttonMoveDirection = "buttonFromA";
-      this.selectedOperandRectA = eventTarget.getBoundingClientRect();
-      console.log('Operand A ' +  JSON.stringify(this.selectedOperandRectA));
     } else {
       if (this.selectedOperandA.id !== operand.id) {
         if (!this.selectedOperandB) {
           this.selectedOperandB = operand;
-          this.selectedOperandRectB = eventTarget.getBoundingClientRect();
-          this.buttonMoveDirection = "buttonToB";
-          console.log('Operand B ' + JSON.stringify(this.selectedOperandRectB));
         }
       }
     }
@@ -210,7 +175,6 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
     if (this.selectedOperandA && this.selectedOperandB && !selectedOperator) {
       this.selectedOperandB.selected = false;
       this.selectedOperandB = null;
-      this.buttonMoveDirection = "buttonFromA";
     }else if (this.selectedOperandA && this.selectedOperandB && selectedOperator) {
       let clonedGameParameters =
         EvaluateArythmeticOperation.cloneGameParameters(this.gameParameters);
@@ -250,7 +214,6 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
         this.clearSelectionOfOperands();
         this.selectedOperandA = null;
         this.selectedOperandB = null;
-        this.buttonMoveDirection = "buttonFromA";
       }
     }
 
