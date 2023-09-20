@@ -6,14 +6,14 @@
   <div class="operands-container">
     <div class="three-operands">
       <ng-container *ngFor="let operand of gameParameters.operands; let ix = index">
-          <button type="button" *ngIf="ix < 3" class="operand" [disabled]="operand.disabled"
+          <button type="button" class="operand" [disabled]="operand.disabled"
             [ngStyle]="{'background-color': operand.selected ? 'rgb(190 209 253 / 59%)' : '' }"
             [ngClass]="!operand.disabled && !operand.selected ? 'operator-content-button' : 'operator-content-button-disabled'"
             (click)="onOperandButtonClick(operand)">{{ operand.value }}
           </button>
       </ng-container>
     </div>
-    <div class="three-operands">
+    <!--div class="three-operands">
       <ng-container *ngFor="let operand of gameParameters.operands; let ix = index">
           <button type="button" *ngIf="ix > 2" class="operand" [disabled]="operand.disabled"
               [ngStyle]="{'background-color': operand.selected ? 'rgb(190 209 253 / 59%)' : '' }"
@@ -21,7 +21,7 @@
               (click)="onOperandButtonClick(operand)">{{ operand.value }}
           </button>
       </ng-container>
-    </div>
+    </div-->
   </div>
   <div class="operators-container">
     <ng-container *ngFor="let operator of operators; let ix = index">

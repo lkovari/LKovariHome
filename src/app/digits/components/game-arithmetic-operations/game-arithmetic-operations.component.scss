@@ -21,6 +21,13 @@
       display: flex;
       justify-content: center;
       margin: 7px;
+      // with the wrap and the fixed width we separate the buttons to two rows
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 371px;      
+      margin-left: auto;
+      margin-right: auto;
 
       .operand {
         width: 90px;
