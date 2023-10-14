@@ -8,13 +8,13 @@
             </div>
             <app-header></app-header>
         </mat-toolbar>
-        <mat-sidenav-container>
+        <mat-sidenav-container autosize>
             <mat-sidenav #sidenav role="navigation" class="mat-elevation-z10"
                 [mode]="isScreenXs() ? 'over' : 'side'" 
                 [opened]="!isScreenXs()">
                 <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list>
             </mat-sidenav>
-            <mat-sidenav-content class="ommit-overflow">
+            <mat-sidenav-content>
                 <main>
                     <router-outlet></router-outlet>
                 </main>

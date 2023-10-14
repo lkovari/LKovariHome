@@ -115,8 +115,9 @@ export class SidenavListComponent implements OnInit {
                   icon: 'pi pi-bolt',
                   items: [
                       {
-                          label: 'Act #1',
-                          icon: 'pi pi-book'
+                          label: 'Material',
+                          icon: 'pi pi-book',
+                          routerLink: 'material-examples/components/material-examples-main'
                       },
                       {
                           label: 'Act #2',

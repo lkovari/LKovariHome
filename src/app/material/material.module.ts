@@ -8,10 +8,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     CommonModule,
     MatMenuModule,
@@ -21,8 +23,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatToolbarModule,
     MatTabsModule,
     MatSidenavModule,
-    MatTooltipModule
-  ],
+    MatTooltipModule,
+    MatFormFieldModule
+  ], 
  exports: [
   MatMenuModule,
   MatListModule,
