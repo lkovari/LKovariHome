@@ -25,7 +25,8 @@ import { StageCommunicationService } from './services/stage-communication.servic
   
   ToDo
   - share copy to clipboard does not works.
-  - issue with @angular/fire is: https://stackoverflow.com/questions/74868274/issue-with-importing-angularfirestoremodule-this-type-parameter-might-need-an currently in use the version "^16.0.0-canary.4172abd"
+  - issue with @angular/fire is: https://stackoverflow.com/questions/74868274/issue-with-importing-angularfirestoremodule-this-type-parameter-might-need-an Workaround: currently in use the version "^16.0.0-canary.4172abd"
+  - should be use firestore query by locale based on: https://github.com/angular/angularfire/blob/master/docs/compat/firestore/documents.md#manipulating-documents 
 
   Optional
   - consider the lodash deep copy usage or use the JSON.parse(JSON.stringify(data)) to clone object

@@ -6,8 +6,8 @@ import * as angular from '@angular/forms';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('10/15/2023 12:23 AM');
-  lastUpdateTooltip = 'Eliminate horizontal overflow, Added Material menu item';
+  lastUpdateDate = new Date('10/26/2023 11:33 AM');
+  lastUpdateTooltip = 'tsconfig changes and added todo to digits';
   angularVersion: any;
 
   constructor() { }
