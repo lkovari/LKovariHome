@@ -86,10 +86,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "LKovariHome:build:production"
+              "buildTarget": "LKovariHome:build:production"
             },
             "development": {
-              "browserTarget": "LKovariHome:build:development"
+              "buildTarget": "LKovariHome:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -97,7 +97,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "LKovariHome:build"
+            "buildTarget": "LKovariHome:build"
           }
         },
         "test": {
