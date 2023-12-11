@@ -1,34 +1,45 @@
 <div class="stage-level-layout">
     <div [ngClass]="{ 'stage-level-number-unselected':!stageLevel.selected, 'stage-level-number-selected':stageLevel.selected}" 
         style="text-align: center;">
-        <div *ngIf="stageLevel.completed; else NOT_COMPLETED" (click)="onStageClick()">
-            <span class="stage-level-completed-value enable-stage-click">
+        @if (stageLevel.completed) {
+            <div (click)="onStageClick()">
+                <span class="stage-level-completed-value enable-stage-click">
+                    {{ stageLevel.value }}
+                </span>
+            </div>
+        } @else {
+            <ng-container class="disable-stage-click">
                 {{ stageLevel.value }}
-            </span>
-        </div>
-        <ng-template #NOT_COMPLETED class="disable-stage-click">
-            {{ stageLevel.value }}
-        </ng-template>
+            </ng-container>
+        }
     </div>
     <div>
-        <div *ngIf="stageLevel.selected; else STAGE_LEVEL_NOT_SELECTED" style="display: flex; justify-content: center;">
-            <span class="stage-level-asterisk-selected" *ngFor="let star of stars">
-                <i class="pi pi-star-fill" style="font-size: 10px"></i>
-            </span>
-        </div>
-        <ng-template #STAGE_LEVEL_NOT_SELECTED>
+        @if (stageLevel.selected) {
             <div style="display: flex; justify-content: center;">
-                <div *ngIf="stageLevel.completed; else NOT_COMPLETED" (click)="onStageClick()">
-                    <span class="stage-level-asterisk-unselected stage-level-completed enable-stage-click" *ngFor="let star of stars">
+                @for (star of stars; track star) {
+                    <span class="stage-level-asterisk-selected">
                         <i class="pi pi-star-fill" style="font-size: 10px"></i>
                     </span>
-                </div>
-                <ng-template #NOT_COMPLETED>
-                    <span class="stage-level-asterisk-unselected disable-stage-click" *ngFor="let star of stars">
-                        <i class="pi pi-star" style="font-size: 10px"></i>
-                    </span>
-                </ng-template>
+                }
             </div>
-        </ng-template>
+        } @else {
+            <div style="display: flex; justify-content: center;">
+                @if (stageLevel.completed) {
+                    <div (click)="onStageClick()">
+                        @for (star of stars; track star) {
+                            <span class="stage-level-asterisk-unselected stage-level-completed enable-stage-click">
+                                <i class="pi pi-star-fill" style="font-size: 10px"></i>
+                            </span>
+                        }
+                    </div>                    
+                } @else {
+                    @for (star of stars; track star) {
+                        <span class="stage-level-asterisk-unselected disable-stage-click">
+                            <i class="pi pi-star" style="font-size: 10px"></i>
+                        </span>
+                    }
+                }
+            </div>
+        }
     </div>
 </div>

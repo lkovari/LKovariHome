@@ -30,17 +30,21 @@
     [modal]="true" (onHide)="onHideGameCompletedDialog()">
     <div>
         Target {{ reachedValue }}. Your solution:
-        <li class="li-no-bullet" *ngFor="let mess of gameCompletedModalMessages; let ix = index">
-            {{ mess }}
-        </li>
+        @for (mess of gameCompletedModalMessages; track mess) {
+            <li class="li-no-bullet">
+                {{ mess }}
+            </li>
+        }
     </div>
 </p-dialog>  
 <p-dialog id="allGamesCompleted" header="All Game Completed Genius!" [(visible)]="allGameCompletedModalVisible" 
     [modal]="true" [closable]="false">
     <div>
         Congratulation! Your Solutions:
-        <li class="li-no-bullet" *ngFor="let gameMess of allGameCompletedModalMessage; let ix = index">
-            {{ gameMess }}
-        </li>
+        @for (gameMess of allGameCompletedModalMessage; track gameMess) {
+            <li class="li-no-bullet">
+                {{ gameMess }}
+            </li>
+        }
     </div>
 </p-dialog>  

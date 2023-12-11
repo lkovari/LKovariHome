@@ -27,10 +27,13 @@
         bottom: 30px;
         p-slidemenu::ng-deep {
             .p-slidemenu {
+                ol, ul {
+                    padding-left: 0 !important;
+                }
                 width: 15.5rem;
                 border: none;
             }
         }
     }
-
 }
+

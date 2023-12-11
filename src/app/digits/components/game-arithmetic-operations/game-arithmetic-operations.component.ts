@@ -34,30 +34,35 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
   githubLogoPath = 'assets/logos/GitHub-Mark-32px.png';
   operators: IGameOperator[] = new Array<IGameOperator>(
     {
+      id: 0,
       selected: false,
       caption: DigitsConstants.OPERATOR_REV,
       operator: DigitsConstants.OPERATOR_REV,
       icon: 'revert',
     },
     {
+      id: 1,
       selected: false,
       caption: DigitsConstants.OPERATOR_ADD,
       operator: DigitsConstants.OPERATOR_ADD,
       icon: 'addition',
     },
     {
+      id: 2,
       selected: false,
       caption: DigitsConstants.OPERATOR_SUB,
       operator: DigitsConstants.OPERATOR_SUB,
       icon: 'substraction',
     },
     {
+      id: 3,
       selected: false,
       caption: DigitsConstants.OPERATOR_MUL,
       operator: DigitsConstants.OPERATOR_MUL,
       icon: 'multiplication',
     },
     {
+      id: 4,
       selected: false,
       caption: DigitsConstants.OPERATOR_DIV,
       operator: DigitsConstants.OPERATOR_DIV,

@@ -1,13 +1,15 @@
 <div class="game-stage-level-layout">
-    <div *ngIf="NO_STAGE_LEVELS; else HAS_STAGE_LEVELS">
-        <span class="warning-message">No stage levels defined!</span>
-    </div>
-    <ng-template #HAS_STAGE_LEVELS>
-        <div class="stage-levels">
-            <div class="stage-level" *ngFor="let stageLevel of stageLevels; index as ix" 
-            [ngStyle]="{'border-bottom': stageLevel.selected ? 'none' : '1px solid #d4d4d4' }">
-                <app-stage-level [stageLevel]="stageLevel"></app-stage-level>
-            </div>
+    @if (NO_STAGE_LEVELS) {
+        <div>
+            <span class="warning-message">No stage levels defined!</span>
         </div>
-    </ng-template>
+    } @else {
+        <div class="stage-levels">
+            @for (stageLevel of stageLevels; track stageLevel.index) {
+                <div class="stage-level" [ngStyle]="{'border-bottom': stageLevel.selected ? 'none' : '1px solid #d4d4d4' }">
+                    <app-stage-level [stageLevel]="stageLevel"></app-stage-level>
+                </div>
+            }
+        </div>
+    }
 </div>

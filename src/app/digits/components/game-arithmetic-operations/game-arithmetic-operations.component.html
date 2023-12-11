@@ -5,32 +5,23 @@
   </div>
   <div class="operands-container">
     <div class="three-operands">
-      <ng-container *ngFor="let operand of gameParameters.operands; let ix = index">
-          <button type="button" class="operand" [disabled]="operand.disabled"
-            [ngStyle]="{'background-color': operand.selected ? 'rgb(190 209 253 / 59%)' : '' }"
-            [ngClass]="!operand.disabled && !operand.selected ? 'operator-content-button' : 'operator-content-button-disabled'"
-            (click)="onOperandButtonClick(operand)">{{ operand.value }}
-          </button>
-      </ng-container>
+      @for(operand of gameParameters.operands; track operand.id; let ix = $index) {
+        <button type="button" class="operand" [disabled]="operand.disabled"
+          [ngStyle]="{'background-color': operand.selected ? 'rgb(190 209 253 / 59%)' : '' }"
+          [ngClass]="!operand.disabled && !operand.selected ? 'operator-content-button' : 'operator-content-button-disabled'"
+          (click)="onOperandButtonClick(operand)">{{ operand.value }}
+        </button>
+      }
     </div>
-    <!--div class="three-operands">
-      <ng-container *ngFor="let operand of gameParameters.operands; let ix = index">
-          <button type="button" *ngIf="ix > 2" class="operand" [disabled]="operand.disabled"
-              [ngStyle]="{'background-color': operand.selected ? 'rgb(190 209 253 / 59%)' : '' }"
-              [ngClass]="!operand.disabled && !operand.selected ? 'operator-content-button' : 'operator-content-button-disabled'"
-              (click)="onOperandButtonClick(operand)">{{ operand.value }}
-          </button>
-      </ng-container>
-    </div-->
   </div>
   <div class="operators-container">
-    <ng-container *ngFor="let operator of operators; let ix = index">
-        <button type="button" class="operator-content" 
-          [ngClass]="ix === 0 ? 'revert-button' : 'arithmetic-operation-button'"
-          (click)="onOperatorButtonClick(operator)">
-          <mat-icon class="operator-content-icon" svgIcon="{{ operator.icon }}"></mat-icon>
-        </button>
-    </ng-container>
+    @for (operator of operators; track operator.id; let ix = $index) {
+      <button type="button" class="operator-content" 
+        [ngClass]="ix === 0 ? 'revert-button' : 'arithmetic-operation-button'"
+        (click)="onOperatorButtonClick(operator)">
+        <mat-icon class="operator-content-icon" svgIcon="{{ operator.icon }}"></mat-icon>
+      </button>
+    }
   </div>
   <a href="https://github.com/lkovari/LKovariHome/tree/master/src/app/digits/digits-game.component.ts">
     <img [src]="githubLogoPath" width="16" height="16" />

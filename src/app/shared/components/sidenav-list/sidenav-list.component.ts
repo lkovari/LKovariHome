@@ -32,96 +32,49 @@ export class SidenavListComponent implements OnInit {
     this.menuItems = [
       {
         label: 'Angular',
+        styleclass: 'side-menu-item-style',
         icon: 'pi pi-box',
         items: [
             {
-                label: 'v16 news',
+                label: 'Features',
                 icon: 'pi pi-box',
+                styleclass: 'side-menu-item-style',
                 items: [
                     {
                         label: 'Signals',
                         icon: 'pi pi-book',
+                        styleclass: 'side-menu-item-style',
                         routerLink: '/angular-news-pages/angular-news-v16-signals'
                     },
                     {
-                        label: 'Required inputs',
-                        icon: 'pi pi-book'
-                    },
-                    {
-                      label: 'DestroyRef',
-                      icon: 'pi pi-book'
-                    },
-                    {
-                      label: 'provideServiceWorker',
-                      icon: 'pi pi-book'
-                    },
-                    {
-                      label: 'Styles removal opt-in',
-                      icon: 'pi pi-book'
-                    },
-                    {
-                      label: 'RxJS interoperability',
-                      icon: 'pi pi-book'
-                    },
-                    {
-                      label: 'Hydration enhanced',
-                      icon: 'pi pi-book'
+                        label: '@if @for',
+                        icon: 'pi pi-book',
+                        styleclass: 'side-menu-item-style',
                     }
                 ]
-            },
-            {
-              label: 'v15 news',
-              icon: 'pi pi-box',
-              items: [
-                  {
-                      label: 'Standalone Components API',
-                      icon: 'pi pi-book',
-                      routerLink: 'angular-news-pages/angular-news-v15-standalone'
-                  },
-                  {
-                      label: 'Create a multi-route application',
-                      icon: 'pi pi-book'
-                  },
-                  {
-                      label: 'Directive composition API',
-                      icon: 'pi pi-book'
-                  },
-                  {
-                      label: 'NgOptimizedImage',
-                      icon: 'pi pi-book'
-                  },
-                  {
-                      label: 'Functional router guards',
-                      icon: 'pi pi-book'
-                  },
-                  {
-                      label: 'Router unwraps default imports',
-                      icon: 'pi pi-book'
-                  },
-                  {
-                      label: 'Functional router guards',
-                      icon: 'pi pi-book'
-                  }
-              ]
             }
         ]
       },
       {
           label: 'Playground',
           icon: 'pi pi-bolt',
+          styleclass: 'side-menu-item-style',
           items: [
               {
                   label: 'Acts',
                   icon: 'pi pi-bolt',
+                  styleclass: 'side-menu-item-style',
                   items: [
                       {
                           label: 'Material',
                           icon: 'pi pi-book',
+                          styleclass: 'side-menu-item-style',
                           routerLink: 'material-examples/components/material-examples-main'
                       },
                       {
-                          label: 'Act #2',
-                          icon: 'pi pi-book'
+                          label: 'Nested',
+                          icon: 'pi pi-book',
+                          styleclass: 'side-menu-item-style'
                       }
                   ]
               }
