@@ -1,0 +1,83 @@
+<div class="nested-layout">
+    <div>
+        This page is a <b>playground</b>, I show on this page Angular v2+ source code snippets, what I learned at last
+        or just which interested in, for me.
+    </div>
+    <div class="sub-topic">
+        <b>Act #2</b>
+        <div class="top-gap">
+            <label class="text-primary">
+                <a class="horizontal-gap-left horizontal-gap-right"
+                    href="https://github.com/lkovari/LKovariHome/tree/master/src/app/playground/components/nested-example">
+                    <img [src]="githubLogoPath" width="16" height="16">
+                </a>
+                Example of a reactive CheckListComponent, where one list item is a form (FormGroup) and where the list
+                is a FormArray.
+            </label>
+        </div>
+    </div>
+    <div class="sub-topic">
+        <label><b>The
+                <a class="horizontal-gap-left horizontal-gap-right"
+                    href="https://github.com/lkovari/LKovariHome/tree/master/src/app/shared/components/checklist">
+                    <img [src]="githubLogoPath" width="16" height="16">
+                </a> app-checklist Component is </b><span class="text-warning">UNDER CONSTRUCTION!</span>
+        </label>
+        <p>
+            (In the future I will implement to use this checklist component as the Yes-no questions sheet, the normal answers will pass and the component will validate the user answers based on the predefined normal values.)
+        </p>
+        <p>
+            Current Validation rule(s): 
+            <a class="horizontal-gap-left horizontal-gap-right"
+                href="https://github.com/lkovari/LKovariHome/tree/master/src/app/shared/components/checklist/checklist-validators.ts">
+                <img [src]="githubLogoPath" width="16" height="16"> one item selection is required!
+            </a>
+        </p>
+        <form class="sub-topic" [formGroup]="exampleForm" (ngSubmit)="onSubmit(exampleForm)" novalidate autocomplete="off">
+            <div>
+                <label class="horizontal-gap-right">Selection mode</label>
+                <label class="form-check-inline" for="multiselect">
+                    <input id="multiselect" class="form-check-input horizontal-gap-left" 
+                    type="radio" [value]="MULTISELECT" formControlName="selectionMode">Multiple
+                </label>
+                <label class="form-check-inline" for="singleselect">
+                    <input id="singleselect" class="form-check-input horizontal-gap-left horizontal-gap-right" 
+                        type="radio" [value]="SINGLESELECT" formControlName="selectionMode">Single
+                </label>(Single: SelectionMode.SINGLE: {{SINGLESELECT}})
+            </div>
+            <div class="">
+                <label for="withDebounceChb horizontal-gap-right">Highlight items which marked Normal = true</label>
+                <input class="horizontal-gap-left" id="selectNormal" type="checkbox"
+                    formControlName="selectNormal">
+                <label class="horizontal-gap-left">(3rd. 6th. 8th. items) STATUS: <span [ngClass]="exampleForm.status === 'VALID' ? 'text-success' : 'text-danger'">{{ exampleForm.status }}</span></label>
+            </div>            
+            <div class="form-group row mb-2">
+                <app-checklist [checklistItems]="checklistItems"
+                    #checkListGroup
+                    #checkListRef
+                    [elementRef]="checkListReference"
+                    [selectionMode]="selectionMode"
+                    [selectNormal]="selectNormal"
+                    [required]="true"
+                    formGroupName="checkList"
+                    (onClick)="onClick($event)"
+                    >
+                </app-checklist>
+                @if (exampleForm.get('checkList')?.dirty 
+                    && exampleForm.get('checkList')?.hasError('required') 
+                    && exampleForm.get('checkList')?.errors!['invalidForm']) {
+                    <span class="show-invalid-feedback">
+                        {{ exampleForm.get('checkList')?.errors?.['invalidForm'].message }}
+                    </span>
+                }
+            </div>
+        </form>
+        <div class="buttons-area">
+            <button class="btn btn-primary" type="button" (click)="onSelectAll()" [disabled]="selectionMode === SINGLESELECT" >Select All</button>
+            <button class="btn btn-primary horizontal-gap-left" type="button" (click)="onUnselectAll()">Unselect All</button>
+          </div>   
+        <div>
+            <label class="sub-topic text-primary">Selected <span class="text-secondary">{{ showCheckedItems() | json }}</span></label>
+        </div>
+    </div>
+</div>

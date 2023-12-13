@@ -1,0 +1,55 @@
+
+    <form class="checklist-layout" [formGroup]="mainForm">
+      <ul
+        formArrayName="checkListFormArray"
+        style="list-style-type: none; min-width: 17rem; max-width: 50rem"
+      >
+        <!-- Usage of pure pipe named isChecklisItemSelected is a good example to prevent unnecessary function calls -->
+        <li
+          *ngFor="
+            let checklistFormGroupItem of getCheckListFormArray().controls;
+            let ix = index;
+            trackBy: trackById
+          "
+          [ngClass]="{
+            'checklist-item-selected': needToShowNormalItems(
+              selectNormal,
+              checklistFormGroupItem
+            )
+          }"
+          (click)="onChecklistItemClick(checklistFormGroupItem)"
+          tabIndex="{{ ix }}"
+          id="{{ 'lilabel' + ix }}"
+        >
+          <div
+            id="{{ 'label' + ix }}"
+            class="checklist-item-container"
+            [ngClass]="{
+              'checklist-item-disabled':
+                disabled || checklistFormGroupItem.value.disabled
+            }"
+            (mouseenter)="hoverIndex = ix"
+            (mouseleave)="hoverIndex = null"
+            [ngClass]="{ 'checklist-item-highlight': hoverIndex === ix }"
+            [formGroupName]="ix"
+          >
+            <div class="checklist-label-item">
+              {{ checklistFormGroupItem.value.label }}
+            </div>
+            <input
+              id="{{ 'itemCheckBox' + ix }}"
+              type="checkbox"
+              class="checklist-checkmark-item"
+              formControlName="selected"
+            />
+          </div>
+        </li>
+        @if (showErrorInside && getCheckListFormArray().hasError('required') && getCheckListFormArray().errors!['invalidForm']) {
+            <span class="show-invalid-feedback">
+            {{ getCheckListFormArray().errors?.['invalidForm'].message }}
+          </span>
+        }
+      </ul>
+    </form>
+  
+  

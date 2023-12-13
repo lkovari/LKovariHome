@@ -21,15 +21,20 @@ import {
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { SlideMenuModule } from 'primeng/slidemenu';
 import { ImageLazyLoadingDirective } from './directives/image-lazy-loading.directive';
+import { ChecklistComponent } from './components/checklist/checklist.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     HeaderComponent,
     SidenavListComponent,
     LayoutContentComponent,
     ImageLazyLoadingDirective,
+    ChecklistComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     MaterialModule,
     MatToolbarModule,
@@ -46,6 +51,7 @@ import { ImageLazyLoadingDirective } from './directives/image-lazy-loading.direc
     LayoutContentComponent,
     SlideMenuModule,
     ImageLazyLoadingDirective,
+    ChecklistComponent
   ],
   providers: [],
 })

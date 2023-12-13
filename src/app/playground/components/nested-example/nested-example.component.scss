@@ -1,0 +1,25 @@
+.nested-layout {
+    .sub-topic {
+        padding: 1Rem;
+    }
+    .horizontal-gap-right {
+        padding-right: 0.5rem;
+    }
+    .horizontal-gap-left {
+        padding-left: 0.5rem;
+    }    
+    .top-gap {
+        padding-top: 1Rem;
+    }
+    .custom-text-style {
+        width: 100%;
+        resize: none;
+    }
+    .show-invalid-feedback {
+        display: block;
+        width: 100%;
+        margin-top: 0.25rem;
+        font-size: 80%;
+        color: #dc3545;
+    }    
+}

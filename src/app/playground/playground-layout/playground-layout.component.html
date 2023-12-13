@@ -1,0 +1,24 @@
+<div class="layout-content">
+    <app-layout-content>
+        <mat-toolbar class="toolbar-style" color="primary">
+            <div fxShow="true" fxHide.gt-xs>
+                <button mat-icon-button (click)="onSidenavToggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </div>
+            <app-header></app-header>
+        </mat-toolbar>
+        <mat-sidenav-container autosize>
+            <mat-sidenav #sidenav role="navigation" class="mat-elevation-z10"
+                [mode]="isScreenXs() ? 'over' : 'side'" 
+                [opened]="!isScreenXs()">
+                <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list>
+            </mat-sidenav>
+            <mat-sidenav-content>
+                <main>
+                    <router-outlet></router-outlet>
+                </main>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
+    </app-layout-content>
+</div>

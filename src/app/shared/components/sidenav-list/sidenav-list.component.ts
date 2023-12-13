@@ -74,7 +74,8 @@ export class SidenavListComponent implements OnInit {
                       {
                           label: 'Nested',
                           icon: 'pi pi-book',
-                          styleclass: 'side-menu-item-style'
+                          styleclass: 'side-menu-item-style',
+                          routerLink: 'playground/components/nested-example'
                       }
                   ]
               }

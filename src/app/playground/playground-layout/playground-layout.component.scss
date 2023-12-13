@@ -1,0 +1,20 @@
+.layout-content {
+    height: calc(100% - 64px);
+    
+    mat-sidenav-container,
+    mat-sidenav-content,
+    mat-sidenav {
+        height: 100%;
+    }
+
+    mat-sidenav {
+        width: 250px;
+    }
+
+    main {
+        padding: 10px;
+    }
+    .toolbar-style {
+        width: 100%;
+    }
+}
