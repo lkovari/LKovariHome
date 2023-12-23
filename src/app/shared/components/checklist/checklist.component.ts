@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, forwardRef, ElementRef, inject, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, forwardRef, ElementRef, inject, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, ControlValueAccessor, AbstractControl, NG_VALUE_ACCESSOR, FormGroupDirective } from '@angular/forms';
 import { IChecklistItem } from '../../models/checklist-item.interface';
 import { ChecklistValidators } from './checklist-validator';
@@ -17,7 +17,7 @@ export const CHECKLIST_VALUE_ACCESSOR: any = {
   styleUrls: ['./checklist.component.scss'],
   providers: [CHECKLIST_VALUE_ACCESSOR]
 })
-export class ChecklistComponent implements OnInit, ControlValueAccessor, AfterViewInit  {
+export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChanges, AfterViewInit  {
   private formBuilder: FormBuilder = inject(FormBuilder);
   // private changeDetectorRef: ChangeDetectorRef = inject(ChangeDetectorRef);
   hoverIndex: any;
@@ -82,12 +82,6 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, AfterVi
     // get the parent form (FormGroup)
     this.parentForm = this.formGroupDirective.control as FormGroup;
     console.log('!=> Get the parent form with: this.parentForm = this.formGroupDirective.control as FormGroup;');
-    // capture the elementRef to get formGroupName attributze to replace formgGroup wich in used by the component
-    let formGroupName = this.elementRef.nativeElement.getAttribute('formGroupName');
-    console.log('!=> Get the nested formGroup of the parent form with: let formGroupName = this.elementRef.nativeElement.getAttribute(\'formGroupName\');');
-    // replace the build checkList on the parent form with the checkListFormArray which built in this component
-    this.parentForm.setControl(formGroupName, this.mainForm.controls['checkListFormArray']);
-    console.log('!=> Set the parent form formGroup field (which is nested) with: this.parentForm.setControl(formGroupName, this.mainForm.controls[\'checkListFormArray\']);');
 
     // add items
     if (this.getCheckListFormArray().controls.length < 1) {
@@ -108,6 +102,19 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, AfterVi
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['elementRef'] && changes['elementRef'].currentValue && this.formGroupDirective.control) {
+      // capture parent form
+      this.parentForm = this.formGroupDirective.control as FormGroup;
+      console.log('!=> Get the parent form with: this.parentForm = this.formGroupDirective.control as FormGroup;');      
+      // capture the elementRef to get formGroupName attributze to replace formgGroup wich in used by the component
+      let formGroupName = this.elementRef.nativeElement.getAttribute('formGroupName');
+      console.log('!=> Get the nested formGroup of the parent form with: let formGroupName = this.elementRef.nativeElement.getAttribute(\'formGroupName\');');
+      // replace the build checkList on the parent form with the checkListFormArray which built in this component
+      this.parentForm.setControl(formGroupName, this.mainForm.controls['checkListFormArray']);
+      console.log('!=> Set the parent form formGroup field (which is nested) with: this.parentForm.setControl(formGroupName, this.mainForm.controls[\'checkListFormArray\']);');
+    }
+  }
 
   ngAfterViewInit(): void {
     this.setupValidatorsDinamically();
