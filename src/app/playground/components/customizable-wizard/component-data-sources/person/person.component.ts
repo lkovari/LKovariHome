@@ -20,17 +20,7 @@ export class PersonComponent implements OnInit {
     });
   }
 
-  getForm(): FormGroup<any> {
+  getForm(): FormGroup {
     return this.personForm;
   }
-
-  setIx(v: number): void {
-    this.index = v;
-  }
-  setLastItemIx(v: number): void {
-    this.lastPageIndex = v;
-  }
-  setDefaultValues(): void {
-    throw new Error('Method not implemented.');
-  }  
 }

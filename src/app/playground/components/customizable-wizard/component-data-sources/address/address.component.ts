@@ -23,17 +23,7 @@ export class AddressComponent implements OnInit {
     });
   }
 
-  getForm(): FormGroup<any> {
+  getForm(): FormGroup {
     return this.addressForm;
   }
-
-  setIx(v: number): void {
-    this.index = v;
-  }
-  setLastItemIx(v: number): void {
-    this.lastPageIndex = v;
-  }
-  setDefaultValues(): void {
-    throw new Error('Method not implemented.');
-  } 
 }

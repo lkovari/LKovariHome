@@ -1,6 +1,7 @@
 import { Type } from '@angular/core';
 import { IWizardPage } from './wizard-page.interface';
 import { IPageRuleDescriptor } from './page-rule-descriptor.interface';
+import { IFormControlData } from './form-control-data.interface';
 
 export class WizardPage implements IWizardPage {
   index: number;
@@ -14,6 +15,7 @@ export class WizardPage implements IWizardPage {
   nextPageRuleDescriptor?: IPageRuleDescriptor;
   allowBackPage: boolean;
   allowNextPage: boolean;
+  data: IFormControlData<string | number>[]
 
   constructor(
     index: number,
@@ -26,7 +28,8 @@ export class WizardPage implements IWizardPage {
     nextIndex: number,
     allowBackPage: boolean,
     allowNextPage: boolean,
-    nextPageRuleDescriptor?: IPageRuleDescriptor | undefined
+    data: IFormControlData<string | number>[],
+    nextPageRuleDescriptor?: IPageRuleDescriptor
   ) {
     this.index = index;
     this.order = order;
@@ -39,5 +42,6 @@ export class WizardPage implements IWizardPage {
     this.nextPageRuleDescriptor = nextPageRuleDescriptor;
     this.allowBackPage = allowBackPage;
     this.allowNextPage = allowNextPage;
+    this.data = data;
   }
 }

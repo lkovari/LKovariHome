@@ -8,16 +8,26 @@
         [selectedIndex]="currentIndex"
       ></app-wizard-progress>
     </div>
-    <div class="layout-content"  [ngStyle]="componentHeight">
-      <ng-template dynamicComponentHost>
-
-      </ng-template>
+    <div class="layout-content" [ngStyle]="componentHeight">
+      <ng-template dynamicComponentHost> </ng-template>
     </div>
     <div class="footer-style">
-    <div class="d-flex flex-row justify-content-around">
-        <button class="btn btn-primary" [disabled]="currentIndex <= 0"(click)="backClicked()">Back</button>
-        <button class="btn btn-primary" [disabled]="currentIndex >= wizardData.wizardPages.length - 1" (click)="nextClicked()">Next</button>
-    </div>
+      <div class="d-flex flex-row justify-content-around">
+        <button
+          class="btn btn-primary"
+          [disabled]="currentIndex <= 0"
+          (click)="backClicked()"
+        >
+          Back
+        </button>
+        <button
+          class="btn btn-primary"
+          [disabled]="currentIndex >= wizardData.wizardPages.length - 1"
+          (click)="nextClicked()"
+        >
+          Next
+        </button>
+      </div>
     </div>
   </form>
 </div>
