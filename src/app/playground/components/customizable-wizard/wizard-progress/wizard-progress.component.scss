@@ -1,0 +1,24 @@
+.wizard-progress-layout {
+    margin: 2rem;
+    height: 3rem;
+    background-color: #e0f1fc;
+    border: var(--bs-border-width) solid darkgray;
+    border-radius: var(--bs-border-radius);
+
+    .wizard-progress-content {
+        .title-base {
+            font-size: 1.3rem;
+        }
+        margin: 0.8rem;
+        .select-title {
+            @extend .title-base;
+            color: blue;
+            font-weight: bold;
+        }
+        .deselect-title {
+            @extend .title-base;
+            color: black;
+            font-weight: normal;
+        }
+    }    
+}

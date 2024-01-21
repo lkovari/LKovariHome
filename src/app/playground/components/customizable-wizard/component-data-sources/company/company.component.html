@@ -1,0 +1,31 @@
+<div class="company-layout">
+  <form class="form-group" [formGroup]="companyForm">
+    <div class="form-control-gap">
+      <label for="name">Company Name:<span class="text-danger">*</span></label>
+      <input
+        class="form-control"
+        type="text"
+        id="name"
+        formControlName="name"
+      />
+    </div>
+    <div class="form-control-gap">
+      <label for="phone">Phone:<span class="text-danger">*</span></label>
+      <input
+        class="form-control"
+        type="text"
+        id="phone"
+        formControlName="phone"
+      />
+    </div>
+    <div class="form-control-gap">
+      <label for="description">Description:</label>
+      <input
+        class="form-control"
+        type="text"
+        id="description"
+        formControlName="description"
+      />
+    </div>
+  </form>
+</div>

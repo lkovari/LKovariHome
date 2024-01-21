@@ -1,0 +1,31 @@
+<div class="wizard-main-layout">
+  <div>
+    This page is a <b>playground</b>, I show on this page Angular v2+ source
+    code snippets, what I learned at last or just which interested in, for me.
+  </div>
+  <div class="sub-topic">
+    <b>Act #2</b>
+    <div class="top-gap">
+      <label class="text-primary">
+        <a
+          class="horizontal-gap-left horizontal-gap-right"
+          href="https://github.com/lkovari/LKovariHome/tree/master/src/app/playground/components/customizable-wizard"
+        >
+          <img [src]="githubLogoPath" width="16" height="16" />
+        </a>
+        Example of a Customizable Wizard component which get a data model
+        (IWizardData) and contains the wizard pages in an array where each item
+        is an IWizardPage. Also contains a pre-existing components' name and for
+        each wizard step create the component dynamically and show that.
+      </label>
+    </div>
+  </div>
+  <div class="sub-topic under-construction">This component is under construction!</div>
+  <div class="sub-topic text-secondary">TODO: include dynamic component into container validation mechanism, implement RuleDescriptor, pass data into dynamic components, persist data from dynamic components, optional controlling step back, etc.</div>
+  <div>
+    <app-customizable-wizard
+      [wizardData]="wizardData"
+      [componentHeight]="{'height': '18rem'}"
+    ></app-customizable-wizard>
+  </div>
+</div>

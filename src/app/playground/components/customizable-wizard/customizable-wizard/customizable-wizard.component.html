@@ -1,0 +1,23 @@
+<div class="wizard-layout">
+  <form>
+    <div class="title-style">{{ wizardData.title }}</div>
+    <div class="description-style">{{ wizardData.description }}</div>
+    <div>
+      <app-wizard-progress
+        [wizardPages]="wizardData.wizardPages"
+        [selectedIndex]="currentIndex"
+      ></app-wizard-progress>
+    </div>
+    <div class="layout-content"  [ngStyle]="componentHeight">
+      <ng-template dynamicComponentHost>
+
+      </ng-template>
+    </div>
+    <div class="footer-style">
+    <div class="d-flex flex-row justify-content-around">
+        <button class="btn btn-primary" [disabled]="currentIndex <= 0"(click)="backClicked()">Back</button>
+        <button class="btn btn-primary" [disabled]="currentIndex >= wizardData.wizardPages.length - 1" (click)="nextClicked()">Next</button>
+    </div>
+    </div>
+  </form>
+</div>

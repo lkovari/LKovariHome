@@ -5,12 +5,11 @@
         style="list-style-type: none; min-width: 17rem; max-width: 50rem"
       >
         <!-- Usage of pure pipe named isChecklisItemSelected is a good example to prevent unnecessary function calls -->
-        <li
-          *ngFor="
-            let checklistFormGroupItem of getCheckListFormArray().controls;
-            let ix = index;
-            trackBy: trackById
-          "
+        @for (
+            checklistFormGroupItem of getCheckListFormArray().controls; track trackById(ix, 
+            checklistFormGroupItem); let ix = $index) {
+          <li
+         
           [ngClass]="{
             'checklist-item-selected': needToShowNormalItems(
               selectNormal,
@@ -44,6 +43,7 @@
             />
           </div>
         </li>
+}
         @if (showErrorInside && getCheckListFormArray().hasError('required') && getCheckListFormArray().errors!['invalidForm']) {
             <span class="show-invalid-feedback">
             {{ getCheckListFormArray().errors?.['invalidForm'].message }}

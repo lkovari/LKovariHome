@@ -6,8 +6,8 @@ import * as angular from '@angular/forms';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('12/14/2023 00:09 AM');
-  lastUpdateTooltip = 'Angular v17 Nested component in parent form';
+  lastUpdateDate = new Date('01/21/2024 04:34 PM');
+  lastUpdateTooltip = 'Wizard component with dynamic component creation';
   angularVersion: any;
 
   constructor() { }

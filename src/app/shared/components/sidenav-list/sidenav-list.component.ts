@@ -76,7 +76,13 @@ export class SidenavListComponent implements OnInit {
                           icon: 'pi pi-book',
                           styleclass: 'side-menu-item-style',
                           routerLink: 'playground/components/nested-example'
-                      }
+                      },
+                      {
+                          label: 'Wizard',
+                          icon: 'pi pi-book',
+                          styleclass: 'side-menu-item-style',
+                          routerLink: 'playground/components/customizable-wizard'
+                      }                      
                   ]
               }
           ]

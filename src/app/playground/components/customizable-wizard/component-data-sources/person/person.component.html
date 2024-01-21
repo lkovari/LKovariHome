@@ -1,0 +1,22 @@
+<div class="person-layout">
+  <form class="form-group" [formGroup]="personForm">
+    <div class="form-control-gap">
+      <label for="name">Name:<span class="text-danger">*</span></label>
+      <input
+        class="form-control"
+        type="text"
+        id="name"
+        formControlName="name"
+      />
+    </div>
+    <div class="form-control-gap">
+      <label for="age">Age:</label>
+      <input
+        class="form-control"
+        type="number"
+        id="age"
+        formControlName="age"
+      />
+    </div>
+  </form>
+</div>

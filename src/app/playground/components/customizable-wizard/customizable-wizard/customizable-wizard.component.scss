@@ -1,0 +1,31 @@
+.wizard-layout {
+    display: flex;
+    flex-direction: column;
+
+    border: solid 1px gray;
+    .sub-topic {
+        padding: 1Rem;
+    }
+    .horizontal-gap-right {
+        padding-right: 0.5rem;
+    }
+    .horizontal-gap-left {
+        padding-left: 0.5rem;
+    }
+    .title-style {
+        margin: 2rem;
+        height: 1rem;
+        text-align: center;
+        font-weight: 600;
+    }
+    .description-style {
+        margin: 1rem 2rem 1rem 2rem;
+        color: darkgray;
+    }
+    .layout-content {
+        height: 50%;
+    }
+    .footer-style {
+        height: 3rem;
+    }
+}

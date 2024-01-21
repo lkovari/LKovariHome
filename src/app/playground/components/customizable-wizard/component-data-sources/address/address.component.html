@@ -1,0 +1,35 @@
+<div class="address-layout">
+  <form class="form-group" [formGroup]="addressForm">
+    <div class="form-control-gap">
+      <label for="street">Street:<span class="text-danger">*</span></label>
+      <input
+        class="form-control"
+        type="text"
+        id="street"
+        formControlName="street"
+      />
+    </div>
+    <div class="form-control-gap">
+      <label for="city">City:<span class="text-danger">*</span></label>
+      <input
+        class="form-control"
+        type="text"
+        id="city"
+        formControlName="city"
+      />
+    </div>
+    <div class="form-control-gap">
+      <label for="state">State:<span class="text-danger">*</span></label>
+      <input
+        class="form-control"
+        type="text"
+        id="state"
+        formControlName="state"
+      />
+    </div>
+    <div class="form-control-gap">
+      <label for="zip">Zip:<span class="text-danger">*</span></label>
+      <input class="form-control" type="text" id="zip" formControlName="zip" />
+    </div>
+  </form>
+</div>
