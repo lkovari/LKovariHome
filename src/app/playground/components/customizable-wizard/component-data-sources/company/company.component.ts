@@ -1,13 +1,11 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { IWizardComponent } from '../../models/wizard-component.interface';
-
 @Component({
   selector: 'app-company',
   templateUrl: './company.component.html',
   styleUrl: './company.component.scss',
 })
-export class CompanyComponent implements OnInit, IWizardComponent {
+export class CompanyComponent implements OnInit {
   companyForm: FormGroup;
   private formBuilder: FormBuilder = inject(FormBuilder);
   @Input() index: number;

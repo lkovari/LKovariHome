@@ -1,13 +1,12 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IWizardComponent } from '../../models/wizard-component.interface';
 
 @Component({
   selector: 'app-address',
   templateUrl: './address.component.html',
   styleUrl: './address.component.scss'
 })
-export class AddressComponent implements OnInit, IWizardComponent {
+export class AddressComponent implements OnInit {
   addressForm: FormGroup;
   private formBuilder: FormBuilder = inject(FormBuilder);
   @Input() index: number;

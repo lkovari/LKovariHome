@@ -1,13 +1,12 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { IWizardComponent } from '../../models/wizard-component.interface';
 
 @Component({
   selector: 'app-person',
   templateUrl: './person.component.html',
   styleUrl: './person.component.scss',
 })
-export class PersonComponent implements OnInit, IWizardComponent {
+export class PersonComponent implements OnInit {
   personForm: FormGroup;
   private formBuilder: FormBuilder = inject(FormBuilder);
   @Input() index: number;
@@ -17,6 +16,7 @@ export class PersonComponent implements OnInit, IWizardComponent {
     this.personForm = this.formBuilder.group({
       name: ['', Validators.required],
       age: [''],
+      phone: ['', Validators.required],
     });
   }
 
