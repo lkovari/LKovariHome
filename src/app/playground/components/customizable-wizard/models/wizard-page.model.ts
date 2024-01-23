@@ -2,6 +2,7 @@ import { Type } from '@angular/core';
 import { IWizardPage } from './wizard-page.interface';
 import { IPageRuleDescriptor } from './page-rule-descriptor.interface';
 import { IFormControlData } from './form-control-data.interface';
+import { FormControlStatus } from '@angular/forms';
 
 export class WizardPage implements IWizardPage {
   index: number;
@@ -16,6 +17,7 @@ export class WizardPage implements IWizardPage {
   allowBackPage: boolean;
   allowNextPage: boolean;
   data: IFormControlData<string | number>[]
+  lastFormStatus: FormControlStatus = 'INVALID';
 
   constructor(
     index: number,

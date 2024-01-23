@@ -10,7 +10,7 @@ import { IWizardData } from '../models/wizard-data.interface';
 import { IWizardPage } from '../models/wizard-page.interface';
 import { DynamicComponentHostDirective } from 'src/app/playground/directives/dynamic-component-host.directive';
 import { IFormControlData } from '../models/form-control-data.interface';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormControlStatus, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-customizable-wizard',
@@ -25,6 +25,7 @@ export class CustomizableWizardComponent implements AfterViewInit {
   @Input() componentHeight: { [clazz: string]: any } | null = null;
   currentIndex: number = 0;
   currentWizardPage: IWizardPage;
+  isFormValid: boolean = false;
 
   constructor() {}
   ngAfterViewInit(): void {
@@ -39,6 +40,10 @@ export class CustomizableWizardComponent implements AfterViewInit {
   nextClicked() {
     this.currentIndex++;
     this.setupComponentDynamically();
+  }
+
+  saveClicked() {
+    console.log('Saved');
   }
 
   private setupComponentDynamically() {
@@ -65,6 +70,10 @@ export class CustomizableWizardComponent implements AfterViewInit {
     this.wizardData.wizardPages[this.currentIndex].componentRef = componentRef;
     componentRef.hostView.detectChanges();
     const formGroup = componentRef.instance.getForm() as FormGroup;
+    formGroup.statusChanges.subscribe((status: FormControlStatus) => {
+      this.isFormValid = status === 'VALID';
+      this.wizardData.wizardPages[this.currentIndex].lastFormStatus = status;
+    });
     this.setupDataByProperyName(wizardPage.data, formGroup);
     wizardPage.componentRef = componentRef;
   }

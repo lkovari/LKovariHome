@@ -1,6 +1,7 @@
 import { Type } from "@angular/core";
 import { IPageRuleDescriptor } from "./page-rule-descriptor.interface";
 import { IFormControlData } from "./form-control-data.interface";
+import { FormControlStatus } from "@angular/forms";
 
 export interface IWizardPage {
     index: number;
@@ -15,4 +16,5 @@ export interface IWizardPage {
     allowBackPage: boolean;
     allowNextPage: boolean;
     data: IFormControlData<string | number>[];
+    lastFormStatus: FormControlStatus;
 }
