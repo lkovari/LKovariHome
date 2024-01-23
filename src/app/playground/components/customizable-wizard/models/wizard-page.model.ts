@@ -3,6 +3,7 @@ import { IWizardPage } from './wizard-page.interface';
 import { IPageRuleDescriptor } from './page-rule-descriptor.interface';
 import { IFormControlData } from './form-control-data.interface';
 import { FormControlStatus } from '@angular/forms';
+import { Subject } from 'rxjs';
 
 export class WizardPage implements IWizardPage {
   index: number;
@@ -18,7 +19,7 @@ export class WizardPage implements IWizardPage {
   allowNextPage: boolean;
   data: IFormControlData<string | number>[]
   lastFormStatus: FormControlStatus = 'INVALID';
-
+  unsubscribe: Subject<void>;
   constructor(
     index: number,
     order: number,

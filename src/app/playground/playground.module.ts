@@ -15,6 +15,7 @@ import { PersonComponent } from './components/customizable-wizard/component-data
 import { AddressComponent } from './components/customizable-wizard/component-data-sources/address/address.component';
 import { CompanyComponent } from './components/customizable-wizard/component-data-sources/company/company.component';
 import { DynamicComponentHostDirective } from './directives/dynamic-component-host.directive';
+import { MiscellaneousComponent } from './components/customizable-wizard/component-data-sources/miscellaneous/miscellaneous.component';
 
 
 
@@ -28,6 +29,7 @@ import { DynamicComponentHostDirective } from './directives/dynamic-component-ho
     PersonComponent,
     AddressComponent,
     CompanyComponent,
+    MiscellaneousComponent,
     DynamicComponentHostDirective
   ],
   imports: [

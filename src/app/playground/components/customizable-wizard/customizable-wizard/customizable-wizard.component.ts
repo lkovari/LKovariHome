@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   Input,
+  OnDestroy,
   ViewChild,
   ViewContainerRef,
   inject,
@@ -11,13 +12,14 @@ import { IWizardPage } from '../models/wizard-page.interface';
 import { DynamicComponentHostDirective } from 'src/app/playground/directives/dynamic-component-host.directive';
 import { IFormControlData } from '../models/form-control-data.interface';
 import { FormControl, FormControlStatus, FormGroup } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-customizable-wizard',
   templateUrl: './customizable-wizard.component.html',
   styleUrl: './customizable-wizard.component.scss',
 })
-export class CustomizableWizardComponent implements AfterViewInit {
+export class CustomizableWizardComponent implements AfterViewInit, OnDestroy {
   @ViewChild(DynamicComponentHostDirective, { static: true })
   dynamicComponentHost!: DynamicComponentHostDirective;
   viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
@@ -28,6 +30,7 @@ export class CustomizableWizardComponent implements AfterViewInit {
   isFormValid: boolean = false;
 
   constructor() {}
+
   ngAfterViewInit(): void {
     this.setupComponentDynamically();
   }
@@ -43,6 +46,10 @@ export class CustomizableWizardComponent implements AfterViewInit {
   }
 
   saveClicked() {
+    this.wizardData.wizardPages.forEach((page: IWizardPage) => {
+      console.log(`Component : ${page.componentName}.`);  
+      console.log(JSON.stringify(page.componentRef.instance.getForm().value));
+    });
     console.log('Saved');
   }
 
@@ -70,11 +77,22 @@ export class CustomizableWizardComponent implements AfterViewInit {
     this.wizardData.wizardPages[this.currentIndex].componentRef = componentRef;
     componentRef.hostView.detectChanges();
     const formGroup = componentRef.instance.getForm() as FormGroup;
-    formGroup.statusChanges.subscribe((status: FormControlStatus) => {
+    const unsubscribe = new Subject<void>();
+    formGroup.statusChanges.pipe(
+      takeUntil(unsubscribe)
+    ).subscribe((status: FormControlStatus) => {
       this.isFormValid = status === 'VALID';
       this.wizardData.wizardPages[this.currentIndex].lastFormStatus = status;
+      this.wizardData.wizardPages[this.currentIndex].unsubscribe = unsubscribe;
     });
     this.setupDataByProperyName(wizardPage.data, formGroup);
     wizardPage.componentRef = componentRef;
+  }
+
+  ngOnDestroy(): void {
+    this.wizardData.wizardPages.forEach((page: IWizardPage) => {
+      page.unsubscribe.next();
+      page.unsubscribe.complete();
+    });
   }
 }

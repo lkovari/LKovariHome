@@ -6,6 +6,7 @@ import { WizardPage } from './models/wizard-page.model';
 import { AddressComponent } from './component-data-sources/address/address.component';
 import { CompanyComponent } from './component-data-sources/company/company.component';
 import { IFormControlData } from './models/form-control-data.interface';
+import { MiscellaneousComponent } from './component-data-sources/miscellaneous/miscellaneous.component';
 
 @Component({
   selector: 'app-customizable-wizard-main',
@@ -64,6 +65,21 @@ export class CustomizableWizardMainComponent implements OnInit {
     },
   ];
 
+  miscellaneousFormData: IFormControlData<string | number>[] = [
+    {
+      controlName: 'occupation',
+      controlValue: { formControlValue: 'Software developer' },
+    },
+    {
+      controlName: 'religion',
+      controlValue: { formControlValue: '' },
+    },
+    {
+      controlName: 'hobbie',
+      controlValue: { formControlValue: 'Drumming' },
+    },
+  ];
+
   wizardPages: Array<IWizardPage> = [
     new WizardPage(
       0,
@@ -104,6 +120,19 @@ export class CustomizableWizardMainComponent implements OnInit {
       true,
       this.companyFormData
     ),
+    new WizardPage(
+      3,
+      4,
+      'Miscellaneous',
+      'app-app-miscellaneous',
+      MiscellaneousComponent,
+      null,
+      '',
+      -1,
+      true,
+      true,
+      this.miscellaneousFormData
+    )
   ];
   wizardData: IWizardData = {
     title: 'Customizable Wizard Component Example',
