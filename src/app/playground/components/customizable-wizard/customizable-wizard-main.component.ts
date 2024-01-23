@@ -124,7 +124,7 @@ export class CustomizableWizardMainComponent implements OnInit {
       3,
       4,
       'Miscellaneous',
-      'app-app-miscellaneous',
+      'app-miscellaneous',
       MiscellaneousComponent,
       null,
       '',
