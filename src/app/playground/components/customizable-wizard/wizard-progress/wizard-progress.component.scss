@@ -23,17 +23,17 @@
     }   
 }
 @mixin for-phone-only {
-    @media (max-width: 599px) { font-size: 14px }
+    @media (max-width: 599px) { font-size: 7px }
 }
 @mixin for-tablet-portrait-up {
-  @media (min-width: 600px) { font-size: 24px }
+  @media (min-width: 600px) { font-size: 28px }
 }
 @mixin for-tablet-landscape-up {
-  @media (min-width: 900px) { font-size: 34px }
+  @media (min-width: 900px) { font-size: 35px }
 }
 @mixin for-desktop-up {
-  @media (min-width: 1200px) { font-size: 44px }
+  @media (min-width: 1200px) { font-size: 42px }
 }
 @mixin for-big-desktop-up {
-  @media (min-width: 1800px) { font-size: 54px }
+  @media (min-width: 1800px) { font-size: 49px }
 }  
