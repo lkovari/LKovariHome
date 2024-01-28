@@ -8,6 +8,11 @@
         id="name"
         formControlName="name"
       />
+      @if (companyForm.get('name') && (companyForm.get('name')?.invalid &&
+      companyForm.get('name')?.dirty &&
+      companyForm.get('name')?.errors?.['required'])) {
+      <span class="text-danger">Name value is required!</span>
+      }
     </div>
     <div class="form-control-gap">
       <label for="phone">Phone:<span class="text-danger">*</span></label>
@@ -17,6 +22,11 @@
         id="phone"
         formControlName="phone"
       />
+      @if (companyForm.get('phone') && (companyForm.get('phone')?.invalid &&
+      companyForm.get('phone')?.dirty &&
+      companyForm.get('phone')?.errors?.['required'])) {
+      <span class="text-danger">Phone name value is required!</span>
+      }
     </div>
     <div class="form-control-gap">
       <label for="description">Description:</label>

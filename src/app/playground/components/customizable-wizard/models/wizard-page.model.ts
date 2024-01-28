@@ -17,7 +17,8 @@ export class WizardPage implements IWizardPage {
   nextPageRuleDescriptor?: IPageRuleDescriptor;
   allowBackPage: boolean;
   allowNextPage: boolean;
-  data: IFormControlData<string | number>[]
+  initialData: IFormControlData<string | number>[];
+  formData: any;
   lastFormStatus: FormControlStatus = 'INVALID';
   unsubscribe: Subject<void>;
   constructor(
@@ -31,7 +32,7 @@ export class WizardPage implements IWizardPage {
     nextIndex: number,
     allowBackPage: boolean,
     allowNextPage: boolean,
-    data: IFormControlData<string | number>[],
+    initialData: IFormControlData<string | number>[],
     nextPageRuleDescriptor?: IPageRuleDescriptor
   ) {
     this.index = index;
@@ -45,6 +46,6 @@ export class WizardPage implements IWizardPage {
     this.nextPageRuleDescriptor = nextPageRuleDescriptor;
     this.allowBackPage = allowBackPage;
     this.allowNextPage = allowNextPage;
-    this.data = data;
+    this.initialData = initialData;
   }
 }

@@ -1,5 +1,5 @@
 import {
-  AfterContentChecked,
+  AfterViewInit,
   Component,
   Input,
   OnDestroy,
@@ -20,12 +20,24 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './customizable-wizard.component.html',
   styleUrl: './customizable-wizard.component.scss',
 })
-export class CustomizableWizardComponent implements OnInit, AfterContentChecked, OnDestroy {
+export class CustomizableWizardComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @ViewChild(DynamicComponentHostDirective, { static: true })
   dynamicComponentHost!: DynamicComponentHostDirective;
+
   viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
+
   @Input() wizardData: IWizardData;
-  @Input() componentHeight: { [clazz: string]: any } | null = null;
+  @Input() componentContainerStyle: { [clazz: string]: any } | null = null;
+  @Input() wizardProgressStyle: { [clazz: string]: any } | null = null;
+  @Input() wizardDescriptionStyle: { [clazz: string]: any } | null = null;
+  @Input() wizardTitleStyle: { [clazz: string]: any } | null = null;
+  @Input() wizardFooterStyle: { [clazz: string]: any } | null = null;
+  @Input() wizardBackButtonStyle: { [clazz: string]: any } | null = null;
+  @Input() wizardNextButtonStyle: { [clazz: string]: any } | null = null;
+  @Input() wizardSaveButtonStyle: { [clazz: string]: any } | null = null;
+
   currentIndex: number = 0;
   currentWizardPage: IWizardPage;
   isFormValid: boolean = false;
@@ -36,19 +48,30 @@ export class CustomizableWizardComponent implements OnInit, AfterContentChecked,
     this.setupComponentDynamically();
   }
 
-  ngAfterContentChecked(): void {
-    this.setupDataToComponent();
+  ngAfterViewInit(): void {
     this.setupListeners();
+    setTimeout(() => {
+      this.setupInitialDataToComponent();
+    }, 1);
   }
 
   backClicked() {
     this.currentIndex--;
     this.setupComponentDynamically();
+    this.setupListeners();
+    if (this.wizardData.wizardPages[this.currentIndex].formData) {
+      this.restoreTheFormDatafROMWizardModel();
+    } else {
+      this.setupInitialDataToComponent();
+    }
   }
 
   nextClicked() {
+    this.storeTheFormDataToWizardModel();
     this.currentIndex++;
     this.setupComponentDynamically();
+    this.setupListeners();
+    this.setupInitialDataToComponent();
   }
 
   saveClicked() {
@@ -70,16 +93,28 @@ export class CustomizableWizardComponent implements OnInit, AfterContentChecked,
   ) {
     formData.forEach((fieldData: IFormControlData<string | number>) => {
       const formControl = form.controls[fieldData.controlName] as FormControl;
-      formControl.setValue(fieldData.controlValue['formControlValue']);
+      formControl.setValue(fieldData.controlValue);
     });
   }
 
-  /*
-  private setupComponentInputDataByInputName(componentRef: ComponentRef<any>, formData: IFormControlData<string | number>[]) {
-    formData.forEach((fieldData: IFormControlData<string | number>) => {
-      componentRef.setInput(fieldData.controlName, fieldData.controlValue);
-    });
+  private storeTheFormDataToWizardModel() {
+    const formGroup =
+      this.wizardData.wizardPages[
+        this.currentIndex
+      ].componentRef.instance.getForm();
+    this.wizardData.wizardPages[this.currentIndex].formData = formGroup.value;
   }
+
+  private restoreTheFormDatafROMWizardModel() {
+    const formGroup =
+      this.wizardData.wizardPages[
+        this.currentIndex
+      ].componentRef.instance.getForm();
+    formGroup.setValue(this.wizardData.wizardPages[this.currentIndex].formData);
+  }
+
+  /* This is the way to set &Input of the dynamic component
+      componentRef.setInput(formControlName, formControlValue);
   */
 
   private createComponent(wizardPage: IWizardPage) {
@@ -92,13 +127,20 @@ export class CustomizableWizardComponent implements OnInit, AfterContentChecked,
     componentRef.hostView.detectChanges();
   }
 
-  private setupDataToComponent() {
-    const formGroup = this.wizardData.wizardPages[this.currentIndex].componentRef.instance.getForm();
-    this.setupDataByProperyName(formGroup, this.wizardData.wizardPages[this.currentIndex].data);
+  private setupInitialDataToComponent() {
+    const formGroup =
+      this.wizardData.wizardPages[
+        this.currentIndex
+      ].componentRef.instance.getForm();
+    this.setupDataByProperyName(
+      formGroup,
+      this.wizardData.wizardPages[this.currentIndex].initialData
+    );
   }
 
   private setupListeners() {
-    const componentRef = this.wizardData.wizardPages[this.currentIndex].componentRef;
+    const componentRef =
+      this.wizardData.wizardPages[this.currentIndex].componentRef;
     const formGroup = componentRef.instance.getForm() as FormGroup;
     const unsubscribe = new Subject<void>();
     formGroup.statusChanges

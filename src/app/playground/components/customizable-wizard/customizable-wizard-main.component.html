@@ -15,10 +15,13 @@
         </a>
         Example of a Customizable Wizard component which get a data model
         (IWizardData) and contains the wizard pages in an array where each item
-        is an IWizardPage. Also contains a pre-existing components' name and for
-        each wizard step create the component dynamically and show that. The
-        created components's data based on the IFormControlData where can
-        describe the formControlName and the value.
+        is an IWizardPage.<br />
+        Also contains a pre-existing components' name and for each wizard step
+        <a href="https://angular.io/api/core/createComponent"
+          >create the component dynamically</a
+        >
+        and show that. The created components's data based on the
+        IFormControlData where can describe the formControlName and the value.
       </label>
     </div>
   </div>
@@ -34,7 +37,10 @@
   <div>
     <app-customizable-wizard
       [wizardData]="wizardData"
-      [componentHeight]="{ height: '16.5rem' }"
+      [componentContainerStyle]="{ height: '16.5rem' }"
+      [wizardProgressStyle]="{ height: '3rem' }"
+      [wizardDescriptionStyle]="{ color: 'darkgray' }"
+      [wizardTitleStyle]="{ color: '#c405f7' }"
     ></app-customizable-wizard>
   </div>
 </div>

@@ -8,6 +8,11 @@
         id="street"
         formControlName="street"
       />
+      @if (addressForm.get('street') && (addressForm.get('street')?.invalid &&
+      addressForm.get('street')?.dirty) &&
+      addressForm.get('street')?.errors?.['required']) {
+      <span class="text-danger">Street value is required!</span>
+      }
     </div>
     <div class="form-control-gap">
       <label for="city">City:<span class="text-danger">*</span></label>
@@ -17,6 +22,11 @@
         id="city"
         formControlName="city"
       />
+      @if (addressForm.get('city') && (addressForm.get('city')?.invalid &&
+      addressForm.get('city')?.dirty) &&
+      addressForm.get('city')?.errors?.['required']) {
+      <span class="text-danger">City value is required!</span>
+      }
     </div>
     <div class="form-control-gap">
       <label for="state">State:<span class="text-danger">*</span></label>
@@ -26,10 +36,22 @@
         id="state"
         formControlName="state"
       />
+      @if (addressForm.get('state') && (addressForm.get('state')?.invalid &&
+      addressForm.get('state')?.dirty) &&
+      addressForm.get('state')?.errors?.['required']) {
+      <span class="text-danger">State value is required!</span>
+      }
     </div>
     <div class="form-control-gap">
       <label for="zip">Zip:<span class="text-danger">*</span></label>
       <input class="form-control" type="text" id="zip" formControlName="zip" />
+      @if (addressForm.get('zip') && (addressForm.get('zip')?.invalid &&
+      addressForm.get('zip')?.dirty)) { @if
+      (addressForm.get('zip')?.errors?.['required']) {
+      <span class="text-danger">Zip value is required!</span>
+      } @if (addressForm.get('zip')?.errors?.['pattern']) {
+      <span class="text-danger">Zip format is invalid!</span>
+      } }
     </div>
   </form>
 </div>

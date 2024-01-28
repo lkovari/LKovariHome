@@ -1,36 +1,51 @@
 <div class="wizard-layout">
   <form>
-    <div class="title-style">{{ wizardData.title }}</div>
-    <div class="description-style">{{ wizardData.description }}</div>
+    <div class="title-style" [ngStyle]="wizardTitleStyle">
+      {{ wizardData.title }}
+    </div>
+    <div class="description-style" [ngStyle]="wizardDescriptionStyle">
+      {{ wizardData.description }}
+    </div>
     <div>
       <app-wizard-progress
+        [ngStyle]="wizardProgressStyle"
         [wizardPages]="wizardData.wizardPages"
         [selectedIndex]="currentIndex"
       ></app-wizard-progress>
     </div>
-    <div class="layout-content" [ngStyle]="componentHeight">
+    <div class="layout-content" [ngStyle]="componentContainerStyle">
       <ng-template dynamicComponentHost> </ng-template>
     </div>
-    <div class="footer-style">
+    <div class="footer-style" [ngStyle]="wizardFooterStyle">
       <div class="d-flex flex-row justify-content-around">
         <button
           class="btn btn-primary"
+          [ngStyle]="wizardBackButtonStyle"
           [disabled]="currentIndex <= 0"
           (click)="backClicked()"
         >
           Back
         </button>
         @if (currentIndex < wizardData.wizardPages.length - 1) {
-          <button
+        <button
           class="btn btn-primary"
-          [disabled]="currentIndex >= wizardData.wizardPages.length - 1 || !isFormValid"
-          (click)="nextClicked()">Next
-          </button>
+          [ngStyle]="wizardNextButtonStyle"
+          [disabled]="
+            currentIndex >= wizardData.wizardPages.length - 1 || !isFormValid
+          "
+          (click)="nextClicked()"
+        >
+          Next
+        </button>
         } @else {
-          <button class="btn btn-primary"
+        <button
+          class="btn btn-primary"
+          [ngStyle]="wizardSaveButtonStyle"
           [disabled]="!isFormValid"
-          (click)="saveClicked()">Save
-          </button>  
+          (click)="saveClicked()"
+        >
+          Save
+        </button>
         }
       </div>
     </div>

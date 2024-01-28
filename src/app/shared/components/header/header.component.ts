@@ -6,8 +6,8 @@ import * as angular from '@angular/forms';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('01/27/2024 10:50 PM');
-  lastUpdateTooltip = 'Wizard component, fixed the error NG0100, removed status of Nested component';
+  lastUpdateDate = new Date('01/28/2024 11:07 AM');
+  lastUpdateTooltip = 'Wizard component, added customised style with @Inputs()';
   angularVersion: any;
 
   constructor() { }

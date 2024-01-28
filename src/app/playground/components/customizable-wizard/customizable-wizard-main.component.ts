@@ -19,64 +19,62 @@ export class CustomizableWizardMainComponent implements OnInit {
   personFormData: IFormControlData<string | number>[] = [
     {
       controlName: 'name',
-      controlValue: { formControlValue: 'Jogn Doe' },
+      controlValue: 'John Doe',
     },
     {
       controlName: 'age',
-      controlValue: { formControlValue: 58 },
-    },
-    {
-      controlName: 'phone',
-      controlValue: { formControlValue: '9173754729' },
-    },
+      controlValue: 58,
+    }
   ];
 
   addressFormData: IFormControlData<string | number>[] = [
     {
       controlName: 'street',
-      controlValue: { formControlValue: '#7 Elm street' },
+      controlValue: '#7 Elm street',
     },
     {
       controlName: 'city',
-      controlValue: { formControlValue: 'Alpharetta' },
+      controlValue: 'Alpharetta',
     },
     {
       controlName: 'state',
-      controlValue: { formControlValue: 'Georgia' },
+      controlValue: 'Georgia',
     },
+    /*,
     {
       controlName: 'zip',
       controlValue: { formControlValue: '91737' },
     },
+    */
   ];
 
   companyFormData: IFormControlData<string | number>[] = [
     {
       controlName: 'name',
-      controlValue: { formControlValue: 'SISFirst Inc.' },
+      controlValue: 'EKLSoftTrade Llc.',
     },
     {
       controlName: 'phone',
-      controlValue: { formControlValue: '9172345678' },
+      controlValue: '9172345678',
     },
     {
       controlName: 'description',
-      controlValue: { formControlValue: 'Surgical Software Company' },
+      controlValue: 'Software developer & trading company',
     },
   ];
 
   miscellaneousFormData: IFormControlData<string | number>[] = [
     {
       controlName: 'occupation',
-      controlValue: { formControlValue: 'Software developer' },
+      controlValue: 'Software developer',
     },
     {
       controlName: 'religion',
-      controlValue: { formControlValue: '' },
+      controlValue: '',
     },
     {
       controlName: 'hobbie',
-      controlValue: { formControlValue: 'Drumming' },
+      controlValue: 'Drumming',
     },
   ];
 
@@ -132,7 +130,7 @@ export class CustomizableWizardMainComponent implements OnInit {
       true,
       true,
       this.miscellaneousFormData
-    )
+    ),
   ];
   wizardData: IWizardData = {
     title: 'Customizable Wizard Component Example',

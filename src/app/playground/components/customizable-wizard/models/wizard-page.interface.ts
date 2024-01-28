@@ -16,7 +16,8 @@ export interface IWizardPage {
     nextPageRuleDescriptor?: IPageRuleDescriptor
     allowBackPage: boolean;
     allowNextPage: boolean;
-    data: IFormControlData<string | number>[];
+    initialData: IFormControlData<string | number>[];
+    formData: any;
     lastFormStatus: FormControlStatus;
     unsubscribe: Subject<void>;
 }
