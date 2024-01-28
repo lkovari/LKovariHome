@@ -6,8 +6,8 @@ import * as angular from '@angular/forms';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('01/28/2024 11:07 AM');
-  lastUpdateTooltip = 'Wizard component, added customised style with @Inputs()';
+  lastUpdateDate = new Date('01/28/2024 08:22 PM');
+  lastUpdateTooltip = 'Wizard component, fixed data reload next and back buttons';
   angularVersion: any;
 
   constructor() { }

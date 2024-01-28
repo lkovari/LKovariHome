@@ -6,9 +6,11 @@
     border-radius: var(--bs-border-radius);
 
     .wizard-progress-content {
-        .title-base {
-            // font-size: 1.3rem;
-        }
+        @media (max-width: 599px) { .title-base { font-size: 12px } }
+        @media (min-width: 600px) { .title-base { font-size: 16px } }
+        @media (min-width: 900px) { .title-base { font-size: 21px } }
+        @media (min-width: 1200px) { .title-base { font-size: 26px } }
+        @media (min-width: 1800px) { .title-base { font-size: 31px } }
         margin: 0.8rem;
         .select-title {
             @extend .title-base;
@@ -22,18 +24,6 @@
         }
     }   
 }
-@mixin for-phone-only {
-    @media (max-width: 599px) { font-size: 7px }
-}
-@mixin for-tablet-portrait-up {
-  @media (min-width: 600px) { font-size: 28px }
-}
-@mixin for-tablet-landscape-up {
-  @media (min-width: 900px) { font-size: 35px }
-}
-@mixin for-desktop-up {
-  @media (min-width: 1200px) { font-size: 42px }
-}
-@mixin for-big-desktop-up {
-  @media (min-width: 1800px) { font-size: 49px }
-}  
+
+
+

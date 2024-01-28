@@ -71,15 +71,20 @@ export class CustomizableWizardComponent
     this.currentIndex++;
     this.setupComponentDynamically();
     this.setupListeners();
-    this.setupInitialDataToComponent();
+    if (this.wizardData.wizardPages[this.currentIndex].formData) {
+      this.restoreTheFormDatafROMWizardModel();
+    } else {
+      this.setupInitialDataToComponent();
+    }    
   }
 
   saveClicked() {
+    let formData: string = 'FORMDATA\r';
     this.wizardData.wizardPages.forEach((page: IWizardPage) => {
-      console.log(`Component : ${page.componentName}.`);
-      console.log(JSON.stringify(page.componentRef.instance.getForm().value));
+      formData += `\rComponent : ${page.componentName}.\r`;
+      formData += JSON.stringify(page.componentRef.instance.getForm().value);
     });
-    console.log('Saved');
+    alert(formData);
   }
 
   private setupComponentDynamically() {
