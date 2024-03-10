@@ -115,7 +115,7 @@ export class CustomizableWizardComponent implements OnInit, AfterViewInit {
     formGroup.setValue(this.wizardData.wizardPages[this.currentIndex].formData);
   }
 
-  /* This is the way to set &Input of the dynamic component
+  /* This is the way to set @Input of the dynamic component
       componentRef.setInput(formControlName, formControlValue);
   */
 
