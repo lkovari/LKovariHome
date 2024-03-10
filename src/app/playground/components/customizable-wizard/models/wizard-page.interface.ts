@@ -1,8 +1,7 @@
-import { Type } from "@angular/core";
+import { DestroyRef, Type } from "@angular/core";
 import { IPageRuleDescriptor } from "./page-rule-descriptor.interface";
 import { IFormControlData } from "./form-control-data.interface";
 import { FormControlStatus } from "@angular/forms";
-import { Subject } from "rxjs";
 
 export interface IWizardPage {
     index: number;
@@ -19,5 +18,5 @@ export interface IWizardPage {
     initialData: IFormControlData<string | number>[];
     formData: any;
     lastFormStatus: FormControlStatus;
-    unsubscribe: Subject<void>;
+    destroyRef?: DestroyRef;
 }

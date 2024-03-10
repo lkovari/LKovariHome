@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { IStageLevel } from './models/stage-level.interface';
 import { IGameParameters } from './models/game-parameters.interface';
 import { IStack } from './models/stack.interface';
@@ -19,6 +19,7 @@ import { PuzzleData } from './models/puzzle-data.model';
 import { PuzzleDataStage } from './models/puzzle-data-stage.model';
 import { FirestorePuzzleData } from './models/firestore-puzzle-data.model';
 import { StageCommunicationService } from './services/stage-communication.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /*
   Known bugs:
@@ -59,13 +60,16 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
   splashWidth = '80vw';
   updateStageLevel: Subscription;
   reachedValue: number;
-
+  destroyRef: DestroyRef = inject(DestroyRef);
+  
   constructor(private messageService: MessageService,
     private cookieService: CookieService,
     private clipboardService: ClipboardService,
     private numbersFirestoreService: NumbersFirestoreService,
     private stageCommunicationService: StageCommunicationService) {
-      this.updateStageLevel = this.stageCommunicationService.getUpdatedStageLevel().subscribe({
+      this.updateStageLevel = 
+        this.stageCommunicationService.getUpdatedStageLevel()
+          .pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
         next: (v) => {
           console.log('StageLevel updated ' + v.index);
         },

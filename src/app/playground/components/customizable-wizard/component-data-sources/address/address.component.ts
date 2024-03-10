@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -11,6 +11,7 @@ export class AddressComponent implements OnInit {
   private formBuilder: FormBuilder = inject(FormBuilder);
   @Input() index: number;
   @Input() lastPageIndex: number;
+  destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor() {}
 

@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, DestroyRef, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ChecklistComponent } from 'src/app/shared/components/checklist/checklist.component';
 import { SelectionMode } from 'src/app/shared/components/checklist/selection-mode.enum';
@@ -31,7 +32,8 @@ export class NestedExampleComponent implements OnInit {
   @ViewChild('checkListGroup', { static: true }) checkListGroup: ChecklistComponent; 
   MULTISELECT = SelectionMode.MULTI;
   SINGLESELECT = SelectionMode.SINGLE;
-
+  destroyRef: DestroyRef = inject(DestroyRef);
+  
   ngOnInit() {
     this.exampleForm = this.formBuilder.group({
       selectionMode: this.formBuilder.control( { value: SelectionMode.SINGLE, disabled: false} ),
@@ -39,17 +41,21 @@ export class NestedExampleComponent implements OnInit {
       checkList: this.formBuilder.control( [ Validators.required ] )
     });
     this.githubLogoPath = 'assets/logos/GitHub-Mark-32px.png';
-    this.exampleForm.get('selectionMode')?.valueChanges.subscribe((value) => {
+    this.exampleForm.get('selectionMode')?.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
       this.selectionMode = value;
       this.exampleForm.get('selectNormal')?.patchValue(false);
     });
-    this.exampleForm.get('selectNormal')?.valueChanges.subscribe((value) => {
+    this.exampleForm.get('selectNormal')?.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
       this.selectNormal = value;
     });
-    this.exampleForm.statusChanges.subscribe(status =>{
+    this.exampleForm.statusChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(status =>{
       console.log('ExampleForm statusChanges ' + status);
     });
-    this.exampleForm.get('checkList')?.statusChanges.subscribe(status =>{
+    this.exampleForm.get('checkList')?.statusChanges
+      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(status =>{
       console.log('checkList component statusChanges ' + status);
       console.log('checkList Errors ', this.exampleForm.get('checkList')?.errors);
     });

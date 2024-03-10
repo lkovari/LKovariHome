@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-company',
@@ -10,6 +10,7 @@ export class CompanyComponent implements OnInit {
   private formBuilder: FormBuilder = inject(FormBuilder);
   @Input() index: number;
   @Input() lastPageIndex: number;
+  destroyRef: DestroyRef = inject(DestroyRef);
 
   ngOnInit() {
     this.companyForm = this.formBuilder.group({

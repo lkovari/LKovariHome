@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   Component,
   Input,
-  OnDestroy,
   OnInit,
   ViewChild,
   ViewContainerRef,
@@ -13,30 +12,28 @@ import { IWizardPage } from '../models/wizard-page.interface';
 import { DynamicComponentHostDirective } from 'src/app/playground/directives/dynamic-component-host.directive';
 import { IFormControlData } from '../models/form-control-data.interface';
 import { FormControl, FormControlStatus, FormGroup } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-customizable-wizard',
   templateUrl: './customizable-wizard.component.html',
   styleUrl: './customizable-wizard.component.scss',
 })
-export class CustomizableWizardComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
+export class CustomizableWizardComponent implements OnInit, AfterViewInit {
   @ViewChild(DynamicComponentHostDirective, { static: true })
   dynamicComponentHost!: DynamicComponentHostDirective;
 
   viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
 
   @Input() wizardData: IWizardData;
-  @Input() componentContainerStyle: { [clazz: string]: any } | null = null;
-  @Input() wizardProgressStyle: { [clazz: string]: any } | null = null;
-  @Input() wizardDescriptionStyle: { [clazz: string]: any } | null = null;
-  @Input() wizardTitleStyle: { [clazz: string]: any } | null = null;
-  @Input() wizardFooterStyle: { [clazz: string]: any } | null = null;
-  @Input() wizardBackButtonStyle: { [clazz: string]: any } | null = null;
-  @Input() wizardNextButtonStyle: { [clazz: string]: any } | null = null;
-  @Input() wizardSaveButtonStyle: { [clazz: string]: any } | null = null;
+  @Input() componentContainerStyle: { [key: string]: string } = {};
+  @Input() wizardProgressStyle: { [key: string]: string } = {};
+  @Input() wizardDescriptionStyle: { [key: string]: string } = {};
+  @Input() wizardTitleStyle: { [key: string]: string } = {};
+  @Input() wizardFooterStyle: { [key: string]: string } = {};
+  @Input() wizardBackButtonStyle: { [key: string]: string } = {};
+  @Input() wizardNextButtonStyle: { [key: string]: string } = {};
+  @Input() wizardSaveButtonStyle: { [key: string]: string } = {};
 
   currentIndex: number = 0;
   currentWizardPage: IWizardPage;
@@ -129,6 +126,7 @@ export class CustomizableWizardComponent
         wizardPage.componentType
       );
     this.wizardData.wizardPages[this.currentIndex].componentRef = componentRef;
+    this.wizardData.wizardPages[this.currentIndex].destroyRef = componentRef.instance.destroyRef;
     componentRef.hostView.detectChanges();
   }
 
@@ -147,23 +145,11 @@ export class CustomizableWizardComponent
     const componentRef =
       this.wizardData.wizardPages[this.currentIndex].componentRef;
     const formGroup = componentRef.instance.getForm() as FormGroup;
-    const unsubscribe = new Subject<void>();
     formGroup.statusChanges
-      .pipe(takeUntil(unsubscribe))
+      .pipe(takeUntilDestroyed(this.wizardData.wizardPages[this.currentIndex].destroyRef))
       .subscribe((status: FormControlStatus) => {
         this.isFormValid = status === 'VALID';
         this.wizardData.wizardPages[this.currentIndex].lastFormStatus = status;
-        this.wizardData.wizardPages[this.currentIndex].unsubscribe =
-          unsubscribe;
       });
-  }
-
-  ngOnDestroy(): void {
-    this.wizardData.wizardPages.forEach((page: IWizardPage) => {
-      if (page.unsubscribe) {
-        page.unsubscribe.next();
-        page.unsubscribe.complete();
-      }
-    });
   }
 }

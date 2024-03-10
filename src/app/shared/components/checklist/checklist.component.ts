@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter, forwardRef, ElementRef, inject, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, forwardRef, ElementRef, inject, AfterViewInit, OnChanges, SimpleChanges, DestroyRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, ControlValueAccessor, AbstractControl, NG_VALUE_ACCESSOR, FormGroupDirective } from '@angular/forms';
 import { IChecklistItem } from '../../models/checklist-item.interface';
 import { ChecklistValidators } from './checklist-validator';
 import { SelectionMode } from './selection-mode.enum';
 import { ChecklistItem } from '../../models/checklist-item.model';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 
 export const CHECKLIST_VALUE_ACCESSOR: any = {
@@ -70,7 +71,8 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
 
   onModelChange: Function = () => { };
   onModelTouched: Function = () => { };
-
+  destroyRef: DestroyRef = inject(DestroyRef);
+  
   // private formGroupDirective: FormGroupDirective can get parent FormGroup
   constructor(private formGroupDirective: FormGroupDirective) {}    
  
@@ -89,15 +91,18 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
         this.addChecklistItem(item);
       });
     }
-    this.mainForm.statusChanges.subscribe(status =>{
+    this.mainForm.statusChanges
+      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(status =>{
       console.log('mainForm status ', status);
     });
 
-    this.getCheckListFormArray().statusChanges.subscribe(status =>{
+    this.getCheckListFormArray().statusChanges
+      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(status =>{
       console.log('CheckListFormArray Status ' + status);
     });
     
-    this.getCheckListFormArray().valueChanges.subscribe(value =>{
+    this.getCheckListFormArray().valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value =>{
       console.log('CheckListFormArray Value ' + value);
     });
   }

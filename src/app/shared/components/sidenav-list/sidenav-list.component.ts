@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, OnInit, Output, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -14,10 +15,12 @@ export class SidenavListComponent implements OnInit {
   mediaObserverAsObservable: Subscription;
   private isWidthXs = false;
   menuItems: MenuItem[];
+  destroyRef: DestroyRef = inject(DestroyRef);
   
   constructor(mediaObserver: MediaObserver) {
     // use MediaObserver to detect width changes if it is xs or sm then close the sidenav
-    this.mediaObserverAsObservable = mediaObserver.asObservable().subscribe((changes: MediaChange[]) => {
+    this.mediaObserverAsObservable = mediaObserver.asObservable()
+      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe((changes: MediaChange[]) => {
       // option A.
       const currentMediaChange = changes[0];
       if (currentMediaChange.mqAlias === 'xs') {

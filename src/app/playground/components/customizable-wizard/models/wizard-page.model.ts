@@ -1,9 +1,8 @@
-import { Type } from '@angular/core';
+import { DestroyRef, Type } from '@angular/core';
 import { IWizardPage } from './wizard-page.interface';
 import { IPageRuleDescriptor } from './page-rule-descriptor.interface';
 import { IFormControlData } from './form-control-data.interface';
 import { FormControlStatus } from '@angular/forms';
-import { Subject } from 'rxjs';
 
 export class WizardPage implements IWizardPage {
   index: number;
@@ -20,7 +19,7 @@ export class WizardPage implements IWizardPage {
   initialData: IFormControlData<string | number>[];
   formData: any;
   lastFormStatus: FormControlStatus = 'INVALID';
-  unsubscribe: Subject<void>;
+  destroyRef?: DestroyRef;
   constructor(
     index: number,
     order: number,
@@ -33,7 +32,8 @@ export class WizardPage implements IWizardPage {
     allowBackPage: boolean,
     allowNextPage: boolean,
     initialData: IFormControlData<string | number>[],
-    nextPageRuleDescriptor?: IPageRuleDescriptor
+    nextPageRuleDescriptor?: IPageRuleDescriptor,
+    destroyRef?: DestroyRef
   ) {
     this.index = index;
     this.order = order;
@@ -47,5 +47,6 @@ export class WizardPage implements IWizardPage {
     this.allowBackPage = allowBackPage;
     this.allowNextPage = allowNextPage;
     this.initialData = initialData;
+    this.destroyRef = destroyRef;
   }
 }

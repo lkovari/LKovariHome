@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -11,6 +11,7 @@ export class MiscellaneousComponent implements OnInit {
   @Input() index: number;
   @Input() lastPageIndex: number;  
   miscellaneousForm: FormGroup;
+  destroyRef: DestroyRef = inject(DestroyRef);
 
   ngOnInit() {
     this.miscellaneousForm = this.formBuilder.group({
