@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './playground-layout.component.html',
   styleUrl: './playground-layout.component.scss'
 })
-export class PlaygroundLayoutComponent {
+export class PlaygroundLayoutComponent implements OnInit, AfterViewInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
   
   constructor(public router: Router, public mediaObserver: MediaObserver) {}

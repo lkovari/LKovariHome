@@ -2,7 +2,7 @@
     <div [ngClass]="{ 'stage-level-number-unselected':!stageLevel.selected, 'stage-level-number-selected':stageLevel.selected}" 
         style="text-align: center;">
         @if (stageLevel.completed) {
-            <div (click)="onStageClick()">
+            <div (click)="stageClick()">
                 <span class="stage-level-completed-value enable-stage-click">
                     {{ stageLevel.value }}
                 </span>
@@ -25,7 +25,7 @@
         } @else {
             <div style="display: flex; justify-content: center;">
                 @if (stageLevel.completed) {
-                    <div (click)="onStageClick()">
+                    <div (click)="stageClick()">
                         @for (star of stars; track star) {
                             <span class="stage-level-asterisk-unselected stage-level-completed enable-stage-click">
                                 <i class="pi pi-star-fill" style="font-size: 10px"></i>

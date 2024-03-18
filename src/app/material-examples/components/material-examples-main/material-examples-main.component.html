@@ -1,4 +1,34 @@
-<div class="material-layout">
-    <label class="text-warning">Angular material Examples coming soon!</label>
+<div class="title-layout">
+    <div class="text-warning">It not belongs strictly the Material topic, but interesting: Simple wrap an API example Wrap https://www.reddit.com/r/aww/search.json?q=</div>
+</div>
+<hr>
+<div class="d-flex align-items-center">
+    <div class="form-control">
+        <mat-form-field class="example-full-width">
+            <mat-label>Search a text</mat-label>
+            <input matInput id="searchString" type="text" [(ngModel)]="searchString" (ngModelChange)="ngModelChange($event)">
+        </mat-form-field>
+    </div>
+    <div>
+        <button mat-fab color="primary" (click)="searchString = ''">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</div>
+<div class="result-area">
+    <div class="result-area-title">
+        <div class="result-area-title-text">Result</div>
+    </div>
+    <div class="d-flex align-content-around flex-wrap">
+    <div *ngFor="let result of results$ | async">
+        <div *ngIf="!result.data.is_video && result.data.thumbnail !== 'default' && result.data.thumbnail !== 'self'">
+            <a style="padding-left: 20px;" [href]="result.data.url">{{ result.data.url }}</a>
+            {{ data(result) }}
+            <div style="padding-left: 20px;">
+                <img [src]="result.data.thumbnail" alt="" width="auto" height="auto">
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 

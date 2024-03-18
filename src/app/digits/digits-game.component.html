@@ -18,8 +18,8 @@
     <div>
         <app-game-arithmetic-operations #arithmeticOperations
             [gameParameters]="gameParameters[stageIndex]"
-            (onExpectedResultReached)="onExpectedResultReached($event)"
-            (onInvalidOperationExecuted)="onInvalidOperationExecuted($event)">
+            (expectedResultReached)="expectedResultReached($event)"
+            (invalidOperationExecuted)="invalidOperationExecuted($event)">
         </app-game-arithmetic-operations>
     </div>
 </div>
@@ -27,7 +27,7 @@
     <p>It can improves your arithmetic combination ability.</p>
 </p-dialog>    
 <p-dialog id="gameCompleted" header="Game Completed" [(visible)]="gameCompletedModalVisible"
-    [modal]="true" (onHide)="onHideGameCompletedDialog()">
+    [modal]="true" (onHide)="hideGameCompletedDialog()">
     <div>
         Target {{ reachedValue }}. Your solution:
         @for (mess of gameCompletedModalMessages; track mess) {

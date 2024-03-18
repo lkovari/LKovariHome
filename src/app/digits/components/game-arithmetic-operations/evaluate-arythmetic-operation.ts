@@ -13,7 +13,7 @@ export class EvaluateArythmeticOperation {
      * @returns number
      */
     public static evaluate(operandA: number, operandB: number, operator: string): number {
-        var result = Number.MIN_VALUE;
+        let result = Number.MIN_VALUE;
         switch (operator) {
             case DigitsConstants.OPERATOR_ADD: {
                 result = operandA + operandB;
@@ -41,10 +41,10 @@ export class EvaluateArythmeticOperation {
      * @returns IGameParameters
      */
     public static cloneGameParameters(gameParameters: IGameParameters): IGameParameters {
-        let clonedGameParameters = new GameParameters();
+        const clonedGameParameters = new GameParameters();
         clonedGameParameters.result = gameParameters.result;
         gameParameters.operands.forEach((o: IGameOperand) => {
-            let clonedGameOperands = new GameOperand(o.id, false, false, -1);
+            const clonedGameOperands = new GameOperand(o.id, false, false, -1);
             Object.assign(clonedGameOperands, o);
             clonedGameParameters.operands.push(clonedGameOperands);
         });

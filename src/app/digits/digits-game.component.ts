@@ -151,20 +151,20 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
   }
 
   private storeGameStateToCookie() {
-    let cookieData = new CookieData();
+    const cookieData = new CookieData();
     cookieData.storeDate = new Date();
     cookieData.stageIndex = this.stageIndex;
     cookieData.stageLevels = this.stageLevels;
     cookieData.completed = this.allGameCompleted() && this.stageIndex === this.stageLevels.length - 1;
     cookieData.gameParameters = this.gameParameters;
-    let cookieDataAsText = cookieData.cookieData2Text();
-    let expires = new Date();
+    const cookieDataAsText = cookieData.cookieData2Text();
+    const expires = new Date();
     expires.setHours(23,59,59,999); // midnight
     this.cookieService.set(this.COOKIE_LK_DIGITS, cookieDataAsText, expires);
   }
 
   private restoreGameStateFromCookie(): ICookieData | null {
-    let cookie = this.cookieService.get(this.COOKIE_LK_DIGITS);
+    const cookie = this.cookieService.get(this.COOKIE_LK_DIGITS);
     let cookieData: CookieData | null;
     if (!cookie || cookie == "") {
       console.log("INFO: Unable to retrieve the Game State");
@@ -178,7 +178,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
   
   private mapPuzzleDataToGameParameters(puzzleData: IPuzzleData) {
     puzzleData.stages.forEach((puzzleDataStage: IPuzzleDataStage) => {
-      let gameParameters = this.gameParameters.find((param: IGameParameters) => {
+      const gameParameters = this.gameParameters.find((param: IGameParameters) => {
           return param.stageIndex === puzzleDataStage.stageIndex;
       });
       if (gameParameters) {
@@ -190,7 +190,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
         });
         // stages
         this.initializeStageLevels();
-        let stageLevel = this.stageLevels.find(level =>{
+        const stageLevel = this.stageLevels.find(level =>{
           return level.index === puzzleDataStage.stageIndex;
         });
         if (stageLevel) {
@@ -201,15 +201,15 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
   }
 
   private mapGameParametersToPuzzleData(gameParameterValues: IGameParameters[]): IPuzzleData {
-    let puzzleData = new PuzzleData();
+    const puzzleData = new PuzzleData();
     puzzleData.day = new Date();
     puzzleData.day.setHours(23,59,59,999); // midnight
     
     gameParameterValues.forEach(gameParameters => {
-      let puzzleDataStage = new PuzzleDataStage();
+      const puzzleDataStage = new PuzzleDataStage();
       puzzleDataStage.stageIndex = gameParameters.stageIndex;
       puzzleDataStage.expectedValue = gameParameters.result;
-      let operandValues = new Array<number>();
+      const operandValues = new Array<number>();
       gameParameters.operands.forEach(gameOperand => {
         operandValues.push(gameOperand.value)
       });
@@ -239,7 +239,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
   }
 
   private currentLocaleAlreadyStoredInDb(): boolean {
-    let currentLocale = navigator.language;
+    const currentLocale = navigator.language;
     const foundItem =  this.firestorePuzzleDataItems.find(pd => {
       return pd.locale === currentLocale;
     });
@@ -266,7 +266,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
   }
 
   private collectAllOperations(): boolean {
-    let isItTheLastPage = this.allGameCompleted() && this.stageIndex === this.stageLevels.length - 1;
+    const isItTheLastPage = this.allGameCompleted() && this.stageIndex === this.stageLevels.length - 1;
     if (isItTheLastPage) {
       let allStageSummary = "Genius!\n";
       this.allGameCompletedModalMessage = [];
@@ -286,14 +286,14 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
     this.gameParameters = this.generateGameParameters.generateStageNumbers();
     this.storeGameStateToCookie();
     this.setupStages();
-    let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
+    const puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
     this.upsertGameDataInDb(puzzleData);    
   }
 
   ngOnInit(): void {
     console.log(`Browser locale: ${navigator.language}`);
     this.initializeStageLevels();
-    let gameState = this.restoreGameStateFromCookie();
+    const gameState = this.restoreGameStateFromCookie();
     if (gameState) {
       console.log("INFO: Game state restored from cookie");
       const cookieDate = new Date(gameState!.storeDate);
@@ -316,15 +316,15 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
         this.gameParameters = this.generateGameParameters.generateStageNumbers();
         this.storeGameStateToCookie();
         this.setupStages();
-         let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
-         console.log("INFO: Date mismatch which restored from cookie " + puzzleData);
+        const puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
+        console.log("INFO: Date mismatch which restored from cookie " + puzzleData);
         // TODO check first in the DB!
         this.upsertGameDataInDb(puzzleData);
       }
     } else {
       console.log("INFO: No game state in cookie, try to get if from DB.");
       this.gameParameters = this.generateGameParameters.generateStageNumbers();
-      let locale = navigator.language;
+      const locale = navigator.language;
       this.numbersFirestoreService.getAll().snapshotChanges().pipe(
         map(changes =>
           changes.map(c =>
@@ -333,7 +333,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
         )
       ).subscribe(data => {
         this.firestorePuzzleDataItems = data;
-        let localizedPuzzleData = data.find(pd => {
+        const localizedPuzzleData = data.find(pd => {
           return pd.locale === locale;
         });
         if (localizedPuzzleData) {
@@ -352,7 +352,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
             this.gameParameters = this.generateGameParameters.generateStageNumbers();
             this.storeGameStateToCookie();
             this.setupStages();
-            let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
+            const puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
             this.upsertGameDataInDb(puzzleData);
           }
         } else {
@@ -360,7 +360,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
           this.gameParameters = this.generateGameParameters.generateStageNumbers();
           this.storeGameStateToCookie();
           this.setupStages();
-          let puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
+          const puzzleData = this.mapGameParametersToPuzzleData(this.gameParameters);
           const firestorePuzzleData = new FirestorePuzzleData();
           firestorePuzzleData.locale = navigator.language;
           firestorePuzzleData.data = JSON.stringify(puzzleData);          
@@ -374,7 +374,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
     this.updateStageLevel.unsubscribe();
   }
 
-  onExpectedResultReached(executedOperations: IStack<IGameOperation>) {
+  expectedResultReached(executedOperations: IStack<IGameOperation>) {
     const executedOperationsAsText = this.formatOperations(executedOperations);
     const stageSummary = this.createSummaryOfTHeOperations(this.stageIndex, executedOperations);
     this.stageLevels[this.stageIndex].summary = stageSummary;
@@ -385,7 +385,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
     this.gameCompletedModalVisible = true;
   }
 
-  onHideGameCompletedDialog() {
+  hideGameCompletedDialog() {
     const isItTheLastPage = this.collectAllOperations();
     if (!isItTheLastPage) {
       this.stageIndex++;
@@ -395,7 +395,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
     this.arithmeticComponent.clearHistory();    
   }
 
-  onInvalidOperationExecuted(value: number) {
+  invalidOperationExecuted(value: number) {
     this.showErrorMessage('Invalid Operation Executed!');
     this.arithmeticComponent.revertLastOperation();
     console.log(value);

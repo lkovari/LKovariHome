@@ -13,7 +13,7 @@ export class GenerateGameParameters {
   }
 
   private choiceRandomOperation(): string {
-    let randomOperationIndex = this.generateNumber(0, 4);
+    const randomOperationIndex = this.generateNumber(0, 4);
     let result = DigitsConstants.OPERATOR_ADD;
     switch (randomOperationIndex) {
       case 0: {
@@ -28,7 +28,7 @@ export class GenerateGameParameters {
         result = DigitsConstants.OPERATOR_MUL;
         break;
       }
-      case 0: {
+      case 3: {
         result = DigitsConstants.OPERATOR_DIV;
         break;
       }
@@ -60,10 +60,10 @@ export class GenerateGameParameters {
     let remainedOperands = this.operands.length;
     let result = 0;
     let ix = 0;
-    let maxCycles = this.generateNumber(3, 5);
+    const maxCycles = this.generateNumber(3, 5);
     let defaultOperandIndex = Number.MIN_VALUE;
     while (ix < maxCycles && operands.length > 1) {
-      let operation = this.choiceRandomOperation();
+      const operation = this.choiceRandomOperation();
 
       let operandIndex = this.generateNumber(0, remainedOperands - 1);
       if (defaultOperandIndex === Number.MIN_VALUE) {
@@ -157,7 +157,7 @@ export class GenerateGameParameters {
   }
 
   private generateGameParameter(stageIndex: number): IGameParameters {
-    let generateUniqueNumber = new GenerateUniqueNumber();
+    const generateUniqueNumber = new GenerateUniqueNumber();
     switch (stageIndex) {
       case 0: {
         generateUniqueNumber.generateNumber(1, 5);
@@ -210,7 +210,7 @@ export class GenerateGameParameters {
     generatedNumbers = generatedNumbers.sort((a: number, b: number) => {
       return a - b;
     });
-    let originalOperands = new Array<number>(
+    const originalOperands = new Array<number>(
       generatedNumbers[0],
       generatedNumbers[1],
       generatedNumbers[2],
@@ -269,11 +269,11 @@ export class GenerateGameParameters {
       );
       stageResult = this.calculateResult(this.operands);
     }
-    let result = new GameParameters();
+    const result = new GameParameters();
     result.result = stageResult;
     let idSeq = 0;
     originalOperands.forEach((op) => {
-      let gameOperand = new GameOperand(idSeq, false, false, op);
+      const gameOperand = new GameOperand(idSeq, false, false, op);
       result.operands.push(gameOperand);
       ++idSeq;
     });
@@ -283,7 +283,7 @@ export class GenerateGameParameters {
   public generateStageNumbers(): Array<IGameParameters> {
     let result = new Array<IGameParameters>();
     for (let ix = 0; ix < 5; ix++) {
-      let gameParameter = this.generateGameParameter(ix);
+      const gameParameter = this.generateGameParameter(ix);
       gameParameter.stageIndex = ix;
       result.push(gameParameter);
     }

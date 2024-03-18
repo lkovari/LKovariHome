@@ -1,6 +1,20 @@
-.material-layout {
+.title-layout {
     display: flex;
     flex-direction: row;
     justify-content: center;
     font-size: large;
+}
+.result-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    border: 1px solid #0cdfaa;
+    border-radius: 15px;
+    height: 100%;
+    padding: 0.5rem;
+}
+.result-area-title {
+    margin: 10px;
 }

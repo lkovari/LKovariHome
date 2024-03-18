@@ -14,7 +14,7 @@ export class StageLevelComponent {
   constructor(private stageCommunicationService: StageCommunicationService) {
   }
 
-  onStageClick() {
+  stageClick() {
     this.stageCommunicationService.updatePerformedItem(this.stageLevel);
     console.log('Stage Clicked');
   }

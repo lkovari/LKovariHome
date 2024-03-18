@@ -8,6 +8,10 @@ import { MaterialExamplesMainComponent } from './components/material-examples-ma
 import { MaterialExamplesLayoutComponent } from './material-examples-layout/material-examples-layout.component';
 import { AngularNewsRoutingModule } from '../angular-news/angular-news-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -18,8 +22,12 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
     AngularNewsRoutingModule,
     MaterialModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
     FlexLayoutModule,
     SharedModule,    
     MaterialExamplesRoutingModule
