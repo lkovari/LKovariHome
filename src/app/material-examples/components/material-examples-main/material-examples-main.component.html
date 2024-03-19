@@ -1,49 +1,58 @@
 <div class="title-layout">
-  <div class="text-warning">It not belongs strictly the Material topic, but interesting: Simple wrap an API example Wrap https://www.reddit.com/r/aww/search.json?q=</div>
+  <div class="text-warning">It not belongs strictly the Material topic, but interesting, Simple wrap an API. for example Wrap https://www.reddit.com/r/aww/search.json?q=</div>
 </div>
 <hr>
-  <div class="d-flex align-items-center">
-    <div class="form-control">
-      <mat-form-field class="example-full-width">
-        <mat-label>Search a text</mat-label>
-        <input matInput id="searchString" type="text" [(ngModel)]="searchString" (ngModelChange)="ngModelChange($event)">
+  <div class="d-flex align-items-center flex-wrap">
+    <div class="d-flex align-items-center flex-wrap search-field-style">
+      <mat-form-field>
+        <mat-label>Search on reddit.com</mat-label>
+        <input matInput id="searchString" [(ngModel)]="searchString" (ngModelChange)="ngModelChange($event)">
       </mat-form-field>
+      <mat-radio-group class="align-radio-group" [formControl]="showSearchContentFormControl" color="primary" labelPosition="after">
+        <mat-radio-button value="Both">Both</mat-radio-button>  
+        <mat-radio-button value="Image">Image</mat-radio-button>  
+        <mat-radio-button value="Video">Video</mat-radio-button>      
+      </mat-radio-group>
     </div>
-    <div>
-      <button mat-fab color="primary" (click)="searchString = ''">
+    <div class="align-trashcan">
+      <button mat-fab color="primary" (click)="searchString = ''; 
+        showSearchContentFormControl.setValue('Both'); this.searchSubject$.next('');">
         <mat-icon>delete</mat-icon>
       </button>
     </div>
   </div>
-  <div class="result-area">
-    <div class="result-area-title">
-      <div class="result-area-title-text">Result</div>
-    </div>
-    <div class="d-flex align-content-around flex-wrap">
-      @for (result of results$ | async; track result.data.id) {
-        @if (result.data.thumbnail !== 'default' && result.data.thumbnail !== 'self') {
-            <div>
-                @if (!result.data.is_video) {
-                    <div>
-                        <a style="padding-left: 20px;" [href]="result.data.url">{{ result.data.url }}</a>
-                        {{ data(result) }}
-                        <div style="padding-left: 20px;">
-                            <img [src]="result.data.thumbnail" alt="" width="auto" height="auto">
+  @if (searchString) {
+    <div class="result-area">
+        <div class="result-area-title">
+          <div class="result-area-title-text">The Results see below</div>
+        </div>
+        <div class="d-flex align-content-around flex-wrap">
+          @for (result of results$ | async; track result.data.id) {
+            @if (result.data.thumbnail !== 'default' && result.data.thumbnail !== 'self') {
+                <div>
+                    @if ((findImage() || findBoth()) && !result.data.is_video) {
+                        <div>
+                            <a style="padding-left: 20px;" [href]="result.data.url">{{ result.data.url }}</a>
+                            {{ data(result) }}
+                            <div style="padding-left: 20px;">
+                                <img [src]="result.data.thumbnail" alt="" width="auto" height="auto">
+                            </div>
                         </div>
-                    </div>
-                } @else if (result.data.is_video) {
-                    <div>
-                        <a style="padding-left: 20px;" [href]="result.data.url">{{ result.data.url }}</a>
-                        <div style="padding-left: 20px;">
-                            <video width="320" height="200" controls>
-                                <source [src]="result.data.media.reddit_video.fallback_url">
-                            </video>
+                    } @else if ((findVideo() || findBoth()) && result.data.is_video) {
+                        <div>
+                            <a style="padding-left: 20px;" [href]="result.data.url">{{ result.data.url }}</a>
+                            <div style="padding-left: 20px;">
+                                <video width="320" height="200" controls>
+                                    <source [src]="result.data.media.reddit_video.fallback_url">
+                                </video>
+                            </div>
                         </div>
-                    </div>
-                }
-            </div>
-        }
-      }
-    </div>
-  </div>
+                    }
+                </div>
+            }
+          }
+        </div>
+      </div>
+  }
+
   
