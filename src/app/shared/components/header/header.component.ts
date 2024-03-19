@@ -6,8 +6,8 @@ import * as angular from '@angular/forms';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('03/18/2024 10:46 PM');
-  lastUpdateTooltip = 'lint and reddit search wrap';
+  lastUpdateDate = new Date('03/19/2024 10:46 AM');
+  lastUpdateTooltip = 'show video *ngIf => @if *ngFor => @for';
   angularVersion: any;
 
   constructor() { }
