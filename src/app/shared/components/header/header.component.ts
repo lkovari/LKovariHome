@@ -6,8 +6,8 @@ import * as angular from '@angular/forms';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('03/19/2024 04:41 PM');
-  lastUpdateTooltip = 'select both wideo image whan wrap API. www.reddit.com';
+  lastUpdateDate = new Date('03/26/2024 09:38 PM');
+  lastUpdateTooltip = 'CV. & wrap API. www.reddit.com';
   angularVersion: any;
 
   constructor() { }
