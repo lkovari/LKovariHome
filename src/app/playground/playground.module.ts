@@ -34,9 +34,9 @@ import { MiscellaneousComponent } from './components/customizable-wizard/compone
   ],
   imports: [
     CommonModule,
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule,
     MaterialModule,
     FlexLayoutModule,
     SharedModule,

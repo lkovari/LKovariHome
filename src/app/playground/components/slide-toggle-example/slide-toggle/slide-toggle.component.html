@@ -1,0 +1,11 @@
+<div class="slide-toggle-layout" [class.vertical]="orientation === 'vertical'">
+  <label>
+    <input
+      #slideToggle
+      type="checkbox"
+      [(ngModel)]="value"
+      (click)="toggleClick()"
+    />
+    <span class="slider"></span>
+  </label>
+</div>

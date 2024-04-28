@@ -1,0 +1,74 @@
+<div class="side-toggle-example-layout">
+  <div>
+    This page is a <b>playground</b>, I show on this page Angular v2+ source
+    code snippets, what I learned at last or just which interested in, for me.
+  </div>
+  <div class="sub-topic">
+    <b>Act #4</b>
+    <div class="top-gap">
+      <div class="text-primary">
+        <a
+          class="horizontal-gap-left horizontal-gap-right"
+          href="https://github.com/lkovari/LKovariHome/tree/master/src/app/playground/components/customizable-wizard"
+        >
+          <img
+            [src]="githubLogoPath"
+            width="16"
+            height="16"
+            alt="githubLogoPath"
+          />
+        </a>
+        Signal based slide toggle standalone component in Trmplate-driven
+        aproach (default value is true)
+      </div>
+      <div class="sub-topic">
+        Reactive form example with a slide toggle custom component.
+        <div class="sub-topic">
+          <form class="form-group" [formGroup]="toggleForm">
+            <div class="radio-options">
+              @for (option of options; track $index) {
+              <label class="horizontal-gap-right horizontal-gap-left">
+                <input
+                  type="radio"
+                  id="{{ option }}"
+                  value="{{ option }}"
+                  formControlName="orientation"
+                />
+                <span>{{ option }}</span>
+              </label>
+              }
+            </div>
+            <div class="form-control control-area">
+              <label class="spacer" for="slideToggle">Slide toggle</label>
+              <app-slide-toggle
+                class="horizontal-gap-left"
+                id="slideToggle"
+                [orientation]="defaultOrientation"
+                formControlName="toggle"
+                (valueChanged)="valueChanged($event)"
+              ></app-slide-toggle>
+            </div>
+          </form>
+          <div>
+            <p>Form Status: {{ toggleForm.status }}</p>
+            <p>
+              Slide Toggle value:
+              {{ toggleForm.value | json }}
+            </p>
+          </div>
+          <div>
+            <p class="under-construction">This Component is under construction!</p>
+          </div>
+        <div class="text-primary">
+            TODO list: 
+            <ul>
+                <li>implement the component with Model-driven (reactive) aproach</li>
+                <li>show default value selector checkbox</li>
+                <li>review the signal related </li>
+            </ul>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
