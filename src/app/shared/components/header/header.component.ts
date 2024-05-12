@@ -6,8 +6,8 @@ import * as angular from '@angular/forms';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('04/28/2024 09:35 PM');
-  lastUpdateTooltip = 'Implemented SlideToggleComponent and SlideToggleExampleComponent.';
+  lastUpdateDate = new Date('05/12/2024 01:21 PM');
+  lastUpdateTooltip = 'Added wait spinner to SlideToggleComponent.';
   angularVersion: any;
 
   constructor() { }

@@ -1,65 +1,114 @@
+@mixin spin-animation($time: 1.5s, $type: linear, $mode: infinite) {
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  animation: spin $time $type $mode;
+}
+
+$color-gray: #ccc;
+$checked-backround-color: #4d8af5;
+$knob-spin-border-colorcolor: blue;
+$knob-border-color-default: var(--slide-knob-bg-color, white);
+$color-disabled: #ccc;
+$color-background-off: white;
+$color-background-on: #4d8af5;
+
+
 .slide-toggle-layout {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-  
-    &.vertical {
-      width: 34px;
-      height: 60px;
-    }
-  
-    & input { 
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-  
-    .slider {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+
+  &.vertical {
+    width: 34px;
+    height: 60px;
+  }
+
+  & input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $color-gray;
+    transition: .4s;
+    border-radius: 34px;
+
+    &:before  {
+      border: 3px dotted $knob-border-color-default;
       position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
+      content: "";
+      height: 23px;
+      width: 23px;
+      left: 5px;
+      bottom: 5px;
+      background-color: var(--slide-knob-bg-color);
       transition: .4s;
-      border-radius: 34px;
-  
-      &:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        transition: .4s;
-        border-radius: 50%;
-        transform: translateY(0);
-      }
+      border-radius: 50%;
+      transform: translateY(0);
     }
-  
-    &.vertical .slider:before {
-      left: 4px;
-      bottom: initial;
-      top: 30px;
+
+  }
+
+  &.vertical .slider:before  {
+    left: 5px;
+    bottom: initial;
+    top: 32px;
+  }
+
+  input:checked + .slider {
+    background-color: $checked-backround-color;
+  }
+
+  input:checked + .slider:before  {
+    left: 32px;
+  }
+
+  &.vertical input:checked + .slider:before  {
+    top: 5px;
+    left: 5px;
+  }
+
+  &.spin .slider:before ,
+  &.vertical.spin .slider:before {
+    border: 3px dotted var(--slide-knob-spinner-color, knob-spin-border-colorcolor);
+    border-radius: 50%;
+    width: 23px;
+    height: 23px;
+    @include spin-animation(2s, linear, infinite);
+  }
+
+  &.spin .slider:before  {
+    left: 19px;
+  }
+
+  &.vertical.spin .slider:before {
+    left: 5px;
+    top: 19px;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px $checked-backround-color;
+  }
+
+  &.disabled {
+    opacity: 0.6;
+    & input {
+      cursor: not-allowed;
     }
-  
-    input:checked + .slider {
-      background-color: #2196F3;
-    }
-  
-    input:checked + .slider:before {
-      transform: translateX(26px);
-    }
-  
-    &.vertical input:checked + .slider:before {
-      transform: translateY(-25px);
-    }
-  
-    input:focus + .slider {
-      box-shadow: 0 0 1px #2196F3;
+    .slider {
+      background-color: $color-disabled;
+      cursor: not-allowed;
     }
   }
-  
+
+}

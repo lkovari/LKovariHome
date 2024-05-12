@@ -26,6 +26,14 @@
         <div class="sub-topic">
           <form class="form-group" [formGroup]="toggleForm">
             <div class="radio-options">
+              <label for="spinCheckbox">
+                <input
+                  type="checkbox"
+                  id="spinCheckbox"
+                  formControlName="spin"
+                  #spinCheckbox
+                /> In Progress
+              </label>
               @for (option of options; track $index) {
               <label class="horizontal-gap-right horizontal-gap-left">
                 <input
@@ -34,9 +42,12 @@
                   value="{{ option }}"
                   formControlName="orientation"
                 />
-                <span>{{ option }}</span>
+                <span> {{ option }}</span>
               </label>
               }
+            </div>
+            <div class="sub-topic">
+
             </div>
             <div class="form-control control-area">
               <label class="spacer" for="slideToggle">Slide toggle</label>
@@ -44,8 +55,12 @@
                 class="horizontal-gap-left"
                 id="slideToggle"
                 [orientation]="defaultOrientation"
+                [knobColor]="'white'"
+                [knobWaitSpinnerColor]="'blue'"
+                [toggleOnStyle]="{ 'background-color': '#4d8af5' }"
+                [toggleOffStyle]="{ 'background-color': 'lightgray' }"
+                [spin]="spinCheckbox.checked"
                 formControlName="toggle"
-                (valueChanged)="valueChanged($event)"
               ></app-slide-toggle>
             </div>
           </form>
@@ -62,6 +77,7 @@
         <div class="text-primary">
             TODO list: 
             <ul>
+                <li>implement the off state in pseudo class :before the on state in class :after</li>
                 <li>implement the component with Model-driven (reactive) aproach</li>
                 <li>show default value selector checkbox</li>
                 <li>review the signal related </li>

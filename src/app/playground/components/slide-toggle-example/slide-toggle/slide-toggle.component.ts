@@ -1,6 +1,6 @@
-import { Component, EffectRef, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild, effect, forwardRef, signal } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormsModule } from '@angular/forms';
-import { SlideToggleOrientation } from 'src/app/playground/models/slide-toggle.types';
+import { Component, EffectRef, EventEmitter, Input, OnDestroy, Output, effect, forwardRef, signal } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormsModule, Validator, ValidationErrors, AbstractControl } from '@angular/forms';
+import { SlideToggleOrientationType } from 'src/app/playground/models/slide-toggle.types';
 
 @Component({
   selector: 'app-slide-toggle',
@@ -16,59 +16,79 @@ import { SlideToggleOrientation } from 'src/app/playground/models/slide-toggle.t
     }
   ]
 })
-export class SlideToggleComponent implements ControlValueAccessor, OnDestroy {
-  @ViewChild('slideToggle') _sideToggleElementRef: ElementRef;
-  @Input() orientation: SlideToggleOrientation = 'horizontal';
-
+export class SlideToggleComponent implements OnDestroy, ControlValueAccessor, Validator  {
   private _toggleState = signal(false);
-
-  @Input() 
+  private previousState: boolean | null = null;
+  @Input() orientation: SlideToggleOrientationType = 'horizontal';
+  @Input()
   get value(): boolean {
     return this._toggleState();
   }
   set value(value: boolean) {
     this._toggleState.set(value);
   }
+  private _spin = signal(false);
+  @Input()
+  set spin(v: boolean) {
+    this._spin.set(v);
+    if (v) {
+      this.previousState = this._toggleState();
+      this._toggleState.set(false);
+    } else {
+      this._toggleState.set(this.previousState!);
+    }
+    this.disable = v;
+  }
+  get spin(): boolean {
+    return this._spin();
+  }
+  @Input() validValue: boolean | null = null;
+  @Input() knobColor: string = 'white';
+  @Input() knobWaitSpinnerColor: string = 'blue';
+  @Input() toggleOnStyle: { [key: string]: string; } = {};
+  @Input() toggleOffStyle: { [key: string]: string; } = {};
+
+  disable: boolean = false;
 
   @Output() valueChanged = new EventEmitter<boolean>();
+  private _effectRef: EffectRef = effect(() => {
+    this.valueChanged.emit(this._toggleState());
+  });
 
-  private onChange: (value: boolean) => void = () => {};
-  private onTouched: () => void = () => {};
-  private _effectRef: EffectRef;
-  isDisabled: boolean = false;
-
-  constructor() {
-    this._effectRef = effect(() => {
-      this.writeValue(this._toggleState());
-      this.onChange(this._toggleState())
-      this.onTouched();       
-      this.valueChanged.emit(this._toggleState());
-    }, {allowSignalWrites: true });    
-
-  }
+  private onChange: (value: boolean) => void = () => { };
+  private onTouched: () => void = () => { };
 
   writeValue(value: boolean): void {
     this._toggleState.set(value);
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: boolean) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.isDisabled = isDisabled;
-    if (this._sideToggleElementRef && this._sideToggleElementRef.nativeElement) {
-      this._sideToggleElementRef.nativeElement.disabled = isDisabled;
-    }
+    this.disable = isDisabled;
   }
 
   toggleClick(): void {
     this._toggleState.update((value) => !value);
-0  }
+    this.onChange(this._toggleState());
+    this.onTouched();
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (this.validValue !== null) {
+      if (value !== this.validValue) {
+        return { 'invalidValue': true };
+      }
+    }
+    return null;
+  }
 
   ngOnDestroy() {
     if (this._effectRef) {
