@@ -1,6 +1,11 @@
-import { Component, EffectRef, EventEmitter, Input, OnDestroy, Output, effect, forwardRef, signal } from '@angular/core';
+import { Component, EffectRef, Input, OnDestroy, computed, effect, forwardRef, output, signal } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormsModule, Validator, ValidationErrors, AbstractControl } from '@angular/forms';
 import { SlideToggleOrientationType } from 'src/app/playground/models/slide-toggle.types';
+
+export function stringAttributeTransform(value: any): string | null {
+  return (typeof value === 'string') ? value as string : null;
+}
+
 
 @Component({
   selector: 'app-slide-toggle',
@@ -44,16 +49,29 @@ export class SlideToggleComponent implements OnDestroy, ControlValueAccessor, Va
   }
   @Input() validValue: boolean | null = null;
   @Input() knobColor: string = 'white';
-  @Input() knobWaitSpinnerColor: string = 'blue';
+  //@Input() knobWaitSpinnerColor: string = 'blue';
+  @Input({ transform: stringAttributeTransform }) knobWaitSpinnerColor: string = 'blue';
   @Input() toggleOnStyle: { [key: string]: string; } = {};
   @Input() toggleOffStyle: { [key: string]: string; } = {};
 
   disable: boolean = false;
 
-  @Output() valueChanged = new EventEmitter<boolean>();
+  valueChanged = output<boolean>();
+
   private _effectRef: EffectRef = effect(() => {
     this.valueChanged.emit(this._toggleState());
   });
+
+  status = computed(() => {
+    if (this._spin()) {
+      return 'wait';
+    } else if (this._toggleState()) {
+      return 'on';
+    } else {
+      return 'off';
+    };
+  });
+
 
   private onChange: (value: boolean) => void = () => { };
   private onTouched: () => void = () => { };

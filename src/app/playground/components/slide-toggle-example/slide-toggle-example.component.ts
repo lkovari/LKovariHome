@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
@@ -12,6 +12,7 @@ import { SlideToggleOrientationType } from '../../models/slide-toggle.types';
   styleUrl: './slide-toggle-example.component.scss'
 })
 export class SlideToggleExampleComponent implements OnInit {
+  @ViewChild('modernSlideToggle') modernSlideToggle: SlideToggleComponent;
   githubLogoPath: string;
   defaultValue: boolean = true;
   orientationHorizontal: SlideToggleOrientationType = 'horizontal';

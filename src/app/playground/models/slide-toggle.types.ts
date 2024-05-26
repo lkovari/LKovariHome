@@ -1,2 +1,2 @@
 export type SlideToggleOrientationType = 'horizontal' | 'vertical';
-export type SlideToggleActionValueType = 'On' | 'Off' | 'Spin';
+export type SlideToggleActionValueType = 'on' | 'off' | 'wait';

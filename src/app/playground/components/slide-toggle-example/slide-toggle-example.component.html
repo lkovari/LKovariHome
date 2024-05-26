@@ -18,8 +18,7 @@
             alt="githubLogoPath"
           />
         </a>
-        Signal based slide toggle standalone component in Trmplate-driven
-        aproach (default value is true)
+        Signal based "modern" SlideToggle standalone component with input transform stringAttributeTransform, effect(), computed(), output() on Reactive form
       </div>
       <div class="sub-topic">
         Reactive form example with a slide toggle custom component.
@@ -51,7 +50,7 @@
             </div>
             <div class="form-control control-area">
               <label class="spacer" for="slideToggle">Slide toggle</label>
-              <app-slide-toggle
+              <app-slide-toggle #modernSlideToggle
                 class="horizontal-gap-left"
                 id="slideToggle"
                 [orientation]="defaultOrientation"
@@ -70,6 +69,7 @@
               Slide Toggle value:
               {{ toggleForm.value | json }}
             </p>
+            <p>SlideToggle Component Status: {{ modernSlideToggle.status() }}</p>
           </div>
           <div>
             <p class="under-construction">This Component is under construction!</p>
@@ -78,7 +78,6 @@
             TODO list: 
             <ul>
                 <li>implement the off state in pseudo class :before the on state in class :after</li>
-                <li>implement the component with Model-driven (reactive) aproach</li>
                 <li>show default value selector checkbox</li>
                 <li>review the signal related </li>
             </ul>
