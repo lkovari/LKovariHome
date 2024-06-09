@@ -1,11 +1,11 @@
 <div class="awards-content">
         <div class="awards-screen">
-            <div fxFlexAlign="center" class="align-awards">
-                <p>Awards...</p>
+            <div  class="align-awards text-primary">
+                <h4 class="label-title">Awards...</h4>
             </div>
             <div>
                 <p>
-                <span class="text-primary label-title">
+                <span class="text-primary">
                     <a class="spacer"
                       href="https://github.com/lkovari/LKovariHome/blob/master/src/app/shared/directives/imag-lazy-loading.directive.ts">
                       <img [src]="githubLogoPath" width="16" height="16" alt="githubLogoPath">
@@ -13,55 +13,15 @@
             </div>
             <div class="image-content">
                 <ul>
-                    <li>Team GT50 the Leaderboard Winner Q2 2022
-                        <img
-                            class="img-responsive"
-                            src="assets/images/2022Q2LeaderboardWinnerGT50.png" 
-                            width="434" height="640"
-                            alt="Caught at your best Q4 2021">
-                    </li>            
-                    <li>Caught at your best Q4 2021
-                        <img
-                            class="img-responsive"
-                            src="assets/images/2021Q4CaughtAtYourBest.png" 
-                            width="791" height="916"
-                            alt="Caught at your best Q4 2021">
-                    </li>
-                    <li>20 years of service.
-                        <img 
-                            class="img-responsive"
-                            src="assets/images/2018CertificateOfRecognition20years.png"
-                            width="800" height="583"
-                            alt="20 years of service">
-                    </li>
-                    <li>Caught at your best Q4 2016
-                        <img 
-                            class="img-responsive"
-                            src="assets/images/2016Q4CaughtAtYourBest.png" 
-                            width="1280" height="983"
-                            alt="Caught at your best Q4 2016">
-                    </li>
-                    <li>Caught at your best Q4 2015
-                        <img 
-                            class="img-responsive"
-                            src="assets/images/2015Q4CaughtAtYourBest.png"
-                            width="1280" height="913"
-                            alt="Caught at your best Q4 2015">
-                    </li>
-                    <li>ICAgile Bootcamp Certificate
-                        <img 
-                            class="img-responsive"
-                            src="assets/images/icagile-cert2014.png" 
-                            width="800" height="583"
-                            alt="IcAgile course Certificate">
-                    </li>
-                    <li>Former award, Stock Option Series A
-                        <img 
-                            class="img-responsive"
-                            src="assets/images/AmkaiStockOptions1050A.png" 
-                            width="1199" height="913"
-                            alt="Series A Stock Option got as an Award">
-                    </li>
+                    @for (imageDescriptor of imageDescriptors; track imageDescriptor.id) {
+                        <li class="text-primary">  {{ imageDescriptor.alt }}
+                            <img
+                                class="img-responsive"
+                                [src]="imageDescriptor.fileName" 
+                                width="imageDescriptor.width" height="imageDescriptor.height"
+                                alt="imageDescriptor.alt">
+                        </li>            
+                    }
                 </ul>
             </div>            
         </div>

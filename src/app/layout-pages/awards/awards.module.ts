@@ -17,6 +17,6 @@ import { AwardsRoutingModule } from './awards-routing.module';
     SharedModule,
     MaterialModule,
     AwardsRoutingModule
-  ],
+  ]
 })
 export class AwardsModule { }
