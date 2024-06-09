@@ -6,8 +6,8 @@ import * as angular from '@angular/forms';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('06/8/2024 6:47 AM');
-  lastUpdateTooltip = 'CV. Updated';
+  lastUpdateDate = new Date('06/9/2024 6:47 AM');
+  lastUpdateTooltip = 'About page style, added vertical scroll';
   angularVersion: any;
 
   constructor() { }
