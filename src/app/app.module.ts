@@ -3,8 +3,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
-import { NgOptimizedImage } from '@angular/common';
+import { provideHttpClient } from '@angular/common/http';
 
 
 @NgModule({
@@ -15,13 +14,11 @@ import { NgOptimizedImage } from '@angular/common';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NgOptimizedImage,
-    HttpClientModule
   ],
   // prevent 404 Forbidden error when refresh the page
   // https://stackoverflow.com/questions/35284988/angular-2-404-error-occur-when-i-refresh-through-the-browser
   // providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
-  providers: [],
+  providers: [provideHttpClient()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

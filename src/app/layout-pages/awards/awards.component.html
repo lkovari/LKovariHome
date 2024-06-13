@@ -9,21 +9,21 @@
                     <a class="spacer"
                       href="https://github.com/lkovari/LKovariHome/blob/master/src/app/layout-pages/awards/awards.component.ts">
                       <img [src]="githubLogoPath" width="16" height="16" alt="githubLogoPath">
-                    </a>Technical notes:</span> under CONSTRUCTION, will use ngOptimizedImage directive</p>
+                    </a>Technical notes:</span> NgOptimizedImage directive usage example</p>
             </div>
             <div class="image-content">
                 <ul>
                     @for (imageDescriptor of imageDescriptors; track imageDescriptor.id) {
                         <li class="text-primary">  {{ imageDescriptor.alt }}
-                            <!-- [ngSrc]="imageDescriptor.fileName" 
-                                 emit [ERROR] NG5002: Opening tag "img" not terminated. [plugin angular-compiler -->
                             <img
-                                class="img-responsive"
-                                ngSrc="imageDescriptor.fileName"
-                                [width]="imageDescriptor.width"
-                                [height]="imageDescriptor.height"
-                                [alt]="imageDescriptor.alt"
-                                ngSrcset="200w, 400w, 600w, 800w, 1000w, 1200w, 1600w, 2000w, 3000w">
+                            class="img-responsive"
+                            [ngSrc]="imageDescriptor.fileName"
+                            [width]="imageDescriptor.width"
+                            [height]="imageDescriptor.height"
+                            [alt]="imageDescriptor.alt"
+                            ngSrcset="200w, 400w, 600w, 800w, 1000w, 1200w, 1600w, 2000w, 3000w"
+                            [priority]="imageDescriptor.id === 1"
+                            [attr.loading]="imageDescriptor.id !== 1 ? 'lazy' : 'eager'">
                         </li>            
                     }
                 </ul>
