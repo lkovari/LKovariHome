@@ -7,7 +7,7 @@
                 <p>
                 <span class="text-primary">
                     <a class="spacer"
-                      href="https://github.com/lkovari/LKovariHome/blob/master/src/app/shared/directives/imag-lazy-loading.directive.ts">
+                      href="https://github.com/lkovari/LKovariHome/blob/master/src/app/layout-pages/awards/awards.component.ts">
                       <img [src]="githubLogoPath" width="16" height="16" alt="githubLogoPath">
                     </a>Technical notes:</span> under CONSTRUCTION, will use ngOptimizedImage directive</p>
             </div>
@@ -17,9 +17,11 @@
                         <li class="text-primary">  {{ imageDescriptor.alt }}
                             <img
                                 class="img-responsive"
-                                [src]="imageDescriptor.fileName" 
-                                width="imageDescriptor.width" height="imageDescriptor.height"
-                                alt="imageDescriptor.alt">
+                                [ngSrc]="imageDescriptor.fileName"
+                                [width]="imageDescriptor.width"
+                                [height]="imageDescriptor.height"
+                                [alt]="imageDescriptor.alt"
+                                ngSrcset="200w, 400w, 600w, 800w, 1000w, 1200w, 1600w, 2000w, 3000w">
                         </li>            
                     }
                 </ul>
