@@ -15,9 +15,11 @@
                 <ul>
                     @for (imageDescriptor of imageDescriptors; track imageDescriptor.id) {
                         <li class="text-primary">  {{ imageDescriptor.alt }}
+                            <!-- [ngSrc]="imageDescriptor.fileName" 
+                                 emit [ERROR] NG5002: Opening tag "img" not terminated. [plugin angular-compiler -->
                             <img
                                 class="img-responsive"
-                                [ngSrc]="imageDescriptor.fileName"
+                                ngSrc="imageDescriptor.fileName"
                                 [width]="imageDescriptor.width"
                                 [height]="imageDescriptor.height"
                                 [alt]="imageDescriptor.alt"

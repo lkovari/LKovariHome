@@ -21,7 +21,8 @@ import { provideImgixLoader } from '@angular/common';
     NgOptimizedImage
   ],
   providers: [
-    provideImgixLoader('http://localhost:4200/assets/images/'),
+    //provideImgixLoader('http://localhost:4200/assets/images/'),
+    provideImgixLoader('https://github.com/lkovari/LKovariHome/blob/master/src/assets/images/'),
   ],
 })
 export class AwardsModule { }

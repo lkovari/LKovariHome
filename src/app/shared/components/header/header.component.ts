@@ -6,8 +6,8 @@ import * as angular from '@angular/forms';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('06/9/2024 11:38 PM');
-  lastUpdateTooltip = 'Upgrade 18.0.0 to latest. fix award page.';
+  lastUpdateDate = new Date('06/13/2024 9:34 AM');
+  lastUpdateTooltip = 'Upgrade 18.0.3. new build system.';
   angularVersion: string;
 
   constructor() { }
