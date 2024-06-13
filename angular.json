@@ -18,7 +18,8 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": {
-              "base": "dist"
+              "base": "dist",
+              "browser": ""
             },
             "aot": true,
             "index": "src/index.html",
@@ -87,10 +88,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "LKovariHome:build:production"
+              "browserTarget": "LKovariHome:build:production"
             },
             "development": {
-              "buildTarget": "LKovariHome:build:development"
+              "browserTarget": "LKovariHome:build:development"
             }
           },
           "defaultConfiguration": "development"
