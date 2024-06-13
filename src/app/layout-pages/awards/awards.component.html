@@ -14,7 +14,8 @@
             <div class="image-content">
                 <ul>
                     @for (imageDescriptor of imageDescriptors; track imageDescriptor.id) {
-                        <li class="text-primary">  {{ imageDescriptor.alt }}
+                        <p class="text-primary label-title">{{ imageDescriptor.alt }}</p>
+                        <li>
                             <img
                             class="img-responsive"
                             [ngSrc]="imageDescriptor.fileName"
