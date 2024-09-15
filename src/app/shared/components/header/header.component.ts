@@ -7,7 +7,7 @@ import * as angular from '@angular/forms';
 })
 export class HeaderComponent implements OnInit {
   lastUpdateDate = new Date('09/15/2024 05:46 PM');
-  lastUpdateTooltip = 'Upgrade to version 18.2.3.';
+  lastUpdateTooltip = 'Upgrade to version 18.2.4.';
   angularVersion: string;
 
   constructor() { }
