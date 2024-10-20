@@ -8,16 +8,14 @@
     },    
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
     "esModuleInterop": true,
-
-
+    
+    "strict": true,
     "noImplicitReturns": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
-    // "strictPropertyInitialization": false,
 
     "useUnknownInCatchVariables": true,
     "noImplicitOverride": true,
@@ -26,7 +24,9 @@
     "noUnusedLocals": true,
     "exactOptionalPropertyTypes": true,
 
-    "skipLibCheck": true, // [ERROR] TS2430: Interface 'FirebaseServerAppSettings' incorrectly extends interface 'FirebaseAppSettings'.
+    // [ERROR] TS2430: Interface 'FirebaseServerAppSettings' incorrectly extends interface 'FirebaseAppSettings'.
+    "skipLibCheck": true,
+    
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
