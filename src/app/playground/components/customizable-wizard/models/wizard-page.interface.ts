@@ -10,13 +10,13 @@ export interface IWizardPage {
     componentName: string;
     componentType: Type<any>;
     componentRef?: any;
-    description?: string;
+    description: string;
     nextIndex: number;
-    nextPageRuleDescriptor?: IPageRuleDescriptor
+    nextPageRuleDescriptor?: IPageRuleDescriptor | undefined;
     allowBackPage: boolean;
     allowNextPage: boolean;
     initialData: IFormControlData<string | number>[];
     formData: any;
     lastFormStatus: FormControlStatus;
-    destroyRef?: DestroyRef;
+    destroyRef?: DestroyRef | undefined;
 }

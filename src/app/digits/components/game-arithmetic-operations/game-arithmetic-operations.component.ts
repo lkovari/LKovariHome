@@ -70,15 +70,15 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
     }
   );
 
-  @Input() gameParameters: IGameParameters;
+  @Input() gameParameters!: IGameParameters;
   @Output() expectedResultReached = new EventEmitter<IStack<IGameOperation>>();
   @Output() invalidOperationExecuted = new EventEmitter<number>();
   
   private history: IStack<IGameParameters> | undefined;
   private operationHistory: IStack<IGameOperation> | undefined;
 
-  private selectedOperandA: IGameOperand | null;
-  private selectedOperandB: IGameOperand | null;
+  private selectedOperandA!: IGameOperand | null;
+  private selectedOperandB!: IGameOperand | null;
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon('revert',  sanitizer.bypassSecurityTrustResourceUrl('assets/icons/rotate-left-solid.svg'));

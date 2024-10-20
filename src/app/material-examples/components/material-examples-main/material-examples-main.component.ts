@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-material-examples-main',
@@ -13,8 +14,8 @@ import { FormControl } from '@angular/forms';
 })
 export class MaterialExamplesMainComponent implements OnInit {
   searchSubject$ = new Subject<string>();
-  results$: Observable<any>;
-  searchString: string;
+  results$: Observable<any> = of([]);
+  searchString: string = '';
   searchMode: 'Both' | 'Image' | 'Video' = 'Both';
   showSearchContentFormControl: FormControl = new FormControl(this.searchMode);
 

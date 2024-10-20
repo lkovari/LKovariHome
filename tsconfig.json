@@ -10,20 +10,25 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "esModuleInterop": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
+
+
     "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noImplicitThis": true,
-    "strictNullChecks": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
-    "strictPropertyInitialization": false,
+    // "strictPropertyInitialization": false,
+
+    "useUnknownInCatchVariables": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "exactOptionalPropertyTypes": true,
+
+    "skipLibCheck": true, // [ERROR] TS2430: Interface 'FirebaseServerAppSettings' incorrectly extends interface 'FirebaseAppSettings'.
     "sourceMap": true,
     "declaration": false,
-    "noImplicitAny": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,

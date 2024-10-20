@@ -7,10 +7,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrl: './person.component.scss',
 })
 export class PersonComponent implements OnInit {
-  personForm: FormGroup;
   private formBuilder: FormBuilder = inject(FormBuilder);
-  @Input() index: number;
-  @Input() lastPageIndex: number;
+  personForm: FormGroup = this.formBuilder.group({});
+  @Input() index: number = 0;
+  @Input() lastPageIndex: number = 0;
   destroyRef: DestroyRef = inject(DestroyRef);
 
   ngOnInit() {

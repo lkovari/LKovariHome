@@ -16,7 +16,7 @@
     <div>
         @if (stageLevel.selected) {
             <div style="display: flex; justify-content: center;">
-                @for (star of stars; track star) {
+                @for (star of stars; track $index ){
                     <span class="stage-level-asterisk-selected">
                         <i class="pi pi-star-fill" style="font-size: 10px"></i>
                     </span>
@@ -26,14 +26,14 @@
             <div style="display: flex; justify-content: center;">
                 @if (stageLevel.completed) {
                     <div (click)="stageClick()">
-                        @for (star of stars; track star) {
+                        @for (star of stars; track $index ) {
                             <span class="stage-level-asterisk-unselected stage-level-completed enable-stage-click">
                                 <i class="pi pi-star-fill" style="font-size: 10px"></i>
                             </span>
                         }
                     </div>                    
                 } @else {
-                    @for (star of stars; track star) {
+                    @for (star of stars; track $index ) {
                         <span class="stage-level-asterisk-unselected disable-stage-click">
                             <i class="pi pi-star" style="font-size: 10px"></i>
                         </span>

@@ -7,10 +7,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './address.component.scss',
 })
 export class AddressComponent implements OnInit {
-  addressForm: FormGroup;
   private formBuilder: FormBuilder = inject(FormBuilder);
-  @Input() index: number;
-  @Input() lastPageIndex: number;
+  addressForm: FormGroup = this.formBuilder.group({});
+  @Input() index: number = 0;
+  @Input() lastPageIndex: number = 0;
   destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor() {}

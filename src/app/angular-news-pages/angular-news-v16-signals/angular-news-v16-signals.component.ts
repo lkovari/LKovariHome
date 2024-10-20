@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./angular-news-v16-signals.component.scss'],
 })
 export class AngularNewsV16SignalsComponent implements OnInit {
-  githubLogoPath: string;
+  githubLogoPath!: string;
   form = this.formBuilder.group({
     quantity: this.formBuilder.control(0, [
       Validators.required

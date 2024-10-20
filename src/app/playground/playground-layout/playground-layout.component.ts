@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './playground-layout.component.scss'
 })
 export class PlaygroundLayoutComponent implements OnInit, AfterViewInit {
-  @ViewChild('sidenav') sidenav: MatSidenav;
+  @ViewChild('sidenav') sidenav!: MatSidenav;
   
   constructor(public router: Router, public mediaObserver: MediaObserver) {}
 

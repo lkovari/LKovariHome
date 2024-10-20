@@ -8,15 +8,13 @@
         @for (
             checklistFormGroupItem of getCheckListFormArray().controls; track trackById(ix, 
             checklistFormGroupItem); let ix = $index) {
-          <li
-         
-          [ngClass]="{
+          <li [ngClass]="{
             'checklist-item-selected': needToShowNormalItems(
               selectNormal,
               checklistFormGroupItem
             )
           }"
-          (click)="onChecklistItemClick(checklistFormGroupItem)"
+          (click)="checklistItemClick(checklistFormGroupItem)"
           tabIndex="{{ ix }}"
           id="{{ 'lilabel' + ix }}"
         >

@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./material-examples-layout.component.scss']
 })
 export class MaterialExamplesLayoutComponent implements OnInit, AfterViewInit {
-  @ViewChild('sidenav') sidenav: MatSidenav;
+  @ViewChild('sidenav') sidenav!: MatSidenav;
   
   constructor(public router: Router, public mediaObserver: MediaObserver) {}
 

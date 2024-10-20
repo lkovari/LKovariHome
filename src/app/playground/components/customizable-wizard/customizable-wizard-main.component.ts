@@ -14,7 +14,7 @@ import { MiscellaneousComponent } from './component-data-sources/miscellaneous/m
   styleUrl: './customizable-wizard-main.component.scss',
 })
 export class CustomizableWizardMainComponent implements OnInit {
-  githubLogoPath: string;
+  githubLogoPath!: string;
 
   personFormData: IFormControlData<string | number>[] = [
     {

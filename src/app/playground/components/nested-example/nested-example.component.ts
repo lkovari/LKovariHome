@@ -12,8 +12,8 @@ import { ChecklistItem } from 'src/app/shared/models/checklist-item.model';
 })
 export class NestedExampleComponent implements OnInit {
   private formBuilder: FormBuilder = inject(FormBuilder);
-  exampleForm: FormGroup;
-  githubLogoPath: string;
+  exampleForm: FormGroup = this.formBuilder.group({});
+  githubLogoPath!: string;
   checklistItems: ChecklistItem[] = [
     { id: 1, label: "Alistair McIntyre as bone breaker", selected: false, value: null, normal: false },
     { id: 2, label: "Erika Gusbakothy as brain miner", selected: false, value: null, normal: false },
@@ -27,9 +27,9 @@ export class NestedExampleComponent implements OnInit {
   selectNormal = false;
   selectionMode = SelectionMode.SINGLE;
   // pass the element ref into the component
-  @ViewChild('checkListRef', { read: ElementRef, static: true }) checkListReference: ElementRef; 
+  @ViewChild('checkListRef', { read: ElementRef, static: true }) checkListReference!: ElementRef; 
   // checkListGroup for capture the component to manage selection etc.
-  @ViewChild('checkListGroup', { static: true }) checkListGroup: ChecklistComponent; 
+  @ViewChild('checkListGroup', { static: true }) checkListGroup!: ChecklistComponent; 
   MULTISELECT = SelectionMode.MULTI;
   SINGLESELECT = SelectionMode.SINGLE;
   destroyRef: DestroyRef = inject(DestroyRef);

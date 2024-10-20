@@ -22,7 +22,7 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
   private formBuilder: FormBuilder = inject(FormBuilder);
   // private changeDetectorRef: ChangeDetectorRef = inject(ChangeDetectorRef);
   hoverIndex: any;
-  @Input() elementRef: ElementRef;
+  @Input() elementRef!: ElementRef;
   @Input() showErrorInside = false;
   private _values: any;
   @Input() 
@@ -35,7 +35,7 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
   get checkListItems(): Array<IChecklistItem> {
     return this._values;
   }
-  private _selectionMode: SelectionMode;
+  private _selectionMode: SelectionMode = SelectionMode.SINGLE;
   @Input() 
   set selectionMode(v: SelectionMode) {
     this._selectionMode = v;
@@ -48,9 +48,9 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
   }
 
   @Input() style: any;
-  @Input() styleClass: string;
+  @Input() styleClass: string = '';
   @Input() listStyle: any;
-  @Input() listStyleClass: string;
+  @Input() listStyleClass: string = '';
   @Input() disabled: boolean = false;
   
   private _selectNormal: boolean = false;
@@ -63,14 +63,15 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
   }
   @Input() required: boolean = false;
 
-  @Output() onClick: EventEmitter<any> = new EventEmitter();
+  @Output() itemClick: EventEmitter<any> = new EventEmitter();
 
   isDisabled = false;
-  mainForm: FormGroup;
-  parentForm: FormGroup;
+  mainForm!: FormGroup;
+  parentForm!: FormGroup;
 
-  onModelChange: Function = () => { };
-  onModelTouched: Function = () => { };
+  private onChange: (value: FormArray | null) => void = () => {};
+  private onTouched: () => void = () => {};
+
   destroyRef: DestroyRef = inject(DestroyRef);
   
   // private formGroupDirective: FormGroupDirective can get parent FormGroup
@@ -113,7 +114,7 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
       this.parentForm = this.formGroupDirective.control as FormGroup;
       console.log('!=> Get the parent form with: this.parentForm = this.formGroupDirective.control as FormGroup;');      
       // capture the elementRef to get formGroupName attributze to replace formgGroup wich in used by the component
-      let formGroupName = this.elementRef.nativeElement.getAttribute('formGroupName');
+      const formGroupName = this.elementRef.nativeElement.getAttribute('formGroupName');
       console.log('!=> Get the nested formGroup of the parent form with: let formGroupName = this.elementRef.nativeElement.getAttribute(\'formGroupName\');');
       // replace the build checkList on the parent form with the checkListFormArray which built in this component
       this.parentForm.setControl(formGroupName, this.mainForm.controls['checkListFormArray']);
@@ -158,8 +159,8 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
       const formGroup: FormGroup = <FormGroup>abstractControl;
       formGroup.get('selected')?.patchValue(false);
     });
-    this.onModelChange(this.getCheckListFormArray().value);
-    this.onModelTouched();
+    this.onChange(this.getCheckListFormArray().value);
+    this.onTouched();
   }
 
   createChecklistItem(item?: IChecklistItem): FormGroup {
@@ -196,9 +197,9 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
     return checkListItemFormGroup.value.id;
   }
 
-  onChecklistItemClick(abstractControl: AbstractControl) {
+  checklistItemClick(abstractControl: AbstractControl) {
     this.selectListItem(abstractControl);
-    this.onClick.emit(this.mainForm.controls['checkListFormArray']);
+    this.itemClick.emit(this.mainForm.controls['checkListFormArray']);
   }
 
 
@@ -220,8 +221,8 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
    * This is called by the forms API on initialization so it can update the form
    * model when values propagate from the view (view -> model).
    */
-  registerOnChange(fn: any): void {
-      this.onModelChange = fn;
+  registerOnChange(fn: (value: FormArray | null) => void): void {
+    this.onChange = fn;
   }
 
   /*
@@ -231,8 +232,8 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
    * This is called by the forms API on initialization so it can update the form model
    * on blur.
    */
-  registerOnTouched(fn: any): void {
-      this.onModelTouched = fn;
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
   }
 
   /**
@@ -258,8 +259,8 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
         }
       }  
     });
-    this.onModelTouched();
-    this.onModelChange(this.getCheckListFormArray().value);
+    this.onTouched();
+    this.onChange(this.getCheckListFormArray().value);
   }
   
   private setupValidatorsDinamically() {
@@ -287,8 +288,8 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
       formGroupItem.markAsTouched();
       formGroupItem.markAsDirty();
     });
-    this.onModelTouched();
-    this.onModelChange(this.getCheckListFormArray().value);
+    this.onTouched();
+    this.onChange(this.getCheckListFormArray().value);
   }
 
   private setAllNormalItemsSelection(selected: boolean) {
@@ -309,8 +310,8 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
         formGroupItem.markAsTouched();
         formGroupItem.markAsDirty();
       });
-      this.onModelTouched();
-      this.onModelChange(this.getCheckListFormArray().value);
+      this.onTouched();
+      this.onChange(this.getCheckListFormArray().value);
     }
   }
 
@@ -335,8 +336,8 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
       }
       formGroup.get('selected')?.markAsTouched();
       formGroup.get('selected')?.markAsDirty();
-      this.onModelTouched();
-      this.onModelChange(this.getCheckListFormArray().value);
+      this.onTouched();
+      this.onChange(this.getCheckListFormArray().value);
       formGroup.updateValueAndValidity();
     }
   }
@@ -346,7 +347,7 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
   }
 
   getSelectedItems(): IChecklistItem[] {
-    let selArray = new Array<ChecklistItem>();
+    const selArray = new Array<ChecklistItem>();
     this.getCheckListFormArray().controls.forEach((abstractControl: AbstractControl) => {
       const formGroup: FormGroup = <FormGroup>abstractControl;
       if (formGroup.get('selected')?.value) {

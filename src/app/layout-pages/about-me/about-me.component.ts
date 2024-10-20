@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./about-me.component.scss']
 })
 export class AboutMeComponent implements OnInit {
-  public years: number;
+  public years!: number;
   public fullImagePath: string;
   public fullInsightImagePath: string;
   public fullInsightImagePathHref: string;

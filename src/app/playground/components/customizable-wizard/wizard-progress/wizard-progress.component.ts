@@ -8,6 +8,6 @@ import { IWizardPage } from '../models/wizard-page.interface';
 })
 export class WizardProgressComponent {
   @Input() wizardProgressStyle: { [key: string]: string } = {};
-  @Input() wizardPages: Array<IWizardPage>;
+  @Input() wizardPages: Array<IWizardPage> = new Array<IWizardPage>();
   @Input() selectedIndex = 0;
 }

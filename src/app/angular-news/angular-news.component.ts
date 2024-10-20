@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./angular-news.component.scss']
 })
 export class AngularNewsComponent implements OnInit, AfterViewInit {
-  @ViewChild('sidenav') sidenav: MatSidenav;
+  @ViewChild('sidenav') sidenav!: MatSidenav;
   
   constructor(public router: Router, public mediaObserver: MediaObserver) {}
 

@@ -8,9 +8,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class MiscellaneousComponent implements OnInit {
   private formBuilder: FormBuilder = inject(FormBuilder);
-  @Input() index: number;
-  @Input() lastPageIndex: number;  
-  miscellaneousForm: FormGroup;
+  @Input() index: number = 0;
+  @Input() lastPageIndex: number = 0;  
+  miscellaneousForm: FormGroup = this.formBuilder.group({});
   destroyRef: DestroyRef = inject(DestroyRef);
 
   ngOnInit() {

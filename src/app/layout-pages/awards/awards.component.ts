@@ -10,8 +10,8 @@ import { NgOptimizedImage } from '@angular/common';
   styleUrls: ['./awards.component.scss']
 })
 export class AwardsComponent implements OnInit {
-  githubLogoPath: string;
-  public years: number;
+  githubLogoPath!: string;
+  public years!: number;
   imageDescriptors: ImageDescriptor[] = [
     { id : 1, fileName: 'assets/images/2022Q2LeaderboardWinnerGT50.png', width: 434, height: 640, alt: 'Leaderboard winner Q2 of 2022' },
     { id : 2, fileName: 'assets/images/2021Q4CaughtAtYourBest.png', width: 791, height: 916, alt: 'Caught at your best Q4 2021' },

@@ -14,7 +14,7 @@ export class SidenavListComponent implements OnInit {
   @Output() sidenavClose = new EventEmitter<void>();
   mediaObserverAsObservable: Subscription;
   private isWidthXs = false;
-  menuItems: MenuItem[];
+  menuItems: MenuItem[] = [];
   destroyRef: DestroyRef = inject(DestroyRef);
   
   constructor(mediaObserver: MediaObserver) {
@@ -23,7 +23,7 @@ export class SidenavListComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef)).subscribe((changes: MediaChange[]) => {
       // option A.
       const currentMediaChange = changes[0];
-      if (currentMediaChange.mqAlias === 'xs') {
+      if (currentMediaChange?.mqAlias === 'xs') {
         this.isWidthXs = true;
       } else {
         this.isWidthXs = false;

@@ -13,13 +13,13 @@ export class WizardPage implements IWizardPage {
   componentRef?: any;
   description: string;
   nextIndex: number;
-  nextPageRuleDescriptor?: IPageRuleDescriptor;
+  nextPageRuleDescriptor?: IPageRuleDescriptor | undefined;
   allowBackPage: boolean;
   allowNextPage: boolean;
   initialData: IFormControlData<string | number>[];
   formData: any;
   lastFormStatus: FormControlStatus = 'INVALID';
-  destroyRef?: DestroyRef;
+  destroyRef?: DestroyRef | undefined;
   constructor(
     index: number,
     order: number,

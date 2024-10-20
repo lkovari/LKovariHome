@@ -1,7 +1,7 @@
 export interface IChecklistItem {
     id: number;
     label: string;
-    value: any;
+    value?: null;
     selected: boolean;
     normal: boolean;
     disabled?: boolean;

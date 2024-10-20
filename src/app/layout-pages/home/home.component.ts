@@ -6,7 +6,7 @@ import * as angular from '@angular/forms';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public years: number;
+  public years!: number
   constructor() { }
 
   ngOnInit(): void {

@@ -6,7 +6,7 @@ import { IGameParameters } from './models/game-parameters.interface';
 import { GameParameters } from './models/game-parameters.model';
 
 export class GenerateGameParameters {
-  private operands: number[];
+  private operands!: number[];
 
   private generateNumber(min: number, max: number) {
     return Math.floor(min + Math.random() * (max - min + 1));
@@ -76,8 +76,8 @@ export class GenerateGameParameters {
       switch (operation) {
         case DigitsConstants.OPERATOR_ADD: {
           operands[defaultOperandIndex] = EvaluateArythmeticOperation.evaluate(
-            operands[defaultOperandIndex],
-            operands[operandIndex],
+            operands[defaultOperandIndex]!,
+            operands[operandIndex]!,
             operation
           );
           defaultOperandIndex = this.removeOperandByIndex(
@@ -91,14 +91,14 @@ export class GenerateGameParameters {
         case DigitsConstants.OPERATOR_SUB: {
           if (
             this.checkExecuteSubstraction(
-              operands[defaultOperandIndex],
-              operands[operandIndex]
+              operands[defaultOperandIndex]!,
+              operands[operandIndex]!
             )
           ) {
             operands[defaultOperandIndex] =
               EvaluateArythmeticOperation.evaluate(
-                operands[defaultOperandIndex],
-                operands[operandIndex],
+                operands[defaultOperandIndex]!,
+                operands[operandIndex]!,
                 operation
               );
             defaultOperandIndex = this.removeOperandByIndex(
@@ -114,8 +114,8 @@ export class GenerateGameParameters {
         }
         case DigitsConstants.OPERATOR_MUL: {
           operands[defaultOperandIndex] = EvaluateArythmeticOperation.evaluate(
-            operands[defaultOperandIndex],
-            operands[operandIndex],
+            operands[defaultOperandIndex]!,
+            operands[operandIndex]!,
             operation
           );
           defaultOperandIndex = this.removeOperandByIndex(
@@ -129,14 +129,14 @@ export class GenerateGameParameters {
         case DigitsConstants.OPERATOR_DIV: {
           if (
             this.checkExecuteDivision(
-              operands[defaultOperandIndex],
-              operands[operandIndex]
+              operands[defaultOperandIndex]!,
+              operands[operandIndex]!
             )
           ) {
             operands[defaultOperandIndex] =
               EvaluateArythmeticOperation.evaluate(
-                operands[defaultOperandIndex],
-                operands[operandIndex],
+                operands[defaultOperandIndex]!,
+                operands[operandIndex]!,
                 operation
               );
             defaultOperandIndex = this.removeOperandByIndex(
@@ -152,7 +152,7 @@ export class GenerateGameParameters {
         }
       }
     }
-    result = operands[defaultOperandIndex];
+    result = operands[defaultOperandIndex]!;
     return result;
   }
 
@@ -211,20 +211,20 @@ export class GenerateGameParameters {
       return a - b;
     });
     const originalOperands = new Array<number>(
-      generatedNumbers[0],
-      generatedNumbers[1],
-      generatedNumbers[2],
-      generatedNumbers[3],
-      generatedNumbers[4],
-      generatedNumbers[5]
+      generatedNumbers[0]!,
+      generatedNumbers[1]!,
+      generatedNumbers[2]!,
+      generatedNumbers[3]!,
+      generatedNumbers[4]!,
+      generatedNumbers[5]!
     );
     this.operands = new Array<number>(
-      generatedNumbers[0],
-      generatedNumbers[1],
-      generatedNumbers[2],
-      generatedNumbers[3],
-      generatedNumbers[4],
-      generatedNumbers[5]
+      generatedNumbers[0]!,
+      generatedNumbers[1]!,
+      generatedNumbers[2]!,
+      generatedNumbers[3]!,
+      generatedNumbers[4]!,
+      generatedNumbers[5]!
     );
     generateUniqueNumber.clearGeneratedNumbers();
     let minResult = 0;
@@ -260,12 +260,12 @@ export class GenerateGameParameters {
     let stageResult = this.calculateResult(this.operands);
     while (minResult > stageResult || stageResult > maxResult) {
       this.operands = new Array<number>(
-        generatedNumbers[0],
-        generatedNumbers[1],
-        generatedNumbers[2],
-        generatedNumbers[3],
-        generatedNumbers[4],
-        generatedNumbers[5]
+        generatedNumbers[0]!,
+        generatedNumbers[1]!,
+        generatedNumbers[2]!,
+        generatedNumbers[3]!,
+        generatedNumbers[4]!,
+        generatedNumbers[5]!
       );
       stageResult = this.calculateResult(this.operands);
     }

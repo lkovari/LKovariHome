@@ -17,7 +17,7 @@
     </div>
     <div>
         <app-game-arithmetic-operations #arithmeticOperations
-            [gameParameters]="gameParameters[stageIndex]"
+            [gameParameters]="gameParameters[stageIndex] ?? defaultGameParameters"
             (expectedResultReached)="expectedResultReached($event)"
             (invalidOperationExecuted)="invalidOperationExecuted($event)">
         </app-game-arithmetic-operations>
@@ -30,7 +30,7 @@
     [modal]="true" (onHide)="hideGameCompletedDialog()">
     <div>
         Target {{ reachedValue }}. Your solution:
-        @for (mess of gameCompletedModalMessages; track mess) {
+        @for (mess of gameCompletedModalMessages; track $index) {
             <li class="li-no-bullet">
                 {{ mess }}
             </li>
@@ -41,7 +41,7 @@
     [modal]="true" [closable]="false">
     <div>
         Congratulation! Your Solutions:
-        @for (gameMess of allGameCompletedModalMessage; track gameMess) {
+        @for (gameMess of allGameCompletedModalMessage; track $index) {
             <li class="li-no-bullet">
                 {{ gameMess }}
             </li>

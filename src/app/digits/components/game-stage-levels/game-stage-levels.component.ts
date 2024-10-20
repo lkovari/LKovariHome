@@ -9,7 +9,7 @@ import { IStageLevel } from '../../models/stage-level.interface';
 export class GameStageLevelsComponent  implements OnInit {
   private readonly MAXSTAGE_LEVELS: number = 5;
   public NO_STAGE_LEVELS: boolean = false;
-  @Input() stageLevels: Array<IStageLevel>;
+  @Input() stageLevels: Array<IStageLevel> = new Array<IStageLevel>();
 
   ngOnInit(): void {
     this.NO_STAGE_LEVELS = !this.stageLevels 

@@ -9,7 +9,7 @@ import { StageCommunicationService } from '../../services/stage-communication.se
 })
 export class StageLevelComponent {
   stars: number[] = new Array<number>( 1, 2, 3 ); 
-  @Input() stageLevel: IStageLevel;
+  @Input() stageLevel!: IStageLevel;
 
   constructor(private stageCommunicationService: StageCommunicationService) {
   }

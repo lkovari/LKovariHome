@@ -39,7 +39,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   providers: [MessageService, CookieService],
 })
 export class DigitsGameComponent implements OnInit, OnDestroy {
-  @ViewChild('arithmeticOperations', { static: true }) arithmeticComponent: GameArithmeticOperationsComponent;
+  @ViewChild('arithmeticOperations', { static: true }) arithmeticComponent!: GameArithmeticOperationsComponent;
   readonly COOKIE_LK_DIGITS = 'CookieLKNumbers';
   private generateGameParameters = new GenerateGameParameters();
   currentDate = new Date();
@@ -47,10 +47,10 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
   stageLevels: IStageLevel[] = [];
   gameParameters: IGameParameters[] = [];
   stageIndex: number = 0;
-  cookieData: ICookieData;
-  firestorePuzzleDataItems: IFirestorePuzzleData[];
-  firestorePuzzleData: IFirestorePuzzleData;
-  todayPuzzleData: IPuzzleData;
+  cookieData!: ICookieData;
+  firestorePuzzleDataItems!: IFirestorePuzzleData[];
+  firestorePuzzleData!: IFirestorePuzzleData;
+  todayPuzzleData!: IPuzzleData;
   todayPuzzleDataItems: IPuzzleData[] = [];
   splashVisible = false;
   gameCompletedModalMessages: string[] = [];
@@ -59,9 +59,15 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
   allGameCompletedModalVisible = false;
   splashWidth = '80vw';
   updateStageLevel: Subscription;
-  reachedValue: number;
+  reachedValue!: number;
   destroyRef: DestroyRef = inject(DestroyRef);
   
+  defaultGameParameters: IGameParameters = {
+    result: 0,
+    operands: [],
+    stageIndex: 0
+  };
+
   constructor(private messageService: MessageService,
     private cookieService: CookieService,
     private clipboardService: ClipboardService,
@@ -89,8 +95,8 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
   }
 
   private stageToCompleted() {
-    this.stageLevels[this.stageIndex].completed = true;
-    this.stageLevels[this.stageIndex].selected = false;
+    this.stageLevels[this.stageIndex]!.completed = true;
+    this.stageLevels[this.stageIndex]!.selected = false;
   }
 
   private formatOperations(executedOperations: IStack<IGameOperation>): string {
@@ -115,7 +121,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
   }
 
   private createSummaryOfTHeOperations(stageIndex: number, executedOperations: IStack<IGameOperation>): string {
-    let result = this.stageLevels[stageIndex].value + ' -> '
+    let result = this.stageLevels[stageIndex]!.value + ' -> '
     this.gameCompletedModalMessages = [];
     while (executedOperations.size() > 0) {
       const gameOperation = executedOperations.pop();
@@ -145,7 +151,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
   private setupStages() {
     let ix = 0;
     this.gameParameters.forEach((gp) => {
-      this.stageLevels[ix].value = gp.result;
+      this.stageLevels[ix]!.value = gp.result;
       ++ix;
     });
   }
@@ -185,7 +191,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
         gameParameters.result = puzzleDataStage.expectedValue;
         let ix = 0;
         gameParameters.operands.forEach(operand => {
-          operand.value = puzzleDataStage.operands[ix];
+          operand.value = puzzleDataStage.operands[ix]!;
           ix++;
         });
         // stages
@@ -377,11 +383,11 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
   expectedResultReached(executedOperations: IStack<IGameOperation>) {
     const executedOperationsAsText = this.formatOperations(executedOperations);
     const stageSummary = this.createSummaryOfTHeOperations(this.stageIndex, executedOperations);
-    this.stageLevels[this.stageIndex].summary = stageSummary;
+    this.stageLevels[this.stageIndex]!.summary = stageSummary;
     this.clipboardService.copy(executedOperationsAsText);
     this.showSuccessMessage('You are reach the expected result!');
     this.stageToCompleted();
-    this.reachedValue = this.gameParameters[this.stageIndex].result;
+    this.reachedValue = this.gameParameters[this.stageIndex]!.result;
     this.gameCompletedModalVisible = true;
   }
 
@@ -389,7 +395,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
     const isItTheLastPage = this.collectAllOperations();
     if (!isItTheLastPage) {
       this.stageIndex++;
-      this.stageLevels[this.stageIndex].selected = true;
+      this.stageLevels[this.stageIndex]!.selected = true;
     }
     this.storeGameStateToCookie();
     this.arithmeticComponent.clearHistory();    
