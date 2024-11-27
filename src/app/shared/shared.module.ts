@@ -20,6 +20,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { SlideMenuModule } from 'primeng/slidemenu';
+import { MenubarModule } from 'primeng/menubar';
 import { ChecklistComponent } from './components/checklist/checklist.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
@@ -47,7 +48,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MaterialModule,
     FlexLayoutModule,
     LayoutContentComponent,
-    SlideMenuModule,
+    MenubarModule,
     ChecklistComponent
   ],
   providers: [],

@@ -2,9 +2,10 @@ import { Component, Input } from '@angular/core';
 import { IWizardPage } from '../models/wizard-page.interface';
 
 @Component({
-  selector: 'app-wizard-progress',
-  templateUrl: './wizard-progress.component.html',
-  styleUrl: './wizard-progress.component.scss'
+    selector: 'app-wizard-progress',
+    templateUrl: './wizard-progress.component.html',
+    styleUrl: './wizard-progress.component.scss',
+    standalone: false
 })
 export class WizardProgressComponent {
   @Input() wizardProgressStyle: { [key: string]: string } = {};

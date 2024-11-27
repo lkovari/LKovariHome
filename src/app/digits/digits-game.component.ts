@@ -33,10 +33,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   - consider the lodash deep copy usage or use the JSON.parse(JSON.stringify(data)) to clone object
 */
 @Component({
-  selector: 'app-digits-game',
-  templateUrl: './digits-game.component.html',
-  styleUrls: ['./digits-game.component.scss'],
-  providers: [MessageService, CookieService],
+    selector: 'app-digits-game',
+    templateUrl: './digits-game.component.html',
+    styleUrls: ['./digits-game.component.scss'],
+    providers: [MessageService, CookieService],
+    standalone: false
 })
 export class DigitsGameComponent implements OnInit, OnDestroy {
   @ViewChild('arithmeticOperations', { static: true }) arithmeticComponent!: GameArithmeticOperationsComponent;

@@ -4,9 +4,10 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-layout',
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss']
+    selector: 'app-layout',
+    templateUrl: './layout.component.html',
+    styleUrls: ['./layout.component.scss'],
+    standalone: false
 })
 export class LayoutComponent implements OnInit, AfterViewInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;

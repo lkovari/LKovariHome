@@ -20,15 +20,16 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { operandButtonAnimation } from './operand-button-animation';
 
 @Component({
-  host: {
-    '[@operandButtonAnimationMove]': 'operandButtonAnimation',
-    '(@operandButtonAnimationMove.start)': 'captureAnimationTriggerStartEvent($event)',
-    '(@operandButtonAnimationMove.done)': 'captureAnimationTriggerDoneEvent($event)',
-  },
-  selector: 'app-game-arithmetic-operations',
-  templateUrl: './game-arithmetic-operations.component.html',
-  styleUrls: ['./game-arithmetic-operations.component.scss'],
-  animations: [ operandButtonAnimation ],
+    host: {
+        '[@operandButtonAnimationMove]': 'operandButtonAnimation',
+        '(@operandButtonAnimationMove.start)': 'captureAnimationTriggerStartEvent($event)',
+        '(@operandButtonAnimationMove.done)': 'captureAnimationTriggerDoneEvent($event)',
+    },
+    selector: 'app-game-arithmetic-operations',
+    templateUrl: './game-arithmetic-operations.component.html',
+    styleUrls: ['./game-arithmetic-operations.component.scss'],
+    animations: [operandButtonAnimation],
+    standalone: false
 })
 export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
   githubLogoPath = 'assets/logos/GitHub-Mark-32px.png';

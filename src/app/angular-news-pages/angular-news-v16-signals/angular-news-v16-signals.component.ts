@@ -3,9 +3,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-angular-news-v16-signals',
-  templateUrl: './angular-news-v16-signals.component.html',
-  styleUrls: ['./angular-news-v16-signals.component.scss'],
+    selector: 'app-angular-news-v16-signals',
+    templateUrl: './angular-news-v16-signals.component.html',
+    styleUrls: ['./angular-news-v16-signals.component.scss'],
+    standalone: false
 })
 export class AngularNewsV16SignalsComponent implements OnInit {
   githubLogoPath!: string;

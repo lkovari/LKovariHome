@@ -4,9 +4,10 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-angular-news',
-  templateUrl: './angular-news.component.html',
-  styleUrls: ['./angular-news.component.scss']
+    selector: 'app-angular-news',
+    templateUrl: './angular-news.component.html',
+    styleUrls: ['./angular-news.component.scss'],
+    standalone: false
 })
 export class AngularNewsComponent implements OnInit, AfterViewInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;

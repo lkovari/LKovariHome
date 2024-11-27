@@ -8,9 +8,10 @@ import { FormControl } from '@angular/forms';
 import { of } from 'rxjs';
 
 @Component({
-  selector: 'app-material-examples-main',
-  templateUrl: './material-examples-main.component.html',
-  styleUrls: ['./material-examples-main.component.scss']
+    selector: 'app-material-examples-main',
+    templateUrl: './material-examples-main.component.html',
+    styleUrls: ['./material-examples-main.component.scss'],
+    standalone: false
 })
 export class MaterialExamplesMainComponent implements OnInit {
   searchSubject$ = new Subject<string>();

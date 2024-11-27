@@ -3,11 +3,10 @@ import { ImageDescriptor } from './models/image-descriptor.interface';
 import { NgOptimizedImage } from '@angular/common';
 
 @Component({
-  standalone: true,
-  imports: [NgOptimizedImage],
-  selector: 'app-awards',
-  templateUrl: './awards.component.html',
-  styleUrls: ['./awards.component.scss']
+    imports: [NgOptimizedImage],
+    selector: 'app-awards',
+    templateUrl: './awards.component.html',
+    styleUrls: ['./awards.component.scss']
 })
 export class AwardsComponent implements OnInit {
   githubLogoPath!: string;

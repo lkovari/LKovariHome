@@ -4,9 +4,10 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-playground-layout',
-  templateUrl: './playground-layout.component.html',
-  styleUrl: './playground-layout.component.scss'
+    selector: 'app-playground-layout',
+    templateUrl: './playground-layout.component.html',
+    styleUrl: './playground-layout.component.scss',
+    standalone: false
 })
 export class PlaygroundLayoutComponent implements OnInit, AfterViewInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;

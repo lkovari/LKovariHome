@@ -9,9 +9,10 @@ import { IFormControlData } from './models/form-control-data.interface';
 import { MiscellaneousComponent } from './component-data-sources/miscellaneous/miscellaneous.component';
 
 @Component({
-  selector: 'app-customizable-wizard-main',
-  templateUrl: './customizable-wizard-main.component.html',
-  styleUrl: './customizable-wizard-main.component.scss',
+    selector: 'app-customizable-wizard-main',
+    templateUrl: './customizable-wizard-main.component.html',
+    styleUrl: './customizable-wizard-main.component.scss',
+    standalone: false
 })
 export class CustomizableWizardMainComponent implements OnInit {
   githubLogoPath!: string;

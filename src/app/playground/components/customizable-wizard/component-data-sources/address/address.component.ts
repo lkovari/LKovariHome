@@ -2,9 +2,10 @@ import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-address',
-  templateUrl: './address.component.html',
-  styleUrl: './address.component.scss',
+    selector: 'app-address',
+    templateUrl: './address.component.html',
+    styleUrl: './address.component.scss',
+    standalone: false
 })
 export class AddressComponent implements OnInit {
   private formBuilder: FormBuilder = inject(FormBuilder);

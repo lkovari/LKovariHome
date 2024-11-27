@@ -5,11 +5,10 @@ import { JsonPipe } from '@angular/common';
 import { SlideToggleOrientationType } from '../../models/slide-toggle.types';
 
 @Component({
-  selector: 'app-slide-toggle-example',
-  standalone: true,
-  imports: [JsonPipe, ReactiveFormsModule, SlideToggleComponent],
-  templateUrl: './slide-toggle-example.component.html',
-  styleUrl: './slide-toggle-example.component.scss'
+    selector: 'app-slide-toggle-example',
+    imports: [JsonPipe, ReactiveFormsModule, SlideToggleComponent],
+    templateUrl: './slide-toggle-example.component.html',
+    styleUrl: './slide-toggle-example.component.scss'
 })
 export class SlideToggleExampleComponent implements OnInit {
   // strict @ViewChild('modernSlideToggle') modernSlideToggle: SlideToggleComponent;

@@ -8,18 +8,17 @@ export function stringAttributeTransform(value: any): string | null {
 
 
 @Component({
-  selector: 'app-slide-toggle',
-  standalone: true,
-  imports: [FormsModule],
-  templateUrl: './slide-toggle.component.html',
-  styleUrl: './slide-toggle.component.scss',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SlideToggleComponent),
-      multi: true
-    }
-  ]
+    selector: 'app-slide-toggle',
+    imports: [FormsModule],
+    templateUrl: './slide-toggle.component.html',
+    styleUrl: './slide-toggle.component.scss',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SlideToggleComponent),
+            multi: true
+        }
+    ]
 })
 export class SlideToggleComponent implements OnDestroy, ControlValueAccessor, Validator  {
   private _toggleState = signal(false);

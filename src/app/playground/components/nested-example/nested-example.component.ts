@@ -8,7 +8,8 @@ import { ChecklistItem } from 'src/app/shared/models/checklist-item.model';
 @Component({
     selector: 'app-nested-example',
     templateUrl: './nested-example.component.html',
-    styleUrl: './nested-example.component.scss'
+    styleUrl: './nested-example.component.scss',
+    standalone: false
 })
 export class NestedExampleComponent implements OnInit {
   private formBuilder: FormBuilder = inject(FormBuilder);

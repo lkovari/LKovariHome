@@ -4,9 +4,10 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-material-examples-layout',
-  templateUrl: './material-examples-layout.component.html',
-  styleUrls: ['./material-examples-layout.component.scss']
+    selector: 'app-material-examples-layout',
+    templateUrl: './material-examples-layout.component.html',
+    styleUrls: ['./material-examples-layout.component.scss'],
+    standalone: false
 })
 export class MaterialExamplesLayoutComponent implements OnInit, AfterViewInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;

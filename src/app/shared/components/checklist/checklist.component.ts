@@ -13,10 +13,11 @@ export const CHECKLIST_VALUE_ACCESSOR: any = {
   multi: true
 };
 @Component({
-  selector: 'app-checklist',
-  templateUrl: './checklist.component.html',
-  styleUrls: ['./checklist.component.scss'],
-  providers: [CHECKLIST_VALUE_ACCESSOR]
+    selector: 'app-checklist',
+    templateUrl: './checklist.component.html',
+    styleUrls: ['./checklist.component.scss'],
+    providers: [CHECKLIST_VALUE_ACCESSOR],
+    standalone: false
 })
 export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChanges, AfterViewInit  {
   private formBuilder: FormBuilder = inject(FormBuilder);

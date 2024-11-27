@@ -15,9 +15,10 @@ import { FormControl, FormControlStatus, FormGroup } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'app-customizable-wizard',
-  templateUrl: './customizable-wizard.component.html',
-  styleUrl: './customizable-wizard.component.scss',
+    selector: 'app-customizable-wizard',
+    templateUrl: './customizable-wizard.component.html',
+    styleUrl: './customizable-wizard.component.scss',
+    standalone: false
 })
 export class CustomizableWizardComponent implements OnInit, AfterViewInit {
   @ViewChild(DynamicComponentHostDirective, { static: true })

@@ -3,9 +3,10 @@ import { IStageLevel } from '../../models/stage-level.interface';
 import { StageCommunicationService } from '../../services/stage-communication.service';
 
 @Component({
-  selector: 'app-stage-level',
-  templateUrl: './stage-level.component.html',
-  styleUrls: ['./stage-level.component.scss']
+    selector: 'app-stage-level',
+    templateUrl: './stage-level.component.html',
+    styleUrls: ['./stage-level.component.scss'],
+    standalone: false
 })
 export class StageLevelComponent {
   stars: number[] = new Array<number>( 1, 2, 3 ); 

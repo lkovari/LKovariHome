@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { IStageLevel } from '../../models/stage-level.interface';
 
 @Component({
-  selector: 'app-game-stage-levels',
-  templateUrl: './game-stage-levels.component.html',
-  styleUrls: ['./game-stage-levels.component.scss']
+    selector: 'app-game-stage-levels',
+    templateUrl: './game-stage-levels.component.html',
+    styleUrls: ['./game-stage-levels.component.scss'],
+    standalone: false
 })
 export class GameStageLevelsComponent  implements OnInit {
   private readonly MAXSTAGE_LEVELS: number = 5;

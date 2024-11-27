@@ -1,3 +1,4 @@
+@use 'sass:math';
 .wizard-progress-layout {
     margin: 2rem;
     height: 3rem;
@@ -11,7 +12,9 @@
         @media (min-width: 900px) { .title-base { font-size: 21px } }
         @media (min-width: 1200px) { .title-base { font-size: 26px } }
         @media (min-width: 1800px) { .title-base { font-size: 31px } }
-        margin: 0.8rem;
+        //margin: 0.8rem;
+        margin: math.div(0.8rem, 2);
+        
         .select-title {
             @extend .title-base;
             color: blue;
