@@ -7,8 +7,8 @@ import * as angular from '@angular/forms';
     standalone: false
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('12/01/2024 3:43 PM');
-  lastUpdateTooltip = 'Replace LinkedIn profile url';
+  lastUpdateDate = new Date('12/01/2024 6:15 PM');
+  lastUpdateTooltip = 'Fix sass deprecation warnings';
   angularVersion!: string;
 
   constructor() { }
