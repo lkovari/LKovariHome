@@ -8,7 +8,7 @@ import * as angular from '@angular/forms';
 })
 export class HeaderComponent implements OnInit {
   lastUpdateDate = new Date('12/01/2024 6:15 PM');
-  lastUpdateTooltip = 'Fix sass deprecation warnings';
+  lastUpdateTooltip = 'Fix sass deprecation warnings, Update cfk and material and angular-eslint';
   angularVersion!: string;
 
   constructor() { }
