@@ -4,19 +4,20 @@
     height: calc(100vh - 102px);
     width: auto;
 
-    section div p{
+    section div p {
         color: #3f51b5;
         font-size: 30px;
         text-shadow: 2px 3px 5px grey;
         margin: 30px 0;
     }
-    
-    section div + p{
+
+    section div+p {
         color: #3f51b5;
         font-weight: bold;
         font-size: 20px;
         padding-bottom: 20px;
     }
+
     .home-screen {
         .align-welcome {
             text-align: center;
@@ -30,5 +31,33 @@
         bottom: 1rem;
         width: 100%;
     }
-        
+
+    .pre-wrapper {
+        max-width: 100%;
+        /* Ensure the div fits within the view */
+        overflow-x: auto;
+        /* Add horizontal scrollbar if content overflows */
+        overflow-y: hidden;
+        /* Prevent vertical scrollbar */
+        background-color: #f9f9f9;
+        /* Optional: light background for readability */
+        border: 1px solid #ddd;
+        /* Optional: subtle border for better visibility */
+        padding: 1rem;
+        /* Optional: padding for spacing around content */
+    }
+
+    /* Preformatted text styling */
+    pre {
+        margin: 0;
+        /* Remove default margin */
+        white-space: pre;
+        /* Preserve spaces and line breaks */
+        word-wrap: normal;
+        /* Prevent text wrapping */
+        font-family: monospace;
+        /* Monospace font for consistent tabulation */
+        font-size: 14px;
+        /* Default font size */
+    }
 }
