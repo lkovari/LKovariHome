@@ -8,8 +8,8 @@ describe('AngularNewsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AngularNewsComponent]
-    });
+    imports: [AngularNewsComponent]
+});
     fixture = TestBed.createComponent(AngularNewsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

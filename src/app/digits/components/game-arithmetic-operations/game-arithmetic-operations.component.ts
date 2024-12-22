@@ -15,9 +15,11 @@ import { EvaluateArythmeticOperation } from './evaluate-arythmetic-operation';
 import { IGameOperation } from '../../models/game-operation.interface';
 import { GameOperation } from '../../models/game.operation.model';
 import { DigitsConstants } from '../../digits-constants';
-import { MatIconRegistry } from '@angular/material/icon';
+import { MatIconRegistry, MatIcon } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { operandButtonAnimation } from './operand-button-animation';
+import { NgStyle, NgClass } from '@angular/common';
+import { ExtendedModule } from '@angular/flex-layout/extended';
 
 @Component({
     host: {
@@ -29,7 +31,7 @@ import { operandButtonAnimation } from './operand-button-animation';
     templateUrl: './game-arithmetic-operations.component.html',
     styleUrls: ['./game-arithmetic-operations.component.scss'],
     animations: [operandButtonAnimation],
-    standalone: false
+    imports: [NgStyle, ExtendedModule, NgClass, MatIcon]
 })
 export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
   githubLogoPath = 'assets/logos/GitHub-Mark-32px.png';

@@ -3,13 +3,17 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
+import { MatNavList, MatListItem } from '@angular/material/list';
+import { RouterLink } from '@angular/router';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { SlideMenuModule } from 'primeng/slidemenu';
 
 
 @Component({
     selector: 'app-sidenav-list',
     templateUrl: './sidenav-list.component.html',
     styleUrls: ['./sidenav-list.component.scss'],
-    standalone: false
+    imports: [MatNavList, MatListItem, RouterLink, FaIconComponent, SlideMenuModule]
 })
 export class SidenavListComponent implements OnInit {
   @Output() sidenavClose = new EventEmitter<void>();

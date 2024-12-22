@@ -1,11 +1,11 @@
 import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-person',
     templateUrl: './person.component.html',
     styleUrl: './person.component.scss',
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule]
 })
 export class PersonComponent implements OnInit {
   private formBuilder: FormBuilder = inject(FormBuilder);

@@ -1,13 +1,20 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
-import { MatSidenav } from '@angular/material/sidenav';
-import { Router } from '@angular/router';
+import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
+import { Router, RouterOutlet } from '@angular/router';
+import { LayoutContentComponent } from '../../shared/components/layout-content/layout-content.component';
+import { MatToolbar } from '@angular/material/toolbar';
+import { ExtendedModule } from '@angular/flex-layout/extended';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { HeaderComponent } from '../../shared/components/header/header.component';
+import { SidenavListComponent } from '../../shared/components/sidenav-list/sidenav-list.component';
 
 @Component({
     selector: 'app-playground-layout',
     templateUrl: './playground-layout.component.html',
     styleUrl: './playground-layout.component.scss',
-    standalone: false
+    imports: [LayoutContentComponent, MatToolbar, ExtendedModule, MatIconButton, MatIcon, HeaderComponent, MatSidenavContainer, MatSidenav, SidenavListComponent, MatSidenavContent, RouterOutlet]
 })
 export class PlaygroundLayoutComponent implements OnInit, AfterViewInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;

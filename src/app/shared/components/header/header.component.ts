@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import * as angular from '@angular/forms';
+import { MatToolbar } from '@angular/material/toolbar';
+import { RouterLink } from '@angular/router';
+import { MatTooltip } from '@angular/material/tooltip';
+import { DatePipe } from '@angular/common';
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    standalone: false
+    imports: [MatToolbar, RouterLink, MatTooltip, DatePipe]
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('12/01/2024 6:15 PM');
-  lastUpdateTooltip = 'Fix sass deprecation warnings, Update cfk and material and angular-eslint';
+  lastUpdateDate = new Date('12/22/2024 6:15 PM');
+  lastUpdateTooltip = 'Standalone migration completed';
   angularVersion!: string;
 
   constructor() { }

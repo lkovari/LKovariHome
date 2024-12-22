@@ -20,6 +20,10 @@ import { PuzzleDataStage } from './models/puzzle-data-stage.model';
 import { FirestorePuzzleData } from './models/firestore-puzzle-data.model';
 import { StageCommunicationService } from './services/stage-communication.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ToastModule } from 'primeng/toast';
+import { GameStageLevelsComponent } from './components/game-stage-levels/game-stage-levels.component';
+import { DialogModule } from 'primeng/dialog';
+import { DatePipe } from '@angular/common';
 
 /*
   Known bugs:
@@ -37,7 +41,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     templateUrl: './digits-game.component.html',
     styleUrls: ['./digits-game.component.scss'],
     providers: [MessageService, CookieService],
-    standalone: false
+    imports: [ToastModule, GameStageLevelsComponent, GameArithmeticOperationsComponent, DialogModule, DatePipe]
 })
 export class DigitsGameComponent implements OnInit, OnDestroy {
   @ViewChild('arithmeticOperations', { static: true }) arithmeticComponent!: GameArithmeticOperationsComponent;

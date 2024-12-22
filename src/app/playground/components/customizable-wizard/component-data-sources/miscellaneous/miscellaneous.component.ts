@@ -1,11 +1,11 @@
 import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-miscellaneous',
     templateUrl: './miscellaneous.component.html',
     styleUrl: './miscellaneous.component.scss',
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule]
 })
 export class MiscellaneousComponent implements OnInit {
   private formBuilder: FormBuilder = inject(FormBuilder);

@@ -8,8 +8,8 @@ describe('MaterialExamplesLayoutComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MaterialExamplesLayoutComponent]
-    });
+    imports: [MaterialExamplesLayoutComponent]
+});
     fixture = TestBed.createComponent(MaterialExamplesLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

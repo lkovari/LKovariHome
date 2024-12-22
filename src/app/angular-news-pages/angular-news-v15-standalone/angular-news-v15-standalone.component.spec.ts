@@ -8,8 +8,8 @@ describe('AngularNewsV15StandaloneComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AngularNewsV15StandaloneComponent]
-    });
+    declarations: [AngularNewsV15StandaloneComponent]
+});
     fixture = TestBed.createComponent(AngularNewsV15StandaloneComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

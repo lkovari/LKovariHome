@@ -8,8 +8,8 @@ describe('GameStageLevelsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [GameStageLevelsComponent]
-    });
+    imports: [GameStageLevelsComponent]
+});
     fixture = TestBed.createComponent(GameStageLevelsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

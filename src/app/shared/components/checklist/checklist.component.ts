@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, forwardRef, ElementRef, inject, AfterViewInit, OnChanges, SimpleChanges, DestroyRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, ControlValueAccessor, AbstractControl, NG_VALUE_ACCESSOR, FormGroupDirective } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, ControlValueAccessor, AbstractControl, NG_VALUE_ACCESSOR, FormGroupDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IChecklistItem } from '../../models/checklist-item.interface';
 import { ChecklistValidators } from './checklist-validator';
 import { SelectionMode } from './selection-mode.enum';
 import { ChecklistItem } from '../../models/checklist-item.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NgClass } from '@angular/common';
 
 
 export const CHECKLIST_VALUE_ACCESSOR: any = {
@@ -17,7 +18,7 @@ export const CHECKLIST_VALUE_ACCESSOR: any = {
     templateUrl: './checklist.component.html',
     styleUrls: ['./checklist.component.scss'],
     providers: [CHECKLIST_VALUE_ACCESSOR],
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, NgClass]
 })
 export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChanges, AfterViewInit  {
   private formBuilder: FormBuilder = inject(FormBuilder);

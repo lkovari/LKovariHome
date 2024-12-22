@@ -8,8 +8,8 @@ describe('GameArithmeticOperationsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [GameArithmeticOperationsComponent]
-    });
+    imports: [GameArithmeticOperationsComponent]
+});
     fixture = TestBed.createComponent(GameArithmeticOperationsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

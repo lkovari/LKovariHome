@@ -3,7 +3,7 @@ import { PlaygroundRoutingModule } from './playground-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../material/material.module';
+
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PlaygroundLayoutComponent } from './playground-layout/playground-layout.component';
 import { NestedExampleComponent } from './components/nested-example/nested-example.component';
@@ -20,8 +20,15 @@ import { MiscellaneousComponent } from './components/customizable-wizard/compone
 
 
 @NgModule({
-  declarations: [
-    PlaygroundLayoutComponent, 
+    imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FlexLayoutModule,
+    SharedModule,
+    PlaygroundRoutingModule,
+    PlaygroundLayoutComponent,
     NestedExampleComponent,
     WizardProgressComponent,
     CustomizableWizardComponent,
@@ -31,16 +38,6 @@ import { MiscellaneousComponent } from './components/customizable-wizard/compone
     CompanyComponent,
     MiscellaneousComponent,
     DynamicComponentHostDirective
-  ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    FlexLayoutModule,
-    SharedModule,
-    PlaygroundRoutingModule
-  ]
+]
 })
 export class PlaygroundModule { }

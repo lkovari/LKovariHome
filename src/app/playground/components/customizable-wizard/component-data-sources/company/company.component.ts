@@ -1,10 +1,10 @@
 import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 @Component({
     selector: 'app-company',
     templateUrl: './company.component.html',
     styleUrl: './company.component.scss',
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule]
 })
 export class CompanyComponent implements OnInit {
   private formBuilder: FormBuilder = inject(FormBuilder);

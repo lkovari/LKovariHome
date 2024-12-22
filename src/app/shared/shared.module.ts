@@ -4,7 +4,7 @@ import { SidenavListComponent } from './components/sidenav-list/sidenav-list.com
 import { LayoutContentComponent } from './components/layout-content/layout-content.component';
 
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../material/material.module';
+
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -24,34 +24,30 @@ import { MenubarModule } from 'primeng/menubar';
 import { ChecklistComponent } from './components/checklist/checklist.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    SidenavListComponent,
-    LayoutContentComponent,
-    ChecklistComponent
-  ],
-  imports: [
+    imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    MaterialModule,
     MatToolbarModule,
     RouterModule,
     FontAwesomeModule,
     SlideMenuModule,
-  ],
-  exports: [
+    HeaderComponent,
+    SidenavListComponent,
+    LayoutContentComponent,
+    ChecklistComponent,
+],
+    exports: [
     RouterModule,
     HeaderComponent,
     SidenavListComponent,
-    MaterialModule,
     FlexLayoutModule,
     LayoutContentComponent,
     MenubarModule,
     ChecklistComponent
-  ],
-  providers: [],
+],
+    providers: [],
 })
 export class SharedModule {
   constructor(library: FaIconLibrary) {

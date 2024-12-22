@@ -18,25 +18,23 @@ import { NumbersFirestoreService } from './services/numbers-firestore.service';
 import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
-  declarations: [
-    DigitsGameComponent,
-    GameStageLevelsComponent,
-    StageLevelComponent,
-    GameArithmeticOperationsComponent
-  ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    ToastModule,
-    MessagesModule,
-    DigitsRoutingModule,
-    FlexLayoutModule,
-    MatIconModule,
-    ClipboardModule,
-    AngularFireModule.initializeApp(environment.firebasePuzzleData),
-    AngularFirestoreModule,
-    DialogModule
-  ],
-  providers: [ NumbersFirestoreService ]
+    imports: [
+        CommonModule,
+        RouterModule,
+        ToastModule,
+        MessagesModule,
+        DigitsRoutingModule,
+        FlexLayoutModule,
+        MatIconModule,
+        ClipboardModule,
+        AngularFireModule.initializeApp(environment.firebasePuzzleData),
+        AngularFirestoreModule,
+        DialogModule,
+        DigitsGameComponent,
+        GameStageLevelsComponent,
+        StageLevelComponent,
+        GameArithmeticOperationsComponent
+    ],
+    providers: [NumbersFirestoreService]
 })
 export class DigitsModule { }

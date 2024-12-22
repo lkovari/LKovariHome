@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../material/material.module';
+
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialExamplesRoutingModule } from './material-examples-routing.module';
 import { MaterialExamplesMainComponent } from './components/material-examples-main/material-examples-main.component';
@@ -15,24 +15,21 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
-  declarations: [
-    MaterialExamplesMainComponent,
-    MaterialExamplesLayoutComponent
-  ],
-  imports: [
+    imports: [
     CommonModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
     AngularNewsRoutingModule,
-    MaterialModule,
     MatInputModule,
     MatButtonModule,
     MatRadioModule,
     MatIconModule,
     FlexLayoutModule,
-    SharedModule,    
-    MaterialExamplesRoutingModule
-  ]
+    SharedModule,
+    MaterialExamplesRoutingModule,
+    MaterialExamplesMainComponent,
+    MaterialExamplesLayoutComponent
+]
 })
 export class MaterialExamplesModule { }

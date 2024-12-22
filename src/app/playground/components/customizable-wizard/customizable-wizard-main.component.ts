@@ -7,12 +7,13 @@ import { AddressComponent } from './component-data-sources/address/address.compo
 import { CompanyComponent } from './component-data-sources/company/company.component';
 import { IFormControlData } from './models/form-control-data.interface';
 import { MiscellaneousComponent } from './component-data-sources/miscellaneous/miscellaneous.component';
+import { CustomizableWizardComponent } from './customizable-wizard/customizable-wizard.component';
 
 @Component({
     selector: 'app-customizable-wizard-main',
     templateUrl: './customizable-wizard-main.component.html',
     styleUrl: './customizable-wizard-main.component.scss',
-    standalone: false
+    imports: [CustomizableWizardComponent]
 })
 export class CustomizableWizardMainComponent implements OnInit {
   githubLogoPath!: string;

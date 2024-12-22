@@ -1,12 +1,18 @@
 import { Component, DestroyRef, OnInit, Signal, computed, effect, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FlexModule } from '@angular/flex-layout/flex';
+import { NgStyle, NgClass } from '@angular/common';
+import { ExtendedModule } from '@angular/flex-layout/extended';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 
 @Component({
     selector: 'app-angular-news-v16-signals',
     templateUrl: './angular-news-v16-signals.component.html',
     styleUrls: ['./angular-news-v16-signals.component.scss'],
-    standalone: false
+    imports: [FlexModule, FormsModule, ReactiveFormsModule, NgStyle, ExtendedModule, NgClass, InputNumberModule, MatFormField, MatLabel, MatInput]
 })
 export class AngularNewsV16SignalsComponent implements OnInit {
   githubLogoPath!: string;

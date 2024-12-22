@@ -8,8 +8,8 @@ describe('AngularNewsV16SignalsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AngularNewsV16SignalsComponent]
-    });
+    imports: [AngularNewsV16SignalsComponent]
+});
     fixture = TestBed.createComponent(AngularNewsV16SignalsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

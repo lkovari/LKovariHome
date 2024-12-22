@@ -1,15 +1,17 @@
 import { Component, DestroyRef, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChecklistComponent } from 'src/app/shared/components/checklist/checklist.component';
 import { SelectionMode } from 'src/app/shared/components/checklist/selection-mode.enum';
 import { ChecklistItem } from 'src/app/shared/models/checklist-item.model';
+import { ChecklistComponent as ChecklistComponent_1 } from '../../../shared/components/checklist/checklist.component';
+import { JsonPipe } from '@angular/common';
 
 @Component({
     selector: 'app-nested-example',
     templateUrl: './nested-example.component.html',
     styleUrl: './nested-example.component.scss',
-    standalone: false
+    imports: [FormsModule, ReactiveFormsModule, ChecklistComponent_1, JsonPipe]
 })
 export class NestedExampleComponent implements OnInit {
   private formBuilder: FormBuilder = inject(FormBuilder);

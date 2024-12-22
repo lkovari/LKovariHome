@@ -4,14 +4,20 @@ import { Subject } from 'rxjs/internal/Subject';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { MatFabButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'app-material-examples-main',
     templateUrl: './material-examples-main.component.html',
     styleUrls: ['./material-examples-main.component.scss'],
-    standalone: false
+    imports: [MatFormField, MatLabel, MatInput, FormsModule, MatRadioGroup, ReactiveFormsModule, MatRadioButton, MatFabButton, MatIcon, AsyncPipe]
 })
 export class MaterialExamplesMainComponent implements OnInit {
   searchSubject$ = new Subject<string>();
