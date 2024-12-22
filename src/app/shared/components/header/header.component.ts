@@ -11,8 +11,8 @@ import { DatePipe } from '@angular/common';
     imports: [MatToolbar, RouterLink, MatTooltip, DatePipe]
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('12/22/2024 6:15 PM');
-  lastUpdateTooltip = 'Standalone migration completed';
+  lastUpdateDate = new Date('12/22/2024 11:21 PM');
+  lastUpdateTooltip = 'Standalone migration completed, Global ErrorHandler';
   angularVersion!: string;
 
   constructor() { }
