@@ -4,6 +4,8 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 import { MatTooltip } from '@angular/material/tooltip';
 import { DatePipe } from '@angular/common';
+import { GlobalErrorHandlerService } from '../../services/error-handler/global-error-handler.service';
+
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
@@ -15,7 +17,7 @@ export class HeaderComponent implements OnInit {
   lastUpdateTooltip = 'Align copyright.';
   angularVersion!: string;
 
-  constructor() { }
+  constructor(public globalErrorHandlerService: GlobalErrorHandlerService) { }
 
   ngOnInit(): void {
     this.angularVersion = angular.VERSION.full;

@@ -21,10 +21,12 @@
             }    
         }
     }
-  
     mat-toolbar {
         border-radius: 3px;
         width: 100%;
     }
+    .align-right {
+        float: right;
+    }    
 }
 

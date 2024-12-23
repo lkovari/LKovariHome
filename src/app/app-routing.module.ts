@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: '', loadChildren: () => import('./digits/digits.module').then(m => m.DigitsModule) },
   { path: '', loadChildren: () => import('./material-examples/material-examples.module').then(m => m.MaterialExamplesModule) },
   { path: '', loadChildren: () => import('./playground/playground.module').then(m => m.PlaygroundModule) },
+  { path: 'error', loadComponent: () => import('./error/error.component').then(c => c.ErrorComponent) },
   { path: 'not-found', loadChildren: () => import('./not-found/not-found.module').then(m => m.NotFoundModule) },
   { path: '**', redirectTo: 'not-found' }
 ];

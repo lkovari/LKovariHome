@@ -1,0 +1,18 @@
+<div>
+    <h2>Error Log</h2>
+    @if (errorEntries.length === 0) {
+      <div>No errors logged.</div>
+    }
+    @if (errorEntries.length > 0) {
+      <ul>
+        @for (errorEntry of errorEntries; track errorEntry.timestamp) {
+          <li>
+            <strong>Error:</strong> {{ errorEntry.message }}<br>
+            <strong>Stack:</strong> <pre>{{ errorEntry.stack }}</pre>
+          </li>
+        } @empty {
+          <li>No errors logged.</li>
+        }
+      </ul>
+    }
+  </div>
