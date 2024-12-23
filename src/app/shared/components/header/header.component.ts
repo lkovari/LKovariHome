@@ -13,8 +13,8 @@ import { GlobalErrorHandlerService } from '../../services/error-handler/global-e
     imports: [MatToolbar, RouterLink, MatTooltip, DatePipe]
 })
 export class HeaderComponent implements OnInit {
-  lastUpdateDate = new Date('12/23/2024 07:26 PM');
-  lastUpdateTooltip = 'Align copyright.';
+  lastUpdateDate = new Date('12/23/2024 10:47 PM');
+  lastUpdateTooltip = 'Global error handling';
   angularVersion!: string;
 
   constructor(public globalErrorHandlerService: GlobalErrorHandlerService) { }
