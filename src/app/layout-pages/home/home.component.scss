@@ -35,17 +35,11 @@
 
     .pre-wrapper {
         max-width: 100%;
-        /* Ensure the div fits within the view */
         overflow-x: auto;
-        /* Add horizontal scrollbar if content overflows */
-        overflow-y: hidden;
-        /* Prevent vertical scrollbar */
+        overflow-y: auto;
         background-color: #f9f9f9;
-        /* Optional: light background for readability */
         border: 1px solid #ddd;
-        /* Optional: subtle border for better visibility */
         padding: 1rem;
-        /* Optional: padding for spacing around content */
     }
 
     /* Preformatted text styling */
