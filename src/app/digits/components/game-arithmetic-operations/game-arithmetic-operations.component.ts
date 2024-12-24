@@ -179,7 +179,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
         }
       }
     }
-    var selectedOperator = this.getSelectedOperator();
+    const selectedOperator = this.getSelectedOperator();
     if (this.selectedOperandA && this.selectedOperandB && !selectedOperator) {
       this.selectedOperandB.selected = false;
       this.selectedOperandB = null;

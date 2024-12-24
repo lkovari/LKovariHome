@@ -11,7 +11,7 @@ export class ChecklistValidators {
         let ix = 0;
         for (ix; ix < listItems.length; ix++) {
             const formRef = listItems.at(ix);
-            let selectedFormControl = formRef.get('selected');
+            const selectedFormControl = formRef.get('selected');
             if (selectedFormControl && selectedFormControl?.dirty && selectedFormControl.value) {
                 return null;
             }

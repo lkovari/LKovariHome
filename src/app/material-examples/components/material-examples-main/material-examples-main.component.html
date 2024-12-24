@@ -35,7 +35,7 @@
                             <a style="padding-left: 20px;" [href]="result.data.url">{{ result.data.url }}</a>
                             {{ data(result) }}
                             <div style="padding-left: 20px;">
-                                <img [src]="result.data.thumbnail" alt="" width="auto" height="auto">
+                                <img [src]="result.data.thumbnail" alt="data" width="auto" height="auto">
                             </div>
                         </div>
                     } @else if ((findVideo() || findBoth()) && result.data.is_video) {
