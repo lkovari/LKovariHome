@@ -13,7 +13,7 @@ import { GlobalErrorHandlerService } from '../../services/error-handler/global-e
   imports: [MatToolbar, RouterLink, MatTooltip, DatePipe]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  lastUpdateDate = new Date('12/26/2024 01:05 PM');
+  lastUpdateDate = new Date('12/26/2024 06:05 PM');
   lastUpdateTooltip = 'Global error handling effect does not works';
   angularVersion!: string;
   showExclamationMark = false;

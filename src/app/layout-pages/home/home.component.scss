@@ -32,27 +32,4 @@
         bottom: 0;
         width: 100%;
     }
-
-    .pre-wrapper {
-        max-width: 100%;
-        overflow-x: auto;
-        overflow-y: auto;
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        padding: 1rem;
-    }
-
-    /* Preformatted text styling */
-    pre {
-        margin: 0;
-        /* Remove default margin */
-        white-space: pre;
-        /* Preserve spaces and line breaks */
-        word-wrap: normal;
-        /* Prevent text wrapping */
-        font-family: monospace;
-        /* Monospace font for consistent tabulation */
-        font-size: 14px;
-        /* Default font size */
-    }
 }
