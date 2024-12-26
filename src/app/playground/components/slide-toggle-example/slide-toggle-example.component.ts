@@ -5,10 +5,10 @@ import { JsonPipe } from '@angular/common';
 import { SlideToggleOrientationType } from '../../models/slide-toggle.types';
 
 @Component({
-    selector: 'app-slide-toggle-example',
-    imports: [JsonPipe, ReactiveFormsModule, SlideToggleComponent],
-    templateUrl: './slide-toggle-example.component.html',
-    styleUrl: './slide-toggle-example.component.scss'
+  selector: 'app-slide-toggle-example',
+  imports: [JsonPipe, ReactiveFormsModule, SlideToggleComponent],
+  templateUrl: './slide-toggle-example.component.html',
+  styleUrl: './slide-toggle-example.component.scss'
 })
 export class SlideToggleExampleComponent implements OnInit {
   // strict @ViewChild('modernSlideToggle') modernSlideToggle: SlideToggleComponent;
@@ -21,8 +21,8 @@ export class SlideToggleExampleComponent implements OnInit {
   options: string[] = [this.orientationHorizontal, this.orientationVertical];
   toggleForm: FormGroup = new FormGroup({
     toggle: new FormControl(this.defaultValue),
-    orientation: new FormControl(this.defaultOrientation), 
-    spin: new FormControl(this.defaultSpin) 
+    orientation: new FormControl(this.defaultOrientation),
+    spin: new FormControl(this.defaultSpin)
   });
   ngOnInit(): void {
     this.githubLogoPath = 'assets/logos/GitHub-Mark-32px.png';
@@ -30,5 +30,7 @@ export class SlideToggleExampleComponent implements OnInit {
       this.defaultOrientation = value;
     });
   }
-
+  generateError(): void {
+    throw new Error('Global Exception Handler Test');
+  }
 }

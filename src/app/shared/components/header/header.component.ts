@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, OnDestroy, OnInit } from '@angular/core';
 import * as angular from '@angular/forms';
 import { MatToolbar } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
@@ -7,20 +7,32 @@ import { DatePipe } from '@angular/common';
 import { GlobalErrorHandlerService } from '../../services/error-handler/global-error-handler.service';
 
 @Component({
-    selector: 'app-header',
-    templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss'],
-    imports: [MatToolbar, RouterLink, MatTooltip, DatePipe]
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
+  imports: [MatToolbar, RouterLink, MatTooltip, DatePipe]
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   lastUpdateDate = new Date('12/23/2024 10:47 PM');
   lastUpdateTooltip = 'Global error handling';
   angularVersion!: string;
+  showExclamationMark = false;
+  private effectRef;
 
-  constructor(public globalErrorHandlerService: GlobalErrorHandlerService) { }
+  constructor(private globalErrorHandlerService: GlobalErrorHandlerService) {
+    this.effectRef = effect(() => {
+      const errors = this.globalErrorHandlerService.getErrorEntries();
+      console.log(`Header Errors: ${errors.length}`);
+      this.showExclamationMark = errors.length > 0;
+    });
+  }
 
   ngOnInit(): void {
     this.angularVersion = angular.VERSION.full;
     console.log(`Angular ${this.angularVersion}.`);
+  }
+
+  ngOnDestroy(): void {
+    this.effectRef.destroy();
   }
 }

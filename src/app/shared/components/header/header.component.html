@@ -7,8 +7,8 @@
         <div class="line-style">
             <label class="last-update" [matTooltip]="lastUpdateTooltip" [matTooltipPosition]="'right'">Last update: {{
                 lastUpdateDate | date:'MM/dd/yyyy HH:mm' }}<a [routerLink]="['/error']">
-                    @if(globalErrorHandlerService.errorEntries.length > 0) {
-                    ?
+                    @if(showExclamationMark) {
+                    !
                     }</a></label>
         </div>
         <div class="line-style">

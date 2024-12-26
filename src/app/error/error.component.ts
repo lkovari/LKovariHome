@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, effect, OnDestroy } from '@angular/core';
 import { GlobalErrorHandlerService } from '../shared/services/error-handler/global-error-handler.service';
 import { ErrorEntry } from '../shared/models/error-entry.interface';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -9,11 +9,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './error.component.html',
   styleUrl: './error.component.scss'
 })
-export class ErrorComponent implements OnInit  {
-  globalErrorHandlingService = inject(GlobalErrorHandlerService);
+export class ErrorComponent implements OnDestroy {
   errorEntries: ErrorEntry[] = [];
+  private effectRef;
 
-  ngOnInit(): void {
-    this.errorEntries = this.globalErrorHandlingService.errorEntries;
+  constructor(private globalErrorHandlerService: GlobalErrorHandlerService) {
+    this.effectRef = effect(() => {
+      this.errorEntries = this.globalErrorHandlerService.getErrorEntries();
+      console.log(`Errors: ${this.errorEntries.length}`);
+    });
+  }
+  ngOnDestroy(): void {
+    this.effectRef.destroy();
   }
 }

@@ -1,4 +1,4 @@
-import { ErrorHandler, inject, Injectable, NgZone } from '@angular/core';
+import { ErrorHandler, inject, Injectable, Signal, signal } from '@angular/core';
 import { ErrorEntry } from '../../models/error-entry.interface';
 import { Router } from '@angular/router';
 
@@ -6,20 +6,39 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class GlobalErrorHandlerService implements ErrorHandler {
-  router = inject(Router);
-  zone = inject(NgZone);
-  errorEntries: ErrorEntry[] = [];
+  private readonly router = inject(Router);
+  // private readonly zone = inject(NgZone);
+  private errorEntries = signal<ErrorEntry[]>([])
+
   constructor() { }
+
   handleError(error: any): void {
-    this.zone.run(() => {
-      const timestamp = new Date().toISOString();
-      const message = error.message ? error.message : error.toString();
-      const stack = error.stack ? error.stack : 'No stack trace available';
-      const route = this.router.url;
-      const errorEntry = { timestamp, message, stack, route };
-      this.errorEntries.push(errorEntry);
-      console.error(error);
-      this.router.navigate(['/error']);
-    });
+    this.addError(error);
+    // this.zone.run(() => {
+    //   this.router.navigate(['/error']);
+    // });
+  }
+
+  clearErrorEntries(): void {
+    this.errorEntries.set([]);
+  }
+
+  getErrorEntriesSignal(): Signal<ErrorEntry[]> {
+    return this.errorEntries;
+  }
+
+  getErrorEntries(): ErrorEntry[] {
+    return this.errorEntries();
+  }
+
+  private addError(error: any): void {
+    const timestamp = new Date().toISOString();
+    const message = error.message || error.toString();
+    const stack = error.stack || 'No stack trace available';
+    const route = this.router.url;
+
+    const errorEntry: ErrorEntry = { timestamp, message, stack, route };
+    this.errorEntries.update((entries) => [...entries, errorEntry]);
+    console.log(`Errors : ${this.errorEntries().length}`);
   }
 }
