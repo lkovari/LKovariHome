@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import { SlideToggleOrientationType } from '../../models/slide-toggle.types';
 import { RouterLink } from '@angular/router';
+import { GlobalErrorHandlerService } from 'src/app/shared/services/error-handler/global-error-handler.service';
 
 @Component({
   selector: 'app-slide-toggle-example',
@@ -25,13 +26,21 @@ export class SlideToggleExampleComponent implements OnInit {
     orientation: new FormControl(this.defaultOrientation),
     spin: new FormControl(this.defaultSpin)
   });
+
+  constructor(private globalErrorHandlerService: GlobalErrorHandlerService) { }
+
   ngOnInit(): void {
     this.githubLogoPath = 'assets/logos/GitHub-Mark-32px.png';
     this.toggleForm.controls['orientation']!.valueChanges.subscribe((value: 'horizontal' | 'vertical') => {
       this.defaultOrientation = value;
     });
   }
+
   generateError(): void {
     throw new Error('Global Exception Handler Test');
+  }
+
+  resetError(): void {
+    this.globalErrorHandlerService.resetErrors();
   }
 }

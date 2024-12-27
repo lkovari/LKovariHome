@@ -5,14 +5,14 @@
             of L.Kővári
         </div>
         <div class="line-style">
-            <label class="last-update" [matTooltip]="lastUpdateTooltip" [matTooltipPosition]="'right'">Last update: {{
-                lastUpdateDate | date:'MM/dd/yyyy HH:mm' }}<a [routerLink]="['/error']">
-                    @if(showExclamationMark) {
-                    !
-                    }</a></label>
+            <span class="last-update" [matTooltip]="lastUpdateTooltip" [matTooltipPosition]="'right'">Last update: {{
+                lastUpdateDate | date:'MM/dd/yyyy HH:mm' }}</span>
         </div>
         <div class="line-style">
-            <label class="last-update">Built with Angular v{{ angularVersion }}</label>
+            <span class="last-update">Built with Angular v{{ angularVersion }}</span><a class="last-update" [routerLink]="['/error']">
+                @if(showExclamationMark) {
+                !!!
+                }</a>
         </div>
     </mat-toolbar>
 </div>

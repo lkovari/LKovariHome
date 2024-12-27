@@ -16,7 +16,7 @@ export class ErrorComponent implements OnDestroy {
 
   constructor() {
     this._effectRef = effect(() => {
-      this.errorEntries = GlobalErrorHandlerService.errorEntries;
+      this.errorEntries = GlobalErrorHandlerService.errorEntries();
       console.log(`Errors: ${this.errorEntries.length}`);
     });
   }
