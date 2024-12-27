@@ -18,7 +18,9 @@
             alt="githubLogoPath"
           />
         </a>
-        Signal based "modern" SlideToggle standalone component with input transform stringAttributeTransform, effect(), computed(), output() on Reactive form
+        Signal based "modern" SlideToggle standalone component with input
+        transform stringAttributeTransform, effect(), computed(), output() on
+        Reactive form
       </div>
       <div class="sub-topic">
         Reactive form example with a slide toggle custom component.
@@ -31,7 +33,8 @@
                   id="spinCheckbox"
                   formControlName="spin"
                   #spinCheckbox
-                /> In Progress
+                />
+                In Progress
               </label>
               @for (option of options; track $index) {
               <label class="horizontal-gap-right horizontal-gap-left">
@@ -45,12 +48,11 @@
               </label>
               }
             </div>
-            <div class="sub-topic">
-
-            </div>
+            <div class="sub-topic"></div>
             <div class="form-control control-area">
               <label class="spacer" for="slideToggle">Slide toggle</label>
-              <app-slide-toggle #modernSlideToggle
+              <app-slide-toggle
+                #modernSlideToggle
                 class="horizontal-gap-left"
                 id="slideToggle"
                 [orientation]="defaultOrientation"
@@ -69,28 +71,43 @@
               Slide Toggle value:
               {{ toggleForm.value | json }}
             </p>
-            <p>SlideToggle Component Status: {{ modernSlideToggle.status() }}</p>
+            <p>
+              SlideToggle Component Status: {{ modernSlideToggle.status() }}
+            </p>
           </div>
           <div>
-            <p class="under-construction">This Component is under construction!</p>
+            <p class="under-construction">
+              This Component is under construction!
+            </p>
           </div>
-        <div class="text-primary">
-            TODO list: 
+          <div class="text-primary">
+            TODO list:
             <ul>
-                <li>implement the off state in pseudo class :before the on state in class :after</li>
-                <li>show default value selector checkbox</li>
-                <li>review the signal related </li>
+              <li>
+                implement the off state in pseudo class :before the on state in
+                class :after
+              </li>
+              <li>show default value selector checkbox</li>
+              <li>review the signal related</li>
             </ul>
-        </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
   <div class="sub-topic">
-    <div class="mt-4">
-      <button (click)="generateError()">
-        Generate Error
-      </button>
+    <b>Act #5</b>
+    <div class="top-gap">
+      <div class="text-primary">
+        <a class="horizontal-gap-left horizontal-gap-right"
+          href="https://github.com/lkovari/LKovariHome/tree/master/src/app/shared/services/global-error-handler-service">
+          <img [src]="githubLogoPath" width="16" height="16" alt="githubLogoPath" />
+        </a>
+        Global Error handling
+      </div>
+    <div class="d-flex gap-2 ps-2 pt-1">
+      <button class="text-danger" (click)="generateError()">Generate Error</button>
+      <button [routerLink]="['/error']"> Show Errors</button>
     </div>
   </div>
 </div>

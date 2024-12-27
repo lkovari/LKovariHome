@@ -11,15 +11,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class ErrorComponent implements OnDestroy {
   errorEntries: ErrorEntry[] = [];
-  private effectRef;
+  hasErrorOccurred: boolean = false;
+  private _effectRef;
 
-  constructor(private globalErrorHandlerService: GlobalErrorHandlerService) {
-    this.effectRef = effect(() => {
-      this.errorEntries = this.globalErrorHandlerService.getErrorEntries();
+  constructor() {
+    this._effectRef = effect(() => {
+      this.errorEntries = GlobalErrorHandlerService.errorEntries;
       console.log(`Errors: ${this.errorEntries.length}`);
     });
   }
+
   ngOnDestroy(): void {
-    this.effectRef.destroy();
+    if (this._effectRef) {
+      this._effectRef.destroy();
+    }
   }
 }

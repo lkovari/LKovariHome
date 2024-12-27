@@ -19,12 +19,12 @@ import {
   faPerson,
 } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { SlideMenuModule } from 'primeng/slidemenu';
 import { MenubarModule } from 'primeng/menubar';
 import { ChecklistComponent } from './components/checklist/checklist.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TieredMenuModule } from 'primeng/tieredmenu';
 @NgModule({
-    imports: [
+  imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -32,13 +32,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatToolbarModule,
     RouterModule,
     FontAwesomeModule,
-    SlideMenuModule,
+    TieredMenuModule,
     HeaderComponent,
     SidenavListComponent,
     LayoutContentComponent,
     ChecklistComponent,
-],
-    exports: [
+  ],
+  exports: [
     RouterModule,
     HeaderComponent,
     SidenavListComponent,
@@ -46,8 +46,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LayoutContentComponent,
     MenubarModule,
     ChecklistComponent
-],
-    providers: [],
+  ],
+  providers: [],
 })
 export class SharedModule {
   constructor(library: FaIconLibrary) {

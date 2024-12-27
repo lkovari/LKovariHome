@@ -13,17 +13,17 @@ import { GlobalErrorHandlerService } from '../../services/error-handler/global-e
   imports: [MatToolbar, RouterLink, MatTooltip, DatePipe]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  lastUpdateDate = new Date('12/26/2024 06:05 PM');
+  lastUpdateDate = new Date('12/27/2024 10:43 AM');
   lastUpdateTooltip = 'Global error handling effect does not works';
   angularVersion!: string;
   showExclamationMark = false;
-  private effectRef;
+  private _effectRef;
 
   constructor(private globalErrorHandlerService: GlobalErrorHandlerService) {
-    this.effectRef = effect(() => {
-      const errors = this.globalErrorHandlerService.getErrorEntries();
-      console.log(`Header Errors: ${errors.length}`);
-      this.showExclamationMark = errors.length > 0;
+    this._effectRef = effect(() => {
+      this.showExclamationMark = this.globalErrorHandlerService.hasErrorOccurred();
+      this.globalErrorHandlerService.hasErrorOccurred.set(false);
+      console.log(`Header Error signal: ${this.showExclamationMark}`);
     });
   }
 
@@ -33,6 +33,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.effectRef.destroy();
+    if (this._effectRef) {
+      this._effectRef.destroy();
+    }
   }
 }

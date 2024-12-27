@@ -2,6 +2,8 @@ import { Component, ErrorHandler } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { GlobalErrorHandlerService } from './shared/services/error-handler/global-error-handler.service';
 
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -20,3 +22,4 @@ export class AppComponent {
   */
 
 }
+

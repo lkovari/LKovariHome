@@ -1,4 +1,4 @@
-import { ErrorHandler, inject, Injectable, Signal, signal } from '@angular/core';
+import { ErrorHandler, inject, Injectable, signal } from '@angular/core';
 import { ErrorEntry } from '../../models/error-entry.interface';
 import { Router } from '@angular/router';
 
@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 export class GlobalErrorHandlerService implements ErrorHandler {
   private readonly router = inject(Router);
   // private readonly zone = inject(NgZone);
-  private errorEntries = signal<ErrorEntry[]>([])
+  hasErrorOccurred = signal(false);
+  public static errorEntries: ErrorEntry[] = [];
 
   constructor() { }
 
@@ -19,18 +20,6 @@ export class GlobalErrorHandlerService implements ErrorHandler {
     // });
   }
 
-  clearErrorEntries(): void {
-    this.errorEntries.set([]);
-  }
-
-  getErrorEntriesSignal(): Signal<ErrorEntry[]> {
-    return this.errorEntries;
-  }
-
-  getErrorEntries(): ErrorEntry[] {
-    return this.errorEntries();
-  }
-
   private addError(error: any): void {
     const timestamp = new Date().toISOString();
     const message = error.message || error.toString();
@@ -38,7 +27,8 @@ export class GlobalErrorHandlerService implements ErrorHandler {
     const route = this.router.url;
 
     const errorEntry: ErrorEntry = { timestamp, message, stack, route };
-    this.errorEntries.update((entries) => [...entries, errorEntry]);
-    console.log(`Errors : ${this.errorEntries().length}`);
+    GlobalErrorHandlerService.errorEntries.push(errorEntry);
+    this.hasErrorOccurred.set(true);
+    console.log(`Errors : ${GlobalErrorHandlerService.errorEntries.length}`);
   }
 }

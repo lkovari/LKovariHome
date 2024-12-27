@@ -3,10 +3,11 @@ import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import { SlideToggleOrientationType } from '../../models/slide-toggle.types';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-slide-toggle-example',
-  imports: [JsonPipe, ReactiveFormsModule, SlideToggleComponent],
+  imports: [JsonPipe, ReactiveFormsModule, SlideToggleComponent, RouterLink],
   templateUrl: './slide-toggle-example.component.html',
   styleUrl: './slide-toggle-example.component.scss'
 })
