@@ -3,4 +3,5 @@ export interface ErrorEntry {
     message: string;
     stack: string;
     route: string;
+    status: string;
 }

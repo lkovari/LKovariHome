@@ -5,10 +5,12 @@ export class ErrorEntryModel implements ErrorEntry {
     message: string;
     stack: string;
     route: string;
-    constructor(timestamp: string, message: string, stack: string, route: string) {
+    status: string;
+    constructor(timestamp: string, message: string, stack: string, route: string, status: string) {
         this.timestamp = timestamp;
         this.message = message;
         this.stack = stack;
         this.route = route;
+        this.status = status;
     }
 }

@@ -1,29 +1,31 @@
-import { Component, effect, OnDestroy } from '@angular/core';
-import { GlobalErrorHandlerService } from '../shared/services/error-handler/global-error-handler.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ErrorEntry } from '../shared/models/error-entry.interface';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { ErrorNotificationService } from '../shared/services/error-handler/error-notification.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-error',
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, RouterLink],
   templateUrl: './error.component.html',
   styleUrl: './error.component.scss'
 })
-export class ErrorComponent implements OnDestroy {
+export class ErrorComponent implements OnInit, OnDestroy {
   errorEntries: ErrorEntry[] = [];
-  hasErrorOccurred: boolean = false;
-  private _effectRef;
+  private errorSubscription!: Subscription;
 
-  constructor() {
-    this._effectRef = effect(() => {
-      this.errorEntries = GlobalErrorHandlerService.errorEntries();
-      console.log(`Errors: ${this.errorEntries.length}`);
-    });
+  constructor(private errorNotification: ErrorNotificationService) { }
+
+  ngOnInit(): void {
+    this.errorSubscription = this.errorNotification.currentErrorEntries$.subscribe(
+      (errors) => (this.errorEntries = errors)
+    );
   }
 
   ngOnDestroy(): void {
-    if (this._effectRef) {
-      this._effectRef.destroy();
+    if (this.errorSubscription) {
+      this.errorSubscription.unsubscribe();
     }
   }
 }

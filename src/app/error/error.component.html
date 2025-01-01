@@ -7,6 +7,7 @@
       <ul>
         @for (errorEntry of errorEntries; track errorEntry.timestamp) {
           <li>
+            <strong>TimeStamp:</strong> {{ errorEntry.timestamp }}<br>
             <strong>Error:</strong> {{ errorEntry.message }}<br>
             <strong>Stack:</strong> <pre>{{ errorEntry.stack }}</pre>
           </li>
@@ -14,5 +15,8 @@
           <li>No errors logged.</li>
         }
       </ul>
+      <span class="text-primary">
+      <button [routerLink]="['/playground/components/slide-toggle-example']">Back</button>
+      </span>
     }
   </div>

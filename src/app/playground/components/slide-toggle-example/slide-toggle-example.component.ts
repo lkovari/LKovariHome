@@ -4,7 +4,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import { SlideToggleOrientationType } from '../../models/slide-toggle.types';
 import { RouterLink } from '@angular/router';
-import { GlobalErrorHandlerService } from 'src/app/shared/services/error-handler/global-error-handler.service';
+import { ErrorNotificationService } from 'src/app/shared/services/error-handler/error-notification.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-slide-toggle-example',
@@ -26,8 +27,9 @@ export class SlideToggleExampleComponent implements OnInit {
     orientation: new FormControl(this.defaultOrientation),
     spin: new FormControl(this.defaultSpin)
   });
+  errorMessage: string | null = null;
 
-  constructor(private globalErrorHandlerService: GlobalErrorHandlerService) { }
+  constructor(private errorNotification: ErrorNotificationService, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
     this.githubLogoPath = 'assets/logos/GitHub-Mark-32px.png';
@@ -40,7 +42,16 @@ export class SlideToggleExampleComponent implements OnInit {
     throw new Error('Global Exception Handler Test');
   }
 
+  generateHttpError() {
+    this.httpClient.get('https://jsonplaceholder.typicode.com/non-existent-endpoint').subscribe({
+      next: (response) => console.log('Response:', response),
+      error: (err) => {
+        setTimeout(() => { throw err; });
+      },
+    });
+  }
+
   resetError(): void {
-    this.globalErrorHandlerService.resetErrors();
+    this.errorNotification.resetErrors();
   }
 }

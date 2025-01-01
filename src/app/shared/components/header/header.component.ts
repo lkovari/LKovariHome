@@ -1,10 +1,12 @@
-import { Component, effect, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as angular from '@angular/forms';
 import { MatToolbar } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 import { MatTooltip } from '@angular/material/tooltip';
 import { DatePipe } from '@angular/common';
-import { GlobalErrorHandlerService } from '../../services/error-handler/global-error-handler.service';
+import { ErrorEntry } from '../../models/error-entry.interface';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { ErrorNotificationService } from '../../services/error-handler/error-notification.service';
 
 @Component({
   selector: 'app-header',
@@ -13,16 +15,17 @@ import { GlobalErrorHandlerService } from '../../services/error-handler/global-e
   imports: [MatToolbar, RouterLink, MatTooltip, DatePipe]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  lastUpdateDate = new Date('12/28/2024 09:51 PM');
-  lastUpdateTooltip = 'PrimeNg menu .light-mode';
+  lastUpdateDate = new Date('01/01/2025 066:48 PM');
+  lastUpdateTooltip = 'Global error and http error handler';
   angularVersion!: string;
   showExclamationMark = false;
-  private _effectRef;
+  errorEntries: ErrorEntry[] = [];
+  private errorSubscription!: Subscription;
 
-  constructor(public globalErrorHandlerService: GlobalErrorHandlerService) {
-    this._effectRef = effect(() => {
-      this.showExclamationMark = GlobalErrorHandlerService.errorEntries().length > 0;
-      console.log(`Header Error signal: ${this.showExclamationMark}`);
+  constructor(private errorNotification: ErrorNotificationService) {
+    this.errorSubscription = this.errorNotification.currentErrorEntries$.subscribe((errors: ErrorEntry[]) => {
+      this.errorEntries = errors;
+      this.showExclamationMark = this.errorEntries.length > 0;
     });
   }
 
@@ -32,8 +35,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this._effectRef) {
-      this._effectRef.destroy();
+    if (this.errorSubscription) {
+      this.errorSubscription.unsubscribe();
     }
   }
 }

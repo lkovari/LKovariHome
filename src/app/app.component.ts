@@ -3,12 +3,13 @@ import { RouterOutlet } from '@angular/router';
 import { GlobalErrorHandlerService } from './shared/services/error-handler/global-error-handler.service';
 
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandlerService }],
+  providers: [
+    { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
+  ],
   imports: [RouterOutlet]
 })
 export class AppComponent {

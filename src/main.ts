@@ -2,13 +2,14 @@ import { enableProdMode, importProvidersFrom } from '@angular/core';
 
 import { environment } from './environments/environment';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { AppRoutingModule } from './app/app-routing.module';
 import { AppComponent } from './app/app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
+import { httpErrorInterceptor } from './app/shared/services/error-handler/http-error.interceptor';
 
 if (environment.production) {
   enableProdMode();
@@ -20,6 +21,7 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(),
     provideAnimations(),
     provideAnimationsAsync(),
+    provideHttpClient(withInterceptors([httpErrorInterceptor])),
     providePrimeNG({
       theme: {
         preset: Aura,

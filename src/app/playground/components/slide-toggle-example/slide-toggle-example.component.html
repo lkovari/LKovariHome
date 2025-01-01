@@ -103,11 +103,12 @@
           href="https://github.com/lkovari/LKovariHome/tree/master/src/app/shared/services/global-error-handler-service">
           <img [src]="githubLogoPath" width="16" height="16" alt="githubLogoPath" />
         </a>
-        Global Error handling with signal based notification.
+        Global Error handling based on ErrorNotificationService with BehaviorSubject. The future improvement is use Signal to notify the target component via effect
       </div>
       <div class="ps-2">When generate an error then appear three exclamation mark !!! next to the angular version. If click on it or click on the Show Error button then navigate to the error page where collected the errors. With the Reset error button can clear the errors.</div>
     <div class="d-flex gap-2 ps-2 pt-1">
       <button class="text-danger" (click)="generateError()">Generate Error</button>
+      <button class="text-danger" (click)="generateHttpError()">Generate HTTP Error</button>
       <button [routerLink]="['/error']"> Show Errors</button>
       <button class="text-warning" (click)="resetError()">Reset Error</button>
     </div>
