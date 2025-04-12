@@ -15,8 +15,8 @@ import { ErrorNotificationService } from '../../services/error-handler/error-not
   imports: [MatToolbar, RouterLink, MatTooltip, DatePipe]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  lastUpdateDate = new Date('04/06/2025 07:02 PM');
-  lastUpdateTooltip = 'CV. changed';
+  lastUpdateDate = new Date('04/12/2025 09:39 PM');
+  lastUpdateTooltip = 'About me page UI problem fix';
   angularVersion!: string;
   showExclamationMark = false;
   errorEntries: ErrorEntry[] = [];

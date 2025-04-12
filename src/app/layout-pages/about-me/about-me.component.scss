@@ -15,6 +15,8 @@
         padding-bottom: 20px;
     }
     .about-me-screen {
+        overflow: auto;
+        padding: 1rem;
         .align-about-me {
             text-align: center;
         }
@@ -39,12 +41,12 @@
         padding-top: 8rem;
     }
     .img-responsive-right {
-        width: auto;
-        height: auto;
         float: right;
-        margin-left: 3rem;
-        border-radius: 25%;
-        shape-outside: circle();
+        margin-left: 1rem;
+        margin-bottom: 1rem;
+        max-width: 200px;
+        height: auto;
+        border-radius: 8px;
     }
     .txt {
         line-height: 150%;
@@ -78,5 +80,12 @@
     .handpointer-off {
         cursor: default;
     }    
+    @media (max-width: 768px) {
+        .img-responsive-right {
+            float: none;
+            display: block;
+            margin: 0 auto 1rem;
+        }
+    }
 }
 
