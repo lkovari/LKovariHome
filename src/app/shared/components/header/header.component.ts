@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, effect, OnDestroy, OnInit } from '@angular/core';
 import * as angular from '@angular/forms';
 import { MatToolbar } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
@@ -15,17 +15,18 @@ import { ErrorNotificationService } from '../../services/error-handler/error-not
   imports: [MatToolbar, RouterLink, MatTooltip, DatePipe]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  lastUpdateDate = new Date('04/13/2025 10:25 AM');
-  lastUpdateTooltip = 'About me page UI optimization';
+  lastUpdateDate = new Date('04/13/2025 11:06 AM');
+  lastUpdateTooltip = 'Replace ErrorhandlerService to signal based from BehaviorSubject, instead of observable use effect';
   angularVersion!: string;
   showExclamationMark = false;
   errorEntries: ErrorEntry[] = [];
   private errorSubscription!: Subscription;
 
   constructor(private errorNotification: ErrorNotificationService) {
-    this.errorSubscription = this.errorNotification.currentErrorEntries$.subscribe((errors: ErrorEntry[]) => {
+    effect(() => {
+      const errors = this.errorNotification.currentErrorEntries();
       this.errorEntries = errors;
-      this.showExclamationMark = this.errorEntries.length > 0;
+      this.showExclamationMark = errors.length > 0;
     });
   }
 

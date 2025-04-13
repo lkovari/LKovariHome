@@ -1,6 +1,5 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { ErrorEntry } from '../../models/error-entry.interface';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -8,16 +7,14 @@ import { Router } from '@angular/router';
 })
 export class ErrorNotificationService {
   private readonly router = inject(Router);
-  private errorSource = new BehaviorSubject<ErrorEntry[]>([]);
-  currentErrorEntries$ = this.errorSource.asObservable();
+  private errorSource = signal<ErrorEntry[]>([]);
 
-  private errorEntries: ErrorEntry[] = [];
+  readonly currentErrorEntries = this.errorSource.asReadonly();
 
   constructor() { }
 
   resetErrors(): void {
-    this.errorEntries = [];
-    this.errorSource.next(this.errorEntries);
+    this.errorSource.set([]);
   }
 
   addError(error: any, isHttp: boolean = false): ErrorEntry {
@@ -28,13 +25,8 @@ export class ErrorNotificationService {
     const status = error.status || 'No status available';
     const errorEntry: ErrorEntry = { timestamp, message, stack, route, status };
 
-    this.changeErrorEntries([...this.errorEntries, errorEntry]);
-    console.log(`Errors: ${this.errorEntries.length}`);
+    this.errorSource.update(errors => [...errors, errorEntry]);
+    console.log(`Errors: ${this.errorSource.length}`);
     return errorEntry
-  }
-
-  private changeErrorEntries(errorEntries: ErrorEntry[]): void {
-    this.errorEntries = errorEntries;
-    this.errorSource.next(this.errorEntries);
   }
 }

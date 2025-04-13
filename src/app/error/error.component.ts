@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, effect, OnDestroy, OnInit } from '@angular/core';
 import { ErrorEntry } from '../shared/models/error-entry.interface';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -15,12 +15,15 @@ export class ErrorComponent implements OnInit, OnDestroy {
   errorEntries: ErrorEntry[] = [];
   private errorSubscription!: Subscription;
 
-  constructor(private errorNotification: ErrorNotificationService) { }
+  constructor(private errorNotification: ErrorNotificationService) {
+    effect(() => {
+      const errors = this.errorNotification.currentErrorEntries();
+      this.errorEntries = errors;
+    });
+  }
 
   ngOnInit(): void {
-    this.errorSubscription = this.errorNotification.currentErrorEntries$.subscribe(
-      (errors) => (this.errorEntries = errors)
-    );
+
   }
 
   ngOnDestroy(): void {
