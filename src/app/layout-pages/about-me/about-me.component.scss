@@ -84,5 +84,15 @@
             display: block;
             margin: 0 auto 1rem;
         }
+        .about-me-screen {
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+
+        // Optional: prevent horizontal scroll if necessary
+        .about-me-content {
+            overflow-x: hidden;
+        }
     }
+
 }
