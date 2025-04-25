@@ -15,8 +15,8 @@ import { ErrorNotificationService } from '../../services/error-handler/error-not
   imports: [MatToolbar, RouterLink, MatTooltip, DatePipe]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  lastUpdateDate = new Date('04/14/2025 06:50 PM');
-  lastUpdateTooltip = 'Add vertical scroll to about page when it on mobile view';
+  lastUpdateDate = new Date('04/25/2025 09:07 PM');
+  lastUpdateTooltip = 'Updated my CV.';
   angularVersion!: string;
   showExclamationMark = false;
   errorEntries: ErrorEntry[] = [];
