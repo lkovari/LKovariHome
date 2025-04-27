@@ -16,7 +16,7 @@
       #inputToggle
     />
     <span class="slider"
-      [style]="inputToggle.checked ? toggleOnStyle : toggleOffStyle"
+      [style]="value ? toggleOnStyle() : toggleOffStyle()"
       [style.--slide-knob-bg-color]="knobColor()"
       [style.--slide-knob-spinner-color]="knobWaitSpinnerColor()">
     </span>

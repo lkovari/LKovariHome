@@ -29,8 +29,6 @@ export class SlideToggleComponent implements OnDestroy, ControlValueAccessor, Va
     return this._toggleState();
   }
   set value(value: boolean) {
-
-    console.log('>>> set  ' + this.previousState);
     this._toggleState.set(value);
   }
   private _spin = signal(false);
@@ -77,7 +75,6 @@ export class SlideToggleComponent implements OnDestroy, ControlValueAccessor, Va
       const v = this._spin();
       if (v) {
         this.storePreviousState();
-        console.log('>>> effect ' + this.previousState);
         this._toggleState.set(false);
       } else {
         this.restorePreviousState();

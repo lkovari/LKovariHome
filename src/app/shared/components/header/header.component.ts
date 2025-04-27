@@ -15,8 +15,8 @@ import { ErrorNotificationService } from '../../services/error-handler/error-not
   imports: [MatToolbar, RouterLink, MatTooltip, DatePipe]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  lastUpdateDate = new Date('04/27/2025 08:04 PM');
-  lastUpdateTooltip = 'Fix side toggle back to state where was before wait';
+  lastUpdateDate = new Date('04/27/2025 08:16 PM');
+  lastUpdateTooltip = 'Fix side toggle back to state where was before wait and ASSERTION ERROR';
   angularVersion!: string;
   showExclamationMark = false;
   errorEntries: ErrorEntry[] = [];
