@@ -15,8 +15,8 @@ import { ErrorNotificationService } from '../../services/error-handler/error-not
   imports: [MatToolbar, RouterLink, MatTooltip, DatePipe]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  lastUpdateDate = new Date('04/27/2025 02:55 PM');
-  lastUpdateTooltip = 'Turn @Inputs to input<> signal';
+  lastUpdateDate = new Date('04/27/2025 08:04 PM');
+  lastUpdateTooltip = 'Fix side toggle back to state where was before wait';
   angularVersion!: string;
   showExclamationMark = false;
   errorEntries: ErrorEntry[] = [];

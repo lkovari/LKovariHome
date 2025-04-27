@@ -20,7 +20,7 @@ export function stringAttributeTransform(value: any): string | null {
   ]
 })
 export class SlideToggleComponent implements OnDestroy, ControlValueAccessor, Validator {
-  private previousState: boolean = false;
+  private previousState: boolean | undefined = undefined;
   private knobWaitSpinnerColorValue = signal('blue');
   private _toggleState = signal<boolean>(false);
 
@@ -29,7 +29,8 @@ export class SlideToggleComponent implements OnDestroy, ControlValueAccessor, Va
     return this._toggleState();
   }
   set value(value: boolean) {
-    this.previousState = this._toggleState();
+
+    console.log('>>> set  ' + this.previousState);
     this._toggleState.set(value);
   }
   private _spin = signal(false);
@@ -75,10 +76,11 @@ export class SlideToggleComponent implements OnDestroy, ControlValueAccessor, Va
     effect(() => {
       const v = this._spin();
       if (v) {
-        this.previousState = this._toggleState();
+        this.storePreviousState();
+        console.log('>>> effect ' + this.previousState);
         this._toggleState.set(false);
       } else {
-        this._toggleState.set(this.previousState);
+        this.restorePreviousState();
       }
       this.disable = v;
     });
@@ -119,6 +121,19 @@ export class SlideToggleComponent implements OnDestroy, ControlValueAccessor, Va
   ngOnDestroy() {
     if (this._effectRef) {
       this._effectRef.destroy();
+    }
+  }
+
+  private storePreviousState() {
+    if (!this.previousState) {
+      this.previousState = this._toggleState();
+    }
+  }
+
+  private restorePreviousState() {
+    if (this.previousState) {
+      this._toggleState.set(this.previousState);
+      this.previousState = undefined;
     }
   }
 }
