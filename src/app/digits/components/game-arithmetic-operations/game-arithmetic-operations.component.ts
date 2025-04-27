@@ -1,10 +1,9 @@
 import {
   Component,
-  EventEmitter,
   Input,
   OnDestroy,
   OnInit,
-  Output,
+  output
 } from '@angular/core';
 import { IStack } from '../../models/stack.interface';
 import { Stack } from '../../models/stack.model';
@@ -22,16 +21,16 @@ import { NgStyle, NgClass } from '@angular/common';
 import { ExtendedModule } from '@angular/flex-layout/extended';
 
 @Component({
-    host: {
-        '[@operandButtonAnimationMove]': 'operandButtonAnimation',
-        '(@operandButtonAnimationMove.start)': 'captureAnimationTriggerStartEvent($event)',
-        '(@operandButtonAnimationMove.done)': 'captureAnimationTriggerDoneEvent($event)',
-    },
-    selector: 'app-game-arithmetic-operations',
-    templateUrl: './game-arithmetic-operations.component.html',
-    styleUrls: ['./game-arithmetic-operations.component.scss'],
-    animations: [operandButtonAnimation],
-    imports: [NgStyle, ExtendedModule, NgClass, MatIcon]
+  host: {
+    '[@operandButtonAnimationMove]': 'operandButtonAnimation',
+    '(@operandButtonAnimationMove.start)': 'captureAnimationTriggerStartEvent($event)',
+    '(@operandButtonAnimationMove.done)': 'captureAnimationTriggerDoneEvent($event)',
+  },
+  selector: 'app-game-arithmetic-operations',
+  templateUrl: './game-arithmetic-operations.component.html',
+  styleUrls: ['./game-arithmetic-operations.component.scss'],
+  animations: [operandButtonAnimation],
+  imports: [NgStyle, ExtendedModule, NgClass, MatIcon]
 })
 export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
   githubLogoPath = 'assets/logos/GitHub-Mark-32px.png';
@@ -74,9 +73,9 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
   );
 
   @Input() gameParameters!: IGameParameters;
-  @Output() expectedResultReached = new EventEmitter<IStack<IGameOperation>>();
-  @Output() invalidOperationExecuted = new EventEmitter<number>();
-  
+  readonly expectedResultReached = output<IStack<IGameOperation>>();
+  readonly invalidOperationExecuted = output<number>();
+
   private history: IStack<IGameParameters> | undefined;
   private operationHistory: IStack<IGameOperation> | undefined;
 
@@ -84,11 +83,11 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
   private selectedOperandB!: IGameOperand | null;
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIcon('revert',  sanitizer.bypassSecurityTrustResourceUrl('assets/icons/rotate-left-solid.svg'));
-    iconRegistry.addSvgIcon('addition',  sanitizer.bypassSecurityTrustResourceUrl('assets/icons/plus-solid.svg'));
-    iconRegistry.addSvgIcon('substraction',  sanitizer.bypassSecurityTrustResourceUrl('assets/icons/minus-solid.svg'));
-    iconRegistry.addSvgIcon('multiplication',  sanitizer.bypassSecurityTrustResourceUrl('assets/icons/xmark-solid.svg'));
-    iconRegistry.addSvgIcon('division',  sanitizer.bypassSecurityTrustResourceUrl('assets/icons/divide-solid.svg'));
+    iconRegistry.addSvgIcon('revert', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/rotate-left-solid.svg'));
+    iconRegistry.addSvgIcon('addition', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/plus-solid.svg'));
+    iconRegistry.addSvgIcon('substraction', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/minus-solid.svg'));
+    iconRegistry.addSvgIcon('multiplication', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/xmark-solid.svg'));
+    iconRegistry.addSvgIcon('division', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/divide-solid.svg'));
   }
   private getSelectedOperator(): IGameOperator | undefined {
     return this.operators.find((o) => o.selected);
@@ -125,7 +124,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
   captureAnimationTriggerDoneEvent(event: AnimationEvent) {
     console.log('Animation trigger done ', event);
   }
-  
+
   ngOnInit(): void {
     this.history = new Stack<IGameParameters>();
     this.operationHistory = new Stack<IGameOperation>();
@@ -183,7 +182,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
     if (this.selectedOperandA && this.selectedOperandB && !selectedOperator) {
       this.selectedOperandB.selected = false;
       this.selectedOperandB = null;
-    }else if (this.selectedOperandA && this.selectedOperandB && selectedOperator) {
+    } else if (this.selectedOperandA && this.selectedOperandB && selectedOperator) {
       const clonedGameParameters =
         EvaluateArythmeticOperation.cloneGameParameters(this.gameParameters);
 
@@ -210,7 +209,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
         this.addGameOperationToOperationHistory(gameOperation);
 
         if (this.isTheExpectedResultReached(result)) {
-          this.expectedResultReached.emit(this.operationHistory);
+          this.expectedResultReached.emit(this.operationHistory!);
         }
 
         operand.value = result;
@@ -238,7 +237,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
       this.revertLastOperation();
       const clonedGameParameters = EvaluateArythmeticOperation.cloneGameParameters(this.gameParameters);
       const operands = new Array<number>();
-      clonedGameParameters.operands.forEach((op) =>{
+      clonedGameParameters.operands.forEach((op) => {
         operands.push(op.value);
       });
       const gameOperation = new GameOperation(
@@ -246,7 +245,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
         operator.operator,
         this.gameParameters.result
       );
-      this.addGameOperationToOperationHistory(gameOperation);      
+      this.addGameOperationToOperationHistory(gameOperation);
     }
 
     console.log(`Caption ${operator.caption} Selected ${operator.selected}`);

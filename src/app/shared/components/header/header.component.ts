@@ -15,8 +15,8 @@ import { ErrorNotificationService } from '../../services/error-handler/error-not
   imports: [MatToolbar, RouterLink, MatTooltip, DatePipe]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  lastUpdateDate = new Date('04/27/2025 08:43 PM');
-  lastUpdateTooltip = 'Nested checklist component example UI cosmetics';
+  lastUpdateDate = new Date('04/27/2025 09:16 PM');
+  lastUpdateTooltip = 'Replace @Output with output<>';
   angularVersion!: string;
   showExclamationMark = false;
   errorEntries: ErrorEntry[] = [];

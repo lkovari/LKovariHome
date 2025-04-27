@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, forwardRef, ElementRef, inject, AfterViewInit, OnChanges, SimpleChanges, DestroyRef } from '@angular/core';
+import { Component, OnInit, Input, forwardRef, ElementRef, inject, AfterViewInit, OnChanges, SimpleChanges, DestroyRef, output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, ControlValueAccessor, AbstractControl, NG_VALUE_ACCESSOR, FormGroupDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IChecklistItem } from '../../models/checklist-item.interface';
 import { ChecklistValidators } from './checklist-validator';
@@ -65,7 +65,7 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
   }
   @Input() required: boolean = false;
 
-  @Output() itemClick: EventEmitter<any> = new EventEmitter();
+  itemClick = output<FormGroup[]>();
 
   isDisabled = false;
   mainForm!: FormGroup;
@@ -201,7 +201,10 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
 
   checklistItemClick(abstractControl: AbstractControl) {
     this.selectListItem(abstractControl);
-    this.itemClick.emit(this.mainForm.controls['checkListFormArray']);
+    const checkListFormArray = this.mainForm.get('checkListFormArray') as FormArray;
+    if (checkListFormArray) {
+      this.itemClick.emit(checkListFormArray.controls as FormGroup[]);
+    }
   }
 
 

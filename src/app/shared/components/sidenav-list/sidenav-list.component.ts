@@ -1,4 +1,4 @@
-import { Component, DestroyRef, EventEmitter, OnInit, Output, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { MenuItem } from 'primeng/api';
@@ -16,7 +16,7 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
   imports: [MatNavList, MatListItem, RouterLink, FaIconComponent, TieredMenuModule]
 })
 export class SidenavListComponent implements OnInit {
-  @Output() sidenavClose = new EventEmitter<void>();
+  readonly sidenavClose = output<void>();
   mediaObserverAsObservable: Subscription;
   private isWidthXs = false;
   menuItems: MenuItem[] = [];
