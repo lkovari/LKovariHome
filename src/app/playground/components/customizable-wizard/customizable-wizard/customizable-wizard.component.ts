@@ -1,11 +1,13 @@
 import {
   AfterViewInit,
   Component,
+  EnvironmentInjector,
+  createComponent,
   Input,
   OnInit,
-  ViewChild,
   ViewContainerRef,
   inject,
+  viewChild
 } from '@angular/core';
 import { IWizardData } from '../models/wizard-data.interface';
 import { IWizardPage } from '../models/wizard-page.interface';
@@ -19,14 +21,14 @@ import { WizardProgressComponent } from '../wizard-progress/wizard-progress.comp
 import { DynamicComponentHostDirective as DynamicComponentHostDirective_1 } from '../../../directives/dynamic-component-host.directive';
 
 @Component({
-    selector: 'app-customizable-wizard',
-    templateUrl: './customizable-wizard.component.html',
-    styleUrl: './customizable-wizard.component.scss',
-    imports: [FormsModule, NgStyle, ExtendedModule, WizardProgressComponent, DynamicComponentHostDirective_1]
+  selector: 'app-customizable-wizard',
+  templateUrl: './customizable-wizard.component.html',
+  styleUrl: './customizable-wizard.component.scss',
+  imports: [FormsModule, NgStyle, ExtendedModule, WizardProgressComponent, DynamicComponentHostDirective_1]
 })
 export class CustomizableWizardComponent implements OnInit, AfterViewInit {
-  @ViewChild(DynamicComponentHostDirective, { static: true })
-  dynamicComponentHost!: DynamicComponentHostDirective;
+  dynamicComponentHost = viewChild(DynamicComponentHostDirective);
+  private environmentInjector = inject(EnvironmentInjector);
 
   viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
 
@@ -44,7 +46,7 @@ export class CustomizableWizardComponent implements OnInit, AfterViewInit {
   currentWizardPage!: IWizardPage
   isFormValid: boolean = false;
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.setupComponentDynamically();
@@ -77,7 +79,7 @@ export class CustomizableWizardComponent implements OnInit, AfterViewInit {
       this.restoreTheFormDatafROMWizardModel();
     } else {
       this.setupInitialDataToComponent();
-    }    
+    }
   }
 
   saveClicked() {
@@ -91,7 +93,7 @@ export class CustomizableWizardComponent implements OnInit, AfterViewInit {
 
   private setupComponentDynamically() {
     this.currentWizardPage = this.wizardData.wizardPages[this.currentIndex]!;
-    this.createComponent(this.currentWizardPage);
+    this.createComponentDynamically(this.currentWizardPage);
   }
 
   private setupDataByProperyName(
@@ -124,18 +126,29 @@ export class CustomizableWizardComponent implements OnInit, AfterViewInit {
       componentRef.setInput(formControlName, formControlValue);
   */
 
-  private createComponent(wizardPage: IWizardPage) {
-    this.dynamicComponentHost.viewContainer.clear();
-    const componentRef =
-      this.dynamicComponentHost.viewContainer.createComponent(
-        wizardPage.componentType
-      );
-    this.wizardData.wizardPages[this.currentIndex]!.componentRef = componentRef;
-    this.wizardData.wizardPages[this.currentIndex]!.destroyRef = componentRef.instance.destroyRef;
+  private createComponentDynamically(wizardPage: IWizardPage) {
+    const host = this.dynamicComponentHost();
+    if (!host) throw new Error('Dynamic host not available');
+
+    host.viewContainer.clear();
+
+    const componentRef = createComponent(wizardPage.componentType, {
+      environmentInjector: this.environmentInjector,
+    });
+
+    host.viewContainer.insert(componentRef.hostView);
+
+    wizardPage.componentRef = componentRef;
+    wizardPage.destroyRef = (componentRef.instance as any).destroyRef;
     componentRef.hostView.detectChanges();
   }
 
   private setupInitialDataToComponent() {
+    const page = this.wizardData.wizardPages[this.currentIndex];
+    if (!page?.componentRef?.instance) {
+      console.warn('Component not ready yet.');
+      return;
+    }
     const formGroup =
       this.wizardData.wizardPages[
         this.currentIndex

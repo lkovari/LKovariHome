@@ -15,8 +15,8 @@ import { ErrorNotificationService } from '../../services/error-handler/error-not
   imports: [MatToolbar, RouterLink, MatTooltip, DatePipe]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  lastUpdateDate = new Date('04/27/2025 09:16 PM');
-  lastUpdateTooltip = 'Replace @Output with output<>';
+  lastUpdateDate = new Date('04/27/2025 11:44 PM');
+  lastUpdateTooltip = 'Wizard replace @ViewChild with viewChild, "preserveSymlinks": true';
   angularVersion!: string;
   showExclamationMark = false;
   errorEntries: ErrorEntry[] = [];
