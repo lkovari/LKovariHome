@@ -27,6 +27,10 @@
         <div class="sub-topic">
           <form class="form-group" [formGroup]="toggleForm">
             <div class="radio-options">
+              <label class="horizontal-gap-right" for="switchOn">
+                <input type="checkbox" id="switchOn" formControlName="toggle" #switchOn />
+                On/Off
+              </label>
               <label for="spinCheckbox">
                 <input
                   type="checkbox"
@@ -61,6 +65,7 @@
                 [toggleOnStyle]="{ 'background-color': '#4d8af5' }"
                 [toggleOffStyle]="{ 'background-color': 'lightgray' }"
                 [spin]="spinCheckbox.checked"
+                [value]="switchOn.checked"
                 formControlName="toggle"
               ></app-slide-toggle>
             </div>
