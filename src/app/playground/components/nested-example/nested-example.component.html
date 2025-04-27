@@ -34,22 +34,21 @@
             </a>
         </p>
         <form class="sub-topic" [formGroup]="exampleForm" (ngSubmit)="onSubmit(exampleForm)" novalidate autocomplete="off">
-            <div>
-                <label class="horizontal-gap-right">Selection mode</label>
-                <label class="form-check-inline" for="multiselect">
-                    <input id="multiselect" class="form-check-input horizontal-gap-left" 
+            <div class=""top-gap>
+                <label class="gap-label">Selection mode</label>
+                <label for="multiselect" class="gap-label">
+                    <input id="multiselect"
                     type="radio" [value]="MULTISELECT" formControlName="selectionMode">Multiple
                 </label>
-                <label class="form-check-inline" for="singleselect">
-                    <input id="singleselect" class="form-check-input horizontal-gap-left horizontal-gap-right" 
+                <label for="singleselect" class="gap-label">
+                    <input id="singleselect"
                         type="radio" [value]="SINGLESELECT" formControlName="selectionMode">Single
                 </label>(Single: SelectionMode.SINGLE: {{SINGLESELECT}})
             </div>
-            <div class="">
-                <label for="withDebounceChb horizontal-gap-right">Highlight items which marked Normal = true</label>
+            <div class="top-gap">
+                <label for="selectNormal" class="gap-label">Highlight items which marked Normal = true (3rd. 6th. 8th. items)</label>
                 <input class="horizontal-gap-left" id="selectNormal" type="checkbox"
                     formControlName="selectNormal">
-                <label class="horizontal-gap-left">(3rd. 6th. 8th. items)</label>
             </div>            
             <div class="form-group row mb-2">
                 <app-checklist [checklistItems]="checklistItems"

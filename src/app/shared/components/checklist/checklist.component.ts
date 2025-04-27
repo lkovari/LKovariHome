@@ -14,20 +14,20 @@ export const CHECKLIST_VALUE_ACCESSOR: any = {
   multi: true
 };
 @Component({
-    selector: 'app-checklist',
-    templateUrl: './checklist.component.html',
-    styleUrls: ['./checklist.component.scss'],
-    providers: [CHECKLIST_VALUE_ACCESSOR],
-    imports: [FormsModule, ReactiveFormsModule, NgClass]
+  selector: 'app-checklist',
+  templateUrl: './checklist.component.html',
+  styleUrls: ['./checklist.component.scss'],
+  providers: [CHECKLIST_VALUE_ACCESSOR],
+  imports: [FormsModule, ReactiveFormsModule, NgClass]
 })
-export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChanges, AfterViewInit  {
+export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChanges, AfterViewInit {
   private formBuilder: FormBuilder = inject(FormBuilder);
   // private changeDetectorRef: ChangeDetectorRef = inject(ChangeDetectorRef);
   hoverIndex: any;
   @Input() elementRef!: ElementRef;
   @Input() showErrorInside = false;
-  private _values: any;
-  @Input() 
+  private _values: Array<IChecklistItem> = [];
+  @Input()
   set checklistItems(v: Array<IChecklistItem>) {
     this._values = v;
     this._values.forEach((item: IChecklistItem) => {
@@ -38,7 +38,7 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
     return this._values;
   }
   private _selectionMode: SelectionMode = SelectionMode.SINGLE;
-  @Input() 
+  @Input()
   set selectionMode(v: SelectionMode) {
     this._selectionMode = v;
     if (this.getCheckListFormArray()) {
@@ -54,9 +54,9 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
   @Input() listStyle: any;
   @Input() listStyleClass: string = '';
   @Input() disabled: boolean = false;
-  
+
   private _selectNormal: boolean = false;
-  @Input() 
+  @Input()
   set selectNormal(v: boolean) {
     this._selectNormal = v;
   }
@@ -71,14 +71,14 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
   mainForm!: FormGroup;
   parentForm!: FormGroup;
 
-  private onChange: (value: FormArray | null) => void = () => {};
-  private onTouched: () => void = () => {};
+  private onChange: (value: FormArray | null) => void = () => { };
+  private onTouched: () => void = () => { };
 
   destroyRef: DestroyRef = inject(DestroyRef);
-  
+
   // private formGroupDirective: FormGroupDirective can get parent FormGroup
-  constructor(private formGroupDirective: FormGroupDirective) {}    
- 
+  constructor(private formGroupDirective: FormGroupDirective) { }
+
   ngOnInit(): void {
     // define the checklist
     if (!this.mainForm) {
@@ -95,26 +95,26 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
       });
     }
     this.mainForm.statusChanges
-      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(status =>{
-      console.log('mainForm status ', status);
-    });
+      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(status => {
+        console.log('mainForm status ', status);
+      });
 
     this.getCheckListFormArray().statusChanges
-      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(status =>{
-      console.log('CheckListFormArray Status ' + status);
-    });
-    
+      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(status => {
+        console.log('CheckListFormArray Status ' + status);
+      });
+
     this.getCheckListFormArray().valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value =>{
-      console.log('CheckListFormArray Value ' + value);
-    });
+      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
+        console.log('CheckListFormArray Value ' + value);
+      });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['elementRef'] && changes['elementRef'].currentValue && this.formGroupDirective.control) {
       // capture parent form
       this.parentForm = this.formGroupDirective.control as FormGroup;
-      console.log('!=> Get the parent form with: this.parentForm = this.formGroupDirective.control as FormGroup;');      
+      console.log('!=> Get the parent form with: this.parentForm = this.formGroupDirective.control as FormGroup;');
       // capture the elementRef to get formGroupName attributze to replace formgGroup wich in used by the component
       const formGroupName = this.elementRef.nativeElement.getAttribute('formGroupName');
       console.log('!=> Get the nested formGroup of the parent form with: let formGroupName = this.elementRef.nativeElement.getAttribute(\'formGroupName\');');
@@ -130,7 +130,7 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
 
   createInternalNestedForm() {
     this.mainForm = this.formBuilder.group({
-      checkListFormArray: this.formBuilder.array( [], [ ChecklistValidators.oneItemCheckRequiredValidator ] )
+      checkListFormArray: this.formBuilder.array([], [ChecklistValidators.oneItemCheckRequiredValidator])
     });
   }
 
@@ -139,7 +139,7 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
     if (ac instanceof FormGroup) {
       const formArrayItem = <FormGroup>ac;
       res = Boolean(formArrayItem.get('normal'));
-    } 
+    }
     return res;
   }
 
@@ -148,12 +148,12 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
     if (ac instanceof FormGroup) {
       const formArrayItem = <FormGroup>ac;
       res = formArrayItem.get('normal') && formArrayItem.get('normal')?.value;
-    } 
+    }
     return res;
   }
 
   needToShowNormalItems(selectNormal: boolean, ac: AbstractControl): boolean {
-    return ( selectNormal && this.hasNormalValue(ac) ? this.getNormalValue(ac) : false );
+    return (selectNormal && this.hasNormalValue(ac) ? this.getNormalValue(ac) : false);
   }
 
   clearSelection() {
@@ -168,16 +168,16 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
   createChecklistItem(item?: IChecklistItem): FormGroup {
     // create one form item
     const checklistItem = this.formBuilder.group({
-      id: [ -1, [ Validators.required ] ],
-      label: [ '', [ Validators.required ] ],
-      value: [ undefined ],
-      selected: this.formBuilder.control( { value: false, disabled: this.disabled } ),
-      normal: [ false ]
+      id: [-1, [Validators.required]],
+      label: ['', [Validators.required]],
+      value: [undefined],
+      selected: this.formBuilder.control({ value: false, disabled: this.disabled }),
+      normal: [false]
     });
     if (item) {
       checklistItem.setValue({
         id: item.id,
-        label:  item.label,
+        label: item.label,
         value: item.value,
         selected: item.selected,
         normal: item.normal
@@ -185,7 +185,7 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
     }
     return checklistItem;
   }
- 
+
   addChecklistItem(item: IChecklistItem): void {
     if (!this.mainForm) {
       this.createInternalNestedForm();
@@ -244,8 +244,8 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
    * appropriate DOM element.
    */
   setDisabledState(isDisabled: boolean): void {
-      this.disabled = isDisabled;
-  }  
+    this.disabled = isDisabled;
+  }
 
   private unselectOtherItems(selectedFormGroup: FormGroup): void {
     // unselect other items in the FormArray
@@ -259,12 +259,12 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
           //!!!!!!!formGroupItem.markAsTouched();
           //!!!!!!!formGroupItem.markAsDirty();
         }
-      }  
+      }
     });
     this.onTouched();
     this.onChange(this.getCheckListFormArray().value);
   }
-  
+
   private setupValidatorsDinamically() {
     // if the validation is required
     if (this.required) {

@@ -22,4 +22,10 @@
         font-size: 80%;
         color: #dc3545;
     }    
+        .gap-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-right: 1rem;
+        }
 }
