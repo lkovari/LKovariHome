@@ -15,8 +15,8 @@ import { ErrorNotificationService } from '../../services/error-handler/error-not
   imports: [MatToolbar, RouterLink, MatTooltip, DatePipe]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  lastUpdateDate = new Date('04/27/2025 11:44 PM');
-  lastUpdateTooltip = 'Wizard replace @ViewChild with viewChild, "preserveSymlinks": true';
+  lastUpdateDate = new Date('07/09/2025 09:44 PM');
+  lastUpdateTooltip = 'lkovari cv published docker image and updated cv.';
   angularVersion!: string;
   showExclamationMark = false;
   errorEntries: ErrorEntry[] = [];
