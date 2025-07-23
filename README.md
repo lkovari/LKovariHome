@@ -59,3 +59,5 @@ replaced "node_modules/bootstrap/scss/bootstrap.css" with "node_modules/bootstra
 
 -4. added "preserveSymlinks": true, to prevent:
 main.ts:11 ERROR Error: NG0203: inject() must be called from an injection context such as a constructor, a factory function, a field initializer, or a function used with `runInInjectionContext`. Find more at https://angular.io/errors/NG0203
+
+## Deployed to https://lkovari.github.io/LKovariHome
