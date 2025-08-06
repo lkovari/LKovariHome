@@ -39,6 +39,12 @@ export class SidenavListComponent implements OnInit {
   ngOnInit(): void {
     this.menuItems = [
       {
+        label: 'Next.JS Aug.2025',
+        icon: 'pi pi-th-large',
+        url: 'https://nextjs-react-seed-main-app.vercel.app',
+        target: '_blank'
+      },
+      {
         label: 'Angular',
         styleclass: 'side-menu-item-style',
         icon: 'pi pi-box',
