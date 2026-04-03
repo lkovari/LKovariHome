@@ -15,8 +15,8 @@ import { ErrorNotificationService } from '../../services/error-handler/error-not
   imports: [MatToolbar, RouterLink, MatTooltip, DatePipe]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  lastUpdateDate = new Date('02/22/2026 10:08 PM');
-  lastUpdateTooltip = 'Update CV.';
+  lastUpdateDate = new Date('04/03/2026 09:39 PM');
+  lastUpdateTooltip = 'Fix Numbers Firebase Firestore numbers db proble, find, add logs.';
   angularVersion!: string;
   showExclamationMark = false;
   errorEntries: ErrorEntry[] = [];
