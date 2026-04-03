@@ -452,6 +452,7 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
 
   onDeleteCookie() {
     this.cookieService.deleteAll();
+    console.log("INFO: All cookies deleted");
   }
 
   onUpdatePuzzleData() {
