@@ -60,8 +60,7 @@
                     [required]="true"
                     formGroupName="checkList"
                     (onClick)="onClick($event)"
-                    >
-                </app-checklist>
+                     />
                 @if (exampleForm.get('checkList')?.dirty 
                     && exampleForm.get('checkList')?.hasError('required') 
                     && exampleForm.get('checkList')?.errors!['invalidForm']) {

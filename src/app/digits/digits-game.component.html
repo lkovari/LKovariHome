@@ -1,5 +1,5 @@
 <div class="digits-game-layout">
-    <p-toast position="top-center" closable="true"></p-toast>
+    <p-toast position="top-center" closable="true" />
     <div class="digits-game-title">
         This is a daily numbers puzzle, similar to the <a class="anchor-underline-off" href="https://www.nytimes.com/games/digits">NY Times Digits</a>, which unfortunately discontinued at August 8, 2023
     </div>
@@ -13,14 +13,13 @@
         </div>
     </div>
     <div class="tool-bar">
-        <app-game-stage-levels [stageLevels]="stageLevels" ></app-game-stage-levels>
+        <app-game-stage-levels [stageLevels]="stageLevels"  />
     </div>
     <div>
         <app-game-arithmetic-operations #arithmeticOperations
             [gameParameters]="gameParameters[stageIndex] ?? defaultGameParameters"
             (expectedResultReached)="expectedResultReached($event)"
-            (invalidOperationExecuted)="invalidOperationExecuted($event)">
-        </app-game-arithmetic-operations>
+            (invalidOperationExecuted)="invalidOperationExecuted($event)" />
     </div>
 </div>
 <p-dialog id="splashscreen" header="Welcome to the Numbers Puzzle Game" [(visible)]="splashVisible" [modal]="true">

@@ -6,17 +6,17 @@
                     <mat-icon>menu</mat-icon>
                 </button>
             </div>
-            <app-header></app-header>
+            <app-header />
         </mat-toolbar>
         <mat-sidenav-container autosize>
             <mat-sidenav #sidenav role="navigation" class="mat-elevation-z10"
                 [mode]="isScreenXs() ? 'over' : 'side'" 
                 [opened]="!isScreenXs()">
-                <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list>
+                <app-sidenav-list (sidenavClose)="sidenav.close()" />
             </mat-sidenav>
             <mat-sidenav-content>
                 <main>
-                    <router-outlet></router-outlet>
+                    <router-outlet />
                 </main>
             </mat-sidenav-content>
         </mat-sidenav-container>

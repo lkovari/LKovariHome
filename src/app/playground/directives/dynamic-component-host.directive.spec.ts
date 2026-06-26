@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DynamicComponentHostDirective } from './dynamic-component-host.directive';
 
 @Component({
-  template: '<ng-template appDynamicComponentHost></ng-template>',
+  template: '<ng-template appDynamicComponentHost />',
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DynamicComponentHostDirective]
 })

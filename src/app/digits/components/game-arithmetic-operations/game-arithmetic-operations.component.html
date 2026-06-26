@@ -19,7 +19,7 @@
       <button type="button" class="operator-content" 
         [ngClass]="ix === 0 ? 'revert-button' : 'arithmetic-operation-button'"
         (click)="onOperatorButtonClick(operator)">
-        <mat-icon class="operator-content-icon" svgIcon="{{ operator.icon }}"></mat-icon>
+        <mat-icon class="operator-content-icon" svgIcon="{{ operator.icon }}" />
       </button>
     }
   </div>

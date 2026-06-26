@@ -5,7 +5,7 @@
       [routerLink]="['/layout-pages/home']"
       (click)="onSidenavClose()"
     >
-      <fa-icon [icon]="['fas', 'home']"></fa-icon>
+      <fa-icon [icon]="['fas', 'home']" />
       <span class="nav-caption">Home</span>
     </a>
     <a
@@ -13,7 +13,7 @@
       [routerLink]="['/layout-pages/about-me']"
       (click)="onSidenavClose()"
     >
-      <fa-icon [icon]="['fas', 'person']"></fa-icon>
+      <fa-icon [icon]="['fas', 'person']" />
       <span class="nav-caption">About Me</span>
     </a>
     <a
@@ -21,22 +21,19 @@
       [routerLink]="['/layout-pages/awards']"
       (click)="onSidenavClose()"
     >
-      <fa-icon [icon]="['fas', 'award']"></fa-icon
-      ><span class="nav-caption">Awards</span>
+      <fa-icon [icon]="['fas', 'award']" /><span class="nav-caption">Awards</span>
     </a>
     <a
       mat-list-item
       href="https://lkovari.github.io/KLHome"
       (click)="onSidenavClose()"
     >
-      <fa-icon [icon]="['fas', 'globe']"></fa-icon
-      ><span class="nav-caption">Tech Stack & Codes</span>
+      <fa-icon [icon]="['fas', 'globe']" /><span class="nav-caption">Tech Stack & Codes</span>
     </a>
   </mat-nav-list>
   <div class="bottom-menu-section">
-    <p-tieredmenu
-      styleClass="slide-menu-style"
+    <p-tieredmenu styleClass="slide-menu-style"
       [model]="menuItems"
-    ></p-tieredmenu>
+     />
   </div>
 </div>

@@ -7,7 +7,7 @@ import { ChecklistComponent } from './checklist.component';
 @Component({
   template: `
     <form [formGroup]="form">
-      <app-checklist formControlName="checklist"></app-checklist>
+      <app-checklist formControlName="checklist" />
     </form>
   `,
   changeDetection: ChangeDetectionStrategy.Eager,

@@ -7,14 +7,13 @@
       {{ wizardData().description }}
     </div>
     <div>
-      <app-wizard-progress
-        [style]="wizardProgressStyle()"
+      <app-wizard-progress [style]="wizardProgressStyle()"
         [wizardPages]="wizardData().wizardPages"
         [selectedIndex]="currentIndex"
-      ></app-wizard-progress>
+       />
     </div>
     <div class="layout-content" [style]="componentContainerStyle()">
-      <ng-template appDynamicComponentHost> </ng-template>
+      <ng-template appDynamicComponentHost />
     </div>
     <div class="footer-style" [style]="wizardFooterStyle()">
       <div class="d-flex flex-row justify-content-around">
