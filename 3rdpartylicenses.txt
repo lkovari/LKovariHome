@@ -5,7 +5,7 @@ License: "MIT"
 
 The MIT License
 
-Copyright (c) 2024 Google LLC.
+Copyright (c) 2025 Google LLC.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ License: "MIT"
 
 The MIT License
 
-Copyright (c) 2010-2024 Google LLC. https://angular.dev/license
+Copyright (c) 2010-2025 Google LLC. https://angular.dev/license
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -139,7 +139,7 @@ License: "MIT"
 
 The MIT License
 
-Copyright (c) 2010-2024 Google LLC. https://angular.dev/license
+Copyright (c) 2010-2025 Google LLC. https://angular.dev/license
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -169,7 +169,7 @@ License: "SEE LICENSE IN LICENSE.md"
 
 The MIT License (MIT)
 
-Copyright (c) 2016-2025 PrimeTek
+Copyright (c) 2016-2026 PrimeTek
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -242,12 +242,38 @@ The term “Software” includes all source and object code, in whole and/or par
 10. **Governing Law, Jurisdiction:** Licensee hereby agrees not to initiate class-action lawsuits against Licensor in relation to this license and to compensate Licensor for any legal fees, cost or attorney fees should any claim brought by Licensee against Licensor be denied, in part or in full.
 
 --------------------------------------------------------------------------------
+Package: @primeuix/styles
+License: "MIT"
+
+MIT License
+
+Copyright (c) 2025 PrimeTek
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+--------------------------------------------------------------------------------
 Package: @angular/cdk
 License: "MIT"
 
 The MIT License
 
-Copyright (c) 2024 Google LLC.
+Copyright (c) 2025 Google LLC.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -296,7 +322,7 @@ as SVG and JS file types.
 In the Font Awesome Free download, the SIL OFL license applies to all icons
 packaged as web and desktop font files.
 
-Copyright (c) 2024 Fonticons, Inc. (https://fontawesome.com)
+Copyright (c) 2026 Fonticons, Inc. (https://fontawesome.com)
 with Reserved Font Name: "Font Awesome".
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
@@ -396,7 +422,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 In the Font Awesome Free download, the MIT license applies to all non-font and
 non-icon files.
 
-Copyright 2024 Fonticons, Inc.
+Copyright 2026 Fonticons, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in the
@@ -809,7 +835,7 @@ License: "MIT"
 
 The MIT License
 
-Copyright (c) 2010-2024 Google LLC. https://angular.dev/license
+Copyright (c) 2010-2025 Google LLC. https://angular.dev/license
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -885,7 +911,7 @@ License: "MIT"
 
 The MIT License
 
-Copyright (c) 2010-2024 Google LLC. https://angular.dev/license
+Copyright (c) 2010-2025 Google LLC. https://angular.dev/license
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -911,7 +937,7 @@ License: "MIT"
 
 MIT License
 
-Copyright (c) 2024 PrimeTek
+Copyright (c) 2025 PrimeTek
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -937,7 +963,7 @@ License: "MIT"
 
 MIT License
 
-Copyright (c) 2024 PrimeTek
+Copyright (c) 2025 PrimeTek
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -963,7 +989,7 @@ License: "MIT"
 
 The MIT License
 
-Copyright (c) 2010-2024 Google LLC. https://angular.dev/license
+Copyright (c) 2010-2025 Google LLC. https://angular.dev/license
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -989,7 +1015,7 @@ License: "MIT"
 
 The MIT License
 
-Copyright (c) 2010-2024 Google LLC. https://angular.dev/license
+Copyright (c) 2010-2025 Google LLC. https://angular.dev/license
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -1284,7 +1310,7 @@ License: "MIT"
 
 The MIT License
 
-Copyright (c) 2010-2024 Google LLC. https://angular.io/license
+Copyright (c) 2010-2025 Google LLC. https://angular.dev/license
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -1310,7 +1336,7 @@ License: "MIT"
 
 The MIT License (MIT)
 
-Copyright (c) 2011-2024 The Bootstrap Authors
+Copyright (c) 2011-2025 The Bootstrap Authors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
