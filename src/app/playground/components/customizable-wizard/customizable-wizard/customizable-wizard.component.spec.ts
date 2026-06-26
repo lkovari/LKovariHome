@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormGroup } from '@angular/forms';
 
 import { CustomizableWizardComponent } from './customizable-wizard.component';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: ''
 })
 class EmptyWizardPageComponent {

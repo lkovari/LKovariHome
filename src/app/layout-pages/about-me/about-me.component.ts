@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'app-about-me',
     templateUrl: './about-me.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./about-me.component.scss'],
     
 })

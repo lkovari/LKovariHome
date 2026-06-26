@@ -2,7 +2,7 @@ import { enableProdMode, ErrorHandler, importProvidersFrom, provideZoneChangeDet
 
 import { environment } from './environments/environment';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withXhr } from '@angular/common/http';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { AppRoutingModule } from './app/app-routing.module';
 import { AppComponent } from './app/app.component';
@@ -20,10 +20,9 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideZoneChangeDetection(),
     importProvidersFrom(BrowserModule, AppRoutingModule),
-    provideHttpClient(),
+    provideHttpClient(withXhr(), withInterceptors([httpErrorInterceptor])),
     provideAnimations(),
     provideAnimationsAsync(),
-    provideHttpClient(withInterceptors([httpErrorInterceptor])),
     providePrimeNG({
       theme: {
         preset: Aura,

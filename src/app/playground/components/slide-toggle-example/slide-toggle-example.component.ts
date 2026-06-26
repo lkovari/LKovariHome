@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SlideToggleComponent } from '../../../shared/components/slide-toggle/slide-toggle.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
   selector: 'app-slide-toggle-example',
   imports: [JsonPipe, ReactiveFormsModule, SlideToggleComponent, RouterLink],
   templateUrl: './slide-toggle-example.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './slide-toggle-example.component.scss'
 })
 export class SlideToggleExampleComponent implements OnInit {

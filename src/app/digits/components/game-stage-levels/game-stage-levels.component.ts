@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { IStageLevel } from '../../models/stage-level.interface';
 import { NgStyle } from '@angular/common';
 import { ExtendedModule } from '@angular/flex-layout/extended';
@@ -8,6 +8,7 @@ import { StageLevelComponent } from '../stage-level/stage-level.component';
     selector: 'app-game-stage-levels',
     templateUrl: './game-stage-levels.component.html',
     styleUrls: ['./game-stage-levels.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [NgStyle, ExtendedModule, StageLevelComponent]
 })
 export class GameStageLevelsComponent  implements OnInit {

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
 import {
   MatSidenav,
@@ -18,6 +18,7 @@ import { SidenavListComponent } from '../shared/components/sidenav-list/sidenav-
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     LayoutContentComponent,
     MatToolbar,

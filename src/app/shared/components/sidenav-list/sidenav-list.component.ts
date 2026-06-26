@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit, inject, output } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, output, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { MenuItem } from 'primeng/api';
@@ -13,6 +13,7 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
   selector: 'app-sidenav-list',
   templateUrl: './sidenav-list.component.html',
   styleUrls: ['./sidenav-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MatNavList, MatListItem, RouterLink, FaIconComponent, TieredMenuModule]
 })
 export class SidenavListComponent implements OnInit {

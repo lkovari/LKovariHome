@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { IWizardPage } from '../models/wizard-page.interface';
 import { NgStyle, NgClass } from '@angular/common';
 import { ExtendedModule } from '@angular/flex-layout/extended';
@@ -7,6 +7,7 @@ import { ExtendedModule } from '@angular/flex-layout/extended';
     selector: 'app-wizard-progress',
     templateUrl: './wizard-progress.component.html',
     styleUrl: './wizard-progress.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [NgStyle, ExtendedModule, NgClass]
 })
 export class WizardProgressComponent {

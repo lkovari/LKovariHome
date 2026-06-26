@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DynamicComponentHostDirective } from './dynamic-component-host.directive';
 
 @Component({
   template: '<ng-template appDynamicComponentHost></ng-template>',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DynamicComponentHostDirective]
 })
 class TestHostComponent {}

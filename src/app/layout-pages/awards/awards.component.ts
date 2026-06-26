@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ImageDescriptor } from './models/image-descriptor.interface';
 import { NgOptimizedImage } from '@angular/common';
 
@@ -6,6 +6,7 @@ import { NgOptimizedImage } from '@angular/common';
     imports: [NgOptimizedImage],
     selector: 'app-awards',
     templateUrl: './awards.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./awards.component.scss']
 })
 export class AwardsComponent implements OnInit {

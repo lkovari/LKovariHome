@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit, Signal, computed, effect, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, Signal, computed, effect, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexModule } from '@angular/flex-layout/flex';
@@ -12,6 +12,7 @@ import { MatInput } from '@angular/material/input';
     selector: 'app-angular-news-v16-signals',
     templateUrl: './angular-news-v16-signals.component.html',
     styleUrls: ['./angular-news-v16-signals.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FlexModule, FormsModule, ReactiveFormsModule, NgStyle, ExtendedModule, NgClass, InputNumberModule, MatFormField, MatLabel, MatInput]
 })
 export class AngularNewsV16SignalsComponent implements OnInit {

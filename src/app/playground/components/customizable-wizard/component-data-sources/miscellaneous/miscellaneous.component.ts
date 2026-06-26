@@ -1,10 +1,11 @@
-import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-miscellaneous',
     templateUrl: './miscellaneous.component.html',
     styleUrl: './miscellaneous.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule, ReactiveFormsModule]
 })
 export class MiscellaneousComponent implements OnInit {

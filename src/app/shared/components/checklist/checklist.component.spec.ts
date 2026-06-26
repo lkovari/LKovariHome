@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -10,6 +10,7 @@ import { ChecklistComponent } from './checklist.component';
       <app-checklist formControlName="checklist"></app-checklist>
     </form>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ReactiveFormsModule, ChecklistComponent]
 })
 class TestHostComponent {

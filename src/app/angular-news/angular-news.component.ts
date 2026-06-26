@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
 import { Router, RouterOutlet } from '@angular/router';
@@ -14,6 +14,7 @@ import { SidenavListComponent } from '../shared/components/sidenav-list/sidenav-
     selector: 'app-angular-news',
     templateUrl: './angular-news.component.html',
     styleUrls: ['./angular-news.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [LayoutContentComponent, MatToolbar, ExtendedModule, MatIconButton, MatIcon, HeaderComponent, MatSidenavContainer, MatSidenav, SidenavListComponent, MatSidenavContent, RouterOutlet]
 })
 export class AngularNewsComponent implements OnInit, AfterViewInit {

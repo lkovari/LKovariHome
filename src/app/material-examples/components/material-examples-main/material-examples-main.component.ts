@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Subject } from 'rxjs/internal/Subject';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
@@ -17,6 +17,7 @@ import { AsyncPipe } from '@angular/common';
     selector: 'app-material-examples-main',
     templateUrl: './material-examples-main.component.html',
     styleUrls: ['./material-examples-main.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatFormField, MatLabel, MatInput, FormsModule, MatRadioGroup, ReactiveFormsModule, MatRadioButton, MatFabButton, MatIcon, AsyncPipe]
 })
 export class MaterialExamplesMainComponent implements OnInit {

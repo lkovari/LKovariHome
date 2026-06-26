@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, forwardRef, ElementRef, inject, AfterViewInit, OnChanges, SimpleChanges, DestroyRef, output } from '@angular/core';
+import { Component, OnInit, Input, forwardRef, ElementRef, inject, AfterViewInit, OnChanges, SimpleChanges, DestroyRef, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, ControlValueAccessor, AbstractControl, NG_VALUE_ACCESSOR, FormGroupDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IChecklistItem } from '../../models/checklist-item.interface';
 import { ChecklistValidators } from './checklist-validator';
@@ -18,6 +18,7 @@ export const CHECKLIST_VALUE_ACCESSOR: any = {
   templateUrl: './checklist.component.html',
   styleUrls: ['./checklist.component.scss'],
   providers: [CHECKLIST_VALUE_ACCESSOR],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormsModule, ReactiveFormsModule, NgClass]
 })
 export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChanges, AfterViewInit {

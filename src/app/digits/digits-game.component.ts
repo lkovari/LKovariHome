@@ -1,4 +1,4 @@
-import { Component, DestroyRef, Injector, OnDestroy, OnInit, ViewChild, inject, runInInjectionContext } from '@angular/core';
+import { Component, DestroyRef, Injector, OnDestroy, OnInit, ViewChild, inject, runInInjectionContext, ChangeDetectionStrategy } from '@angular/core';
 import { IStageLevel } from './models/stage-level.interface';
 import { IGameParameters } from './models/game-parameters.interface';
 import { IStack } from './models/stack.interface';
@@ -41,6 +41,7 @@ import { DatePipe } from '@angular/common';
     templateUrl: './digits-game.component.html',
     styleUrls: ['./digits-game.component.scss'],
     providers: [MessageService, CookieService],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ToastModule, GameStageLevelsComponent, GameArithmeticOperationsComponent, DialogModule, DatePipe]
 })
 export class DigitsGameComponent implements OnInit, OnDestroy {

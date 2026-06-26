@@ -1,4 +1,4 @@
-import { Component, EffectRef, Input, OnDestroy, computed, effect, forwardRef, input, output, signal } from '@angular/core';
+import { Component, EffectRef, Input, OnDestroy, computed, effect, forwardRef, input, output, signal, ChangeDetectionStrategy } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormsModule, Validator, ValidationErrors, AbstractControl } from '@angular/forms';
 
 export function stringAttributeTransform(value: any): string | null {
@@ -11,6 +11,7 @@ export function stringAttributeTransform(value: any): string | null {
   imports: [FormsModule],
   templateUrl: './slide-toggle.component.html',
   styleUrl: './slide-toggle.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

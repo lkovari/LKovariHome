@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import * as angular from '@angular/forms';
 import { MatToolbar } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
@@ -11,6 +11,7 @@ import { ErrorNotificationService } from '../../services/error-handler/error-not
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MatToolbar, RouterLink, MatTooltip, DatePipe, MatIcon]
 })
 export class HeaderComponent implements OnInit {

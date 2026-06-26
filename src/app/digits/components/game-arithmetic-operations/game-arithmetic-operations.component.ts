@@ -3,7 +3,8 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  output
+  output,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { IStack } from '../../models/stack.interface';
 import { Stack } from '../../models/stack.model';
@@ -31,6 +32,7 @@ import { ExtendedModule } from '@angular/flex-layout/extended';
   templateUrl: './game-arithmetic-operations.component.html',
   styleUrls: ['./game-arithmetic-operations.component.scss'],
   animations: [operandButtonAnimation],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgStyle, ExtendedModule, NgClass, MatIcon]
 })
 export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {

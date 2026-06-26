@@ -7,7 +7,8 @@ import {
   OnInit,
   ViewContainerRef,
   inject,
-  viewChild
+  viewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { IWizardData } from '../models/wizard-data.interface';
 import { IWizardPage } from '../models/wizard-page.interface';
@@ -24,6 +25,7 @@ import { DynamicComponentHostDirective as DynamicComponentHostDirective_1 } from
   selector: 'app-customizable-wizard',
   templateUrl: './customizable-wizard.component.html',
   styleUrl: './customizable-wizard.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormsModule, NgStyle, ExtendedModule, WizardProgressComponent, DynamicComponentHostDirective_1]
 })
 export class CustomizableWizardComponent implements OnInit, AfterViewInit {

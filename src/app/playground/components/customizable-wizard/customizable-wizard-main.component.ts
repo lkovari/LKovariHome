@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { IWizardData } from './models/wizard-data.interface';
 import { IWizardPage } from './models/wizard-page.interface';
 import { PersonComponent } from './component-data-sources/person/person.component';
@@ -13,6 +13,7 @@ import { CustomizableWizardComponent } from './customizable-wizard/customizable-
     selector: 'app-customizable-wizard-main',
     templateUrl: './customizable-wizard-main.component.html',
     styleUrl: './customizable-wizard-main.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CustomizableWizardComponent]
 })
 export class CustomizableWizardMainComponent implements OnInit {
