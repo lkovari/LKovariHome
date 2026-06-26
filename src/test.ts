@@ -1,5 +1,4 @@
 import 'zone.js/testing';
-import { APP_INITIALIZER } from '@angular/core';
 import { getTestBed, TestModuleMetadata } from '@angular/core/testing';
 import {
   BrowserDynamicTestingModule,
@@ -9,9 +8,7 @@ import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
-import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faAward, faGlobe, faHome, faPerson } from '@fortawesome/free-solid-svg-icons';
+import { provideFaIcons } from './app/shared/fa-icons.initializer';
 
 getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
@@ -30,15 +27,7 @@ testBed.configureTestingModule = (moduleDef: TestModuleMetadata) => {
       provideHttpClient(withXhr()),
       provideHttpClientTesting(),
       provideNoopAnimations(),
-      {
-        provide: APP_INITIALIZER,
-        multi: true,
-        useFactory: (library: FaIconLibrary) => {
-          library.addIcons(faHome, faPerson, faGlobe, faAward, faGithub);
-          return () => undefined;
-        },
-        deps: [FaIconLibrary],
-      },
+      provideFaIcons(),
     ],
   });
 };

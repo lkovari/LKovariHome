@@ -24,6 +24,7 @@ import { ToastModule } from 'primeng/toast';
 import { GameStageLevelsComponent } from './components/game-stage-levels/game-stage-levels.component';
 import { DialogModule } from 'primeng/dialog';
 import { DatePipe } from '@angular/common';
+import { ClipboardModule } from 'ngx-clipboard';
 
 /*
   Known bugs:
@@ -42,7 +43,7 @@ import { DatePipe } from '@angular/common';
     styleUrls: ['./digits-game.component.scss'],
     providers: [MessageService, CookieService],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [ToastModule, GameStageLevelsComponent, GameArithmeticOperationsComponent, DialogModule, DatePipe]
+    imports: [ToastModule, GameStageLevelsComponent, GameArithmeticOperationsComponent, DialogModule, DatePipe, ClipboardModule]
 })
 export class DigitsGameComponent implements OnInit, OnDestroy {
   @ViewChild('arithmeticOperations', { static: true }) arithmeticComponent!: GameArithmeticOperationsComponent;
