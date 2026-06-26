@@ -12,6 +12,13 @@ describe('StageLevelComponent', () => {
 });
     fixture = TestBed.createComponent(StageLevelComponent);
     component = fixture.componentInstance;
+    component.stageLevel = {
+      selected: false,
+      index: 0,
+      value: 0,
+      completed: false,
+      summary: ''
+    };
     fixture.detectChanges();
   });
 

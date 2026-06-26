@@ -8,7 +8,6 @@ import { GameStageLevelsComponent } from './components/game-stage-levels/game-st
 import { StageLevelComponent } from './components/stage-level/stage-level.component';
 import { GameArithmeticOperationsComponent } from './components/game-arithmetic-operations/game-arithmetic-operations.component';
 import { ToastModule } from 'primeng/toast';
-import { MessagesModule } from 'primeng/messages';
 import { MatIconModule } from '@angular/material/icon';
 import { ClipboardModule } from 'ngx-clipboard';
 import { environment } from 'src/environments/environment';
@@ -22,7 +21,6 @@ import { DialogModule } from 'primeng/dialog';
         CommonModule,
         RouterModule,
         ToastModule,
-        MessagesModule,
         DigitsRoutingModule,
         FlexLayoutModule,
         MatIconModule,

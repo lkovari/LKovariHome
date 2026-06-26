@@ -1,23 +1,36 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { ChecklistComponent } from './checklist.component';
 
+@Component({
+  template: `
+    <form [formGroup]="form">
+      <app-checklist formControlName="checklist"></app-checklist>
+    </form>
+  `,
+  imports: [ReactiveFormsModule, ChecklistComponent]
+})
+class TestHostComponent {
+  form = new FormGroup({
+    checklist: new FormControl([])
+  });
+}
+
 describe('ChecklistComponent', () => {
-  let component: ChecklistComponent;
-  let fixture: ComponentFixture<ChecklistComponent>;
+  let fixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChecklistComponent]
-    })
-    .compileComponents();
-    
-    fixture = TestBed.createComponent(ChecklistComponent);
-    component = fixture.componentInstance;
+      imports: [TestHostComponent]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(fixture).toBeTruthy();
   });
 });
