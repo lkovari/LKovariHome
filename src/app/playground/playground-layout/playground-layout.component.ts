@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ChangeDetectionStrategy, viewChild } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
 import { Router, RouterOutlet } from '@angular/router';
@@ -18,7 +18,7 @@ import { SidenavListComponent } from '../../shared/components/sidenav-list/siden
     imports: [LayoutContentComponent, MatToolbar, ExtendedModule, MatIconButton, MatIcon, HeaderComponent, MatSidenavContainer, MatSidenav, SidenavListComponent, MatSidenavContent, RouterOutlet]
 })
 export class PlaygroundLayoutComponent implements OnInit, AfterViewInit {
-  @ViewChild('sidenav') sidenav!: MatSidenav;
+  readonly sidenav = viewChild.required<MatSidenav>('sidenav');
   
   constructor(public router: Router, public mediaObserver: MediaObserver) {}
 
@@ -31,9 +31,9 @@ export class PlaygroundLayoutComponent implements OnInit, AfterViewInit {
     
   private initializeSideNav() {
     if (this.mediaObserver.isActive('xs')) {
-      this.sidenav.close();
+      this.sidenav().close();
     } else {
-      this.sidenav.open();
+      this.sidenav().open();
     }
   }
  
@@ -48,7 +48,7 @@ export class PlaygroundLayoutComponent implements OnInit, AfterViewInit {
   }  
 
   onSidenavToggle() {
-    this.sidenav.toggle();
-    console.log('>>>>>>> sidenav ' + this.sidenav.opened);
+    this.sidenav().toggle();
+    console.log('>>>>>>> sidenav ' + this.sidenav().opened);
   }
 }

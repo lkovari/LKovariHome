@@ -1,4 +1,4 @@
-import { Component, DestroyRef, ElementRef, OnInit, ViewChild, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, DestroyRef, ElementRef, OnInit, inject, ChangeDetectionStrategy, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChecklistComponent } from 'src/app/shared/components/checklist/checklist.component';
@@ -31,9 +31,9 @@ export class NestedExampleComponent implements OnInit {
   selectNormal = false;
   selectionMode = SelectionMode.SINGLE;
   // pass the element ref into the component
-  @ViewChild('checkListRef', { read: ElementRef, static: true }) checkListReference!: ElementRef; 
+  readonly checkListReference = viewChild.required('checkListRef', { read: ElementRef }); 
   // checkListGroup for capture the component to manage selection etc.
-  @ViewChild('checkListGroup', { static: true }) checkListGroup!: ChecklistComponent; 
+  readonly checkListGroup = viewChild.required<ChecklistComponent>('checkListGroup'); 
   MULTISELECT = SelectionMode.MULTI;
   SINGLESELECT = SelectionMode.SINGLE;
   destroyRef: DestroyRef = inject(DestroyRef);
@@ -71,15 +71,15 @@ export class NestedExampleComponent implements OnInit {
 
 
   showCheckedItems() {
-    return this.checkListGroup.getSelectedItems();
+    return this.checkListGroup().getSelectedItems();
   }
 
   onSelectAll() {
-    this.checkListGroup.selectAllItems();
+    this.checkListGroup().selectAllItems();
   }
 
   onUnselectAll() {
-    this.checkListGroup.unselectAllItems();
+    this.checkListGroup().unselectAllItems();
     this.selectNormal = false;
   }
 

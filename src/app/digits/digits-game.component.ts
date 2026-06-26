@@ -1,4 +1,4 @@
-import { Component, DestroyRef, Injector, OnDestroy, OnInit, ViewChild, inject, runInInjectionContext, ChangeDetectionStrategy } from '@angular/core';
+import { Component, DestroyRef, Injector, OnDestroy, OnInit, inject, runInInjectionContext, ChangeDetectionStrategy, viewChild } from '@angular/core';
 import { IStageLevel } from './models/stage-level.interface';
 import { IGameParameters } from './models/game-parameters.interface';
 import { IStack } from './models/stack.interface';
@@ -46,7 +46,7 @@ import { ClipboardModule } from 'ngx-clipboard';
     imports: [ToastModule, GameStageLevelsComponent, GameArithmeticOperationsComponent, DialogModule, DatePipe, ClipboardModule]
 })
 export class DigitsGameComponent implements OnInit, OnDestroy {
-  @ViewChild('arithmeticOperations', { static: true }) arithmeticComponent!: GameArithmeticOperationsComponent;
+  readonly arithmeticComponent = viewChild.required<GameArithmeticOperationsComponent>('arithmeticOperations');
   readonly COOKIE_LK_DIGITS = 'CookieLKNumbers';
   private generateGameParameters = new GenerateGameParameters();
   currentDate = new Date();
@@ -443,12 +443,12 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
       this.stageLevels[this.stageIndex]!.selected = true;
     }
     this.storeGameStateToCookie();
-    this.arithmeticComponent.clearHistory();    
+    this.arithmeticComponent().clearHistory();    
   }
 
   invalidOperationExecuted(value: number) {
     this.showErrorMessage('Invalid Operation Executed!');
-    this.arithmeticComponent.revertLastOperation();
+    this.arithmeticComponent().revertLastOperation();
     console.log(value);
   }
 
