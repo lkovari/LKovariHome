@@ -46,6 +46,12 @@ import { ClipboardModule } from 'ngx-clipboard';
     imports: [ToastModule, GameStageLevelsComponent, GameArithmeticOperationsComponent, DialogModule, DatePipe, ClipboardModule]
 })
 export class DigitsGameComponent implements OnInit, OnDestroy {
+  private messageService = inject(MessageService);
+  private cookieService = inject(CookieService);
+  private clipboardService = inject(ClipboardService);
+  private numbersFirestoreService = inject(NumbersFirestoreService);
+  private stageCommunicationService = inject(StageCommunicationService);
+
   readonly arithmeticComponent = viewChild.required<GameArithmeticOperationsComponent>('arithmeticOperations');
   readonly COOKIE_LK_DIGITS = 'CookieLKNumbers';
   private generateGameParameters = new GenerateGameParameters();
@@ -76,11 +82,10 @@ export class DigitsGameComponent implements OnInit, OnDestroy {
     stageIndex: 0
   };
 
-  constructor(private messageService: MessageService,
-    private cookieService: CookieService,
-    private clipboardService: ClipboardService,
-    private numbersFirestoreService: NumbersFirestoreService,
-    private stageCommunicationService: StageCommunicationService) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
       this.updateStageLevel = 
         this.stageCommunicationService.getUpdatedStageLevel()
           .pipe(takeUntilDestroyed(this.destroyRef)).subscribe({

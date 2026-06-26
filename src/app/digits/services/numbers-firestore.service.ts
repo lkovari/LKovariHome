@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { FirestorePuzzleData } from '../models/firestore-puzzle-data.model';
 
@@ -6,10 +6,15 @@ import { FirestorePuzzleData } from '../models/firestore-puzzle-data.model';
   providedIn: 'root'
 })
 export class NumbersFirestoreService {
+  private db = inject(AngularFirestore);
+
   private dbPath = '/puzzledata';
   puzzleDataRef: AngularFirestoreCollection<FirestorePuzzleData>;
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
   
-  constructor(private db: AngularFirestore) {
+  constructor() {
     this.puzzleDataRef = this.db.collection(this.dbPath);
   }
 

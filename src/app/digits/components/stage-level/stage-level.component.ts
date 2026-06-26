@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, inject } from '@angular/core';
 import { IStageLevel } from '../../models/stage-level.interface';
 import { StageCommunicationService } from '../../services/stage-communication.service';
 import { NgClass } from '@angular/common';
@@ -12,10 +12,15 @@ import { ExtendedModule } from '@angular/flex-layout/extended';
     imports: [NgClass, ExtendedModule]
 })
 export class StageLevelComponent {
+  private stageCommunicationService = inject(StageCommunicationService);
+
   stars: number[] = new Array<number>( 1, 2, 3 ); 
   readonly stageLevel = input.required<IStageLevel>();
 
-  constructor(private stageCommunicationService: StageCommunicationService) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
   }
 
   stageClick() {

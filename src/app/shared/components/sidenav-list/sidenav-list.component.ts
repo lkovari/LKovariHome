@@ -23,7 +23,12 @@ export class SidenavListComponent implements OnInit {
   menuItems: MenuItem[] = [];
   destroyRef: DestroyRef = inject(DestroyRef);
 
-  constructor(mediaObserver: MediaObserver) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
+    const mediaObserver = inject(MediaObserver);
+
     // use MediaObserver to detect width changes if it is xs or sm then close the sidenav
     this.mediaObserverAsObservable = mediaObserver.asObservable()
       .pipe(takeUntilDestroyed(this.destroyRef)).subscribe((changes: MediaChange[]) => {

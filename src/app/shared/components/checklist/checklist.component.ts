@@ -22,6 +22,8 @@ export const CHECKLIST_VALUE_ACCESSOR: any = {
   imports: [FormsModule, ReactiveFormsModule, NgClass]
 })
 export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChanges, AfterViewInit {
+  private formGroupDirective = inject(FormGroupDirective);
+
   private formBuilder: FormBuilder = inject(FormBuilder);
   // private changeDetectorRef: ChangeDetectorRef = inject(ChangeDetectorRef);
   hoverIndex: any;
@@ -77,8 +79,11 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
 
   destroyRef: DestroyRef = inject(DestroyRef);
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   // private formGroupDirective: FormGroupDirective can get parent FormGroup
-  constructor(private formGroupDirective: FormGroupDirective) { }
+  constructor() { }
 
   ngOnInit(): void {
     // define the checklist

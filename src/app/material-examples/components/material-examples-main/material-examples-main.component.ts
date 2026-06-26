@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Subject } from 'rxjs/internal/Subject';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
@@ -21,13 +21,18 @@ import { AsyncPipe } from '@angular/common';
     imports: [MatFormField, MatLabel, MatInput, FormsModule, MatRadioGroup, ReactiveFormsModule, MatRadioButton, MatFabButton, MatIcon, AsyncPipe]
 })
 export class MaterialExamplesMainComponent implements OnInit {
+  private httpClient = inject(HttpClient);
+
   searchSubject$ = new Subject<string>();
   results$: Observable<any> = of([]);
   searchString: string = '';
   searchMode: 'Both' | 'Image' | 'Video' = 'Both';
   showSearchContentFormControl: FormControl = new FormControl(this.searchMode);
 
-  constructor(private httpClient: HttpClient) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
   }
 
   ngOnInit() {

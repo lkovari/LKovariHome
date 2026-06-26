@@ -1,8 +1,13 @@
-import { Directive, ViewContainerRef } from '@angular/core';
+import { Directive, ViewContainerRef, inject } from '@angular/core';
 
 @Directive({ selector: '[appDynamicComponentHost]' })
 export class DynamicComponentHostDirective {
+  viewContainer = inject(ViewContainerRef);
 
-  constructor(public viewContainer: ViewContainerRef) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+
+  constructor() { }
 
 }

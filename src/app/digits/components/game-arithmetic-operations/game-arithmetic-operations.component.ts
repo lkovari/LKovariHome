@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  output,
-  ChangeDetectionStrategy,
-  input
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, output, ChangeDetectionStrategy, input, inject } from '@angular/core';
 import { IStack } from '../../models/stack.interface';
 import { Stack } from '../../models/stack.model';
 import { IGameParameters } from '../../models/game-parameters.interface';
@@ -86,7 +79,13 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
   private selectedOperandA!: IGameOperand | null;
   private selectedOperandB!: IGameOperand | null;
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
+    const iconRegistry = inject(MatIconRegistry);
+    const sanitizer = inject(DomSanitizer);
+
     iconRegistry.addSvgIcon('revert', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/rotate-left-solid.svg'));
     iconRegistry.addSvgIcon('addition', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/plus-solid.svg'));
     iconRegistry.addSvgIcon('substraction', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/minus-solid.svg'));

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { SlideToggleComponent } from '../../../shared/components/slide-toggle/slide-toggle.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
@@ -15,6 +15,9 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './slide-toggle-example.component.scss'
 })
 export class SlideToggleExampleComponent implements OnInit {
+  private errorNotification = inject(ErrorNotificationService);
+  private httpClient = inject(HttpClient);
+
   // strict @ViewChild('modernSlideToggle') modernSlideToggle: SlideToggleComponent;
   githubLogoPath!: string;
   defaultValue: boolean = false;
@@ -30,7 +33,10 @@ export class SlideToggleExampleComponent implements OnInit {
   });
   errorMessage: string | null = null;
 
-  constructor(private errorNotification: ErrorNotificationService, private httpClient: HttpClient) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 
   ngOnInit(): void {
     this.githubLogoPath = 'assets/logos/GitHub-Mark-32px.png';

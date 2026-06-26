@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ChangeDetectionStrategy, viewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ChangeDetectionStrategy, viewChild, inject } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
 import {
   MatSidenav,
@@ -34,9 +34,15 @@ import { SidenavListComponent } from '../shared/components/sidenav-list/sidenav-
   ],
 })
 export class LayoutComponent implements OnInit, AfterViewInit {
+  router = inject(Router);
+  mediaObserver = inject(MediaObserver);
+
   readonly sidenav = viewChild.required<MatSidenav>('sidenav');
 
-  constructor(public router: Router, public mediaObserver: MediaObserver) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 
   ngOnInit(): void {
     // navigate to home

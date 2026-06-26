@@ -16,6 +16,8 @@ import { MatInput } from '@angular/material/input';
     imports: [FlexModule, FormsModule, ReactiveFormsModule, NgStyle, ExtendedModule, NgClass, InputNumberModule, MatFormField, MatLabel, MatInput]
 })
 export class AngularNewsV16SignalsComponent implements OnInit {
+  private formBuilder = inject(FormBuilder);
+
   githubLogoPath!: string;
   form = this.formBuilder.group({
     quantity: this.formBuilder.control(0, [
@@ -34,7 +36,10 @@ export class AngularNewsV16SignalsComponent implements OnInit {
   amountSignal: Signal<number> = computed(() => (this.paymentSignal() * this.quantitySignal()) - this.writeoffSignal());
   destroyRef: DestroyRef = inject(DestroyRef);
 
-  constructor(private formBuilder: FormBuilder) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     effect(() => {
       this.form.controls.amount.setValue(this.amountSignal());
       console.log(`The current Amount is: ${this.amountSignal()}`);
