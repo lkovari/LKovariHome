@@ -1,10 +1,10 @@
 import {
   Component,
-  Input,
   OnDestroy,
   OnInit,
   output,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  input
 } from '@angular/core';
 import { IStack } from '../../models/stack.interface';
 import { Stack } from '../../models/stack.model';
@@ -76,7 +76,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
     }
   );
 
-  @Input() gameParameters!: IGameParameters;
+  readonly gameParameters = input.required<IGameParameters>();
   readonly expectedResultReached = output<IStack<IGameOperation>>();
   readonly invalidOperationExecuted = output<number>();
 
@@ -98,13 +98,13 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
   }
 
   private clearSelectionOfOperands() {
-    this.gameParameters.operands.forEach((operand) => {
+    this.gameParameters().operands.forEach((operand) => {
       operand.selected = false;
     });
   }
 
   private isTheExpectedResultReached(result: number) {
-    return this.gameParameters.result === result;
+    return this.gameParameters().result === result;
   }
 
   private addStateToHistory(gameParameters: IGameParameters) {
@@ -136,7 +136,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
 
   public revertLastOperation() {
     if (this.history!.size() > 0) {
-      this.gameParameters = this.history!.pop()!;
+      this.applyGameParameters(this.history!.pop()!);
     } else {
       console.log('History is empty!');
     }
@@ -146,8 +146,17 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
     this.selectedOperandB = null;
   }
 
+  private applyGameParameters(source: IGameParameters): void {
+    const target = this.gameParameters();
+    target.result = source.result;
+    target.stageIndex = source.stageIndex;
+    source.operands.forEach((sourceOperand, index) => {
+      Object.assign(target.operands[index]!, sourceOperand);
+    });
+  }
+
   public enableOfAllOperands() {
-    this.gameParameters.operands.forEach((operand) => {
+    this.gameParameters().operands.forEach((operand) => {
       operand.disabled = false;
     });
   }
@@ -188,7 +197,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
       this.selectedOperandB = null;
     } else if (this.selectedOperandA && this.selectedOperandB && selectedOperator) {
       const clonedGameParameters =
-        EvaluateArythmeticOperation.cloneGameParameters(this.gameParameters);
+        EvaluateArythmeticOperation.cloneGameParameters(this.gameParameters());
 
       const result = EvaluateArythmeticOperation.evaluate(
         this.selectedOperandA.value,
@@ -217,7 +226,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
         }
 
         operand.value = result;
-        const operandToDisable = this.gameParameters.operands.find(
+        const operandToDisable = this.gameParameters().operands.find(
           (o) => o.id == this.selectedOperandA!.id
         );
         operandToDisable!.disabled = true;
@@ -239,7 +248,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
     operator.selected = !operator.selected;
     if (operator.operator === DigitsConstants.OPERATOR_REV) {
       this.revertLastOperation();
-      const clonedGameParameters = EvaluateArythmeticOperation.cloneGameParameters(this.gameParameters);
+      const clonedGameParameters = EvaluateArythmeticOperation.cloneGameParameters(this.gameParameters());
       const operands = new Array<number>();
       clonedGameParameters.operands.forEach((op) => {
         operands.push(op.value);
@@ -247,7 +256,7 @@ export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
       const gameOperation = new GameOperation(
         operands,
         operator.operator,
-        this.gameParameters.result
+        this.gameParameters().result
       );
       this.addGameOperationToOperationHistory(gameOperation);
     }

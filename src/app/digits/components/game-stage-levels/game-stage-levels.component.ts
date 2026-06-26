@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, input } from '@angular/core';
 import { IStageLevel } from '../../models/stage-level.interface';
 import { NgStyle } from '@angular/common';
 import { ExtendedModule } from '@angular/flex-layout/extended';
@@ -14,10 +14,11 @@ import { StageLevelComponent } from '../stage-level/stage-level.component';
 export class GameStageLevelsComponent  implements OnInit {
   private readonly MAXSTAGE_LEVELS: number = 5;
   public NO_STAGE_LEVELS: boolean = false;
-  @Input() stageLevels: Array<IStageLevel> = new Array<IStageLevel>();
+  readonly stageLevels = input<Array<IStageLevel>>(new Array<IStageLevel>());
 
   ngOnInit(): void {
-    this.NO_STAGE_LEVELS = !this.stageLevels 
-      || (this.stageLevels && this.stageLevels.length != this.MAXSTAGE_LEVELS);
+    const stageLevels = this.stageLevels();
+    this.NO_STAGE_LEVELS = !stageLevels 
+      || (stageLevels && stageLevels.length != this.MAXSTAGE_LEVELS);
   }  
 }

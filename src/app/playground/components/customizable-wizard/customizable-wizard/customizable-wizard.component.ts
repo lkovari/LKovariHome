@@ -3,12 +3,12 @@ import {
   Component,
   EnvironmentInjector,
   createComponent,
-  Input,
   OnInit,
   ViewContainerRef,
   inject,
   viewChild,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  input
 } from '@angular/core';
 import { IWizardData } from '../models/wizard-data.interface';
 import { IWizardPage } from '../models/wizard-page.interface';
@@ -34,15 +34,31 @@ export class CustomizableWizardComponent implements OnInit, AfterViewInit {
 
   viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
 
-  @Input() wizardData!: IWizardData;
-  @Input() componentContainerStyle: { [key: string]: string } = {};
-  @Input() wizardProgressStyle: { [key: string]: string } = {};
-  @Input() wizardDescriptionStyle: { [key: string]: string } = {};
-  @Input() wizardTitleStyle: { [key: string]: string } = {};
-  @Input() wizardFooterStyle: { [key: string]: string } = {};
-  @Input() wizardBackButtonStyle: { [key: string]: string } = {};
-  @Input() wizardNextButtonStyle: { [key: string]: string } = {};
-  @Input() wizardSaveButtonStyle: { [key: string]: string } = {};
+  readonly wizardData = input.required<IWizardData>();
+  readonly componentContainerStyle = input<{
+    [key: string]: string;
+}>({});
+  readonly wizardProgressStyle = input<{
+    [key: string]: string;
+}>({});
+  readonly wizardDescriptionStyle = input<{
+    [key: string]: string;
+}>({});
+  readonly wizardTitleStyle = input<{
+    [key: string]: string;
+}>({});
+  readonly wizardFooterStyle = input<{
+    [key: string]: string;
+}>({});
+  readonly wizardBackButtonStyle = input<{
+    [key: string]: string;
+}>({});
+  readonly wizardNextButtonStyle = input<{
+    [key: string]: string;
+}>({});
+  readonly wizardSaveButtonStyle = input<{
+    [key: string]: string;
+}>({});
 
   currentIndex: number = 0;
   currentWizardPage!: IWizardPage
@@ -65,7 +81,7 @@ export class CustomizableWizardComponent implements OnInit, AfterViewInit {
     this.currentIndex--;
     this.setupComponentDynamically();
     this.setupListeners();
-    if (this.wizardData.wizardPages[this.currentIndex]!.formData) {
+    if (this.wizardData().wizardPages[this.currentIndex]!.formData) {
       this.restoreTheFormDatafROMWizardModel();
     } else {
       this.setupInitialDataToComponent();
@@ -77,7 +93,7 @@ export class CustomizableWizardComponent implements OnInit, AfterViewInit {
     this.currentIndex++;
     this.setupComponentDynamically();
     this.setupListeners();
-    if (this.wizardData.wizardPages[this.currentIndex]!.formData) {
+    if (this.wizardData().wizardPages[this.currentIndex]!.formData) {
       this.restoreTheFormDatafROMWizardModel();
     } else {
       this.setupInitialDataToComponent();
@@ -86,7 +102,7 @@ export class CustomizableWizardComponent implements OnInit, AfterViewInit {
 
   saveClicked() {
     let formData: string = 'FORMDATA\r';
-    this.wizardData.wizardPages.forEach((page: IWizardPage) => {
+    this.wizardData().wizardPages.forEach((page: IWizardPage) => {
       formData += `\rComponent : ${page.componentName}.\r`;
       formData += JSON.stringify(page.componentRef.instance.getForm().value);
     });
@@ -94,7 +110,7 @@ export class CustomizableWizardComponent implements OnInit, AfterViewInit {
   }
 
   private setupComponentDynamically() {
-    this.currentWizardPage = this.wizardData.wizardPages[this.currentIndex]!;
+    this.currentWizardPage = this.wizardData().wizardPages[this.currentIndex]!;
     this.createComponentDynamically(this.currentWizardPage);
   }
 
@@ -110,18 +126,18 @@ export class CustomizableWizardComponent implements OnInit, AfterViewInit {
 
   private storeTheFormDataToWizardModel() {
     const formGroup =
-      this.wizardData.wizardPages[
+      this.wizardData().wizardPages[
         this.currentIndex
       ]!.componentRef.instance.getForm();
-    this.wizardData.wizardPages[this.currentIndex]!.formData = formGroup.value;
+    this.wizardData().wizardPages[this.currentIndex]!.formData = formGroup.value;
   }
 
   private restoreTheFormDatafROMWizardModel() {
     const formGroup =
-      this.wizardData.wizardPages[
+      this.wizardData().wizardPages[
         this.currentIndex
       ]!.componentRef.instance.getForm();
-    formGroup.setValue(this.wizardData.wizardPages[this.currentIndex]!.formData);
+    formGroup.setValue(this.wizardData().wizardPages[this.currentIndex]!.formData);
   }
 
   /* This is the way to set @Input of the dynamic component
@@ -146,30 +162,30 @@ export class CustomizableWizardComponent implements OnInit, AfterViewInit {
   }
 
   private setupInitialDataToComponent() {
-    const page = this.wizardData.wizardPages[this.currentIndex];
+    const page = this.wizardData().wizardPages[this.currentIndex];
     if (!page?.componentRef?.instance) {
       console.warn('Component not ready yet.');
       return;
     }
     const formGroup =
-      this.wizardData.wizardPages[
+      this.wizardData().wizardPages[
         this.currentIndex
       ]!.componentRef.instance.getForm();
     this.setupDataByProperyName(
       formGroup,
-      this.wizardData.wizardPages[this.currentIndex]!.initialData
+      this.wizardData().wizardPages[this.currentIndex]!.initialData
     );
   }
 
   private setupListeners() {
     const componentRef =
-      this.wizardData.wizardPages[this.currentIndex]!.componentRef;
+      this.wizardData().wizardPages[this.currentIndex]!.componentRef;
     const formGroup = componentRef.instance.getForm() as FormGroup;
     formGroup.statusChanges
-      .pipe(takeUntilDestroyed(this.wizardData.wizardPages[this.currentIndex]!.destroyRef))
+      .pipe(takeUntilDestroyed(this.wizardData().wizardPages[this.currentIndex]!.destroyRef))
       .subscribe((status: FormControlStatus) => {
         this.isFormValid = status === 'VALID';
-        this.wizardData.wizardPages[this.currentIndex]!.lastFormStatus = status;
+        this.wizardData().wizardPages[this.currentIndex]!.lastFormStatus = status;
       });
   }
 }

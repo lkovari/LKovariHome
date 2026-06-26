@@ -1,4 +1,4 @@
-import { Component, DestroyRef, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, ChangeDetectionStrategy, input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -11,8 +11,8 @@ import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } 
 export class AddressComponent implements OnInit {
   private formBuilder: FormBuilder = inject(FormBuilder);
   addressForm: FormGroup = this.formBuilder.group({});
-  @Input() index: number = 0;
-  @Input() lastPageIndex: number = 0;
+  readonly index = input<number>(0);
+  readonly lastPageIndex = input<number>(0);
   destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor() {}

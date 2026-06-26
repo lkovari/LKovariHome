@@ -5,7 +5,7 @@
         </div>
     } @else {
         <div class="stage-levels">
-            @for (stageLevel of stageLevels; track stageLevel.index) {
+            @for (stageLevel of stageLevels(); track stageLevel.index) {
                 <div class="stage-level" [ngStyle]="{'border-bottom': stageLevel.selected ? 'none' : '1px solid #d4d4d4' }">
                     <app-stage-level [stageLevel]="stageLevel"></app-stage-level>
                 </div>

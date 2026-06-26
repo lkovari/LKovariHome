@@ -1,7 +1,7 @@
-<div class="wizard-progress-layout" [ngStyle]="wizardProgressStyle">
+<div class="wizard-progress-layout" [ngStyle]="wizardProgressStyle()">
   <div class="wizard-progress-content d-flex flex-row justify-content-around">
-    @for (wizardPage of wizardPages; track wizardPage.index; let ix = $index;) {
-    <div [ngClass]="ix === selectedIndex ? 'select-title' : 'deselect-title'">
+    @for (wizardPage of wizardPages(); track wizardPage.index; let ix = $index;) {
+    <div [ngClass]="ix === selectedIndex() ? 'select-title' : 'deselect-title'">
       {{ wizardPage.title }}
     </div>
     }

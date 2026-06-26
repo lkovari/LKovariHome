@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { IWizardPage } from '../models/wizard-page.interface';
 import { NgStyle, NgClass } from '@angular/common';
 import { ExtendedModule } from '@angular/flex-layout/extended';
@@ -11,7 +11,9 @@ import { ExtendedModule } from '@angular/flex-layout/extended';
     imports: [NgStyle, ExtendedModule, NgClass]
 })
 export class WizardProgressComponent {
-  @Input() wizardProgressStyle: { [key: string]: string } = {};
-  @Input() wizardPages: Array<IWizardPage> = new Array<IWizardPage>();
-  @Input() selectedIndex = 0;
+  readonly wizardProgressStyle = input<{
+    [key: string]: string;
+}>({});
+  readonly wizardPages = input<Array<IWizardPage>>(new Array<IWizardPage>());
+  readonly selectedIndex = input(0);
 }

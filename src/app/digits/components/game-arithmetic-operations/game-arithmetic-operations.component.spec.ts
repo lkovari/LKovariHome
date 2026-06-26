@@ -12,11 +12,11 @@ describe('GameArithmeticOperationsComponent', () => {
 });
     fixture = TestBed.createComponent(GameArithmeticOperationsComponent);
     component = fixture.componentInstance;
-    component.gameParameters = {
+    fixture.componentRef.setInput('gameParameters', {
       result: 0,
       operands: [],
       stageIndex: 0
-    };
+    });
     fixture.detectChanges();
   });
 

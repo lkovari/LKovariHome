@@ -1,11 +1,11 @@
 <div class="game-arithmetic-operations-layout">
   <div class="usage-instruction">Use the any combination of number to reach the target:</div>
   <div>
-    <label class="expected-result">{{ gameParameters.result }}</label>
+    <label class="expected-result">{{ gameParameters().result }}</label>
   </div>
   <div class="operands-container">
     <div class="three-operands">
-      @for(operand of gameParameters.operands; track operand.id; let ix = $index) {
+      @for(operand of gameParameters().operands; track operand.id; let ix = $index) {
         <button type="button" class="operand" [disabled]="operand.disabled"
           [ngStyle]="{'background-color': operand.selected ? 'rgb(190 209 253 / 59%)' : '' }"
           [ngClass]="!operand.disabled && !operand.selected ? 'operator-content-button' : 'operator-content-button-disabled'"

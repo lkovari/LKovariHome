@@ -1,4 +1,4 @@
-import { Component, DestroyRef, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, ChangeDetectionStrategy, input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 @Component({
     selector: 'app-company',
@@ -10,8 +10,8 @@ import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } 
 export class CompanyComponent implements OnInit {
   private formBuilder: FormBuilder = inject(FormBuilder);
   companyForm: FormGroup = this.formBuilder.group({});
-  @Input() index: number = 0;
-  @Input() lastPageIndex: number = 0;
+  readonly index = input<number>(0);
+  readonly lastPageIndex = input<number>(0);
   destroyRef: DestroyRef = inject(DestroyRef);
 
   ngOnInit() {

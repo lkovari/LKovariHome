@@ -1,4 +1,4 @@
-import { Component, DestroyRef, Input, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, ChangeDetectionStrategy, input } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -10,8 +10,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 })
 export class MiscellaneousComponent implements OnInit {
   private formBuilder: FormBuilder = inject(FormBuilder);
-  @Input() index: number = 0;
-  @Input() lastPageIndex: number = 0;  
+  readonly index = input<number>(0);
+  readonly lastPageIndex = input<number>(0);  
   miscellaneousForm: FormGroup = this.formBuilder.group({});
   destroyRef: DestroyRef = inject(DestroyRef);
 

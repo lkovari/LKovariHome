@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, forwardRef, ElementRef, inject, AfterViewInit, OnChanges, SimpleChanges, DestroyRef, output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, forwardRef, ElementRef, inject, AfterViewInit, OnChanges, SimpleChanges, DestroyRef, output, ChangeDetectionStrategy, input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, ControlValueAccessor, AbstractControl, NG_VALUE_ACCESSOR, FormGroupDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IChecklistItem } from '../../models/checklist-item.interface';
 import { ChecklistValidators } from './checklist-validator';
@@ -25,8 +25,8 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
   private formBuilder: FormBuilder = inject(FormBuilder);
   // private changeDetectorRef: ChangeDetectorRef = inject(ChangeDetectorRef);
   hoverIndex: any;
-  @Input() elementRef!: ElementRef;
-  @Input() showErrorInside = false;
+  readonly elementRef = input.required<ElementRef>();
+  readonly showErrorInside = input(false);
   private _values: Array<IChecklistItem> = [];
   @Input()
   set checklistItems(v: Array<IChecklistItem>) {
@@ -50,11 +50,11 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
     return this._selectionMode;
   }
 
-  @Input() style: any;
-  @Input() styleClass: string = '';
-  @Input() listStyle: any;
-  @Input() listStyleClass: string = '';
-  @Input() disabled: boolean = false;
+  readonly style = input<any>();
+  readonly styleClass = input<string>('');
+  readonly listStyle = input<any>();
+  readonly listStyleClass = input<string>('');
+  readonly disabled = input<boolean>(false);
 
   private _selectNormal: boolean = false;
   @Input()
@@ -64,7 +64,7 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
   get selectNormal(): boolean {
     return this._selectNormal;
   }
-  @Input() required: boolean = false;
+  readonly required = input<boolean>(false);
 
   itemClick = output<FormGroup[]>();
 
@@ -117,7 +117,7 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
       this.parentForm = this.formGroupDirective.control as FormGroup;
       console.log('!=> Get the parent form with: this.parentForm = this.formGroupDirective.control as FormGroup;');
       // capture the elementRef to get formGroupName attributze to replace formgGroup wich in used by the component
-      const formGroupName = this.elementRef.nativeElement.getAttribute('formGroupName');
+      const formGroupName = this.elementRef().nativeElement.getAttribute('formGroupName');
       console.log('!=> Get the nested formGroup of the parent form with: let formGroupName = this.elementRef.nativeElement.getAttribute(\'formGroupName\');');
       // replace the build checkList on the parent form with the checkListFormArray which built in this component
       this.parentForm.setControl(formGroupName, this.mainForm.controls['checkListFormArray']);
@@ -172,7 +172,7 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
       id: [-1, [Validators.required]],
       label: ['', [Validators.required]],
       value: [undefined],
-      selected: this.formBuilder.control({ value: false, disabled: this.disabled }),
+      selected: this.formBuilder.control({ value: false, disabled: this.disabled() || this.isDisabled }),
       normal: [false]
     });
     if (item) {
@@ -248,7 +248,7 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
    * appropriate DOM element.
    */
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    this.isDisabled = isDisabled;
   }
 
   private unselectOtherItems(selectedFormGroup: FormGroup): void {
@@ -271,7 +271,7 @@ export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChang
 
   private setupValidatorsDinamically() {
     // if the validation is required
-    if (this.required) {
+    if (this.required()) {
       // has not added oneItemCheckRequiredValidator
       if (!this.getCheckListFormArray().hasValidator(ChecklistValidators.oneItemCheckRequiredValidator)) {
         // add the oneItemCheckRequiredValidator

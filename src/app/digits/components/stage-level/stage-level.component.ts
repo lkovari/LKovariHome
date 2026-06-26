@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { IStageLevel } from '../../models/stage-level.interface';
 import { StageCommunicationService } from '../../services/stage-communication.service';
 import { NgClass } from '@angular/common';
@@ -13,13 +13,13 @@ import { ExtendedModule } from '@angular/flex-layout/extended';
 })
 export class StageLevelComponent {
   stars: number[] = new Array<number>( 1, 2, 3 ); 
-  @Input() stageLevel!: IStageLevel;
+  readonly stageLevel = input.required<IStageLevel>();
 
   constructor(private stageCommunicationService: StageCommunicationService) {
   }
 
   stageClick() {
-    this.stageCommunicationService.updatePerformedItem(this.stageLevel);
+    this.stageCommunicationService.updatePerformedItem(this.stageLevel());
     console.log('Stage Clicked');
   }
 }

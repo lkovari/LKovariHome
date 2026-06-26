@@ -25,7 +25,7 @@ describe('CustomizableWizardComponent', () => {
 
     fixture = TestBed.createComponent(CustomizableWizardComponent);
     component = fixture.componentInstance;
-    component.wizardData = {
+    fixture.componentRef.setInput('wizardData', {
       title: 'Test Wizard',
       description: 'Test Description',
       wizardPages: [{
@@ -42,7 +42,7 @@ describe('CustomizableWizardComponent', () => {
         formData: null,
         lastFormStatus: 'VALID'
       }]
-    };
+    });
   });
 
   it('should create', () => {

@@ -23,7 +23,7 @@
             class="checklist-item-container"
             [ngClass]="{
               'checklist-item-disabled':
-                disabled || checklistFormGroupItem.value.disabled
+                disabled() || isDisabled || checklistFormGroupItem.value.disabled
             }"
             (mouseenter)="hoverIndex = ix"
             (mouseleave)="hoverIndex = null"
@@ -42,7 +42,7 @@
           </div>
         </li>
 }
-        @if (showErrorInside && getCheckListFormArray().hasError('required') && getCheckListFormArray().errors!['invalidForm']) {
+        @if (showErrorInside() && getCheckListFormArray().hasError('required') && getCheckListFormArray().errors!['invalidForm']) {
             <span class="show-invalid-feedback">
             {{ getCheckListFormArray().errors?.['invalidForm'].message }}
           </span>
