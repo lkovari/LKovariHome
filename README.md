@@ -13,7 +13,7 @@ Originally generated with Angular CLI 14; currently on **Angular 22** with stand
 | Framework | Angular 22.0.4, RxJS 7, TypeScript 6.0 |
 | UI | Angular Material 22, PrimeNG 21 (`@primeng/themes` Aura), Bootstrap 5, Font Awesome, Flex Layout |
 | Backend / persistence | Firebase Firestore (`@angular/fire` compat), browser cookies (`ngx-cookie-service`) |
-| Tooling | Angular CLI, ESLint flat config (`eslint.config.js`, angular-eslint 22), Karma/Jasmine, pnpm 10, gh-pages |
+| Tooling | Angular CLI, ESLint flat config (`eslint.config.js`, angular-eslint 22), Vitest (jsdom), pnpm 10, gh-pages |
 
 ---
 
@@ -494,7 +494,14 @@ pnpm gitdeploy  # gh-pages -d dist
 
 ## Running unit tests
 
-Run `ng test` to execute unit tests via [Karma](https://karma-runner.github.io).
+Run `pnpm test` or `ng test` to execute unit tests with [Vitest](https://vitest.dev) via the Angular `@angular/build:unit-test` builder. See [Tests](#tests) for setup details, coverage, and what is covered.
+
+For a single CI-style run:
+
+```bash
+ng test --no-watch
+ng test --no-watch --coverage
+```
 
 ## Running end-to-end tests
 
@@ -536,14 +543,14 @@ That executes `scripts/run-v22-migrations-direct.cjs`, which loads migration sch
 | Package | Migration | Typical changes |
 |---------|-----------|-----------------|
 | `@angular/core` | `change-detection-eager` | Adds `changeDetection: ChangeDetectionStrategy.Eager` to components |
-| `@angular/core` | `http-xhr-backend` | Updates HTTP test setup to `provideHttpClient(withXhr())` in `src/test.ts` |
+| `@angular/core` | `http-xhr-backend` | Updates HTTP test setup to `provideHttpClient(withXhr())` in test providers |
 | `@angular/core` | `strict-templates-default` | Enables `strictTemplates: true` in `tsconfig.json` |
 | `@angular/core` | `can-match-snapshot-required` | Route guard / `canMatch` API updates where applicable |
 | `@angular/core` | `incremental-hydration` | SSR/hydration-related updates where applicable |
 | `@angular/core` | `strict-safe-navigation-narrow` | Template strictness for safe navigation |
 | `@angular/core` | `model-output` | `model()` input/output API updates where applicable |
 | `@angular/core` | `safe-optional-chaining` | Template optional-chaining strictness updates |
-| `@angular/cli` | `add-istanbul-instrumenter` | Karma coverage / `istanbul-lib-instrument` dev dependency alignment |
+| `@angular/cli` | `add-istanbul-instrumenter` | Coverage / `istanbul-lib-instrument` dev dependency alignment |
 | `@angular/cli` | `update-workspace-config` | Updates `tsconfig.*.json`, `angular.json`, and related workspace files |
 
 #### Migration scripts in `scripts/`
@@ -598,14 +605,13 @@ Package                              Current   Wanted   Latest  Location
 @primeuix/styles                       1.2.5    1.2.5    2.0.3  node_modules/@primeuix/styles
 @primeuix/utils                        0.6.4    0.6.4    0.7.2  node_modules/@primeuix/utils
 @schematics/angular                   22.0.4   22.0.4  21.2.17  node_modules/@schematics/angular
-@types/jasmine                        5.1.15   5.1.15    6.0.0  node_modules/@types/jasmine
 eslint                                9.39.4   9.39.4   10.6.0  node_modules/eslint
 firebase                             11.10.0  11.10.0  12.15.0  node_modules/firebase
-jasmine-core                           5.1.2    5.1.2    6.3.0  node_modules/jasmine-core
-karma-jasmine-html-reporter            2.1.0    2.1.0    2.2.0  node_modules/karma-jasmine-html-reporter
+jsdom                                 26.1.0   26.1.0   26.1.0  node_modules/jsdom
+vitest                                 4.1.9    4.1.9    4.1.9   node_modules/vitest
 ```
 
-**Summary:** Angular packages are pinned at **22.0.4** and match **Wanted**. Optional future major bumps (not required for v22): ESLint 10, Font Awesome 7, Firebase 12, Jasmine 6, `@primeuix/styles` 2.x.
+**Summary:** Angular packages are pinned at **22.0.4** and match **Wanted**. Optional future major bumps (not required for v22): ESLint 10, Font Awesome 7, Firebase 12, `@primeuix/styles` 2.x. Unit tests use **Vitest** (Karma/Jasmine removed); see [Migrations](#migrations) and [Tests](#tests).
 
 #### `ng update`
 
@@ -618,6 +624,119 @@ Found 647 dependencies.
 ```
 
 **Conclusion:** The v21 → v22 upgrade and migrations are complete; no further Angular CLI updates are pending.
+
+---
+
+## Migrations
+
+Current migration status for this repository. Completed items are verified with `pnpm build` and `pnpm test -- --no-watch`.
+
+| Track | Status | Notes |
+|-------|--------|-------|
+| Angular 14 → 22 | **Complete** | On **22.0.4**; application build system (`@angular/build:application`) |
+| v21 → v22 codemods | **Complete** | Applied via `pnpm run migrate:angular-v22`; see [Upgrade](#upgrade) |
+| Karma / Jasmine → Vitest | **Complete** | `@angular/build:unit-test`, Vitest 4, jsdom; Karma config removed |
+| NgModules → standalone | **In progress** | Root and most feature areas are standalone; legacy module naming/docs remain in places |
+| `@angular/flex-layout` | **Pending** | Still used for responsive layout; library is deprecated — replace with modern CSS when feasible |
+| `@angular/fire` compat API | **Pending** | Digits game uses compat Firestore; migrate to modular Firebase API when upgrading `@angular/fire` |
+| PrimeNG `@primeng/themes` | **Pending** | Package deprecated in favour of `@primeuix/themes` |
+
+### Angular version upgrade
+
+- **Done:** TypeScript 6.0, strict templates, eager change detection on components, HTTP client with `withXhr()`, workspace `angular.json` aligned with the application builder.
+- **Script:** `pnpm run migrate:angular-v22` runs `scripts/run-v22-migrations-direct.cjs` (one-time; do not re-run unless repeating the upgrade on a fresh branch).
+- **Details:** Full migration list and verification output are under [Upgrade](#upgrade) and [Result](#result).
+
+### Test runner (Karma → Vitest)
+
+| Removed | Added / updated |
+|---------|-----------------|
+| `karma.conf.js`, `src/test.ts` | `src/test-providers.ts` — global TestBed providers (router, HTTP, animations, Font Awesome) |
+| `karma`, `karma-*`, `jasmine-core`, `@types/jasmine` | `vitest`, `jsdom`, `@vitest/coverage-v8` |
+| `@angular/build:karma` test target | `@angular/build:unit-test` in `angular.json` |
+| `tsconfig.spec.json` types: `jasmine` | `vitest/globals` |
+
+Global test bootstrap moved from `src/test.ts` into Angular’s Vitest builder plus `providersFile` / `setupFiles`. The builder reuses the **development** build configuration (`buildTarget: LKovariHome:build:development`) instead of duplicating styles and assets on the test target.
+
+### Standalone components and routing
+
+- **Done:** Standalone root bootstrap in `main.ts`, lazy `loadComponent` routes in `app.routes.ts`, hash-based routing with `withHashLocation()`.
+- **In progress:** UI copy on the home page still mentions ongoing `@NgModule` removal; most components are already standalone imports.
+- **Not migrated:** End-to-end tests — no e2e runner is configured (`ng e2e` is not set up).
+
+---
+
+## Tests
+
+Unit tests run with **Vitest** through Angular CLI’s **`@angular/build:unit-test`** builder (the default direction for new Angular projects from v21 onward).
+
+### Why Vitest instead of Karma
+
+| Topic | Karma + Jasmine (before) | Vitest (now) |
+|-------|--------------------------|--------------|
+| Runtime | Real browser (Chrome) via Karma | **jsdom** in Node by default — no browser startup |
+| Speed | Full rebuild + browser launch per run | Typically **much faster** feedback (~2s for this suite) |
+| CLI integration | Separate Karma config and `test.ts` bootstrap | Builder owns config; optional `providersFile` / `setupFiles` only |
+| Watch mode | Karma `autoWatch` | `ng test` watch in TTY; `ng test --no-watch` for CI |
+| Coverage | `karma-coverage` | `ng test --coverage` with `@vitest/coverage-v8` |
+| API | Jasmine `describe` / `it` / `expect` | Same globals via `vitest/globals` in `tsconfig.spec.json` |
+| Maintenance | Karma is deprecated in the Angular ecosystem | Aligns with [Angular’s Vitest migration guide](https://angular.dev/guide/testing/migrating-to-vitest) |
+
+Vitest fits this project because most specs are component and service smoke tests plus a growing set of **behaviour-focused** tests; they do not require a real browser unless you later opt into `@vitest/browser-playwright`.
+
+### Configuration
+
+| File | Role |
+|------|------|
+| `angular.json` → `architect.test` | Builder `@angular/build:unit-test`, `providersFile`, `setupFiles`, coverage reporters |
+| `tsconfig.spec.json` | `vitest/globals`; includes `*.spec.ts` and test helper files |
+| `src/test-providers.ts` | Default router stubs, `provideHttpClientTesting`, noop animations, Font Awesome initializer |
+| `src/test-setup.ts` | `window.matchMedia` polyfill for Flex Layout and PrimeNG in jsdom |
+
+**Requirements:** Node **v22.22.3+**, **v24.15.0+**, or **v26+** (Angular CLI 22). Use `nvm use` if `ng test` reports an unsupported Node version.
+
+### What is tested (38 spec files, 58 tests)
+
+Tests favour **observable behaviour** over empty “should create” checks where the component has real logic. Many playground and digits specs remain minimal smoke tests for demo components.
+
+#### Routing (`app.routes.spec.ts`)
+
+- Route table: layout pages, digits (Firebase providers), playground, angular news, wildcard redirect to `not-found`
+- Navigation: URL resolution for home, about-me, awards, error, and unknown paths redirecting to `not-found`
+
+#### Layout pages
+
+| Spec | Behaviour covered |
+|------|-------------------|
+| `home.component.spec.ts` | Copyright year; welcome text in the DOM |
+| `about-me.component.spec.ts` | Profile asset paths; copyright year; profile image and CV link |
+| `awards.component.spec.ts` | Eight award entries; priority image metadata; alt text rendered |
+| `layout.component.spec.ts` | Redirect `/` → `/layout-pages/home`; no redirect on other URLs; `isScreenXs()` |
+
+#### Error handling and shell pages
+
+| Spec | Behaviour covered |
+|------|-------------------|
+| `error.component.spec.ts` | Empty error log vs. entries from `ErrorNotificationService` |
+| `not-found.component.spec.ts` | 404 heading and message |
+| `global-error-handler.service.spec.ts` | Runtime errors forwarded to the notification service |
+| `app.component.spec.ts` | App bootstrap and title |
+
+#### Angular news demo
+
+| Spec | Behaviour covered |
+|------|-------------------|
+| `angular-news-v16-signals.component.spec.ts` | Signal-derived amount (`payment × quantity − writeoff`); form sync to disabled amount control; invalid state when required fields empty |
+
+#### Smoke tests (create / wiring only)
+
+Remaining specs mostly assert that components, services, interceptors, and playground wizard steps compile and instantiate: digits game subtree, material examples, playground layouts, shared header/sidenav/checklist/slide-toggle, and customizable-wizard data-source components.
+
+### Possible follow-ups
+
+- Replace smoke-only specs with behaviour tests where components gain non-trivial logic (digits game stages, wizard validation, Firestore service).
+- Add `@vitest/browser-playwright` only if a test truly needs a real browser APIs beyond jsdom.
+- Introduce e2e tests (Playwright/Cypress) for full hash-router flows — not covered by unit tests today.
 
 ---
 
