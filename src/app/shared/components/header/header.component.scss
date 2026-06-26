@@ -18,7 +18,13 @@
                 color: yellow;
                 font-size: 0.6rem;
                 line-height: 0.5rem;
-            }    
+            }
+        }
+
+        .angular-version-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.15rem;
         }
     }
     mat-toolbar {
@@ -27,6 +33,26 @@
     }
     .align-right {
         float: right;
-    }    
+    }
+
+    .error-indicator-link {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        line-height: 0.5rem;
+
+        &:hover .error-indicator,
+        &:active .error-indicator {
+            color: #ff6666;
+        }
+    }
+
+    .error-indicator {
+        color: red;
+        font-size: 0.75rem;
+        width: 0.75rem;
+        height: 0.75rem;
+        line-height: 0.75rem;
+    }
 }
 

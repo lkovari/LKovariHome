@@ -1,7 +1,5 @@
-import { Component, effect, OnDestroy, OnInit } from '@angular/core';
-import { ErrorEntry } from '../shared/models/error-entry.interface';
+import { Component, computed } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs/internal/Subscription';
 import { ErrorNotificationService } from '../shared/services/error-handler/error-notification.service';
 import { RouterLink } from '@angular/router';
 
@@ -11,24 +9,8 @@ import { RouterLink } from '@angular/router';
   templateUrl: './error.component.html',
   styleUrl: './error.component.scss'
 })
-export class ErrorComponent implements OnInit, OnDestroy {
-  errorEntries: ErrorEntry[] = [];
-  private errorSubscription!: Subscription;
+export class ErrorComponent {
+  errorEntries = computed(() => this.errorNotification.currentErrorEntries());
 
-  constructor(private errorNotification: ErrorNotificationService) {
-    effect(() => {
-      const errors = this.errorNotification.currentErrorEntries();
-      this.errorEntries = errors;
-    });
-  }
-
-  ngOnInit(): void {
-
-  }
-
-  ngOnDestroy(): void {
-    if (this.errorSubscription) {
-      this.errorSubscription.unsubscribe();
-    }
-  }
+  constructor(private errorNotification: ErrorNotificationService) {}
 }

@@ -1,4 +1,4 @@
-import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { enableProdMode, ErrorHandler, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 
 import { environment } from './environments/environment';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -10,6 +10,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { httpErrorInterceptor } from './app/shared/services/error-handler/http-error.interceptor';
+import { GlobalErrorHandlerService } from './app/shared/services/error-handler/global-error-handler.service';
 
 if (environment.production) {
   enableProdMode();
@@ -17,6 +18,7 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
+    provideZoneChangeDetection(),
     importProvidersFrom(BrowserModule, AppRoutingModule),
     provideHttpClient(),
     provideAnimations(),
@@ -29,6 +31,7 @@ bootstrapApplication(AppComponent, {
           darkModeSelector: '.light-mode'
         }
       }
-    })
+    }),
+    { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
   ]
 }).catch(err => console.error(err));

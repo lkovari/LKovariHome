@@ -16,6 +16,7 @@ import { GameOperation } from '../../models/game.operation.model';
 import { DigitsConstants } from '../../digits-constants';
 import { MatIconRegistry, MatIcon } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AnimationEvent } from '@angular/animations';
 import { operandButtonAnimation } from './operand-button-animation';
 import { NgStyle, NgClass } from '@angular/common';
 import { ExtendedModule } from '@angular/flex-layout/extended';
@@ -33,6 +34,7 @@ import { ExtendedModule } from '@angular/flex-layout/extended';
   imports: [NgStyle, ExtendedModule, NgClass, MatIcon]
 })
 export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
+  operandButtonAnimation = '';
   githubLogoPath = 'assets/logos/GitHub-Mark-32px.png';
   operators: IGameOperator[] = new Array<IGameOperator>(
     {

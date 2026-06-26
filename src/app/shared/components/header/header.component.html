@@ -8,11 +8,13 @@
             <span class="last-update" [matTooltip]="lastUpdateTooltip" [matTooltipPosition]="'right'">Last update: {{
                 lastUpdateDate | date:'MM/dd/yyyy HH:mm' }}</span>
         </div>
-        <div class="line-style">
-            <span class="last-update">Built with Angular v{{ angularVersion }}</span><a class="last-update" [routerLink]="['/error']">
-                @if(showExclamationMark) {
-                !!!
-                }</a>
+        <div class="line-style angular-version-row">
+            <span class="last-update">Built with Angular v{{ angularVersion }}</span>
+            @if(errorNotification.currentErrorEntries().length > 0) {
+            <a class="error-indicator-link" [routerLink]="['/error']">
+                <mat-icon class="error-indicator">warning</mat-icon>
+            </a>
+            }
         </div>
     </mat-toolbar>
 </div>
