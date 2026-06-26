@@ -8,12 +8,10 @@
         @for (
             checklistFormGroupItem of getCheckListFormArray().controls; track trackById(ix, 
             checklistFormGroupItem); let ix = $index) {
-          <li [ngClass]="{
-            'checklist-item-selected': needToShowNormalItems(
+          <li [class.checklist-item-selected]="needToShowNormalItems(
               selectNormal,
               checklistFormGroupItem
-            )
-          }"
+            )"
           (click)="checklistItemClick(checklistFormGroupItem)"
           tabIndex="{{ ix }}"
           id="{{ 'lilabel' + ix }}"
@@ -21,13 +19,10 @@
           <div
             id="{{ 'label' + ix }}"
             class="checklist-item-container"
-            [ngClass]="{
-              'checklist-item-disabled':
-                disabled() || isDisabled || checklistFormGroupItem.value.disabled
-            }"
+            [class.checklist-item-disabled]="disabled() || isDisabled || checklistFormGroupItem.value.disabled"
             (mouseenter)="hoverIndex = ix"
             (mouseleave)="hoverIndex = null"
-            [ngClass]="{ 'checklist-item-highlight': hoverIndex === ix }"
+            [class.checklist-item-highlight]="hoverIndex === ix"
             [formGroupName]="ix"
           >
             <div class="checklist-label-item">

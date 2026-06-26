@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, input } from '@angular/core';
 import { IStageLevel } from '../../models/stage-level.interface';
-import { NgStyle } from '@angular/common';
+
 import { ExtendedModule } from '@angular/flex-layout/extended';
 import { StageLevelComponent } from '../stage-level/stage-level.component';
 
@@ -9,7 +9,7 @@ import { StageLevelComponent } from '../stage-level/stage-level.component';
     templateUrl: './game-stage-levels.component.html',
     styleUrls: ['./game-stage-levels.component.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [NgStyle, ExtendedModule, StageLevelComponent]
+    imports: [ExtendedModule, StageLevelComponent]
 })
 export class GameStageLevelsComponent  implements OnInit {
   private readonly MAXSTAGE_LEVELS: number = 5;

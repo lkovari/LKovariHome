@@ -5,7 +5,7 @@ import { ChecklistValidators } from './checklist-validator';
 import { SelectionMode } from './selection-mode.enum';
 import { ChecklistItem } from '../../models/checklist-item.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NgClass } from '@angular/common';
+
 
 
 export const CHECKLIST_VALUE_ACCESSOR: any = {
@@ -19,7 +19,7 @@ export const CHECKLIST_VALUE_ACCESSOR: any = {
   styleUrls: ['./checklist.component.scss'],
   providers: [CHECKLIST_VALUE_ACCESSOR],
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [FormsModule, ReactiveFormsModule, NgClass]
+  imports: [FormsModule, ReactiveFormsModule]
 })
 export class ChecklistComponent implements OnInit, ControlValueAccessor, OnChanges, AfterViewInit {
   private formGroupDirective = inject(FormGroupDirective);

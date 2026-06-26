@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, input, inject } from '@angular/core';
 import { IStageLevel } from '../../models/stage-level.interface';
 import { StageCommunicationService } from '../../services/stage-communication.service';
-import { NgClass } from '@angular/common';
+
 import { ExtendedModule } from '@angular/flex-layout/extended';
 
 @Component({
@@ -9,7 +9,7 @@ import { ExtendedModule } from '@angular/flex-layout/extended';
     templateUrl: './stage-level.component.html',
     styleUrls: ['./stage-level.component.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [NgClass, ExtendedModule]
+    imports: [ExtendedModule]
 })
 export class StageLevelComponent {
   private stageCommunicationService = inject(StageCommunicationService);

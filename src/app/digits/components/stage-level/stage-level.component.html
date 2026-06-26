@@ -1,5 +1,5 @@
 <div class="stage-level-layout">
-    <div [ngClass]="{ 'stage-level-number-unselected':!stageLevel().selected, 'stage-level-number-selected':stageLevel().selected}" 
+    <div [class]="{ 'stage-level-number-unselected':!stageLevel().selected, 'stage-level-number-selected':stageLevel().selected}" 
         style="text-align: center;">
         @if (stageLevel().completed) {
             <div (click)="stageClick()">

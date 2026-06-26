@@ -7,7 +7,7 @@
     <div class="three-operands">
       @for(operand of gameParameters().operands; track operand.id; let ix = $index) {
         <button type="button" class="operand" [disabled]="operand.disabled"
-          [ngStyle]="{'background-color': operand.selected ? 'rgb(190 209 253 / 59%)' : '' }"
+          [style.background-color]="operand.selected ? 'rgb(190 209 253 / 59%)' : ''"
           [ngClass]="!operand.disabled && !operand.selected ? 'operator-content-button' : 'operator-content-button-disabled'"
           (click)="onOperandButtonClick(operand)">{{ operand.value }}
         </button>

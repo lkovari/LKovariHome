@@ -16,7 +16,7 @@ import { DynamicComponentHostDirective } from 'src/app/playground/directives/dyn
 import { IFormControlData } from '../models/form-control-data.interface';
 import { FormControl, FormControlStatus, FormGroup, FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NgStyle } from '@angular/common';
+
 import { ExtendedModule } from '@angular/flex-layout/extended';
 import { WizardProgressComponent } from '../wizard-progress/wizard-progress.component';
 import { DynamicComponentHostDirective as DynamicComponentHostDirective_1 } from '../../../directives/dynamic-component-host.directive';
@@ -26,7 +26,7 @@ import { DynamicComponentHostDirective as DynamicComponentHostDirective_1 } from
   templateUrl: './customizable-wizard.component.html',
   styleUrl: './customizable-wizard.component.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [FormsModule, NgStyle, ExtendedModule, WizardProgressComponent, DynamicComponentHostDirective_1]
+  imports: [FormsModule, ExtendedModule, WizardProgressComponent, DynamicComponentHostDirective_1]
 })
 export class CustomizableWizardComponent implements OnInit, AfterViewInit {
   dynamicComponentHost = viewChild(DynamicComponentHostDirective);
