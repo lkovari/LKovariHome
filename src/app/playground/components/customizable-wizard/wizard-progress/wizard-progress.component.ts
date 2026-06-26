@@ -1,6 +1,5 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { IWizardPage } from '../models/wizard-page.interface';
-import { NgClass } from '@angular/common';
 import { ExtendedModule } from '@angular/flex-layout/extended';
 
 @Component({
@@ -8,7 +7,7 @@ import { ExtendedModule } from '@angular/flex-layout/extended';
     templateUrl: './wizard-progress.component.html',
     styleUrl: './wizard-progress.component.scss',
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [ExtendedModule, NgClass]
+    imports: [ExtendedModule]
 })
 export class WizardProgressComponent {
   readonly wizardProgressStyle = input<{

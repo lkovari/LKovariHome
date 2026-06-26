@@ -1,25 +1,21 @@
-
 <div
   class="slide-toggle-layout"
   [class.vertical]="orientation() === 'vertical'"
-  [class.disabled]="disable"
-  [class.spin]="spin"
-
+  [class.disabled]="disabled() || spin()"
+  [class.spin]="spin()"
 >
   <label>
     <input
       data-test-id="slide-toggle-input"
       type="checkbox"
-      [(ngModel)]="value"
-      (click)="toggleClick()"
-      [disabled]="disable"
-      #inputToggle
+      [checked]="checked()"
+      (click)="$event.preventDefault(); toggleClick()"
+      [disabled]="disabled() || spin()"
     />
     <span class="slider"
-      [style]="value ? toggleOnStyle() : toggleOffStyle()"
+      [style]="checked() ? toggleOnStyle() : toggleOffStyle()"
       [style.--slide-knob-bg-color]="knobColor()"
       [style.--slide-knob-spinner-color]="knobWaitSpinnerColor()">
     </span>
   </label>
 </div>
-

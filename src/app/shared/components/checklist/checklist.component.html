@@ -9,7 +9,7 @@
             checklistFormGroupItem of getCheckListFormArray().controls; track trackById(ix, 
             checklistFormGroupItem); let ix = $index) {
           <li [class.checklist-item-selected]="needToShowNormalItems(
-              selectNormal,
+              selectNormal(),
               checklistFormGroupItem
             )"
           (click)="checklistItemClick(checklistFormGroupItem)"
@@ -19,7 +19,7 @@
           <div
             id="{{ 'label' + ix }}"
             class="checklist-item-container"
-            [class.checklist-item-disabled]="disabled() || isDisabled || checklistFormGroupItem.value.disabled"
+            [class.checklist-item-disabled]="disabled() || checklistFormGroupItem.value.disabled"
             (mouseenter)="hoverIndex = ix"
             (mouseleave)="hoverIndex = null"
             [class.checklist-item-highlight]="hoverIndex === ix"

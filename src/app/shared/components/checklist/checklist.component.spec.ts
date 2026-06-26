@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -7,14 +7,15 @@ import { ChecklistComponent } from './checklist.component';
 @Component({
   template: `
     <form [formGroup]="form">
-      <app-checklist formControlName="checklist" [elementRef]="checklistElementRef" />
+      <app-checklist formControlName="checklist" [checklistItems]="checklistItems" />
     </form>
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ReactiveFormsModule, ChecklistComponent]
 })
 class TestHostComponent {
-  checklistElementRef = new ElementRef(document.createElement('div'));
+  checklistItems = [
+    { id: 1, label: 'Item 1', selected: false, value: null, normal: false }
+  ];
   form = new FormGroup({
     checklist: new FormControl([])
   });
@@ -29,6 +30,7 @@ describe('ChecklistComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
+    fixture.detectChanges();
   });
 
   it('should create', () => {

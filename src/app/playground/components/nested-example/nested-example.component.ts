@@ -1,10 +1,11 @@
-import { Component, DestroyRef, ElementRef, OnInit, inject, ChangeDetectionStrategy, viewChild } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, ChangeDetectionStrategy, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChecklistComponent } from 'src/app/shared/components/checklist/checklist.component';
 import { SelectionMode } from 'src/app/shared/components/checklist/selection-mode.enum';
 import { ChecklistItem } from 'src/app/shared/models/checklist-item.model';
 import { ChecklistComponent as ChecklistComponent_1 } from '../../../shared/components/checklist/checklist.component';
+import { ChecklistValidators } from '../../../shared/components/checklist/checklist-validator';
 import { JsonPipe } from '@angular/common';
 
 @Component({
@@ -30,10 +31,7 @@ export class NestedExampleComponent implements OnInit {
   ];
   selectNormal = false;
   selectionMode = SelectionMode.SINGLE;
-  // pass the element ref into the component
-  readonly checkListReference = viewChild.required('checkListRef', { read: ElementRef }); 
-  // checkListGroup for capture the component to manage selection etc.
-  readonly checkListGroup = viewChild.required<ChecklistComponent>('checkListGroup'); 
+  readonly checkListGroup = viewChild.required<ChecklistComponent>('checkListGroup');
   MULTISELECT = SelectionMode.MULTI;
   SINGLESELECT = SelectionMode.SINGLE;
   destroyRef: DestroyRef = inject(DestroyRef);
@@ -42,7 +40,7 @@ export class NestedExampleComponent implements OnInit {
     this.exampleForm = this.formBuilder.group({
       selectionMode: this.formBuilder.control( { value: SelectionMode.SINGLE, disabled: false} ),
       selectNormal: this.formBuilder.control( { value: false, disabled: false } ),
-      checkList: this.formBuilder.control( [ Validators.required ] )
+      checkList: this.formBuilder.control([], ChecklistValidators.oneItemCheckRequiredValidator)
     });
     this.githubLogoPath = 'assets/logos/GitHub-Mark-32px.png';
     this.exampleForm.get('selectionMode')?.valueChanges

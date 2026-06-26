@@ -2,7 +2,7 @@
 
 Personal portfolio and Angular playground deployed at [https://lkovari.github.io/LKovariHome](https://lkovari.github.io/LKovariHome).
 
-Originally generated with Angular CLI 14; currently on **Angular 22** with standalone components, lazy-loaded feature modules, PrimeNG, Angular Material, Bootstrap, and Firebase (Digits game persistence).
+Originally generated with Angular CLI 14; currently on **Angular 22** with standalone components, lazy-loaded routes, PrimeNG, Angular Material, Bootstrap, and Firebase (Digits game persistence).
 
 ---
 
@@ -19,33 +19,35 @@ Originally generated with Angular CLI 14; currently on **Angular 22** with stand
 
 ## Application architecture (top level)
 
-The app bootstraps as a standalone root component with hash-based routing. Feature areas are lazy-loaded NgModules that register sibling routes under the empty path.
+The app bootstraps as a standalone root component with hash-based routing. Feature areas are lazy-loaded standalone components registered in `app.routes.ts` under sibling empty-path routes.
 
 ```mermaid
 flowchart TB
   subgraph bootstrap["Bootstrap (main.ts)"]
     BA[AppComponent]
-    PR[Providers: HTTP, Animations, PrimeNG Aura, GlobalErrorHandler]
+    PR[Providers: HTTP, Animations, PrimeNG Aura, GlobalErrorHandler, FaIconLibrary]
+    RT[provideRouter app.routes.ts withHashLocation]
   end
 
-  subgraph routing["AppRoutingModule (hash router)"]
-    R1[LayoutModule]
-    R2[AngularNewsModule]
-    R3[DigitsModule]
-    R4[MaterialExamplesModule]
-    R5[PlaygroundModule]
-    R6[ErrorComponent - lazy standalone]
-    R7[NotFoundModule]
+  subgraph routing["app.routes.ts (hash router)"]
+    R1[LayoutComponent]
+    R2[AngularNewsComponent]
+    R3[DigitsGameComponent]
+    R4[MaterialExamplesLayoutComponent]
+    R5[PlaygroundLayoutComponent]
+    R6[ErrorComponent]
+    R7[NotFoundComponent]
   end
 
-  BA --> routing
+  BA --> RT
+  RT --> routing
   R1 --> LayoutShell
   R2 --> NewsShell
   R3 --> DigitsGame
   R4 --> MaterialShell
   R5 --> PlaygroundShell
 
-  subgraph shared["SharedModule (cross-cutting)"]
+  subgraph shared["Shared standalone components"]
     Header
     SidenavList
     LayoutContent
@@ -58,15 +60,15 @@ flowchart TB
   NewsShell --> shared
 ```
 
-### Feature modules and routes
+### Feature areas and routes
 
-| Module | Shell / entry | Example routes |
-|--------|---------------|----------------|
-| **LayoutModule** | `LayoutComponent` (MatSidenav + toolbar) | `#/layout-pages/home`, `#/layout-pages/about-me`, `#/layout-pages/awards` |
-| **AngularNewsModule** | `AngularNewsComponent` | `#/angular-news-pages/angular-news-v16-signals`, `#/angular-news-pages/angular-news-v15-standalone` |
-| **DigitsModule** | `DigitsGameComponent` | `#/digits/digits-game` |
-| **MaterialExamplesModule** | `MaterialExamplesLayoutComponent` | `#/material-examples/components/material-examples-main` |
-| **PlaygroundModule** | `PlaygroundLayoutComponent` | `#/playground/components/nested-example`, `customizable-wizard`, `slide-toggle-example` |
+| Area | Shell / entry | Example routes |
+|------|---------------|----------------|
+| **Layout** | `LayoutComponent` (MatSidenav + toolbar) | `#/layout-pages/home`, `#/layout-pages/about-me`, `#/layout-pages/awards` |
+| **Angular news** | `AngularNewsComponent` | `#/angular-news-pages/angular-news-v16-signals`, `#/angular-news-pages/angular-news-v15-standalone` |
+| **Digits** | `DigitsGameComponent` | `#/digits/digits-game` |
+| **Material examples** | `MaterialExamplesLayoutComponent` | `#/material-examples/components/material-examples-main` |
+| **Playground** | `PlaygroundLayoutComponent` | `#/playground/components/nested-example`, `customizable-wizard`, `slide-toggle-example` |
 
 Navigation is driven by `SidenavListComponent` (PrimeNG TieredMenu) with links to all feature areas plus an external Next.js demo.
 
@@ -76,14 +78,14 @@ Navigation is driven by `SidenavListComponent` (PrimeNG TieredMenu) with links t
 
 ```mermaid
 flowchart LR
-  subgraph layout["LayoutModule"]
+  subgraph layout["Layout shell"]
     LC[LayoutComponent]
     LC --> Header
     LC --> Sidenav
     LC --> RouterOutlet
   end
 
-  subgraph shared["SharedModule exports"]
+  subgraph shared["Shared components"]
     Header[HeaderComponent]
     Sidenav[SidenavListComponent]
     LContent[LayoutContentComponent]
@@ -102,14 +104,14 @@ flowchart LR
 ```
 
 - **LayoutComponent** — responsive sidenav (Flex Layout `MediaObserver`); redirects `/` → `/layout-pages/home`.
-- **SharedModule** — registers Font Awesome icons; exports header, sidenav, checklist, FlexLayout, Menubar.
+- **Font Awesome icons** — registered via `provideFaIcons()` in `main.ts` (and test providers).
 - **Error pipeline** — `GlobalErrorHandlerService` + HTTP interceptor funnel errors to `ErrorNotificationService`.
 
 ---
 
-## Playground module (dynamic wizard)
+## Playground (dynamic wizard)
 
-Experimental UI patterns live under `PlaygroundModule`.
+Experimental UI patterns live under the playground route tree.
 
 ```mermaid
 flowchart TB
@@ -132,22 +134,18 @@ The customizable wizard builds pages from `IWizardPage` descriptors and mounts s
 
 ---
 
-## Digits module — deep architecture
+## Digits game — deep architecture
 
 Daily arithmetic puzzle (inspired by NY Times Digits). Five stages per day; each stage presents six numbers and a target. The player combines numbers with `+`, `-`, `×`, `/` until the target is reached.
 
-### Module boundary
+### Route and providers
 
 ```mermaid
 flowchart TB
-  subgraph DigitsModule
-    DM[digits.module.ts]
-    DR[digits-routing.module.ts]
+  subgraph DigitsRoute["Route: digits/digits-game"]
     DGC[DigitsGameComponent]
-    DM --> DR
-    DM --> DGC
-    DM --> Firebase["AngularFireModule.initializeApp(firebasePuzzleData)"]
-    DM --> Providers[NumbersFirestoreService]
+    DGC --> Firebase["AngularFireModule.initializeApp(firebasePuzzleData)"]
+    DGC --> Providers[NumbersFirestoreService]
   end
 
   Route["#/digits/digits-game"] --> DGC
@@ -299,7 +297,7 @@ classDiagram
 
 | Service | Scope | Role |
 |---------|-------|------|
-| **NumbersFirestoreService** | root + module | CRUD on Firestore collection `/puzzledata`; stores locale-keyed JSON puzzle payloads |
+| **NumbersFirestoreService** | route + root | CRUD on Firestore collection `/puzzledata`; stores locale-keyed JSON puzzle payloads |
 | **StageCommunicationService** | root | RxJS `Subject` bridge when a stage tab is clicked (observed in `DigitsGameComponent`) |
 
 ---
@@ -425,8 +423,6 @@ flowchart TB
 
 ```
 src/app/digits/
-├── digits.module.ts
-├── digits-routing.module.ts
 ├── digits-game.component.{ts,html,scss}
 ├── digits-constants.ts
 ├── generate-game-parameters.ts
@@ -453,7 +449,7 @@ src/
 ├── main.ts                    # bootstrapApplication + providers
 ├── app/
 │   ├── app.component.ts
-│   ├── app-routing.module.ts
+│   ├── app.routes.ts          # lazy loadComponent routes + route providers
 │   ├── layout/                # portfolio shell (home, about, awards)
 │   ├── layout-pages/          # routed page components
 │   ├── angular-news/          # news shell + lazy news pages
@@ -636,7 +632,7 @@ Current migration status for this repository. Completed items are verified with 
 | Angular 14 → 22 | **Complete** | On **22.0.4**; application build system (`@angular/build:application`) |
 | v21 → v22 codemods | **Complete** | Applied via `pnpm run migrate:angular-v22`; see [Upgrade](#upgrade) |
 | Karma / Jasmine → Vitest | **Complete** | `@angular/build:unit-test`, Vitest 4, jsdom; Karma config removed |
-| NgModules → standalone | **In progress** | Root and most feature areas are standalone; legacy module naming/docs remain in places |
+| NgModules → standalone | **Complete** | `bootstrapApplication`, `app.routes.ts`, lazy `loadComponent`; zero `*.module.ts` files |
 | `@angular/flex-layout` | **Pending** | Still used for responsive layout; library is deprecated — replace with modern CSS when feasible |
 | `@angular/fire` compat API | **Pending** | Digits game uses compat Firestore; migrate to modular Firebase API when upgrading `@angular/fire` |
 | PrimeNG `@primeng/themes` | **Pending** | Package deprecated in favour of `@primeuix/themes` |
@@ -660,9 +656,28 @@ Global test bootstrap moved from `src/test.ts` into Angular’s Vitest builder p
 
 ### Standalone components and routing
 
-- **Done:** Standalone root bootstrap in `main.ts`, lazy `loadComponent` routes in `app.routes.ts`, hash-based routing with `withHashLocation()`.
-- **In progress:** UI copy on the home page still mentions ongoing `@NgModule` removal; most components are already standalone imports.
+- **Done:** Standalone root bootstrap in `main.ts`, lazy `loadComponent` routes in `app.routes.ts`, hash-based routing with `withHashLocation()`. All NgModule and routing-module files removed.
 - **Not migrated:** End-to-end tests — no e2e runner is configured (`ng e2e` is not set up).
+
+### Official Angular migrations ([angular.dev/reference/migrations](https://angular.dev/reference/migrations))
+
+Status for this repository after standalone, Vitest, and partial signal/API modernisation. Run remaining schematics with `ng generate @angular/core:<name>`.
+
+| Migration | Status | Notes |
+|-----------|--------|-------|
+| [Standalone](https://angular.dev/reference/migrations/standalone) | **Complete** | No `@NgModule`; routes in `app.routes.ts` |
+| [Control flow syntax](https://angular.dev/reference/migrations/control-flow) | **Complete** | Templates use `@if` / `@for`; no `*ngIf` / `*ngFor` |
+| [Lazy-loaded routes](https://angular.dev/reference/migrations/route-lazy-loading) | **Complete** | All feature entry points use `loadComponent` |
+| [Outputs (`output()`)](https://angular.dev/reference/migrations/outputs) | **Complete** | No `@Output()` decorators |
+| [Signal queries](https://angular.dev/reference/migrations/signal-queries) | **Complete** | `viewChild()` / `viewChild.required()` throughout |
+| [RouterTestingModule](https://angular.dev/reference/migrations/router-testing-module-migration) | **Complete** | Specs use `provideRouter` / standalone `imports` |
+| [CommonModule → standalone imports](https://angular.dev/reference/migrations/common-module) | **Complete** | N/A — no NgModules remain |
+| [NgStyle → style bindings](https://angular.dev/reference/migrations/ngstyle-to-style) | **Complete** | No `ngStyle` / `NgStyle` in source |
+| [NgClass → class bindings](https://angular.dev/reference/migrations/ngclass-to-class) | **Complete** | All `[ngClass]` converted to `[class.xxx]` |
+| [Signal inputs (`input()`)](https://angular.dev/reference/migrations/signal-inputs) | **Complete** | All components use `input()`; custom widgets use `FormValueControl` / `FormCheckboxControl` |
+| [inject() function](https://angular.dev/reference/migrations/inject-function) | **Complete** | Migration applied; empty constructors are backwards-compat stubs |
+| [Self-closing tags](https://angular.dev/reference/migrations/self-closing-tags) | **Mostly complete** | App templates use self-closing tags; optional cleanup in non-Angular HTML |
+| [Cleanup unused imports](https://angular.dev/reference/migrations/cleanup-unused-imports) | **Complete** | Schematic run; no unused imports in tsconfig.app or tsconfig.spec |
 
 ---
 

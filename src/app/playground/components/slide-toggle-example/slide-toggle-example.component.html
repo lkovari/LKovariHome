@@ -63,8 +63,7 @@
                 [knobWaitSpinnerColor]="'blue'"
                 [toggleOnStyle]="{ 'background-color': '#4d8af5' }"
                 [toggleOffStyle]="{ 'background-color': 'lightgray' }"
-                [spin]="spinCheckbox.checked"
-                [value]="switchOn.checked"
+                [spin]="toggleForm.controls['spin']?.value ?? false"
                 formControlName="toggle"
                />
             </div>

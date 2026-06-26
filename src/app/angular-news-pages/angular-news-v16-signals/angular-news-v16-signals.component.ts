@@ -2,7 +2,6 @@ import { Component, DestroyRef, OnInit, Signal, computed, effect, inject, signal
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexModule } from '@angular/flex-layout/flex';
-import { NgClass } from '@angular/common';
 import { ExtendedModule } from '@angular/flex-layout/extended';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
@@ -13,7 +12,7 @@ import { MatInput } from '@angular/material/input';
     templateUrl: './angular-news-v16-signals.component.html',
     styleUrls: ['./angular-news-v16-signals.component.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [FlexModule, FormsModule, ReactiveFormsModule, ExtendedModule, NgClass, InputNumberModule, MatFormField, MatLabel, MatInput]
+    imports: [FlexModule, FormsModule, ReactiveFormsModule, ExtendedModule, InputNumberModule, MatFormField, MatLabel, MatInput]
 })
 export class AngularNewsV16SignalsComponent implements OnInit {
   private formBuilder = inject(FormBuilder);

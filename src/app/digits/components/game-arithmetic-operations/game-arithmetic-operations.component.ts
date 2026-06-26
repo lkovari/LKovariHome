@@ -12,7 +12,6 @@ import { MatIconRegistry, MatIcon } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AnimationEvent } from '@angular/animations';
 import { operandButtonAnimation } from './operand-button-animation';
-import { NgClass } from '@angular/common';
 import { ExtendedModule } from '@angular/flex-layout/extended';
 
 @Component({
@@ -26,7 +25,7 @@ import { ExtendedModule } from '@angular/flex-layout/extended';
   styleUrls: ['./game-arithmetic-operations.component.scss'],
   animations: [operandButtonAnimation],
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [ExtendedModule, NgClass, MatIcon]
+  imports: [ExtendedModule, MatIcon]
 })
 export class GameArithmeticOperationsComponent implements OnInit, OnDestroy {
   operandButtonAnimation = '';

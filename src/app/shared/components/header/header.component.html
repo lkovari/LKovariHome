@@ -9,7 +9,7 @@
                 lastUpdateDate | date:'MM/dd/yyyy HH:mm' }}</span>
         </div>
         <div class="line-style angular-version-row">
-            <span class="last-update">Built with Angular v{{ angularVersion }}</span>
+            <app-angular-version [compact]="true" />
             @if(errorNotification.currentErrorEntries().length > 0) {
             <a class="error-indicator-link" [routerLink]="['/error']">
                 <mat-icon class="error-indicator">warning</mat-icon>

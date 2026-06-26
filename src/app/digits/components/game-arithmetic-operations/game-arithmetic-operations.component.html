@@ -8,7 +8,8 @@
       @for(operand of gameParameters().operands; track operand.id; let ix = $index) {
         <button type="button" class="operand" [disabled]="operand.disabled"
           [style.background-color]="operand.selected ? 'rgb(190 209 253 / 59%)' : ''"
-          [ngClass]="!operand.disabled && !operand.selected ? 'operator-content-button' : 'operator-content-button-disabled'"
+          [class.operator-content-button]="!operand.disabled && !operand.selected"
+          [class.operator-content-button-disabled]="operand.disabled || operand.selected"
           (click)="onOperandButtonClick(operand)">{{ operand.value }}
         </button>
       }
@@ -17,7 +18,8 @@
   <div class="operators-container">
     @for (operator of operators; track operator.id; let ix = $index) {
       <button type="button" class="operator-content" 
-        [ngClass]="ix === 0 ? 'revert-button' : 'arithmetic-operation-button'"
+        [class.revert-button]="ix === 0"
+        [class.arithmetic-operation-button]="ix !== 0"
         (click)="onOperatorButtonClick(operator)">
         <mat-icon class="operator-content-icon" svgIcon="{{ operator.icon }}" />
       </button>

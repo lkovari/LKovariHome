@@ -53,13 +53,11 @@
             <div class="form-group row mb-2">
                 <app-checklist [checklistItems]="checklistItems"
                     #checkListGroup
-                    #checkListRef
-                    [elementRef]="checkListReference()"
                     [selectionMode]="selectionMode"
                     [selectNormal]="selectNormal"
                     [required]="true"
-                    formGroupName="checkList"
-                    (onClick)="onClick($event)"
+                    formControlName="checkList"
+                    (itemClick)="onClick($event)"
                      />
                 @if (exampleForm.get('checkList')?.dirty 
                     && exampleForm.get('checkList')?.hasError('required') 

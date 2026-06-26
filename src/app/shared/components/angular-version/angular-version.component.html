@@ -1,0 +1,9 @@
+@if (compact()) {
+  <span class="angular-version angular-version--compact">Built with Angular v{{ angularVersion }}</span>
+} @else {
+  <div class="angular-version angular-version--featured" aria-label="Angular version">
+    <span class="angular-version__eyebrow">Framework</span>
+    <span class="angular-version__value">v{{ angularVersion }}</span>
+    <span class="angular-version__caption">Angular runtime from &#64;angular/core</span>
+  </div>
+}
