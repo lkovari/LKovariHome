@@ -16,8 +16,8 @@ import { ErrorNotificationService } from '../../services/error-handler/error-not
 })
 export class HeaderComponent implements OnInit {
   protected readonly errorNotification = inject(ErrorNotificationService);
-  lastUpdateDate = new Date('06/26/2026 10:22 PM');
-  lastUpdateTooltip = 'Upgrade Angular to v21';
+  lastUpdateDate = new Date('06/26/2026 11:18 PM');
+  lastUpdateTooltip = 'Upgrade Angular to v22';
   angularVersion!: string;
 
   ngOnInit(): void {
