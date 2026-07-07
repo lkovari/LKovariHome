@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FlexModule } from '@angular/flex-layout/flex';
 import { AngularVersionComponent } from '../../shared/components/angular-version/angular-version.component';
+import { HomeUpgradePanelComponent } from './home-upgrade-panel.component';
 
 type MigrationStatus = 'complete' | 'in-progress' | 'pending';
 
@@ -21,7 +22,7 @@ interface V22Codemod {
     templateUrl: './home.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./home.component.scss'],
-    imports: [FlexModule, AngularVersionComponent],
+    imports: [FlexModule, AngularVersionComponent, HomeUpgradePanelComponent],
 })
 export class HomeComponent implements OnInit {
   public years!: number;
@@ -147,16 +148,5 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.years = new Date().getFullYear();
-  }
-
-  statusLabel(status: MigrationStatus): string {
-    switch (status) {
-      case 'complete':
-        return 'Complete';
-      case 'in-progress':
-        return 'In progress';
-      case 'pending':
-        return 'Pending';
-    }
   }
 }

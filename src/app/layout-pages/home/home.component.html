@@ -24,72 +24,12 @@
 
     <div class="home-stack__layout">
       <app-angular-version />
-
-      <div class="migration-panel">
-        <h3 class="migration-panel__title">
-          <a class="migration-panel__title-link" href="https://angular.dev/reference/migrations" target="_blank" rel="noopener">Official Angular migrations</a>
-        </h3>
-
-        <div class="migration-panel__scroll">
-          <h4 class="migration-panel__subtitle">Completed</h4>
-          <ul class="migration-list">
-            @for (migration of completedOfficialMigrations; track migration.name) {
-              <li class="migration-item migration-item--complete">
-                <div class="migration-item__head">
-                  <span class="migration-item__status">{{ statusLabel(migration.status) }}</span>
-                  <span class="migration-item__name">{{ migration.name }}</span>
-                </div>
-                <p class="migration-item__note">{{ migration.note }}</p>
-              </li>
-            }
-          </ul>
-
-          @if (openOfficialMigrations.length > 0) {
-            <h4 class="migration-panel__subtitle migration-panel__subtitle--secondary">Remaining</h4>
-            <ul class="migration-list">
-              @for (migration of openOfficialMigrations; track migration.name) {
-                <li class="migration-item" [class.migration-item--progress]="migration.status === 'in-progress'"
-                  [class.migration-item--pending]="migration.status === 'pending'">
-                  <div class="migration-item__head">
-                    <span class="migration-item__status">{{ statusLabel(migration.status) }}</span>
-                    <span class="migration-item__name">{{ migration.name }}</span>
-                  </div>
-                  <p class="migration-item__note">{{ migration.note }}</p>
-                </li>
-              }
-            </ul>
-          }
-
-          <h4 class="migration-panel__subtitle migration-panel__subtitle--secondary">Project upgrades</h4>
-          <ul class="migration-list">
-            @for (migration of projectTracks; track migration.name) {
-              <li class="migration-item"
-                [class.migration-item--complete]="migration.status === 'complete'"
-                [class.migration-item--progress]="migration.status === 'in-progress'"
-                [class.migration-item--pending]="migration.status === 'pending'">
-                <div class="migration-item__head">
-                  <span class="migration-item__status">{{ statusLabel(migration.status) }}</span>
-                  <span class="migration-item__name">{{ migration.name }}</span>
-                </div>
-                <p class="migration-item__note">{{ migration.note }}</p>
-              </li>
-            }
-          </ul>
-
-          <details class="codemod-details">
-            <summary class="codemod-details__summary">v21 → v22 codemods applied</summary>
-            <ul class="codemod-list">
-              @for (codemod of v22Codemods; track codemod.name) {
-                <li class="codemod-item">
-                  <span class="codemod-item__package">{{ codemod.pkg }}</span>
-                  <span class="codemod-item__name">{{ codemod.name }}</span>
-                  <span class="codemod-item__changes">{{ codemod.changes }}</span>
-                </li>
-              }
-            </ul>
-          </details>
-        </div>
-      </div>
+      <app-home-upgrade-panel
+        [completedOfficialMigrations]="completedOfficialMigrations"
+        [openOfficialMigrations]="openOfficialMigrations"
+        [projectTracks]="projectTracks"
+        [v22Codemods]="v22Codemods"
+      />
     </div>
   </section>
 
