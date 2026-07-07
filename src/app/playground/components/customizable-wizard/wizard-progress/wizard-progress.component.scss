@@ -7,12 +7,11 @@
     border-radius: var(--bs-border-radius);
 
     .wizard-progress-content {
-        @media (max-width: 599px) { .title-base { font-size: 12px } }
-        @media (min-width: 600px) { .title-base { font-size: 16px } }
-        @media (min-width: 900px) { .title-base { font-size: 21px } }
-        @media (min-width: 1200px) { .title-base { font-size: 26px } }
-        @media (min-width: 1800px) { .title-base { font-size: 31px } }
-        //margin: 0.8rem;
+        @media (max-width: 37.4375rem) { .title-base { font-size: 0.75rem } }
+        @media (min-width: 37.5rem) { .title-base { font-size: 1rem } }
+        @media (min-width: 56.25rem) { .title-base { font-size: 1.3125rem } }
+        @media (min-width: 75rem) { .title-base { font-size: 1.625rem } }
+        @media (min-width: 112.5rem) { .title-base { font-size: 1.9375rem } }
         margin: math.div(0.8rem, 2);
         
         .select-title {
@@ -27,6 +26,5 @@
         }
     }   
 }
-
 
 

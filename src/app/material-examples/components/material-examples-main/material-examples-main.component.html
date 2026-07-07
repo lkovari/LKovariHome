@@ -32,16 +32,16 @@
                 <div>
                     @if ((findImage() || findBoth()) && !result.data.is_video) {
                         <div>
-                            <a style="padding-left: 20px;" [href]="result.data.url">{{ result.data.url }}</a>
+                            <a style="padding-left: 1.25rem;" [href]="result.data.url">{{ result.data.url }}</a>
                             {{ data(result) }}
-                            <div style="padding-left: 20px;">
+                            <div style="padding-left: 1.25rem;">
                                 <img [src]="result.data.thumbnail" alt="data" width="auto" height="auto">
                             </div>
                         </div>
                     } @else if ((findVideo() || findBoth()) && result.data.is_video) {
                         <div>
-                            <a style="padding-left: 20px;" [href]="result.data.url">{{ result.data.url }}</a>
-                            <div style="padding-left: 20px;">
+                            <a style="padding-left: 1.25rem;" [href]="result.data.url">{{ result.data.url }}</a>
+                            <div style="padding-left: 1.25rem;">
                                 <video width="320" height="200" controls>
                                     <source [src]="result.data.media.reddit_video.fallback_url">
                                 </video>

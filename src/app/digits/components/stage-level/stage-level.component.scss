@@ -1,5 +1,5 @@
 .stage-level-layout {
-    padding-top: 1px;
+    padding-top: 0.0625rem;
     .enable-stage-click {
         cursor: pointer;
         pointer-events: auto;
@@ -9,7 +9,7 @@
         pointer-events: none;
     }
     .stage-level-font {
-        font-size: 17px;
+        font-size: 1.0625rem;
     }
     .stage-level-number-unselected {
         @extend .stage-level-font;

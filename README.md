@@ -2,65 +2,104 @@
 
 Personal portfolio and Angular playground deployed at [https://lkovari.github.io/LKovariHome](https://lkovari.github.io/LKovariHome).
 
-Originally generated with Angular CLI 14; currently on **Angular 22** with standalone components, lazy-loaded routes, PrimeNG, Angular Material, Bootstrap, and Firebase (Digits game persistence).
+Originally scaffolded with Angular CLI 14; the app now runs **Angular 22.0.4** (standalone components, lazy `loadComponent` routes, signals, Vitest, PrimeNG, Angular Material, Bootstrap, and Firebase for Digits game persistence).
 
 ---
 
 ## Tech stack
 
-| Layer | Libraries |
-|-------|-----------|
-| Framework | Angular 22.0.4, RxJS 7, TypeScript 6.0 |
-| UI | Angular Material 22, PrimeNG 21 (`@primeng/themes` Aura), Bootstrap 5, Font Awesome, Flex Layout |
-| Backend / persistence | Firebase Firestore (`@angular/fire` compat), browser cookies (`ngx-cookie-service`) |
-| Tooling | Angular CLI, ESLint flat config (`eslint.config.js`, angular-eslint 22), Vitest (jsdom), pnpm 10, gh-pages |
+| Layer | Libraries (pinned versions) |
+|-------|-----------------------------|
+| Framework | **Angular 22.0.4**, RxJS 7.8, TypeScript 6.0, Zone.js 0.16 |
+| UI | **Angular Material 22.0.2**, **PrimeNG 21.1.9** (`@primeng/themes` Aura), Bootstrap 5.3, Font Awesome 6, Flex Layout |
+| Backend / persistence | Firebase 11.10 (`@angular/fire` 20 compat), browser cookies (`ngx-cookie-service` 22) |
+| Tooling | **Angular CLI 22.0.4**, ESLint flat config (`eslint.config.js`, angular-eslint 22), Vitest 4 (jsdom), pnpm 10.13, gh-pages |
+
+Runtime Angular version is read from `@angular/core` `VERSION.full` and shown in the header via `AngularVersionComponent`.
 
 ---
 
-## Application architecture (top level)
+## Application architecture
 
-The app bootstraps as a standalone root component with hash-based routing. Feature areas are lazy-loaded standalone components registered in `app.routes.ts` under sibling empty-path routes.
+High-level view of bootstrap, routing, shared shell, feature areas, and external persistence.
 
 ```mermaid
 flowchart TB
   subgraph bootstrap["Bootstrap (main.ts)"]
-    BA[AppComponent]
-    PR[Providers: HTTP, Animations, PrimeNG Aura, GlobalErrorHandler, FaIconLibrary]
-    RT[provideRouter app.routes.ts withHashLocation]
+    BA["bootstrapApplication(AppComponent)"]
+    PR["Providers: zone CD, router, HTTP, animations, PrimeNG Aura, GlobalErrorHandler, FaIconLibrary"]
   end
 
-  subgraph routing["app.routes.ts (hash router)"]
-    R1[LayoutComponent]
-    R2[AngularNewsComponent]
-    R3[DigitsGameComponent]
-    R4[MaterialExamplesLayoutComponent]
-    R5[PlaygroundLayoutComponent]
-    R6[ErrorComponent]
-    R7[NotFoundComponent]
+  BA --> PR
+  PR --> RT["provideRouter(routes, withHashLocation)"]
+
+  subgraph routes["Lazy routes (app.routes.ts)"]
+    RT --> L["LayoutComponent<br/>portfolio pages"]
+    RT --> N["AngularNewsComponent<br/>news demos"]
+    RT --> D["DigitsGameComponent<br/>+ Firebase route providers"]
+    RT --> M["MaterialExamplesLayoutComponent"]
+    RT --> P["PlaygroundLayoutComponent"]
+    RT --> X["ErrorComponent · NotFoundComponent"]
   end
 
-  BA --> RT
-  RT --> routing
-  R1 --> LayoutShell
-  R2 --> NewsShell
-  R3 --> DigitsGame
-  R4 --> MaterialShell
-  R5 --> PlaygroundShell
+  subgraph layoutChildren["Layout children"]
+    L --> H["home"]
+    L --> AM["about-me"]
+    L --> AW["awards"]
+  end
+
+  subgraph newsChildren["Angular news children"]
+    N --> S16["angular-news-v16-signals"]
+    N --> S15["angular-news-v15-standalone"]
+  end
+
+  subgraph playgroundChildren["Playground children"]
+    P --> NE["nested-example"]
+    P --> CW["customizable-wizard"]
+    P --> ST["slide-toggle-example"]
+  end
 
   subgraph shared["Shared standalone components"]
-    Header
-    SidenavList
-    LayoutContent
-    Checklist
+    HDR["HeaderComponent"]
+    SN["SidenavListComponent"]
+    LC["LayoutContentComponent"]
+    CHK["ChecklistComponent"]
+    AV["AngularVersionComponent"]
   end
 
-  LayoutShell --> shared
-  PlaygroundShell --> shared
-  MaterialShell --> shared
-  NewsShell --> shared
+  L --> shared
+  N --> shared
+  M --> shared
+  P --> shared
+
+  subgraph digitsCore["Digits game internals"]
+    D --> GSL["GameStageLevelsComponent"]
+    D --> GAO["GameArithmeticOperationsComponent"]
+    GSL --> SL["StageLevelComponent × 5"]
+    D --> NFS["NumbersFirestoreService"]
+    D --> SCS["StageCommunicationService"]
+  end
+
+  subgraph external["External persistence"]
+    CK[("Cookie: CookieLKNumbers")]
+    FS[("Firestore /puzzledata")]
+  end
+
+  D --> CK
+  NFS --> FS
+
+  subgraph errors["Error pipeline"]
+    GEH["GlobalErrorHandlerService"]
+    INT["httpErrorInterceptor"]
+    ENS["ErrorNotificationService"]
+    GEH --> ENS
+    INT --> ENS
+  end
+
+  PR --> errors
 ```
 
-### Feature areas and routes
+### Route map (hash router)
 
 | Area | Shell / entry | Example routes |
 |------|---------------|----------------|
@@ -71,6 +110,10 @@ flowchart TB
 | **Playground** | `PlaygroundLayoutComponent` | `#/playground/components/nested-example`, `customizable-wizard`, `slide-toggle-example` |
 
 Navigation is driven by `SidenavListComponent` (PrimeNG TieredMenu) with links to all feature areas plus an external Next.js demo.
+
+### Bootstrap and routing (detail)
+
+The app bootstraps as a standalone root component with hash-based routing. Feature areas are lazy-loaded standalone components registered in `app.routes.ts` under sibling empty-path routes.
 
 ---
 
@@ -505,7 +548,7 @@ Run `ng e2e` to execute end-to-end tests via a platform of your choice. To use t
 
 ## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+To get more help on the Angular CLI use `ng help` or see the [Angular CLI overview](https://angular.dev/tools/cli).
 
 ---
 
@@ -629,7 +672,7 @@ Current migration status for this repository. Completed items are verified with 
 
 | Track | Status | Notes |
 |-------|--------|-------|
-| Angular 14 → 22 | **Complete** | On **22.0.4**; application build system (`@angular/build:application`) |
+| Angular 14 → **22.0.4** | **Complete** | On **22.0.4**; application build system (`@angular/build:application`) |
 | v21 → v22 codemods | **Complete** | Applied via `pnpm run migrate:angular-v22`; see [Upgrade](#upgrade) |
 | Karma / Jasmine → Vitest | **Complete** | `@angular/build:unit-test`, Vitest 4, jsdom; Karma config removed |
 | NgModules → standalone | **Complete** | `bootstrapApplication`, `app.routes.ts`, lazy `loadComponent`; zero `*.module.ts` files |
@@ -637,7 +680,7 @@ Current migration status for this repository. Completed items are verified with 
 | `@angular/fire` compat API | **Pending** | Digits game uses compat Firestore; migrate to modular Firebase API when upgrading `@angular/fire` |
 | PrimeNG `@primeng/themes` | **Pending** | Package deprecated in favour of `@primeuix/themes` |
 
-### Angular version upgrade
+### Angular 22.0.4 upgrade notes
 
 - **Done:** TypeScript 6.0, strict templates, eager change detection on components, HTTP client with `withXhr()`, workspace `angular.json` aligned with the application builder.
 - **Script:** `pnpm run migrate:angular-v22` runs `scripts/run-v22-migrations-direct.cjs` (one-time; do not re-run unless repeating the upgrade on a fresh branch).
@@ -697,7 +740,7 @@ Unit tests run with **Vitest** through Angular CLI’s **`@angular/build:unit-te
 | API | Jasmine `describe` / `it` / `expect` | Same globals via `vitest/globals` in `tsconfig.spec.json` |
 | Maintenance | Karma is deprecated in the Angular ecosystem | Aligns with [Angular’s Vitest migration guide](https://angular.dev/guide/testing/migrating-to-vitest) |
 
-Vitest fits this project because most specs are component and service smoke tests plus a growing set of **behaviour-focused** tests; they do not require a real browser unless you later opt into `@vitest/browser-playwright`.
+Vitest fits this project because most specs are component and service smoke tests plus a growing set of **behaviour-focused** tests; they do not require a real browser unless you later opt into `@vitest/browser-playwright`. Angular **22.0.4** projects use the `@angular/build:unit-test` builder by default (replacing Karma from earlier majors).
 
 ### Configuration
 
@@ -789,6 +832,6 @@ Generating index html...1 rules skipped due to selector errors: legend+\* -> Can
 replaced "node_modules/bootstrap/scss/bootstrap.css" with "node_modules/bootstrap/scss/bootstrap.scss",
 
 -4. added "preserveSymlinks": true, to prevent:
-main.ts:11 ERROR Error: NG0203: inject() must be called from an injection context such as a constructor, a factory function, a field initializer, or a function used with `runInInjectionContext`. Find more at https://angular.io/errors/NG0203
+main.ts:11 ERROR Error: NG0203: inject() must be called from an injection context such as a constructor, a factory function, a field initializer, or a function used with `runInInjectionContext`. Find more at https://angular.dev/errors/NG0203
 
 ## Deployed to https://lkovari.github.io/LKovariHome

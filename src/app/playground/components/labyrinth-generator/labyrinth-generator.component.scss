@@ -1,0 +1,137 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.labyrinth-generator-layout {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+
+  .header-row {
+    flex-shrink: 0;
+    position: relative;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .title-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    max-width: 42rem;
+  }
+
+  .page-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .page-subtitle {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: #666;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .info-btn {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  @media (max-width: 37.4375rem) {
+    .header-row {
+      padding: 0.75rem 2.5rem 0.75rem 1rem;
+    }
+
+    .page-title {
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    .page-subtitle {
+      font-size: 0.75rem;
+    }
+  }
+
+  @media (min-width: 56.25rem) {
+    .page-title {
+      font-size: 1.125rem;
+    }
+  }
+
+  app-labyrinth-canvas {
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    display: flex;
+  }
+}
+
+.docs-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.docs-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  &.disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+}
+
+.lang-label {
+  font-size: 0.875rem;
+  color: #888;
+
+  &.active {
+    color: #333;
+    font-weight: 600;
+  }
+}
+
+.docs-body {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.docs-loading {
+  margin: 0;
+  color: #666;
+}
+
+.docs-content {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+
+  &.source-code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.75rem;
+  }
+}

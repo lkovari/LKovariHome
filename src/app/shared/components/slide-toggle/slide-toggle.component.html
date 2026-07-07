@@ -1,5 +1,6 @@
 <div
   class="slide-toggle-layout"
+  [class.checked]="checked()"
   [class.vertical]="orientation() === 'vertical'"
   [class.disabled]="disabled() || spin()"
   [class.spin]="spin()"

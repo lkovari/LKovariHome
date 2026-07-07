@@ -6,7 +6,7 @@
     } @else {
         <div class="stage-levels">
             @for (stageLevel of stageLevels(); track stageLevel.index) {
-                <div class="stage-level" [style.border-bottom]="stageLevel.selected ? 'none' : '1px solid #d4d4d4'">
+                <div class="stage-level" [style.border-bottom]="stageLevel.selected ? 'none' : '0.0625rem solid #d4d4d4'">
                     <app-stage-level [stageLevel]="stageLevel" />
                 </div>
             }

@@ -18,12 +18,12 @@ $color-background-on: #4d8af5;
 .slide-toggle-layout {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 3.75rem;
+  height: 2.125rem;
 
   &.vertical {
-    width: 34px;
-    height: 60px;
+    width: 2.125rem;
+    height: 3.75rem;
   }
 
   & input {
@@ -41,16 +41,16 @@ $color-background-on: #4d8af5;
     bottom: 0;
     background-color: $color-gray;
     transition: .4s;
-    border-radius: 34px;
+    border-radius: 2.125rem;
 
     &:before  {
-      border: 3px dotted $knob-border-color-default;
+      border: 0.1875rem dotted $knob-border-color-default;
       position: absolute;
       content: "";
-      height: 23px;
-      width: 23px;
-      left: 5px;
-      bottom: 5px;
+      height: 1.4375rem;
+      width: 1.4375rem;
+      left: 0.3125rem;
+      bottom: 0.3125rem;
       background-color: var(--slide-knob-bg-color);
       transition: .4s;
       border-radius: 50%;
@@ -60,44 +60,44 @@ $color-background-on: #4d8af5;
   }
 
   &.vertical .slider:before  {
-    left: 5px;
+    left: 0.3125rem;
     bottom: initial;
-    top: 32px;
+    top: 2rem;
   }
 
-  input:checked + .slider {
+  &.checked .slider {
     background-color: $checked-backround-color;
   }
 
-  input:checked + .slider:before  {
-    left: 32px;
+  &.checked .slider:before  {
+    left: 2rem;
   }
 
-  &.vertical input:checked + .slider:before  {
-    top: 5px;
-    left: 5px;
+  &.vertical.checked .slider:before  {
+    top: 0.3125rem;
+    left: 0.3125rem;
   }
 
   &.spin .slider:before ,
   &.vertical.spin .slider:before {
-    border: 3px dotted var(--slide-knob-spinner-color, knob-spin-border-colorcolor);
+    border: 0.1875rem dotted var(--slide-knob-spinner-color, knob-spin-border-colorcolor);
     border-radius: 50%;
-    width: 23px;
-    height: 23px;
+    width: 1.4375rem;
+    height: 1.4375rem;
     @include spin-animation(2s, linear, infinite);
   }
 
   &.spin .slider:before  {
-    left: 19px;
+    left: 1.1875rem;
   }
 
   &.vertical.spin .slider:before {
-    left: 5px;
-    top: 19px;
+    left: 0.3125rem;
+    top: 1.1875rem;
   }
 
   input:focus + .slider {
-    box-shadow: 0 0 1px $checked-backround-color;
+    box-shadow: 0 0 0.0625rem $checked-backround-color;
   }
 
   &.disabled {

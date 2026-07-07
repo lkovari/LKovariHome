@@ -1,0 +1,60 @@
+<div class="labyrinth-generator-layout">
+  <div class="sub-topic header-row">
+    <div class="title-group">
+      <h1 class="page-title">{{ pageTitle }}</h1>
+      <div class="page-subtitle">{{ subTitle }}</div>
+    </div>
+    <button
+      mat-icon-button
+      type="button"
+      class="info-btn"
+      aria-label="Documentation"
+      (click)="openDocs()"
+    >
+      <mat-icon>info</mat-icon>
+    </button>
+  </div>
+
+  <app-labyrinth-canvas />
+</div>
+
+<p-dialog
+  [header]="docsDialogHeader()"
+  [visible]="docsVisible()"
+  (visibleChange)="docsVisible.set($event)"
+  [modal]="true"
+  [appendTo]="'body'"
+  [baseZIndex]="12000"
+  [style]="{ width: '80vw', maxHeight: '85vh' }"
+>
+  <div class="docs-toolbar">
+    <div class="docs-toolbar-group" [class.disabled]="showPascalSource()">
+      <span class="lang-label" [class.active]="!hungarianSelected()">English</span>
+      <app-slide-toggle
+        [checked]="hungarianSelected()"
+        (checkedChange)="hungarianSelected.set($event)"
+        [toggleOnStyle]="{ 'background-color': '#4363d8' }"
+        [toggleOffStyle]="{ 'background-color': 'lightgray' }"
+      />
+      <span class="lang-label" [class.active]="hungarianSelected()">Magyar</span>
+    </div>
+    <div class="docs-toolbar-group">
+      <span class="lang-label" [class.active]="!showPascalSource()">Readme</span>
+      <app-slide-toggle
+        [checked]="showPascalSource()"
+        (checkedChange)="showPascalSource.set($event)"
+        [toggleOnStyle]="{ 'background-color': '#4363d8' }"
+        [toggleOffStyle]="{ 'background-color': 'lightgray' }"
+      />
+      <span class="lang-label" [class.active]="showPascalSource()">Pascal</span>
+    </div>
+  </div>
+
+  <div class="docs-body">
+    @if (docsLoading()) {
+      <p class="docs-loading">Loading documentation…</p>
+    } @else {
+      <pre class="docs-content" [class.source-code]="showPascalSource()">{{ activeDoc() }}</pre>
+    }
+  </div>
+</p-dialog>

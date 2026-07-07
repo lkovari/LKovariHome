@@ -1,5 +1,5 @@
 .layout-content {
-    height: calc(100% - 64px);
+    height: calc(100% - 4rem);
     
     mat-sidenav-container,
     mat-sidenav-content,
@@ -8,11 +8,11 @@
     }
 
     mat-sidenav {
-        width: 250px;
+        width: 15.625rem;
     }
 
     main {
-        padding: 10px;
+        padding: 0.625rem;
     }
     .toolbar-style {
         width: 100%;

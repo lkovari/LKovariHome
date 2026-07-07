@@ -95,6 +95,13 @@ export const routes: Routes = [
             m => m.SlideToggleExampleComponent
           ),
       },
+      {
+        path: 'playground/components/labyrinth-generator',
+        loadComponent: () =>
+          import('./playground/components/labyrinth-generator/labyrinth-generator.component').then(
+            m => m.LabyrinthGeneratorComponent
+          ),
+      },
     ],
   },
   {

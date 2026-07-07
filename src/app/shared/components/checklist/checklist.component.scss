@@ -1,9 +1,6 @@
 .checklist-layout {
-    // overflow-x: hidden;
-    // overflow-y: auto;
-    border: solid blue 1px;
-    border-radius:8px;
-    // position: relative;
+    border: solid blue 0.0625rem;
+    border-radius: 0.5rem;
     cursor: pointer;
     padding: 1rem;
 
@@ -19,7 +16,7 @@
         justify-content: flex-start;
         align-items: center;
         align-content: flex-start;        
-        font-size: 15px;
+        font-size: 0.9375rem;
         line-height: 1.8rem;
 
 
@@ -48,13 +45,11 @@
         align-items: flex-start;
         background-color: #d9edf7;
         color: blue;
-        border: 1px solid var(--primary-color);
+        border: 0.0625rem solid var(--primary-color);
     }    
 
     .checklist-item-selected {
-        // background-color: #d9edf7;
         background-color: rgb(180, 240, 180);
-        // display: flex;
     }
 
     .show-invalid-feedback {
