@@ -2,7 +2,7 @@
  * FILE NAME:       LABYR.PAS
  * AUTHOR:          László Kővári
  * LAST UPDATE:     1991.07.25.
- * COPYRIGHT:       Copyright (C) 1991 by Leslie Kîvári #364121033
+ * COPYRIGHT:       Copyright (C) 1991 by László Kővári #364121033
  * DESCRIPTION:
                     A program véletlenszerű pontokból 4 irányba irányított fákat rajzol.
                     A farajzoló algoritmus irányított fát rajzol, tehát a megadott iránytól csak jobbra balra 
@@ -490,7 +490,7 @@ procedure drawtree;
 
 {* FôPROGRAM *}
 begin
-  copyright:='Copyright (C) 1991 by Leslie Kîvári #3641321033';
+  copyright:='Copyright (C) 1991 by László Kővári #3641321033';
   {* Alaphelyzet *}
   initg;
   if not grapherror then
