@@ -2,7 +2,7 @@
  * FILE NAME:       LABYR.PAS
  * AUTHOR:          László Kővári
  * LAST UPDATE:     1991.07.25.
- * COPYRIGHT:       Copyright (C) 1991 by Leslie Kîvári #364121033
+ * COPYRIGHT:       Copyright (C) 1991 by László Kővári #364121033
  * DESCRIPTION:
                     A program véletlenszerű pontokból 4 irányba irányított fákat rajzol.
                     A farajzoló algoritmus irányított fát rajzol, tehát a megadott iránytól csak jobbra balra 
@@ -10,7 +10,7 @@
                     Visszafele nem! Egy pontból a 3 irányt úgy választja ki hogy generál egy véletlenszámot 1-6-ig
                     és ez a szája 3 nak az egyik ismétlés nélküli permutációját választja ki. 
                     Ez a permutáció lesz az irányok vizsgálatának sorrendje. (ahova tud vonalat húzni)
-                    A program alapja, hogy vizsgálja egy leendî ágvég állapotát. Ha az nem
+                    A program alapja, hogy vizsgálja egy leendö ágvég állapotát. Ha az nem
                     háttér szinü akkor oda már lett húzva ág valamely irányból. 
                     Ez biztositja hogy a labirintus szabályos lesz.
  *)
@@ -65,7 +65,7 @@ procedure initg;
       grapherror:=true
     else
       begin
-        {* Képernyî tîrlése *}
+        {* Képernyö törlése *}
         cleardevice;
         maxx:=getmaxx;
         maxy:=getmaxy;
@@ -75,7 +75,7 @@ procedure initg;
       end;
   end;
 
-{* Koordináták módositása a kîvetkezî pont vizsgálatához *}
+{* Koordináták módositása a következö pont vizsgálatához *}
 procedure posnext(var pwx,pwy,sl,ls: integer; ox,oy,stp,dto: integer);
 
   {*
@@ -96,7 +96,7 @@ procedure posnext(var pwx,pwy,sl,ls: integer; ox,oy,stp,dto: integer);
               begin
                 pwx:=ox-stp;                    {* Egy fal végpontja *}
                 pwy:=oy;
-                ls:=sl;                         {* Elîzî irány *}
+                ls:=sl;                         {* Elözö irány *}
                 sl:=3;                          {* Jelenlegi irány *}
               end;
             2:{* Aktuális irányba *}
@@ -193,7 +193,7 @@ procedure posnext(var pwx,pwy,sl,ls: integer; ox,oy,stp,dto: integer);
     end;
   end;
 
-{* Visszalépés iránytól függîen *}
+{* Visszalépés iránytól függöen *}
 procedure backstep(var wx,wy,s: integer;xo,yo,sfrom,sto,st: integer);
   {*
   SFROM   Legutóbbi irány ami LASTSEL-ben van
@@ -275,7 +275,7 @@ procedure backstep(var wx,wy,s: integer;xo,yo,sfrom,sto,st: integer);
               end;
           end;
     end;
-    s:=sfrom;                           {* Elîzî irány az aktuális *}
+    s:=sfrom;                           {* Elözö irány az aktuális *}
   end;
 
 {* Megállapitja egy pontról hogy halad-e rajta keresztül vonal, vagy sem *}
@@ -294,12 +294,12 @@ function dotchk(px,py : integer): boolean;
       dotchk:=false;
   end;
 
-{* Koordináta ellenîrzés TRUE ha képernyîn belül van a pont *}
+{* Koordináta ellenörzés TRUE ha képernyön belül van a pont *}
 function poschk(xx,yy: integer): boolean;
   var
     lv: boolean;
   begin
-    {* Tartományellenîrzés *}
+    {* Tartományellenörzés *}
     if (((xx>=1) and (xx<=maxx)) and ((yy>=1) and (yy<=maxy))) then
       poschk:=true
     else
@@ -328,7 +328,7 @@ function chkd(d: integer):boolean;
   end;
 
 {* Ha a megadott farajzolási iránytól balra vagy jobbra rajzolna
-   nem mindig engedélyezi, mert inkább a rajzolás irányába nî-
+   nem mindig engedélyezi, mert inkább a rajzolás irányába nö-
    vessze a fa ágait *}
 function lrd(ss: integer):boolean;
   var
@@ -413,7 +413,7 @@ procedure wall(var posx,posy: integer);
            dotnum:      integer;
 
       {*
-      LASTSEL           elîzî irány
+      LASTSEL           elözö irány
       POSWX
       POSWY             munkaváltozó koordinátapár
       PPOSX
@@ -422,7 +422,7 @@ procedure wall(var posx,posy: integer);
       *}
 
   begin
-    {* Kezdîpozició *}
+    {* Kezdöpozició *}
     pposx:=posx;
     pposy:=posy;
     if not keypressed then
@@ -440,7 +440,7 @@ procedure wall(var posx,posy: integer);
             dotnum:=dn[dotn,dotnm];
             {* Irány meghatározása *}
             posnext(poswx,poswy,sel,lastsel,pposx,pposy,step,dotnum);
-            {* Koordináták ellenîrzése *}
+            {* Koordináták ellenörzése *}
             if (poschk(poswx,poswy) and dotchk(poswx,poswy)) and chkd(sel) and lrd(sel) then
               begin
                 {* Vonal huzása *}
@@ -490,7 +490,7 @@ procedure drawtree;
 
 {* FôPROGRAM *}
 begin
-  copyright:='Copyright (C) 1991 by Leslie Kîvári #3641321033';
+  copyright:='Copyright (C) 1991 by László Kővári #3641321033';
   {* Alaphelyzet *}
   initg;
   if not grapherror then
