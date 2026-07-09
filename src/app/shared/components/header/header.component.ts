@@ -16,6 +16,6 @@ import { AngularVersionComponent } from '../angular-version/angular-version.comp
 })
 export class HeaderComponent {
   protected readonly errorNotification = inject(ErrorNotificationService);
-  lastUpdateDate = new Date('07/07/2026 09:41 AM');
+  lastUpdateDate = new Date('07/09/2026 05:58 PM');
   lastUpdateTooltip = 'Angular 22: standalone, Vitest, FormValueControl/FormCheckboxControl custom widgets, Add Labyrinth';
 }

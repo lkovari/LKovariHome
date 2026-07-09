@@ -30,7 +30,7 @@ import { LabyrinthCanvasComponent } from './labyrinth-canvas/labyrinth-canvas.co
 export class LabyrinthGeneratorComponent implements OnInit {
   private readonly http = inject(HttpClient);
 
-  readonly pageTitle = "Labirynth generator algorythm by L.Kővári '98";
+  readonly pageTitle = "Labirynth generator algorythm by L.Kővári '91";
   readonly subTitle = "Based on my own created algorythm";
 
   readonly docsVisible = signal(false);

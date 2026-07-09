@@ -2,12 +2,12 @@
   <form class="params-form" [formGroup]="paramsForm" (ngSubmit)="onGenerate()">
     <div class="params-grid">
       <mat-form-field appearance="outline" class="param-field" subscriptSizing="dynamic">
-        <mat-label>Step</mat-label>
+        <mat-label>Wall length</mat-label>
         <input matInput type="number" formControlName="step" min="1" max="100" />
         <mat-hint>1–100</mat-hint>
       </mat-form-field>
       <mat-form-field appearance="outline" class="param-field" subscriptSizing="dynamic">
-        <mat-label>P</mat-label>
+        <mat-label>Probability</mat-label>
         <input matInput type="number" formControlName="probability" min="1" max="100" />
         <mat-hint>1–100</mat-hint>
       </mat-form-field>
@@ -17,7 +17,7 @@
         <mat-hint>1–1000</mat-hint>
       </mat-form-field>
       <mat-form-field appearance="outline" class="param-field" subscriptSizing="dynamic">
-        <mat-label>PLR</mat-label>
+        <mat-label>L/R Length</mat-label>
         <input matInput type="number" formControlName="plr" min="1" max="100" />
         <mat-hint>1–100</mat-hint>
       </mat-form-field>
