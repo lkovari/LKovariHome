@@ -1,0 +1,180 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.mersenne-layout {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 1rem 1rem;
+  gap: 1rem;
+
+  .header-row {
+    flex-shrink: 0;
+    position: relative;
+    padding: 1rem 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .title-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    max-width: 42rem;
+  }
+
+  .page-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .page-subtitle {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: #666;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .info-btn {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .controls {
+    flex-shrink: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1rem 1.5rem;
+    max-width: 56rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .engine-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    align-items: center;
+    padding-top: 0.5rem;
+  }
+
+  .max-exp-field {
+    width: 12rem;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    padding-top: 0.35rem;
+  }
+
+  .status {
+    flex-basis: 100%;
+    font-size: 0.875rem;
+    color: #555;
+    min-height: 1.25rem;
+  }
+
+  .primes-output {
+    flex: 1;
+    min-height: 12rem;
+    width: 100%;
+    max-width: 56rem;
+    margin: 0 auto;
+    resize: none;
+    box-sizing: border-box;
+    padding: 0.75rem 1rem;
+    border: 1px solid #c8c8c8;
+    border-radius: 4px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    background: #fafafa;
+    color: #222;
+  }
+
+  @media (max-width: 37.4375rem) {
+    .header-row {
+      padding: 0.75rem 2.5rem 0.75rem 1rem;
+    }
+
+    .page-title {
+      font-size: 0.875rem;
+    }
+
+    .page-subtitle {
+      font-size: 0.75rem;
+    }
+
+    .max-exp-field {
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 56.25rem) {
+    .page-title {
+      font-size: 1.125rem;
+    }
+  }
+}
+
+.docs-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.docs-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lang-label {
+  font-size: 0.875rem;
+  color: #888;
+
+  &.active {
+    color: #333;
+    font-weight: 600;
+  }
+}
+
+.docs-body {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.docs-loading {
+  margin: 0;
+  color: #666;
+}
+
+.docs-content {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}

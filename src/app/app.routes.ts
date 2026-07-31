@@ -102,6 +102,13 @@ export const routes: Routes = [
             m => m.LabyrinthGeneratorComponent
           ),
       },
+      {
+        path: 'playground/components/mersenne',
+        loadComponent: () =>
+          import('./playground/components/mersenne/mersenne.component').then(
+            m => m.MersenneComponent
+          ),
+      },
     ],
   },
   {

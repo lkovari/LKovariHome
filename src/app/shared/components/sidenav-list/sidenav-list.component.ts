@@ -114,6 +114,12 @@ export class SidenavListComponent implements OnInit {
                 icon: 'pi pi-book',
                 styleclass: 'side-menu-item-style',
                 routerLink: 'playground/components/labyrinth-generator'
+              },
+              {
+                label: 'Mersenne',
+                icon: 'pi pi-book',
+                styleclass: 'side-menu-item-style',
+                routerLink: 'playground/components/mersenne'
               }
             ]
           }

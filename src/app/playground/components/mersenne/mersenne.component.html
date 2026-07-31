@@ -1,0 +1,86 @@
+<div class="mersenne-layout">
+  <div class="sub-topic header-row">
+    <div class="title-group">
+      <h1 class="page-title">{{ pageTitle }}</h1>
+      <div class="page-subtitle">{{ subTitle }}</div>
+    </div>
+    <button
+      mat-icon-button
+      type="button"
+      class="info-btn"
+      aria-label="Documentation"
+      (click)="openDocs()"
+    >
+      <mat-icon>info</mat-icon>
+    </button>
+  </div>
+
+  <form class="controls" [formGroup]="form" (ngSubmit)="start()">
+    <mat-radio-group formControlName="engine" class="engine-group" aria-label="Arithmetic engine">
+      <mat-radio-button value="bigint">Native BigInt</mat-radio-button>
+      <mat-radio-button value="base256">Base-256 custom arythmetics</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field appearance="outline" class="max-exp-field">
+      <mat-label>Max exponent P</mat-label>
+      <input
+        matInput
+        type="number"
+        formControlName="maxExponent"
+        [min]="minExponent"
+        [max]="hardMaxExponent"
+      />
+      <mat-hint>Default 127; max {{ hardMaxExponent }}</mat-hint>
+    </mat-form-field>
+
+    <div class="actions">
+      <button mat-flat-button color="primary" type="submit" [disabled]="startDisabled()">
+        Start
+      </button>
+      <button mat-stroked-button type="button" [disabled]="stopDisabled()" (click)="stop()">
+        Stop
+      </button>
+    </div>
+
+    <div class="status" aria-live="polite">{{ status() }}</div>
+  </form>
+
+  <textarea
+    class="primes-output"
+    readonly
+    placeholder="Found Mersenne primes will appear here, one per line."
+    rows="16"
+  >{{ output() }}</textarea>
+</div>
+
+<p-dialog
+  [header]="docsDialogHeader()"
+  [visible]="docsVisible()"
+  (visibleChange)="docsVisible.set($event)"
+  [modal]="true"
+  [appendTo]="'body'"
+  [baseZIndex]="12000"
+  [style]="{ width: '80vw', maxHeight: '85vh' }"
+  [contentStyle]="{ overflow: 'auto', maxHeight: '70vh' }"
+>
+  <div class="docs-toolbar">
+    <div class="docs-toolbar-group">
+      <span class="lang-label" [class.active]="!hungarianSelected()">English</span>
+      <app-slide-toggle
+        [checked]="hungarianSelected()"
+        (checkedChange)="hungarianSelected.set($event)"
+        [toggleOnStyle]="{ 'background-color': '#4363d8' }"
+        [toggleOffStyle]="{ 'background-color': 'lightgray' }"
+      />
+      <span class="lang-label" [class.active]="hungarianSelected()">Magyar</span>
+    </div>
+  </div>
+
+  <div class="docs-body">
+    @if (docsLoading()) {
+      <p class="docs-loading">Loading documentation…</p>
+    } @else {
+      <pre class="docs-content">{{ activeDoc() }}</pre>
+    }
+  </div>
+</p-dialog>
