@@ -1,16 +1,38 @@
 import { describe, expect, it } from 'vitest';
 import {
+  clampMaxExponent,
   generate,
-  generateMersennePrimes,
+  generateMersennePrimesOnMainThread,
   oddPrimeExponents,
   test,
+  MERSENNE_DEFAULT_MAX_EXPONENT,
+  MERSENNE_HARD_MAX_EXPONENT,
 } from './mersenne-prim-generator';
+import { hasSmallMersenneFactor } from './mersenne-trial-factor';
+import { CUSTOM_ARITHMETIC_BASE } from './base65536-number';
 import type { MersenneEngineId } from './mersenne.types';
 
 const KNOWN_MERSENNE_EXPONENTS = [2, 3, 5, 7, 13, 17, 19, 31, 61, 89, 107, 127];
-const ENGINES: MersenneEngineId[] = ['bigint', 'base256'];
+const ENGINES: MersenneEngineId[] = ['bigint', 'base65536'];
 
 describe('mersenne-prim-generator', () => {
+  it('uses default max 256, hard max 100000, and custom base 65536', () => {
+    expect(MERSENNE_DEFAULT_MAX_EXPONENT).toBe(256);
+    expect(MERSENNE_HARD_MAX_EXPONENT).toBe(100000);
+    expect(CUSTOM_ARITHMETIC_BASE).toBe(65536);
+  });
+
+  it('clampMaxExponent respects the hard max of 100000', () => {
+    expect(clampMaxExponent(100000)).toBe(100000);
+    expect(clampMaxExponent(100001)).toBe(100000);
+    expect(clampMaxExponent(256)).toBe(256);
+  });
+
+  it('trial factoring finds a proper factor of M_11 and not of M_3', () => {
+    expect(hasSmallMersenneFactor(11)).toBe(true);
+    expect(hasSmallMersenneFactor(3)).toBe(false);
+  });
+
   describe.each(ENGINES)('engine %s', engine => {
     it.each(KNOWN_MERSENNE_EXPONENTS)('test(%i) is true', p => {
       expect(test(p, engine)).toBe(true);
@@ -29,7 +51,7 @@ describe('mersenne-prim-generator', () => {
 
   it('both engines agree on generate for known exponents', () => {
     for (const p of KNOWN_MERSENNE_EXPONENTS) {
-      expect(generate(p, 'base256')).toBe(generate(p, 'bigint'));
+      expect(generate(p, 'base65536')).toBe(generate(p, 'bigint'));
     }
   });
 
@@ -39,7 +61,7 @@ describe('mersenne-prim-generator', () => {
 
   it('generateMersennePrimes streams known primes up to 127', async () => {
     const streamed: number[] = [];
-    const hits = await generateMersennePrimes({
+    const hits = await generateMersennePrimesOnMainThread({
       maxExponent: 127,
       engine: 'bigint',
       onPrime: hit => {
@@ -53,7 +75,7 @@ describe('mersenne-prim-generator', () => {
   it('generateMersennePrimes honors AbortSignal', async () => {
     const controller = new AbortController();
     const streamed: number[] = [];
-    const run = generateMersennePrimes({
+    const run = generateMersennePrimesOnMainThread({
       maxExponent: 127,
       engine: 'bigint',
       signal: controller.signal,

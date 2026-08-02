@@ -49,11 +49,16 @@ export class MersenneComponent implements OnInit, OnDestroy {
   private readonly http = inject(HttpClient);
 
   readonly pageTitle = "Mersenne prime generator by L.Kővári '92 / custom arythmetics";
-  readonly subTitle = 'Lucas–Lehmer test with BigInt or base-256 arithmetic';
+  readonly subTitle = 'Lucas–Lehmer test with BigInt or base-65536 arithmetic';
 
   readonly running = signal(false);
   readonly status = signal('Idle');
   readonly output = signal('');
+  readonly elapsedMs = signal(0);
+
+  readonly elapsedLabel = computed(() => formatElapsed(this.elapsedMs()));
+  readonly clearDisabled = computed(() => this.running() || this.output().length === 0);
+  readonly saveDisabled = computed(() => this.running() || this.output().length === 0);
 
   readonly docsVisible = signal(false);
   readonly docsLoading = signal(true);
@@ -87,9 +92,12 @@ export class MersenneComponent implements OnInit, OnDestroy {
   readonly stopDisabled = computed(() => !this.running());
 
   readonly minExponent = MERSENNE_MIN_EXPONENT;
+  readonly defaultMaxExponent = MERSENNE_DEFAULT_MAX_EXPONENT;
   readonly hardMaxExponent = MERSENNE_HARD_MAX_EXPONENT;
 
   private abortController: AbortController | null = null;
+  private elapsedTimerId: ReturnType<typeof setInterval> | null = null;
+  private elapsedStartedAt = 0;
 
   ngOnInit(): void {
     forkJoin({
@@ -111,6 +119,7 @@ export class MersenneComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.abortController?.abort();
+    this.stopElapsedTimer();
   }
 
   openDocs(): void {
@@ -127,6 +136,7 @@ export class MersenneComponent implements OnInit, OnDestroy {
     this.abortController = new AbortController();
     this.running.set(true);
     this.status.set('Running…');
+    this.startElapsedTimer();
 
     const { engine, maxExponent } = this.form.getRawValue();
     const lines: string[] = [];
@@ -153,6 +163,7 @@ export class MersenneComponent implements OnInit, OnDestroy {
     } catch {
       this.status.set('Error');
     } finally {
+      this.stopElapsedTimer();
       this.running.set(false);
       this.abortController = null;
     }
@@ -161,4 +172,64 @@ export class MersenneComponent implements OnInit, OnDestroy {
   stop(): void {
     this.abortController?.abort();
   }
+
+  clearOutput(): void {
+    if (this.running()) {
+      return;
+    }
+    this.output.set('');
+    this.status.set('Idle');
+  }
+
+  saveToFile(): void {
+    const content = this.output();
+    if (content.length === 0 || this.running()) {
+      return;
+    }
+    const stamp = formatDateTimeStamp(new Date());
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = `mersenne-primes-${stamp}.txt`;
+    anchor.click();
+    URL.revokeObjectURL(url);
+  }
+
+  private startElapsedTimer(): void {
+    this.stopElapsedTimer();
+    this.elapsedStartedAt = performance.now();
+    this.elapsedMs.set(0);
+    this.elapsedTimerId = setInterval(() => {
+      this.elapsedMs.set(Math.floor(performance.now() - this.elapsedStartedAt));
+    }, 100);
+  }
+
+  private stopElapsedTimer(): void {
+    if (this.elapsedTimerId !== null) {
+      clearInterval(this.elapsedTimerId);
+      this.elapsedTimerId = null;
+    }
+    if (this.elapsedStartedAt > 0) {
+      this.elapsedMs.set(Math.floor(performance.now() - this.elapsedStartedAt));
+    }
+  }
+}
+
+function formatElapsed(ms: number): string {
+  const totalSeconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  const tenths = Math.floor((ms % 1000) / 100);
+  const mm = String(minutes).padStart(2, '0');
+  const ss = String(seconds).padStart(2, '0');
+  return `${mm}:${ss}.${tenths}`;
+}
+
+function formatDateTimeStamp(date: Date): string {
+  const pad = (value: number) => String(value).padStart(2, '0');
+  return (
+    `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}` +
+    `-${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`
+  );
 }

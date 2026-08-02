@@ -18,7 +18,7 @@
   <form class="controls" [formGroup]="form" (ngSubmit)="start()">
     <mat-radio-group formControlName="engine" class="engine-group" aria-label="Arithmetic engine">
       <mat-radio-button value="bigint">Native BigInt</mat-radio-button>
-      <mat-radio-button value="base256">Base-256 custom arythmetics</mat-radio-button>
+      <mat-radio-button value="base65536">Base-65536 custom arythmetics</mat-radio-button>
     </mat-radio-group>
 
     <mat-form-field appearance="outline" class="max-exp-field">
@@ -30,7 +30,7 @@
         [min]="minExponent"
         [max]="hardMaxExponent"
       />
-      <mat-hint>Default 127; max {{ hardMaxExponent }}</mat-hint>
+      <mat-hint>Default {{ defaultMaxExponent }}; max {{ hardMaxExponent }}</mat-hint>
     </mat-form-field>
 
     <div class="actions">
@@ -40,9 +40,18 @@
       <button mat-stroked-button type="button" [disabled]="stopDisabled()" (click)="stop()">
         Stop
       </button>
+      <button mat-stroked-button type="button" [disabled]="clearDisabled()" (click)="clearOutput()">
+        Clear
+      </button>
+      <button mat-stroked-button type="button" [disabled]="saveDisabled()" (click)="saveToFile()">
+        Save
+      </button>
     </div>
 
-    <div class="status" aria-live="polite">{{ status() }}</div>
+    <div class="status" aria-live="polite">
+      <span>{{ status() }}</span>
+      <span class="elapsed">Elapsed {{ elapsedLabel() }}</span>
+    </div>
   </form>
 
   <textarea
@@ -61,26 +70,34 @@
   [appendTo]="'body'"
   [baseZIndex]="12000"
   [style]="{ width: '80vw', maxHeight: '85vh' }"
-  [contentStyle]="{ overflow: 'auto', maxHeight: '70vh' }"
+  [contentStyle]="{
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'hidden',
+    maxHeight: '70vh',
+    paddingTop: '0.5rem'
+  }"
 >
-  <div class="docs-toolbar">
-    <div class="docs-toolbar-group">
-      <span class="lang-label" [class.active]="!hungarianSelected()">English</span>
-      <app-slide-toggle
-        [checked]="hungarianSelected()"
-        (checkedChange)="hungarianSelected.set($event)"
-        [toggleOnStyle]="{ 'background-color': '#4363d8' }"
-        [toggleOffStyle]="{ 'background-color': 'lightgray' }"
-      />
-      <span class="lang-label" [class.active]="hungarianSelected()">Magyar</span>
+  <div class="docs-shell">
+    <div class="docs-toolbar">
+      <div class="docs-toolbar-group">
+        <span class="lang-label" [class.active]="!hungarianSelected()">English</span>
+        <app-slide-toggle
+          [checked]="hungarianSelected()"
+          (checkedChange)="hungarianSelected.set($event)"
+          [toggleOnStyle]="{ 'background-color': '#4363d8' }"
+          [toggleOffStyle]="{ 'background-color': 'lightgray' }"
+        />
+        <span class="lang-label" [class.active]="hungarianSelected()">Magyar</span>
+      </div>
     </div>
-  </div>
 
-  <div class="docs-body">
-    @if (docsLoading()) {
-      <p class="docs-loading">Loading documentation…</p>
-    } @else {
-      <pre class="docs-content">{{ activeDoc() }}</pre>
-    }
+    <div class="docs-body">
+      @if (docsLoading()) {
+        <p class="docs-loading">Loading documentation…</p>
+      } @else {
+        <pre class="docs-content">{{ activeDoc() }}</pre>
+      }
+    </div>
   </div>
 </p-dialog>

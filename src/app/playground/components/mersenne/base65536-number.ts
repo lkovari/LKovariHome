@@ -1,5 +1,6 @@
-const BASE = 256;
-const BASE_MASK = 255;
+const BASE = 65536;
+const BASE_MASK = 65535;
+const BITS = 16;
 
 function trimLength(digits: number[], length: number): number {
   let len = length;
@@ -17,6 +18,14 @@ function copyTrimmed(digits: number[], length: number): number[] {
   return digits.slice(0, len);
 }
 
+function splitDigit(value: number): { low: number; carry: number } {
+  const carry = Math.floor(value / BASE);
+  return {
+    low: value - carry * BASE,
+    carry,
+  };
+}
+
 function bitLengthOf(digits: number[], length: number): number {
   const len = trimLength(digits, length);
   const msb = digits[len - 1];
@@ -27,9 +36,9 @@ function bitLengthOf(digits: number[], length: number): number {
   let bits = 0;
   while (v > 0) {
     bits++;
-    v >>>= 1;
+    v = Math.floor(v / 2);
   }
-  return bits + (len - 1) * 8;
+  return bits + (len - 1) * BITS;
 }
 
 function compareDigits(
@@ -54,14 +63,14 @@ function compareDigits(
 }
 
 function buildMersenneDigits(p: number): number[] {
-  const fullBytes = Math.floor(p / 8);
-  const remBits = p % 8;
-  const digits = new Array<number>(fullBytes + (remBits > 0 ? 1 : 0)).fill(0);
-  for (let i = 0; i < fullBytes; i++) {
+  const fullLimbs = Math.floor(p / BITS);
+  const remBits = p % BITS;
+  const digits = new Array<number>(fullLimbs + (remBits > 0 ? 1 : 0)).fill(0);
+  for (let i = 0; i < fullLimbs; i++) {
     digits[i] = BASE_MASK;
   }
   if (remBits > 0) {
-    digits[fullBytes] = (1 << remBits) - 1;
+    digits[fullLimbs] = (1 << remBits) - 1;
   }
   if (digits.length === 0) {
     return [0];
@@ -72,7 +81,7 @@ function buildMersenneDigits(p: number): number[] {
 function squareInto(src: number[], srcLen: number, dest: number[]): number {
   const n = trimLength(src, srcLen);
   const outLen = 2 * n;
-  for (let i = 0; i < outLen; i++) {
+  for (let i = 0; i < outLen + 2; i++) {
     dest[i] = 0;
   }
   for (let i = 0; i < n; i++) {
@@ -81,14 +90,16 @@ function squareInto(src: number[], srcLen: number, dest: number[]): number {
     for (let j = 0; j < n; j++) {
       const pos = i + j;
       const prod = ai * (src[j] ?? 0) + (dest[pos] ?? 0) + carry;
-      dest[pos] = prod & BASE_MASK;
-      carry = prod >>> 8;
+      const split = splitDigit(prod);
+      dest[pos] = split.low;
+      carry = split.carry;
     }
     let k = i + n;
     while (carry > 0) {
       const sum = (dest[k] ?? 0) + carry;
-      dest[k] = sum & BASE_MASK;
-      carry = sum >>> 8;
+      const split = splitDigit(sum);
+      dest[k] = split.low;
+      carry = split.carry;
       k++;
     }
   }
@@ -121,58 +132,63 @@ function modMersenneInPlace(
   scratch: number[]
 ): number {
   let len = trimLength(digits, length);
-  const limbBytes = modulus.length;
+  const limbCount = modulus.length;
+  const limbShift = Math.floor(p / BITS);
+  const bitShift = p % BITS;
 
   while (bitLengthOf(digits, len) > p) {
     for (let i = 0; i < scratch.length; i++) {
       scratch[i] = 0;
     }
 
-    const byteShift = Math.floor(p / 8);
-    const bitShift = p % 8;
-
-    for (let i = 0; i < limbBytes; i++) {
+    for (let i = 0; i < limbCount; i++) {
       scratch[i] = (digits[i] ?? 0) & (modulus[i] ?? 0);
     }
 
-    if (byteShift < len) {
+    if (limbShift < len) {
       if (bitShift === 0) {
-        for (let i = byteShift; i < len; i++) {
-          const pos = i - byteShift;
+        for (let i = limbShift; i < len; i++) {
+          const pos = i - limbShift;
           const sum = (scratch[pos] ?? 0) + (digits[i] ?? 0);
-          scratch[pos] = sum & BASE_MASK;
-          let carry = sum >>> 8;
+          const split = splitDigit(sum);
+          scratch[pos] = split.low;
+          let carry = split.carry;
           let k = pos + 1;
           while (carry > 0) {
             const s = (scratch[k] ?? 0) + carry;
-            scratch[k] = s & BASE_MASK;
-            carry = s >>> 8;
+            const cs = splitDigit(s);
+            scratch[k] = cs.low;
+            carry = cs.carry;
             k++;
           }
         }
       } else {
-        const inv = 8 - bitShift;
-        for (let i = byteShift; i < len; i++) {
-          const low = (digits[i] ?? 0) >>> bitShift;
+        const inv = BITS - bitShift;
+        for (let i = limbShift; i < len; i++) {
+          const low = Math.floor((digits[i] ?? 0) / (1 << bitShift));
           const high =
-            i + 1 < len ? ((digits[i + 1] ?? 0) << inv) & BASE_MASK : 0;
-          const folded = low | high;
-          const pos = i - byteShift;
+            i + 1 < len
+              ? ((digits[i + 1] ?? 0) * (1 << inv)) & BASE_MASK
+              : 0;
+          const folded = low + high;
+          const pos = i - limbShift;
           const sum = (scratch[pos] ?? 0) + folded;
-          scratch[pos] = sum & BASE_MASK;
-          let carry = sum >>> 8;
+          const split = splitDigit(sum);
+          scratch[pos] = split.low;
+          let carry = split.carry;
           let k = pos + 1;
           while (carry > 0) {
             const s = (scratch[k] ?? 0) + carry;
-            scratch[k] = s & BASE_MASK;
-            carry = s >>> 8;
+            const cs = splitDigit(s);
+            scratch[k] = cs.low;
+            carry = cs.carry;
             k++;
           }
         }
       }
     }
 
-    len = trimLength(scratch, Math.max(limbBytes + 2, len - byteShift + 2));
+    len = trimLength(scratch, Math.max(limbCount + 2, len - limbShift + 2));
     for (let i = 0; i < len; i++) {
       digits[i] = scratch[i] ?? 0;
     }
@@ -211,74 +227,84 @@ function isZeroDigits(digits: number[], length: number): boolean {
   return len === 1 && (digits[0] ?? 0) === 0;
 }
 
-export function lucasLehmerBase256Fast(p: number): boolean {
-  const limbBytes = Math.ceil(p / 8);
-  const workSize = limbBytes * 2 + 8;
-  const s = new Array<number>(workSize).fill(0);
-  const squareBuf = new Array<number>(workSize).fill(0);
+export function lucasLehmerBase65536Fast(
+  p: number,
+  signal?: AbortSignal
+): boolean {
+  const limbCount = Math.ceil(p / BITS);
+  const workSize = limbCount * 2 + 8;
+  let s = new Array<number>(workSize).fill(0);
+  let squareBuf = new Array<number>(workSize).fill(0);
   const scratch = new Array<number>(workSize).fill(0);
   const modulus = buildMersenneDigits(p);
   s[0] = 4;
   let sLen = 1;
 
   for (let i = 0; i < p - 2; i++) {
+    if (signal?.aborted) {
+      return false;
+    }
     const sqLen = squareInto(s, sLen, squareBuf);
     const afterSub = subtractTwoInPlace(squareBuf, sqLen);
     sLen = modMersenneInPlace(squareBuf, afterSub, p, modulus, scratch);
-    for (let j = 0; j < sLen; j++) {
-      s[j] = squareBuf[j] ?? 0;
-    }
+    const swap = s;
+    s = squareBuf;
+    squareBuf = swap;
     for (let j = sLen; j < s.length; j++) {
       s[j] = 0;
     }
   }
 
+  if (signal?.aborted) {
+    return false;
+  }
   return isZeroDigits(s, sLen);
 }
 
-export class Base256Number {
+export class Base65536Number {
   readonly digits: number[];
 
   constructor(digits: number[]) {
     this.digits = digits.length === 0 ? [0] : copyTrimmed(digits, digits.length);
   }
 
-  static zero(): Base256Number {
-    return new Base256Number([0]);
+  static zero(): Base65536Number {
+    return new Base65536Number([0]);
   }
 
-  static fromSmall(value: number): Base256Number {
+  static fromSmall(value: number): Base65536Number {
     if (!Number.isInteger(value) || value < 0) {
-      return Base256Number.zero();
+      return Base65536Number.zero();
     }
     if (value === 0) {
-      return Base256Number.zero();
+      return Base65536Number.zero();
     }
     const digits: number[] = [];
     let n = value;
     while (n > 0) {
-      digits.push(n & BASE_MASK);
-      n = Math.floor(n / BASE);
+      const split = splitDigit(n);
+      digits.push(split.low);
+      n = split.carry;
     }
-    return new Base256Number(digits);
+    return new Base65536Number(digits);
   }
 
-  static mersenne(p: number): Base256Number {
+  static mersenne(p: number): Base65536Number {
     if (!Number.isInteger(p) || p < 1) {
-      return Base256Number.zero();
+      return Base65536Number.zero();
     }
-    return new Base256Number(buildMersenneDigits(p));
+    return new Base65536Number(buildMersenneDigits(p));
   }
 
-  clone(): Base256Number {
-    return new Base256Number(this.digits);
+  clone(): Base65536Number {
+    return new Base65536Number(this.digits);
   }
 
   isZero(): boolean {
     return isZeroDigits(this.digits, this.digits.length);
   }
 
-  compare(other: Base256Number): number {
+  compare(other: Base65536Number): number {
     return compareDigits(
       this.digits,
       this.digits.length,
@@ -287,19 +313,19 @@ export class Base256Number {
     );
   }
 
-  equals(other: Base256Number): boolean {
+  equals(other: Base65536Number): boolean {
     return this.compare(other) === 0;
   }
 
-  gte(other: Base256Number): boolean {
+  gte(other: Base65536Number): boolean {
     return this.compare(other) >= 0;
   }
 
-  gt(other: Base256Number): boolean {
+  gt(other: Base65536Number): boolean {
     return this.compare(other) > 0;
   }
 
-  add(other: Base256Number): Base256Number {
+  add(other: Base65536Number): Base65536Number {
     const a = this.digits;
     const b = other.digits;
     const maxLen = Math.max(a.length, b.length);
@@ -307,16 +333,17 @@ export class Base256Number {
     let carry = 0;
     for (let i = 0; i < maxLen; i++) {
       const sum = (a[i] ?? 0) + (b[i] ?? 0) + carry;
-      result[i] = sum & BASE_MASK;
-      carry = sum >>> 8;
+      const split = splitDigit(sum);
+      result[i] = split.low;
+      carry = split.carry;
     }
     result[maxLen] = carry;
-    return new Base256Number(result);
+    return new Base65536Number(result);
   }
 
-  sub(other: Base256Number): Base256Number {
+  sub(other: Base65536Number): Base65536Number {
     if (this.compare(other) < 0) {
-      return Base256Number.zero();
+      return Base65536Number.zero();
     }
     const a = this.digits;
     const b = other.digits;
@@ -332,21 +359,21 @@ export class Base256Number {
       }
       result[i] = diff;
     }
-    return new Base256Number(result);
+    return new Base65536Number(result);
   }
 
-  square(): Base256Number {
+  square(): Base65536Number {
     const dest = new Array<number>(this.digits.length * 2 + 2).fill(0);
     const len = squareInto(this.digits, this.digits.length, dest);
-    return new Base256Number(dest.slice(0, len));
+    return new Base65536Number(dest.slice(0, len));
   }
 
-  modMersenne(p: number): Base256Number {
+  modMersenne(p: number): Base65536Number {
     const work = this.digits.slice();
     const scratch = new Array<number>(work.length + 8).fill(0);
     const modulus = buildMersenneDigits(p);
     const len = modMersenneInPlace(work, work.length, p, modulus, scratch);
-    return new Base256Number(work.slice(0, len));
+    return new Base65536Number(work.slice(0, len));
   }
 
   bitLength(): number {
@@ -375,3 +402,6 @@ export class Base256Number {
     return digits.reverse().join('');
   }
 }
+
+export const CUSTOM_ARITHMETIC_BASE = BASE;
+export const CUSTOM_ARITHMETIC_BITS = BITS;

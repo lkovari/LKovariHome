@@ -32,9 +32,10 @@ describe('MersenneComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('defaults engine to bigint and max exponent to 127', () => {
+  it('defaults engine to bigint and max exponent to 256', () => {
     expect(component.form.controls.engine.value).toBe('bigint');
-    expect(component.form.controls.maxExponent.value).toBe(127);
+    expect(component.form.controls.maxExponent.value).toBe(256);
+    expect(component.hardMaxExponent).toBe(100000);
   });
 
   it('loads documentation on init and defaults to English', () => {
@@ -55,5 +56,21 @@ describe('MersenneComponent', () => {
     await component.start();
     expect(component.output()).toBe('P=2  M=3');
     expect(component.output()).not.toContain('stale');
+  });
+
+  it('resets elapsed time when start is invoked', async () => {
+    component.elapsedMs.set(12345);
+    component.form.controls.maxExponent.setValue(2);
+    const startPromise = component.start();
+    expect(component.elapsedMs()).toBe(0);
+    await startPromise;
+    expect(component.elapsedMs()).toBeGreaterThanOrEqual(0);
+  });
+
+  it('clears the result area', () => {
+    component.output.set('P=2  M=3');
+    component.clearOutput();
+    expect(component.output()).toBe('');
+    expect(component.status()).toBe('Idle');
   });
 });

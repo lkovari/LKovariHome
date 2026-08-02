@@ -1,4 +1,4 @@
-export type MersenneEngineId = 'bigint' | 'base256';
+export type MersenneEngineId = 'bigint' | 'base65536';
 
 export interface MersennePrimeHit {
   p: number;
@@ -14,10 +14,10 @@ export interface GenerateMersennePrimesOptions {
 }
 
 export interface MersenneEngine {
-  test(p: number): boolean;
+  test(p: number, signal?: AbortSignal): boolean;
   mersenneDecimal(p: number): string;
 }
 
-export const MERSENNE_DEFAULT_MAX_EXPONENT = 127;
-export const MERSENNE_HARD_MAX_EXPONENT = 5000;
+export const MERSENNE_DEFAULT_MAX_EXPONENT = 256;
+export const MERSENNE_HARD_MAX_EXPONENT = 100000;
 export const MERSENNE_MIN_EXPONENT = 2;
