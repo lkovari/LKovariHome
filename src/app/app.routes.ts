@@ -22,6 +22,13 @@ export const routes: Routes = [
         path: 'layout-pages/awards',
         loadComponent: () => import('./layout-pages/awards/awards.component').then(m => m.AwardsComponent),
       },
+      {
+        path: 'layout-pages/display-knowledge-base/:kind',
+        loadComponent: () =>
+          import('./layout-pages/display-knowledge-base/display-knowledge-base.component').then(
+            m => m.DisplayKnowledgeBaseComponent
+          ),
+      },
     ],
   },
   {

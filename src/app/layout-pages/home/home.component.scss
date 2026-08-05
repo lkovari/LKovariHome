@@ -75,6 +75,59 @@
         grid-template-columns: minmax(11rem, 14rem) minmax(0, 1fr);
         gap: 1.25rem;
         align-items: stretch;
+        overflow: hidden;
+
+        > * {
+            min-height: 0;
+            min-width: 0;
+        }
+    }
+
+    .home-stack__aside {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        min-height: 0;
+        align-self: start;
+        overflow: auto;
+        max-height: 100%;
+    }
+
+    .home-knowledge {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 1.25rem 1.5rem;
+        border-radius: 0.75rem;
+        background: linear-gradient(145deg, #eef0fb 0%, #ffffff 55%, #f3e8ff 100%);
+        border: 0.0625rem solid rgba(63, 81, 181, 0.22);
+        box-shadow: 0 0.625rem 1.75rem rgba(63, 81, 181, 0.12);
+        min-width: 12rem;
+    }
+
+    .home-knowledge__eyebrow {
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #5c6bc0;
+    }
+
+    .home-knowledge__link {
+        color: #283593;
+        font-size: 1rem;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        line-height: 1.35;
+        text-align: center;
+
+        &:hover,
+        &:focus-visible {
+            color: #3f51b5;
+            text-decoration: underline;
+        }
     }
 
     .copyright-msg {

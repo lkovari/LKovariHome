@@ -1,0 +1,21 @@
+<div class="knowledge-base-page">
+  <header class="knowledge-base-header">
+    <h1 class="knowledge-base-title">{{ pageTitle() }}</h1>
+  </header>
+
+  @if (safePdfUrl(); as pdfUrl) {
+    <div class="knowledge-base-viewer">
+      <iframe
+        class="knowledge-base-iframe"
+        [src]="pdfUrl"
+        [attr.title]="pageTitle()"
+      ></iframe>
+    </div>
+  }
+
+  <footer class="knowledge-base-footer">
+    <button mat-flat-button color="primary" type="button" [routerLink]="['/layout-pages/home']">
+      Back
+    </button>
+  </footer>
+</div>

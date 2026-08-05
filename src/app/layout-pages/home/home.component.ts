@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FlexModule } from '@angular/flex-layout/flex';
+import { RouterLink } from '@angular/router';
 import { AngularVersionComponent } from '../../shared/components/angular-version/angular-version.component';
 import { HomeUpgradePanelComponent } from './home-upgrade-panel.component';
 
@@ -22,7 +23,7 @@ interface V22Codemod {
     templateUrl: './home.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./home.component.scss'],
-    imports: [FlexModule, AngularVersionComponent, HomeUpgradePanelComponent],
+    imports: [FlexModule, RouterLink, AngularVersionComponent, HomeUpgradePanelComponent],
 })
 export class HomeComponent implements OnInit {
   public years!: number;

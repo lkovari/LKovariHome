@@ -23,7 +23,24 @@
     </div>
 
     <div class="home-stack__layout">
-      <app-angular-version />
+      <div class="home-stack__aside">
+        <app-angular-version />
+        <div class="home-knowledge" aria-label="Knowledge base">
+          <span class="home-knowledge__eyebrow">Knowledge Base</span>
+          <a
+            class="home-knowledge__link"
+            [routerLink]="['/layout-pages/display-knowledge-base', 'angular']"
+          >
+            Modern Angular
+          </a>
+          <a
+            class="home-knowledge__link"
+            [routerLink]="['/layout-pages/display-knowledge-base', 'dotnet']"
+          >
+            .Net C#
+          </a>
+        </div>
+      </div>
       <app-home-upgrade-panel
         [completedOfficialMigrations]="completedOfficialMigrations"
         [openOfficialMigrations]="openOfficialMigrations"

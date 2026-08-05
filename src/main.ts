@@ -1,6 +1,6 @@
 import { enableProdMode, ErrorHandler, provideZoneChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideRouter, withDebugTracing, withHashLocation } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withDebugTracing, withHashLocation } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withInterceptors, withXhr } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -21,7 +21,7 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     provideZoneChangeDetection(),
-    provideRouter(routes, withHashLocation(), withDebugTracing()),
+    provideRouter(routes, withHashLocation(), withComponentInputBinding(), withDebugTracing()),
     provideFaIcons(),
     provideHttpClient(withXhr(), withInterceptors([httpErrorInterceptor])),
     provideAnimations(),
