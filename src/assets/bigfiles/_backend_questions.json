@@ -1,0 +1,942 @@
+[
+  {
+    "level": "Junior",
+    "num": 1,
+    "title": "Mi a Minimal API, és miben különbözik az MVC controlleres megközelítéstől?"
+  },
+  {
+    "level": "Junior",
+    "num": 2,
+    "title": "Hogyan valósítanál meg CRUD végpontokat Minimal API-val?"
+  },
+  {
+    "level": "Junior",
+    "num": 3,
+    "title": "Mit jelent a REST API, és milyen HTTP igék tartoznak a tipikus CRUD műveletekhez?"
+  },
+  {
+    "level": "Junior",
+    "num": 4,
+    "title": "Milyen HTTP státuszkódokat vársz GET, POST, PUT és DELETE esetén?"
+  },
+  {
+    "level": "Junior",
+    "num": 5,
+    "title": "Melyik HTTP státuszkódot (result type) mikor használjuk API-kban?"
+  },
+  {
+    "level": "Junior",
+    "num": 6,
+    "title": "Mit ad vissza egy controller action `IActionResult`-ként GET esetén, ha van és ha nincs adat?"
+  },
+  {
+    "level": "Junior",
+    "num": 7,
+    "title": "Miért érdemes POST-nál `CreatedAtAction`-t használni `Ok` helyett?"
+  },
+  {
+    "level": "Junior",
+    "num": 8,
+    "title": "Mik a Dependency Injection lifetime-ok ASP.NET Core-ban?"
+  },
+  {
+    "level": "Junior",
+    "num": 9,
+    "title": "Mi a különbség Transient, Scoped és Singleton között gyakorlati példával?"
+  },
+  {
+    "level": "Junior",
+    "num": 10,
+    "title": "Mi a captive dependency probléma?"
+  },
+  {
+    "level": "Junior",
+    "num": 11,
+    "title": "Mikor használnál `IEnumerable<T>`-et `List<T>` helyett?"
+  },
+  {
+    "level": "Junior",
+    "num": 12,
+    "title": "Mi a különbség a `get`/`set`, az `init` és a `private set` között?"
+  },
+  {
+    "level": "Junior",
+    "num": 13,
+    "title": "Mi a különbség a `class`, `record` és `struct` között?"
+  },
+  {
+    "level": "Junior",
+    "num": 14,
+    "title": "Mikor célszerű `class`-t, `struct`-ot vagy `record`-ot használni?"
+  },
+  {
+    "level": "Junior",
+    "num": 15,
+    "title": "Mikor választanál `record`-ot DTO-hoz a `class` helyett?"
+  },
+  {
+    "level": "Junior",
+    "num": 16,
+    "title": "Mi az async/await lényege, és mikor használjuk API-kban?"
+  },
+  {
+    "level": "Junior",
+    "num": 17,
+    "title": "Miért kerüljük a `.Result` és `.Wait()` használatát async kódban?"
+  },
+  {
+    "level": "Junior",
+    "num": 18,
+    "title": "Mi a `CancellationToken`, és miért fontos API-kban?"
+  },
+  {
+    "level": "Junior",
+    "num": 19,
+    "title": "Hogyan adod át a `CancellationToken`-t Minimal API-ban és controllerben?"
+  },
+  {
+    "level": "Junior",
+    "num": 20,
+    "title": "Mi a különbség az EF Core `Add`, `Attach` és `Update` között?"
+  },
+  {
+    "level": "Junior",
+    "num": 21,
+    "title": "Melyek az EF Core Entity State-ek?"
+  },
+  {
+    "level": "Junior",
+    "num": 22,
+    "title": "Melyek a legfontosabb EF Core migrációs parancsok?"
+  },
+  {
+    "level": "Junior",
+    "num": 23,
+    "title": "Mi a különbség az INNER JOIN és a LEFT JOIN között SQL-ben?"
+  },
+  {
+    "level": "Junior",
+    "num": 24,
+    "title": "Hogyan írsz LEFT JOIN-t EF Core LINQ-ban?"
+  },
+  {
+    "level": "Junior",
+    "num": 25,
+    "title": "Mi a soft delete (logikai törlés) lényege EF Core-ban?"
+  },
+  {
+    "level": "Junior",
+    "num": 26,
+    "title": "Mi az ASP.NET Core middleware, és miért számít a sorrend?"
+  },
+  {
+    "level": "Junior",
+    "num": 27,
+    "title": "Mi a különbség a JWT, az OAuth és az OpenID Connect között?"
+  },
+  {
+    "level": "Junior",
+    "num": 28,
+    "title": "Mit jelent a SOLID SRP (Single Responsibility Principle)?"
+  },
+  {
+    "level": "Junior",
+    "num": 29,
+    "title": "Mit jelent a Dependency Inversion Principle (DIP)?"
+  },
+  {
+    "level": "Junior",
+    "num": 30,
+    "title": "Mi a különbség az xUnit `[Fact]` és `[Theory]` között?"
+  },
+  {
+    "level": "Junior",
+    "num": 31,
+    "title": "Mi az Arrange–Act–Assert (AAA) minta tesztekben?"
+  },
+  {
+    "level": "Junior",
+    "num": 32,
+    "title": "Hogyan használod a Moq-ot unit tesztben?"
+  },
+  {
+    "level": "Junior",
+    "num": 33,
+    "title": "Mi a különbség Mock, Stub és Fake között?"
+  },
+  {
+    "level": "Junior",
+    "num": 34,
+    "title": "Mi az extension method, és mikor hasznos?"
+  },
+  {
+    "level": "Junior",
+    "num": 35,
+    "title": "Mik a Nullable Reference Types (NRT), és mire jók?"
+  },
+  {
+    "level": "Junior",
+    "num": 36,
+    "title": "Mire való a Swagger / OpenAPI ASP.NET Core-ban?"
+  },
+  {
+    "level": "Junior",
+    "num": 37,
+    "title": "Mely gyűjtemények hash alapúak, és miért fontos az `Equals`/`GetHashCode`?"
+  },
+  {
+    "level": "Junior",
+    "num": 38,
+    "title": "Mit érdemes implementálni egy új, érték-szemantikájú C# típusban?"
+  },
+  {
+    "level": "Junior",
+    "num": 39,
+    "title": "Mi a file-scoped namespace, és mi az előnye?"
+  },
+  {
+    "level": "Junior",
+    "num": 40,
+    "title": "Mire való a `yield return`, és mikor hasznos?"
+  },
+  {
+    "level": "Junior",
+    "num": 41,
+    "title": "Mik az ASP.NET Core Health Check-ek, és mi a liveness vs readiness?"
+  },
+  {
+    "level": "Junior",
+    "num": 42,
+    "title": "Mi az Options Pattern, és miben különbözik az `IOptions`, `IOptionsSnapshot` és `IOptionsMonitor`?"
+  },
+  {
+    "level": "Junior",
+    "num": 43,
+    "title": "Mit csinál a RIGHT JOIN és a FULL OUTER JOIN?"
+  },
+  {
+    "level": "Junior",
+    "num": 44,
+    "title": "Mi a Cross Join, és miért kerüljük általában?"
+  },
+  {
+    "level": "Junior",
+    "num": 45,
+    "title": "Mi a különbség az `Include` és az `AsNoTracking` között EF Core lekérdezéseknél?"
+  },
+  {
+    "level": "Junior",
+    "num": 46,
+    "title": "Hogyan kapcsolódik a global query filter a soft delete-hez?"
+  },
+  {
+    "level": "Junior",
+    "num": 47,
+    "title": "Mikor használjunk sync, és mikor async API metódust?"
+  },
+  {
+    "level": "Junior",
+    "num": 48,
+    "title": "Hogyan segíti a `Task.WhenAll` a párhuzamos I/O-t?"
+  },
+  {
+    "level": "Junior",
+    "num": 49,
+    "title": "Mi történik xUnit-ban a teszt osztály konstruktorában és az `IDisposable.Dispose`-ban?"
+  },
+  {
+    "level": "Junior",
+    "num": 50,
+    "title": "Mit jelent az immutabilitás C#-ban, és milyen eszközökkel érhető el?"
+  },
+  {
+    "level": "Medior",
+    "num": 1,
+    "title": "Mi a Clean Architecture lényege, és mit jelent a Dependency Rule?"
+  },
+  {
+    "level": "Medior",
+    "num": 2,
+    "title": "Miben hasonlít és miben tér el a Hexagonal, az Onion és a Clean Architecture?"
+  },
+  {
+    "level": "Medior",
+    "num": 3,
+    "title": "Mi a Vertical Slice Architecture, és mikor előnyösebb a klasszikus rétegezésnél?"
+  },
+  {
+    "level": "Medior",
+    "num": 4,
+    "title": "Mi a CQRS alapgondolata, és mi a különbség a Command és a Query között?"
+  },
+  {
+    "level": "Medior",
+    "num": 5,
+    "title": "Hogyan segíti a MediatR a CQRS megvalósítását .NET-ben?"
+  },
+  {
+    "level": "Medior",
+    "num": 6,
+    "title": "Mi a Repository pattern szerepe, és milyen hibákat érdemes elkerülni?"
+  },
+  {
+    "level": "Medior",
+    "num": 7,
+    "title": "Mit jelent a Unit of Work mintázat EF Core mellett?"
+  },
+  {
+    "level": "Medior",
+    "num": 8,
+    "title": "Mi a Specification pattern, és mikor éri meg használni?"
+  },
+  {
+    "level": "Medior",
+    "num": 9,
+    "title": "Mi a Result pattern (Railway-Oriented Programming), és mikor használjuk exception helyett?"
+  },
+  {
+    "level": "Medior",
+    "num": 10,
+    "title": "Miben különbözik az Autofac a beépített MS DI-től medior szinten?"
+  },
+  {
+    "level": "Medior",
+    "num": 11,
+    "title": "Mi a különbség az IOptions, IOptionsSnapshot és IOptionsMonitor között?"
+  },
+  {
+    "level": "Medior",
+    "num": 12,
+    "title": "Hogyan modellezünk kapcsolatokat EF Core Fluent API-val?"
+  },
+  {
+    "level": "Medior",
+    "num": 13,
+    "title": "Mi az IEntityTypeConfiguration, és miért jobb, mint mindent az OnModelCreatingbe írni?"
+  },
+  {
+    "level": "Medior",
+    "num": 14,
+    "title": "Mit tudnak az EF Core global query filterek?"
+  },
+  {
+    "level": "Medior",
+    "num": 15,
+    "title": "Mire valók az EF Core interceptorok?"
+  },
+  {
+    "level": "Medior",
+    "num": 16,
+    "title": "Hogyan működik az optimista konkurenciakezelés EF Core-ban?"
+  },
+  {
+    "level": "Medior",
+    "num": 17,
+    "title": "Mi a különbség a TPH, TPT és TPC öröklési stratégiák között?"
+  },
+  {
+    "level": "Medior",
+    "num": 18,
+    "title": "Melyek az alapvető EF Core teljesítmény-technikák (AsNoTracking, Include, projekció)?"
+  },
+  {
+    "level": "Medior",
+    "num": 19,
+    "title": "Miért használjunk IHttpClientFactory-t, és hogyan jön képbe a Polly?"
+  },
+  {
+    "level": "Medior",
+    "num": 20,
+    "title": "Hogyan működik a Circuit Breaker minta, és miért fontos?"
+  },
+  {
+    "level": "Medior",
+    "num": 21,
+    "title": "Milyen caching stratégiákat ismersz ASP.NET Core-ban?"
+  },
+  {
+    "level": "Medior",
+    "num": 22,
+    "title": "Mi a HybridCache, és milyen problémát old meg?"
+  },
+  {
+    "level": "Medior",
+    "num": 23,
+    "title": "Miért fontos a middleware pipeline sorrendje ASP.NET Core-ban?"
+  },
+  {
+    "level": "Medior",
+    "num": 24,
+    "title": "Mi a ProblemDetails, és hogyan illeszkedik a globális kivételkezeléshez?"
+  },
+  {
+    "level": "Medior",
+    "num": 25,
+    "title": "Mit jelent a strukturált logolás ILogger/Serilog esetén?"
+  },
+  {
+    "level": "Medior",
+    "num": 26,
+    "title": "Mi a Correlation ID szerepe, és hogyan valósítjuk meg?"
+  },
+  {
+    "level": "Medior",
+    "num": 27,
+    "title": "Miért kell API versioning, és milyen stratégiák vannak?"
+  },
+  {
+    "level": "Medior",
+    "num": 28,
+    "title": "Hogyan működnek az authorization policy-k és a claim-ek ASP.NET Core-ban?"
+  },
+  {
+    "level": "Medior",
+    "num": 29,
+    "title": "Mi a különbség az IHostedService és a BackgroundService között?"
+  },
+  {
+    "level": "Medior",
+    "num": 30,
+    "title": "Mire való a Quartz.NET a BackgroundService mellett?"
+  },
+  {
+    "level": "Medior",
+    "num": 31,
+    "title": "Mikor használjunk SignalR-t, és mi a lényege?"
+  },
+  {
+    "level": "Medior",
+    "num": 32,
+    "title": "Mik a gRPC alapjai .NET-ben a REST-hez képest?"
+  },
+  {
+    "level": "Medior",
+    "num": 33,
+    "title": "Hogyan illeszkedik a FluentValidation egy MediatR pipeline-ba?"
+  },
+  {
+    "level": "Medior",
+    "num": 34,
+    "title": "Miben jobb a Mapperly az AutoMapperhez képest, és mikor ne mapeljünk?"
+  },
+  {
+    "level": "Medior",
+    "num": 35,
+    "title": "Mi a Test Data Builder és az Object Mother különbsége?"
+  },
+  {
+    "level": "Medior",
+    "num": 36,
+    "title": "Mire való a WebApplicationFactory integrációs teszteknél?"
+  },
+  {
+    "level": "Medior",
+    "num": 37,
+    "title": "Mi a REPR pattern, és hogyan kapcsolódik a Minimal API-hoz?"
+  },
+  {
+    "level": "Medior",
+    "num": 38,
+    "title": "Mi a Service Collection Extension pattern, és miért hasznos?"
+  },
+  {
+    "level": "Medior",
+    "num": 39,
+    "title": "Mikor válasszunk Kafka-t, és mikor RabbitMQ-t?"
+  },
+  {
+    "level": "Medior",
+    "num": 40,
+    "title": "Mit ad a MassTransit az üzenetküldéshez .NET-ben?"
+  },
+  {
+    "level": "Medior",
+    "num": 41,
+    "title": "Mit jelent az idempotency API-kban, és miért fontos?"
+  },
+  {
+    "level": "Medior",
+    "num": 42,
+    "title": "Mi az Outbox pattern lényege?"
+  },
+  {
+    "level": "Medior",
+    "num": 43,
+    "title": "Mik a soft delete best practice-ek EF Core-ban?"
+  },
+  {
+    "level": "Medior",
+    "num": 44,
+    "title": "Mikor érdemes Dapperrel hibrid perzisztenciát használni EF Core mellett?"
+  },
+  {
+    "level": "Medior",
+    "num": 45,
+    "title": "Hogyan működik a rate limiting és az output caching .NET-ben?"
+  },
+  {
+    "level": "Medior",
+    "num": 46,
+    "title": "Mik a keyed services .NET 8-ban, és milyen problémát oldanak meg?"
+  },
+  {
+    "level": "Medior",
+    "num": 47,
+    "title": "Hogyan kapcsolódik egymáshoz a Vertical Slice, a CQRS és a REPR egy medior szintű architektúrában?"
+  },
+  {
+    "level": "Medior",
+    "num": 48,
+    "title": "Milyen sorrendben gondolkodnál egy új .NET API medior szintű „alapvázán”?"
+  },
+  {
+    "level": "Senior",
+    "num": 1,
+    "title": "Mi a Saga minta, és miért nem elég a 2PC mikroszolgáltatások között?"
+  },
+  {
+    "level": "Senior",
+    "num": 2,
+    "title": "Mi a különbség a Saga orchestration és choreography között?"
+  },
+  {
+    "level": "Senior",
+    "num": 3,
+    "title": "Hogyan valósítod meg a choreography-alapú Sagát MassTransittal?"
+  },
+  {
+    "level": "Senior",
+    "num": 4,
+    "title": "Mi az Outbox pattern, és milyen hibát előz meg?"
+  },
+  {
+    "level": "Senior",
+    "num": 5,
+    "title": "Mi az Inbox pattern, és hogyan ad „effectively-once” szemantikát?"
+  },
+  {
+    "level": "Senior",
+    "num": 6,
+    "title": "Mit jelent az eventual consistency, és hogyan kezeld a UI-n?"
+  },
+  {
+    "level": "Senior",
+    "num": 7,
+    "title": "Magyarázd el a CAP-tételt és a PACELC kiegészítést a gyakorlatban!"
+  },
+  {
+    "level": "Senior",
+    "num": 8,
+    "title": "Mi az Event Sourcing, és mikor használd Martent?"
+  },
+  {
+    "level": "Senior",
+    "num": 9,
+    "title": "Mi a különbség a domain event és az integration event között?"
+  },
+  {
+    "level": "Senior",
+    "num": 10,
+    "title": "Melyek az event-driven integrációs stílusok (Fowler), és mikor melyik?"
+  },
+  {
+    "level": "Senior",
+    "num": 11,
+    "title": "Hogyan verziózd az üzenet-szerződéseket törés nélkül?"
+  },
+  {
+    "level": "Senior",
+    "num": 12,
+    "title": "Kafka: mi a topic, partition, offset, consumer group szerepe?"
+  },
+  {
+    "level": "Senior",
+    "num": 13,
+    "title": "Mit okoz a Kafka rebalance, és hogyan kerüld el a dupla feldolgozást?"
+  },
+  {
+    "level": "Senior",
+    "num": 14,
+    "title": "Hogyan kezeled a poison message-et Kafkán (DLQ, retry topic)?"
+  },
+  {
+    "level": "Senior",
+    "num": 15,
+    "title": "RabbitMQ: exchange, binding, routing key – mikor melyik exchange típus?"
+  },
+  {
+    "level": "Senior",
+    "num": 16,
+    "title": "Mikor válassz Kafkát és mikor RabbitMQ-t?"
+  },
+  {
+    "level": "Senior",
+    "num": 17,
+    "title": "MassTransit: mi a különbség a Publish és a Send között?"
+  },
+  {
+    "level": "Senior",
+    "num": 18,
+    "title": "Hogyan működik a MassTransit saga state machine?"
+  },
+  {
+    "level": "Senior",
+    "num": 19,
+    "title": "MassTransit hibakezelés: retry vs. redelivery vs. error queue?"
+  },
+  {
+    "level": "Senior",
+    "num": 20,
+    "title": "Hogyan oldod meg, hogy háttérjob ne fusson le többször több példányon?"
+  },
+  {
+    "level": "Senior",
+    "num": 21,
+    "title": "Mit ad az OpenTelemetry .NET-ben, és hogyan tartsd össze a trace-t brokeren át?"
+  },
+  {
+    "level": "Senior",
+    "num": 22,
+    "title": "Mi az SLI, SLO és error budget, és hogyan riassz?"
+  },
+  {
+    "level": "Senior",
+    "num": 23,
+    "title": "Hogyan vidd végig a Correlation ID-t API → üzenet → worker úton?"
+  },
+  {
+    "level": "Senior",
+    "num": 24,
+    "title": "Polly v8 / Microsoft.Extensions.Resilience: mi a standard pipeline sorrendje?"
+  },
+  {
+    "level": "Senior",
+    "num": 25,
+    "title": "Milyen rugalmassági minták kellenek a circuit breakeren túl?"
+  },
+  {
+    "level": "Senior",
+    "num": 26,
+    "title": "Mi a BFF és az API Gateway különbsége? Hol jön be a YARP?"
+  },
+  {
+    "level": "Senior",
+    "num": 27,
+    "title": "Mi az Aggregator pattern, és miben különbözik a BFF-től / Gateway-től?"
+  },
+  {
+    "level": "Senior",
+    "num": 28,
+    "title": "Mi az Anti-Corruption Layer, és hol helyezed el?"
+  },
+  {
+    "level": "Senior",
+    "num": 29,
+    "title": "Hogyan működik a Strangler Fig migráció?"
+  },
+  {
+    "level": "Senior",
+    "num": 30,
+    "title": "Modular monolith vs. mikroszolgáltatás – mikor melyik?"
+  },
+  {
+    "level": "Senior",
+    "num": 31,
+    "title": "Milyen adatbázis-stratégiákat ismersz mikroszolgáltatásoknál?"
+  },
+  {
+    "level": "Senior",
+    "num": 32,
+    "title": "Hogyan tervezel multi-tenancy-t .NET-ben?"
+  },
+  {
+    "level": "Senior",
+    "num": 33,
+    "title": "Mire jók a feature flagek, és milyen csapdáik vannak?"
+  },
+  {
+    "level": "Senior",
+    "num": 34,
+    "title": "Hogyan validálod a konfigurációt és kezeled a titkokat élesben?"
+  },
+  {
+    "level": "Senior",
+    "num": 35,
+    "title": "Optimista vs. pesszimista konkurencia – mikor melyik, és hogyan throttle-ölj?"
+  },
+  {
+    "level": "Senior",
+    "num": 36,
+    "title": "ValueTask, thread pool starvation, fire-and-forget – mik a senior szintű csapdák?"
+  },
+  {
+    "level": "Senior",
+    "num": 37,
+    "title": "Mit ad a Testcontainers, a contract testing és az architektúra teszt a piramisban?"
+  },
+  {
+    "level": "Senior",
+    "num": 38,
+    "title": "Docker multi-stage és K8s probe-ok – mi a .NET szempontból kritikus?"
+  },
+  {
+    "level": "Senior",
+    "num": 39,
+    "title": "Hogyan futtatsz EF migrációt éles CI/CD-ben nulla leállással?"
+  },
+  {
+    "level": "Senior",
+    "num": 40,
+    "title": "Mi szerepel egy senior API biztonsági checklisten (PII, zero trust, mTLS)?"
+  },
+  {
+    "level": "Senior",
+    "num": 41,
+    "title": "Rich vs. anemic domain, aggregátumhatárok – mit vár el a DDD?"
+  },
+  {
+    "level": "Senior",
+    "num": 42,
+    "title": "Native AOT, trimming, benchmark – mit kell tudni senior szinten?"
+  },
+  {
+    "level": "Senior",
+    "num": 43,
+    "title": "Channels és IAsyncEnumerable – mikor melyiket, és mi a csapda?"
+  },
+  {
+    "level": "Senior",
+    "num": 44,
+    "title": "Duende IdentityServer / saját IdP – hogyan hitelesítesz szolgáltatások között?"
+  },
+  {
+    "level": "Senior",
+    "num": 45,
+    "title": "MassTransit EF Outbox – miért kapcsold be adatbázis-írással együtt?"
+  },
+  {
+    "level": "Senior",
+    "num": 46,
+    "title": "Mi a különbség az at-most-once, at-least-once és exactly-once között?"
+  },
+  {
+    "level": "Senior",
+    "num": 47,
+    "title": "Hogyan kezeled a PII-t a naplókban és span attribútumokban?"
+  },
+  {
+    "level": "Senior",
+    "num": 48,
+    "title": "Zero trust mikroszolgáltatásoknál: mTLS, token-propagáció, NetworkPolicy – hogyan rakod össze?"
+  },
+  {
+    "level": "Staff",
+    "num": 1,
+    "title": "Mi az architektúra eróziója, és miért veszélyesebb, mint egy egyszeri „rossz döntés”?"
+  },
+  {
+    "level": "Staff",
+    "num": 2,
+    "title": "Mi az ADR szerepe egy nagyobb szervezetben, és mikor kell újraírni?"
+  },
+  {
+    "level": "Staff",
+    "num": 3,
+    "title": "Milyen heurisztikákkal döntesz szolgáltatás-határról staff szinten?"
+  },
+  {
+    "level": "Staff",
+    "num": 4,
+    "title": "Honnan ismered fel a distributed monolithot?"
+  },
+  {
+    "level": "Staff",
+    "num": 5,
+    "title": "Mikor NE válassz mikroszolgáltatásokat, és miért Modular Monolith?"
+  },
+  {
+    "level": "Staff",
+    "num": 6,
+    "title": "Hogyan kényszeríted ki a modulhatárokat modular monolithban?"
+  },
+  {
+    "level": "Staff",
+    "num": 7,
+    "title": "Magyarázd el a CAP-tételt úgy, ahogy éles rendszerben döntést hozol!"
+  },
+  {
+    "level": "Staff",
+    "num": 8,
+    "title": "Milyen konzisztencia-modelleket vár el staff szinten egy .NET platformtól?"
+  },
+  {
+    "level": "Staff",
+    "num": 9,
+    "title": "Miért kerülendő a 2PC mikroszolgáltatások között, és mi a gyakorlati recept?"
+  },
+  {
+    "level": "Staff",
+    "num": 10,
+    "title": "Hogyan tervezel event store sémát és snapshot stratégiát?"
+  },
+  {
+    "level": "Staff",
+    "num": 11,
+    "title": "Mikor NE kezdd event sourcinggal a domaint?"
+  },
+  {
+    "level": "Staff",
+    "num": 12,
+    "title": "Hogyan kezeled a szolgáltatásközi üzenetsorrendet nagy skálán?"
+  },
+  {
+    "level": "Staff",
+    "num": 13,
+    "title": "Hogyan oldod meg a duplikált kézbesítést skálán („effectively once”)?"
+  },
+  {
+    "level": "Staff",
+    "num": 14,
+    "title": "Sidecar, Ambassador és Service Mesh — mikor melyik, és hol a Dapr helye?"
+  },
+  {
+    "level": "Staff",
+    "num": 15,
+    "title": "Mikor választasz serverless mikroszolgáltatásokat, és mi a trade-off?"
+  },
+  {
+    "level": "Staff",
+    "num": 16,
+    "title": "Hogyan építesz observability stratégiát SLO/SLI és error budget mentén?"
+  },
+  {
+    "level": "Staff",
+    "num": 17,
+    "title": "Hogyan gondolkodsz production incidentnél staff/principal szinten?"
+  },
+  {
+    "level": "Staff",
+    "num": 18,
+    "title": "Mi az Aspire szerepe a platformvízióban, és mi nem az?"
+  },
+  {
+    "level": "Staff",
+    "num": 19,
+    "title": "Hogyan közelítesz multi-region / resilience stratégiához backend platformon?"
+  },
+  {
+    "level": "Staff",
+    "num": 20,
+    "title": "Mit jelent a zero trust mikroszolgáltatásoknál?"
+  },
+  {
+    "level": "Staff",
+    "num": 21,
+    "title": "Token-propagáció vs token exchange — mikor melyiket választod?"
+  },
+  {
+    "level": "Staff",
+    "num": 22,
+    "title": "Hogyan pozicionálod a Duende IdentityServer / saját IdP stratégiát?"
+  },
+  {
+    "level": "Staff",
+    "num": 23,
+    "title": "Hogyan vezetnél Strangler Fig migrációs programot szervezeti szinten?"
+  },
+  {
+    "level": "Staff",
+    "num": 24,
+    "title": "BFF vs API Gateway — hogyan döntesz topológiáról?"
+  },
+  {
+    "level": "Staff",
+    "num": 25,
+    "title": "Database per service vs shared DB — mi a staff szintű trade-off?"
+  },
+  {
+    "level": "Staff",
+    "num": 26,
+    "title": "Hogyan skálázod a CQRS olvasási oldalt szervezeti szinten?"
+  },
+  {
+    "level": "Staff",
+    "num": 27,
+    "title": "Soft delete, GDPR és PII governance — hogyan egyezteted össze?"
+  },
+  {
+    "level": "Staff",
+    "num": 28,
+    "title": "Hogyan használod az architektúra teszteket szervezeti politikaként?"
+  },
+  {
+    "level": "Staff",
+    "num": 29,
+    "title": "Miért kötelező Central Package Management multi-repo/multi-project platformon?"
+  },
+  {
+    "level": "Staff",
+    "num": 30,
+    "title": "Mikor vezetnél be Native AOT-ot platformstratégiaként?"
+  },
+  {
+    "level": "Staff",
+    "num": 31,
+    "title": "Hogyan tervezed a caching tier-eket HybridCache-szel?"
+  },
+  {
+    "level": "Staff",
+    "num": 32,
+    "title": "Miért tekinted a rate limitinget termékpolitikának, nem csak middleware-nek?"
+  },
+  {
+    "level": "Staff",
+    "num": 33,
+    "title": "Kafka vs RabbitMQ — hogyan választasz platformszabványt?"
+  },
+  {
+    "level": "Staff",
+    "num": 34,
+    "title": "Milyen Kafka platform-szabályokat kötnél ki sorrend és skálázás miatt?"
+  },
+  {
+    "level": "Staff",
+    "num": 35,
+    "title": "Wolverine vs MassTransit vs MediatR — hogyan döntesz ökoszisztémáról?"
+  },
+  {
+    "level": "Staff",
+    "num": 36,
+    "title": "Milyen tanulságokat hozol az eShopOnContainers / .NET reference architektúrákból?"
+  },
+  {
+    "level": "Staff",
+    "num": 37,
+    "title": "Hogyan alkalmazod a Bounded Context / DDD stratégiai tervezést platformszinten?"
+  },
+  {
+    "level": "Staff",
+    "num": 38,
+    "title": "Milyen backend API következményei vannak a micro frontendnek?"
+  },
+  {
+    "level": "Staff",
+    "num": 39,
+    "title": "Miért választasz szét persistence és domain entitást hosszú távon?"
+  },
+  {
+    "level": "Staff",
+    "num": 40,
+    "title": "Mikor és hogyan alkalmazol Anti-Corruption Layert?"
+  },
+  {
+    "level": "Staff",
+    "num": 41,
+    "title": "Choreography vs orchestration saga — hogyan döntesz nagy programban?"
+  },
+  {
+    "level": "Staff",
+    "num": 42,
+    "title": "Hogyan verzióznád az üzenet-szerződéseket platformszabványként?"
+  }
+]

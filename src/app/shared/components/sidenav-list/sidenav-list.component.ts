@@ -120,6 +120,12 @@ export class SidenavListComponent implements OnInit {
                 icon: 'pi pi-book',
                 styleclass: 'side-menu-item-style',
                 routerLink: 'playground/components/mersenne'
+              },
+              {
+                label: 'Learning Check',
+                icon: 'pi pi-book',
+                styleclass: 'side-menu-item-style',
+                routerLink: 'playground/components/learning-check'
               }
             ]
           }

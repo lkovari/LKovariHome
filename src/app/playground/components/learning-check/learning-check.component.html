@@ -1,0 +1,177 @@
+<div class="learning-check">
+  <div class="learning-check__header">
+    <h1 class="learning-check__title">Learning Check</h1>
+    <p class="learning-check__subtitle">
+      Multiple-choice interview check for Angular or .NET C#
+    </p>
+  </div>
+
+  @if (store.phase() === 'setup') {
+    <section class="learning-check__panel" aria-label="Setup">
+      <div class="learning-check__step">
+        <h2 class="learning-check__step-title">What it checks</h2>
+        <div class="learning-check__choices">
+          <button
+            mat-stroked-button
+            type="button"
+            class="learning-check__choice"
+            [class.learning-check__choice--active]="store.domain() === 'angular'"
+            (click)="selectDomain('angular')"
+          >
+            Angular
+          </button>
+          <button
+            mat-stroked-button
+            type="button"
+            class="learning-check__choice"
+            [class.learning-check__choice--active]="store.domain() === 'dotnet'"
+            (click)="selectDomain('dotnet')"
+          >
+            .NET C#
+          </button>
+        </div>
+      </div>
+
+      @if (store.domain()) {
+        <div class="learning-check__step">
+          <h2 class="learning-check__step-title">Seniority level</h2>
+          <div class="learning-check__choices">
+            @for (level of seniorityLevels; track level) {
+              <button
+                mat-stroked-button
+                type="button"
+                class="learning-check__choice"
+                [class.learning-check__choice--active]="store.seniority() === level"
+                (click)="selectSeniority(level)"
+              >
+                {{ level }}
+              </button>
+            }
+          </div>
+        </div>
+      }
+
+      @if (store.prepareStatus() === 'loading') {
+        <p class="learning-check__status" role="status">Preparing questions…</p>
+      }
+
+      @if (store.prepareStatus() === 'error') {
+        <div class="learning-check__error" role="alert">
+          <p>{{ store.errorMessage() }}</p>
+          <button mat-stroked-button type="button" (click)="store.retryPrepare()">
+            Retry
+          </button>
+        </div>
+      }
+
+      @if (store.prepareStatus() === 'ready') {
+        <div class="learning-check__step">
+          <h2 class="learning-check__step-title">Question count</h2>
+          <p class="learning-check__hint">
+            {{ domainLabel(store.domain()) }} · {{ store.seniority() }} · pool
+            {{ store.poolSize() }}
+          </p>
+          <mat-form-field appearance="outline" class="learning-check__count-field">
+            <mat-label>Questions ({{ minQuestionCount }}–{{ store.poolSize() }})</mat-label>
+            <input
+              matInput
+              type="number"
+              [ngModel]="store.questionCount()"
+              (ngModelChange)="onQuestionCountChange($event)"
+              [min]="minQuestionCount"
+              [max]="store.poolSize()"
+            />
+          </mat-form-field>
+        </div>
+      }
+
+      <div class="learning-check__actions">
+        <button
+          mat-flat-button
+          color="primary"
+          type="button"
+          [disabled]="!store.canStart()"
+          (click)="store.start()"
+        >
+          Start
+        </button>
+      </div>
+    </section>
+  }
+
+  @if (store.phase() === 'quiz' && store.currentQuestion(); as question) {
+    <section class="learning-check__panel" aria-label="Quiz">
+      <div class="learning-check__progress">{{ store.progressLabel() }}</div>
+      <h2 class="learning-check__question">{{ question.question }}</h2>
+      <div class="learning-check__options" role="radiogroup" aria-label="Answer options">
+        @for (option of question.options; track $index) {
+          <button
+            type="button"
+            class="learning-check__option"
+            role="radio"
+            [attr.aria-checked]="store.currentSelection() === $index"
+            [class.learning-check__option--selected]="store.currentSelection() === $index"
+            (click)="store.selectOption($index)"
+          >
+            <span class="learning-check__option-letter">{{ $index + 1 }}</span>
+            <span class="learning-check__option-text">{{ option }}</span>
+          </button>
+        }
+      </div>
+      <div class="learning-check__actions">
+        <button
+          mat-flat-button
+          color="primary"
+          type="button"
+          [disabled]="store.currentSelection() === null"
+          (click)="store.goNextOrFinish()"
+        >
+          {{ store.isLastQuestion() ? 'Finish' : 'Next' }}
+        </button>
+      </div>
+    </section>
+  }
+
+  @if (store.phase() === 'results') {
+    <section class="learning-check__panel" aria-label="Results">
+      <p class="learning-check__score">{{ store.scorePercent() }}%</p>
+      <p class="learning-check__score-caption">correct</p>
+
+      @if (store.wrongAnswers().length === 0) {
+        <p class="learning-check__hint">No wrong answers — great work.</p>
+      } @else {
+        <h2 class="learning-check__step-title">Wrong answers</h2>
+        <ul class="learning-check__wrong-list">
+          @for (item of store.wrongAnswers(); track item.num + item.level) {
+            <li class="learning-check__wrong-item">
+              <p class="learning-check__wrong-question">{{ item.question }}</p>
+              <p class="learning-check__wrong-selected">
+                Your answer: {{ item.selectedAnswer }}
+              </p>
+              <p class="learning-check__wrong-correct">
+                Correct answer: {{ item.correctAnswer }}
+              </p>
+              @if (item.documentation) {
+                <a
+                  class="learning-check__doc-link"
+                  [href]="item.documentation"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Documentation
+                </a>
+              }
+            </li>
+          }
+        </ul>
+      }
+
+      <div class="learning-check__actions">
+        <button mat-flat-button color="primary" type="button" (click)="store.resetToSetup()">
+          Try again
+        </button>
+        <a mat-stroked-button routerLink="/layout-pages/home">Back to home</a>
+      </div>
+    </section>
+  }
+</div>

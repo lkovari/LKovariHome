@@ -1,0 +1,1002 @@
+[
+  {
+    "level": "Junior",
+    "num": 1,
+    "title": "Mi a különbség a `let`, `const` és a `var` között?"
+  },
+  {
+    "level": "Junior",
+    "num": 2,
+    "title": "Mit jelent a strict equality (`===`) a `==`-hez képest?"
+  },
+  {
+    "level": "Junior",
+    "num": 3,
+    "title": "Mi az a closure JavaScriptben?"
+  },
+  {
+    "level": "Junior",
+    "num": 4,
+    "title": "Mi a különbség az arrow function és a normál függvény `this` kötése között?"
+  },
+  {
+    "level": "Junior",
+    "num": 5,
+    "title": "Mik a JavaScript primitív típusok?"
+  },
+  {
+    "level": "Junior",
+    "num": 6,
+    "title": "Mi a különbség az `unknown` és az `any` között TypeScriptben?"
+  },
+  {
+    "level": "Junior",
+    "num": 7,
+    "title": "Mit csinál az `interface` és a `type` TypeScriptben?"
+  },
+  {
+    "level": "Junior",
+    "num": 8,
+    "title": "Mi az a generic TypeScriptben?"
+  },
+  {
+    "level": "Junior",
+    "num": 9,
+    "title": "Mi a CSS specificity, és hogyan számoljuk?"
+  },
+  {
+    "level": "Junior",
+    "num": 10,
+    "title": "Mik a fő CSS combinatorok, és mit jelentenek?"
+  },
+  {
+    "level": "Junior",
+    "num": 11,
+    "title": "Mi a különbség a `position: relative`, `absolute`, `fixed` és `sticky` között?"
+  },
+  {
+    "level": "Junior",
+    "num": 12,
+    "title": "Mi a Flexbox fő célja, és melyek a legfontosabb tulajdonságai?"
+  },
+  {
+    "level": "Junior",
+    "num": 13,
+    "title": "Mikor használjunk CSS Gridet Flexbox helyett?"
+  },
+  {
+    "level": "Junior",
+    "num": 14,
+    "title": "Mi a különbség a `px`, `rem`, `em`, `%`, `vh`/`vw` egységek között?"
+  },
+  {
+    "level": "Junior",
+    "num": 15,
+    "title": "Mi az a CSS custom property, és miben különbözik az SCSS változótól?"
+  },
+  {
+    "level": "Junior",
+    "num": 16,
+    "title": "Mi az SCSS, és miben segít a sima CSS-hez képest?"
+  },
+  {
+    "level": "Junior",
+    "num": 17,
+    "title": "Mi a különbség az SCSS `@import` és `@use` között?"
+  },
+  {
+    "level": "Junior",
+    "num": 18,
+    "title": "Mi az Angular komponens?"
+  },
+  {
+    "level": "Junior",
+    "num": 19,
+    "title": "Milyen data binding típusok vannak Angularban?"
+  },
+  {
+    "level": "Junior",
+    "num": 20,
+    "title": "Mi a különbség az `@Input()` / `@Output()` és a modern `input()` / `output()` között?"
+  },
+  {
+    "level": "Junior",
+    "num": 21,
+    "title": "Mi a pipe szerepe Angularban?"
+  },
+  {
+    "level": "Junior",
+    "num": 22,
+    "title": "Mi a különbség a strukturális és az attribútum direktíva között?"
+  },
+  {
+    "level": "Junior",
+    "num": 23,
+    "title": "Mi az `@if` és a `[hidden]` különbsége?"
+  },
+  {
+    "level": "Junior",
+    "num": 24,
+    "title": "Miért kell `track` az `@for`-nál?"
+  },
+  {
+    "level": "Junior",
+    "num": 25,
+    "title": "Mi az `ng-container`, `ng-template` és `ng-content` szerepe?"
+  },
+  {
+    "level": "Junior",
+    "num": 26,
+    "title": "Mi az Observable RxJS-ben?"
+  },
+  {
+    "level": "Junior",
+    "num": 27,
+    "title": "Mi a különbség a cold és a hot Observable között?"
+  },
+  {
+    "level": "Junior",
+    "num": 28,
+    "title": "Mi a különbség a Subject, BehaviorSubject, ReplaySubject és AsyncSubject között?"
+  },
+  {
+    "level": "Junior",
+    "num": 29,
+    "title": "Mit csinál a `map`, `filter` és a `tap` operátor?"
+  },
+  {
+    "level": "Junior",
+    "num": 30,
+    "title": "Mit csinál a `debounceTime` és a `distinctUntilChanged`?"
+  },
+  {
+    "level": "Junior",
+    "num": 31,
+    "title": "Mi a Dependency Injection Angularban?"
+  },
+  {
+    "level": "Junior",
+    "num": 32,
+    "title": "Mit jelent a `@Injectable({ providedIn: 'root' })`?"
+  },
+  {
+    "level": "Junior",
+    "num": 33,
+    "title": "Hogyan adunk át route paramétert Angularban?"
+  },
+  {
+    "level": "Junior",
+    "num": 34,
+    "title": "Mi a PathLocationStrategy és a HashLocationStrategy különbsége?"
+  },
+  {
+    "level": "Junior",
+    "num": 35,
+    "title": "Mire való az `ngOnInit` és az `ngOnDestroy`?"
+  },
+  {
+    "level": "Junior",
+    "num": 36,
+    "title": "Mit jelent a ViewEncapsulation Emulated, None és ShadowDom?"
+  },
+  {
+    "level": "Junior",
+    "num": 37,
+    "title": "Mi a különbség a template-driven és a reactive forms között?"
+  },
+  {
+    "level": "Junior",
+    "num": 38,
+    "title": "Mik a beépített Angular validátorok, és hol használjuk őket?"
+  },
+  {
+    "level": "Junior",
+    "num": 39,
+    "title": "Mi az async pipe, és miért hasznos?"
+  },
+  {
+    "level": "Junior",
+    "num": 40,
+    "title": "Mi a standalone komponens, és miért vált alapértelmezetté?"
+  },
+  {
+    "level": "Junior",
+    "num": 41,
+    "title": "Mi a kapcsolata a `*ngIf` / `*ngFor` és az új `@if` / `@for` control flow-nak?"
+  },
+  {
+    "level": "Junior",
+    "num": 42,
+    "title": "Mit jelent a semantic HTML, és miért fontos?"
+  },
+  {
+    "level": "Junior",
+    "num": 43,
+    "title": "Mi a `:hover`, `:focus` és `:focus-visible` szerepe?"
+  },
+  {
+    "level": "Junior",
+    "num": 44,
+    "title": "Mi az event bubbling, és mit csinál a `stopPropagation`?"
+  },
+  {
+    "level": "Junior",
+    "num": 45,
+    "title": "Mi a Promise, és miben különbözik az Observable-től?"
+  },
+  {
+    "level": "Junior",
+    "num": 46,
+    "title": "Mi a `typeof null` furcsasága, és hogyan ellenőrizzünk nullt helyesen?"
+  },
+  {
+    "level": "Junior",
+    "num": 47,
+    "title": "Mire valók a TypeScript utility type-ok: `Partial`, `Pick`, `Omit`, `Readonly`?"
+  },
+  {
+    "level": "Junior",
+    "num": 48,
+    "title": "Hogyan hivatkozunk a sablonban egy DOM elemre, és hogyan érjük el a kódból?"
+  },
+  {
+    "level": "Junior",
+    "num": 49,
+    "title": "Mi a különbség a `display: none` és a `visibility: hidden` között?"
+  },
+  {
+    "level": "Junior",
+    "num": 50,
+    "title": "Mi az AOT fordítás Angularban, és miért az alapértelmezett?"
+  },
+  {
+    "level": "Medior",
+    "num": 1,
+    "title": "Mi az OnPush change detection, és mikor fut le?"
+  },
+  {
+    "level": "Medior",
+    "num": 2,
+    "title": "Mik a change detection öt fő triggerje Zone.js mellett?"
+  },
+  {
+    "level": "Medior",
+    "num": 3,
+    "title": "Magyarázd el a `switchMap`, `mergeMap`, `concatMap` és `exhaustMap` különbségét?"
+  },
+  {
+    "level": "Medior",
+    "num": 4,
+    "title": "Mikor NEM jó választás a `switchMap`?"
+  },
+  {
+    "level": "Medior",
+    "num": 5,
+    "title": "Mi a különbség a `forkJoin`, `combineLatest`, `withLatestFrom` és a `zip` között?"
+  },
+  {
+    "level": "Medior",
+    "num": 6,
+    "title": "Mi a nested `subscribe` antipattern, és mi a megoldás?"
+  },
+  {
+    "level": "Medior",
+    "num": 7,
+    "title": "Hogyan előzzük meg a memory leaket Observable-nél Angularban?"
+  },
+  {
+    "level": "Medior",
+    "num": 8,
+    "title": "Mi a guardok tipikus hívási sorrendje navigációnál?"
+  },
+  {
+    "level": "Medior",
+    "num": 9,
+    "title": "Mi a különbség a `canMatch` és a `canActivate` között?"
+  },
+  {
+    "level": "Medior",
+    "num": 10,
+    "title": "Mik a DI resolution modifier-ek (`@Optional`, `@Self`, `@SkipSelf`, `@Host`), és mire valók?"
+  },
+  {
+    "level": "Medior",
+    "num": 11,
+    "title": "Mi a különbség a `providers` és a `viewProviders` között?"
+  },
+  {
+    "level": "Medior",
+    "num": 12,
+    "title": "Mi a különbség a `@ViewChild` és a `@ContentChild` között?"
+  },
+  {
+    "level": "Medior",
+    "num": 13,
+    "title": "Mi a content projection, az `ngProjectAs` és a fallback tartalom?"
+  },
+  {
+    "level": "Medior",
+    "num": 14,
+    "title": "Mikor használjunk pure, és mikor impure pipe-ot?"
+  },
+  {
+    "level": "Medior",
+    "num": 15,
+    "title": "Mi a különbség a `FormGroup.value` és a `getRawValue()` között?"
+  },
+  {
+    "level": "Medior",
+    "num": 16,
+    "title": "Mik azok a Typed Forms (v14+), és miért jobbak a régieknél?"
+  },
+  {
+    "level": "Medior",
+    "num": 17,
+    "title": "Mi a ControlValueAccessor, és mikor kell implementálni?"
+  },
+  {
+    "level": "Medior",
+    "num": 18,
+    "title": "Hogyan működik a funkcionális HTTP interceptor (v15+)?"
+  },
+  {
+    "level": "Medior",
+    "num": 19,
+    "title": "Mi a `DestroyRef` és az injection context, és miért fontosak?"
+  },
+  {
+    "level": "Medior",
+    "num": 20,
+    "title": "Mi a `signal`, a `computed` és az `effect` szerepe, és mit ne tegyünk `effect`-ben?"
+  },
+  {
+    "level": "Medior",
+    "num": 21,
+    "title": "Mire valók az `input()`, `output()` és `model()` API-k?"
+  },
+  {
+    "level": "Medior",
+    "num": 22,
+    "title": "Mi a döntési szabály a `toSignal` / `toObservable` és az RxJS vs Signals között?"
+  },
+  {
+    "level": "Medior",
+    "num": 23,
+    "title": "Hogyan érdemes SCSS architektúrát felépíteni (tokens, base, utilities, themes)?"
+  },
+  {
+    "level": "Medior",
+    "num": 24,
+    "title": "Miért legyen a design token CSS custom property, ne SCSS `$változó`?"
+  },
+  {
+    "level": "Medior",
+    "num": 25,
+    "title": "Miért kerülendő a `::ng-deep`, és mi a helyette való megoldás?"
+  },
+  {
+    "level": "Medior",
+    "num": 26,
+    "title": "Mit jelent a Flexboxban a `flex-grow`, `flex-shrink` és a `flex-basis`?"
+  },
+  {
+    "level": "Medior",
+    "num": 27,
+    "title": "Mit jelent a CSS Gridben az `fr` egység és a `minmax` függvény?"
+  },
+  {
+    "level": "Medior",
+    "num": 28,
+    "title": "Hogyan kerüljük el a CSS specificity „háborút” a gyakorlatban?"
+  },
+  {
+    "level": "Medior",
+    "num": 29,
+    "title": "Mi a Directive Composition API (v15+), és milyen problémát old meg?"
+  },
+  {
+    "level": "Medior",
+    "num": 30,
+    "title": "Mi az `ngOptimizedImage` kötelező követelménye, és miért?"
+  },
+  {
+    "level": "Medior",
+    "num": 31,
+    "title": "Mi a `@defer` (v17+), és milyen triggerei vannak?"
+  },
+  {
+    "level": "Medior",
+    "num": 32,
+    "title": "Mi a Facade service minta, és mikor érdemes használni?"
+  },
+  {
+    "level": "Medior",
+    "num": 33,
+    "title": "Mi a különbség a smart (container) és a dumb (presentational) komponens között?"
+  },
+  {
+    "level": "Medior",
+    "num": 34,
+    "title": "Hogyan tesztelsz aszinkron kódot Angularban zone-alapú és zoneless környezetben?"
+  },
+  {
+    "level": "Medior",
+    "num": 35,
+    "title": "Mi a RouterTestingHarness (v14+), és miért jobb a kézi router-tesztelésnél?"
+  },
+  {
+    "level": "Medior",
+    "num": 36,
+    "title": "Mi a `share` / `shareReplay` szerepe, és mire kell vigyázni?"
+  },
+  {
+    "level": "Medior",
+    "num": 37,
+    "title": "Hogyan használd helyesen a `catchError` és a `retry` operátorokat?"
+  },
+  {
+    "level": "Medior",
+    "num": 38,
+    "title": "Mi a secondary routing (named outlet), és mikor használjuk?"
+  },
+  {
+    "level": "Medior",
+    "num": 39,
+    "title": "Mi a preloading strategy, és hogyan kapcsolódik a `@defer` prefetchhez?"
+  },
+  {
+    "level": "Medior",
+    "num": 40,
+    "title": "Mi az XSS, és hogyan véd az Angular alapból?"
+  },
+  {
+    "level": "Medior",
+    "num": 41,
+    "title": "Mi a különbség a `@HostBinding`/`@HostListener` és a `host: {}` objektum között?"
+  },
+  {
+    "level": "Medior",
+    "num": 42,
+    "title": "Mi az `exportAs`, és hogyan használjuk a sablonban?"
+  },
+  {
+    "level": "Medior",
+    "num": 43,
+    "title": "Mit jelent az `updateOn: 'blur' | 'submit'` a reactive formsban?"
+  },
+  {
+    "level": "Medior",
+    "num": 44,
+    "title": "Mi a Tailwind + Angular view encapsulation gyakori buktatója?"
+  },
+  {
+    "level": "Medior",
+    "num": 45,
+    "title": "Mire való a `:host` és a `:host-context()` a komponensstílusokban?"
+  },
+  {
+    "level": "Medior",
+    "num": 46,
+    "title": "Mi a `track` / `trackBy` teljesítményhatása listáknál?"
+  },
+  {
+    "level": "Medior",
+    "num": 47,
+    "title": "Mi a monkey patching, és hol találkozol vele Angularban?"
+  },
+  {
+    "level": "Medior",
+    "num": 48,
+    "title": "Mit csinál a TypeScript `satisfies` operátor?"
+  },
+  {
+    "level": "Medior",
+    "num": 49,
+    "title": "Hogyan kezeled a `null` és `undefined` értékeket Angular sablonban?"
+  },
+  {
+    "level": "Medior",
+    "num": 50,
+    "title": "Mi a TitleStrategy szerepe, és miért jobb, mint a kézi `title` állítgatás?"
+  },
+  {
+    "level": "Senior",
+    "num": 1,
+    "title": "Mit jelent a zoneless change detection, és mit vált fel a Zone.js helyett?"
+  },
+  {
+    "level": "Senior",
+    "num": 2,
+    "title": "Miért lett az OnPush az alapértelmezett stratégia (v22+), és mi az Eager?"
+  },
+  {
+    "level": "Senior",
+    "num": 3,
+    "title": "Magyarázd el a signal reaktív kontextust és az `untracked` szerepét?"
+  },
+  {
+    "level": "Senior",
+    "num": 4,
+    "title": "Mit jelent a glitch-free behavior a signaloknál?"
+  },
+  {
+    "level": "Senior",
+    "num": 5,
+    "title": "Hogyan tervezel signal graphot (állapot → derived → resource → UI)?"
+  },
+  {
+    "level": "Senior",
+    "num": 6,
+    "title": "Mikor használd a `resource`, az `rxResource` és az `httpResource` API-t?"
+  },
+  {
+    "level": "Senior",
+    "num": 7,
+    "title": "Mikor maradjon RxJS, és mikor válassz signalokat (interop döntés)?"
+  },
+  {
+    "level": "Senior",
+    "num": 8,
+    "title": "Hogyan építesz fel egy production typeahead streamet higher-order mappinggel (cancel + error)?"
+  },
+  {
+    "level": "Senior",
+    "num": 9,
+    "title": "Mi a `linkedSignal` (v19/v20), és milyen use case-re való?"
+  },
+  {
+    "level": "Senior",
+    "num": 10,
+    "title": "Mikor válassz NgRx Signal Store-t a classic NgRx Store helyett?"
+  },
+  {
+    "level": "Senior",
+    "num": 11,
+    "title": "Mi az `rxMethod` a Signal Store-ban, és miért jobb a nyers subscribe-nál?"
+  },
+  {
+    "level": "Senior",
+    "num": 12,
+    "title": "Miért érdemes entity managementet / normalizálást használni Signal Store-ban?"
+  },
+  {
+    "level": "Senior",
+    "num": 13,
+    "title": "Mi az incremental hydration SSR mellett, és miért jobb a teljes hydratációnál?"
+  },
+  {
+    "level": "Senior",
+    "num": 14,
+    "title": "Mi az Event Replay a hydratációnál, és milyen UX problémát old meg?"
+  },
+  {
+    "level": "Senior",
+    "num": 15,
+    "title": "Hybrid rendering mellett mikor válassz SSR-t, SSG/prerender-t vagy CSR-t?"
+  },
+  {
+    "level": "Senior",
+    "num": 16,
+    "title": "Hogyan csökkented a main chunk méretét Angular alkalmazásban?"
+  },
+  {
+    "level": "Senior",
+    "num": 17,
+    "title": "Hogyan keresel performance bottlenecket Angularban a gyakorlatban?"
+  },
+  {
+    "level": "Senior",
+    "num": 18,
+    "title": "Hogyan diagnosztizálsz memory leaket Angular frontendben?"
+  },
+  {
+    "level": "Senior",
+    "num": 19,
+    "title": "Milyen frontend biztonsági rétegeket alkalmazol XSS ellen (CSP, Trusted Types, sanitization)?"
+  },
+  {
+    "level": "Senior",
+    "num": 20,
+    "title": "Hogyan építesz modern auth mintát guard + interceptor + RedirectCommand kombinációval?"
+  },
+  {
+    "level": "Senior",
+    "num": 21,
+    "title": "Mikor használd az `afterRender` / `afterNextRender` API-t `ngAfterViewInit` helyett?"
+  },
+  {
+    "level": "Senior",
+    "num": 22,
+    "title": "Miért érdemes route-szintű `providers`-t használni feature service-ekhez?"
+  },
+  {
+    "level": "Senior",
+    "num": 23,
+    "title": "Mit jelent a vertical slicing / modulith architektúra Angularban?"
+  },
+  {
+    "level": "Senior",
+    "num": 24,
+    "title": "Hogyan jelenik meg a SOLID elv a napi Angular kódban, és milyen példákat mondanál?"
+  },
+  {
+    "level": "Senior",
+    "num": 25,
+    "title": "Hogyan alkalmazod az Adapter, Strategy és Facade mintákat Angularban?"
+  },
+  {
+    "level": "Senior",
+    "num": 26,
+    "title": "Mi a különbség a CDK a11y primitívek és az Angular Aria (v21+) között?"
+  },
+  {
+    "level": "Senior",
+    "num": 27,
+    "title": "Milyen i18n stratégiákat ismersz Angularban, és mik a trade-offok?"
+  },
+  {
+    "level": "Senior",
+    "num": 28,
+    "title": "Milyen döntési szempontok vannak PWA / Service Worker bevezetésénél?"
+  },
+  {
+    "level": "Senior",
+    "num": 29,
+    "title": "Mikor indokolt Web Worker használata Angular alkalmazásban?"
+  },
+  {
+    "level": "Senior",
+    "num": 30,
+    "title": "Mit ad a HttpClient `withFetch` és a keepalive opció?"
+  },
+  {
+    "level": "Senior",
+    "num": 31,
+    "title": "Hogyan tervezel globális hibakezelést correlation ID-val?"
+  },
+  {
+    "level": "Senior",
+    "num": 32,
+    "title": "Mi a különbség az ElementInjector és az EnvironmentInjector között?"
+  },
+  {
+    "level": "Senior",
+    "num": 33,
+    "title": "Hogyan hozol létre dinamikus komponenst a modern Angular API-val?"
+  },
+  {
+    "level": "Senior",
+    "num": 34,
+    "title": "Mit változtatnak a Signal Forms (v21+/v22) a reactive forms-hoz képest?"
+  },
+  {
+    "level": "Senior",
+    "num": 35,
+    "title": "Mit jelent a csapatnak, hogy a Vitest lett az alapértelmezett tesztkeretrendszer (v21)?"
+  },
+  {
+    "level": "Senior",
+    "num": 36,
+    "title": "Mit tegyél E2E (Playwright) tesztbe, és mit hagyj unit/component szinten?"
+  },
+  {
+    "level": "Senior",
+    "num": 37,
+    "title": "Mire való a `provideAppInitializer` és az environment initializer?"
+  },
+  {
+    "level": "Senior",
+    "num": 38,
+    "title": "Hogyan kerülöd el a property drillinget DI tokennel, CSS változóval vagy content projectionnel?"
+  },
+  {
+    "level": "Senior",
+    "num": 39,
+    "title": "Hogyan építesz vegyes SCSS + design token + Tailwind stratégiát?"
+  },
+  {
+    "level": "Senior",
+    "num": 40,
+    "title": "Mikor válassz `@container` query-t media query helyett?"
+  },
+  {
+    "level": "Senior",
+    "num": 41,
+    "title": "Miért vezessük ki a CommonJS (CJS) függőségeket az Angular buildből?"
+  },
+  {
+    "level": "Senior",
+    "num": 42,
+    "title": "Hogyan debuggolsz Angular runtime error kódokat (NG0xxx)?"
+  },
+  {
+    "level": "Senior",
+    "num": 43,
+    "title": "Mit tud az új `animate.enter` / `animate.leave` animációs API?"
+  },
+  {
+    "level": "Senior",
+    "num": 44,
+    "title": "Hogyan kapcsolod be a Router view transition animációkat, és mire való?"
+  },
+  {
+    "level": "Senior",
+    "num": 45,
+    "title": "Hogyan állítasz fel korszerű code quality toolingt (ESLint flat config, Prettier, Husky)?"
+  },
+  {
+    "level": "Senior",
+    "num": 46,
+    "title": "Mikor használd a `detectChanges()`-t és mikor a `markForCheck()`-et?"
+  },
+  {
+    "level": "Senior",
+    "num": 47,
+    "title": "Mikor szabad a `DomSanitizer.bypassSecurityTrust*` metódusokat használni?"
+  },
+  {
+    "level": "Senior",
+    "num": 48,
+    "title": "Miért érdemes feature flaget `canMatch`-csel és lazy load-dal kombinálni?"
+  },
+  {
+    "level": "Senior",
+    "num": 49,
+    "title": "Mikor legyen az URL a source of truth a UI állapotra (filter, pagination)?"
+  },
+  {
+    "level": "Senior",
+    "num": 50,
+    "title": "Hogyan terveznél Angular upgrade stratégiát v14-ről v20+/v22 felé?"
+  },
+  {
+    "level": "Staff",
+    "num": 1,
+    "title": "Hogyan döntesz micro-frontend mellett vagy ellen egy szervezetben?"
+  },
+  {
+    "level": "Staff",
+    "num": 2,
+    "title": "Milyen fő kockázatai vannak a Native Federation shell/remote felállásnak?"
+  },
+  {
+    "level": "Staff",
+    "num": 3,
+    "title": "Milyen kommunikációs mintákat ajánlasz micro-frontendek között, és melyeket kerülnéd?"
+  },
+  {
+    "level": "Staff",
+    "num": 4,
+    "title": "Mikor érdemes Web Components / Angular Elements absztrakciót használni MFE helyett vagy mellett?"
+  },
+  {
+    "level": "Staff",
+    "num": 5,
+    "title": "Hogyan kényszeríted ki az Nx monorepo library határait, hogy ne csak dokumentáció legyen az architektúra?"
+  },
+  {
+    "level": "Staff",
+    "num": 6,
+    "title": "Mit jelent az „affected” elv CI/CD-ben Angular monorepónál, és miért kritikus?"
+  },
+  {
+    "level": "Staff",
+    "num": 7,
+    "title": "Hogyan vezetnél be zoneless change detectiont egy nagy legacy Angular appban?"
+  },
+  {
+    "level": "Staff",
+    "num": 8,
+    "title": "Kötelező-e az SSR minden B2B Angular alkalmazásra, és hogyan indokolnád a platform döntést?"
+  },
+  {
+    "level": "Staff",
+    "num": 9,
+    "title": "Hogyan governance-elnéd a design system tokeneket, SCSS-t és komponens API-t több termékcsapatnál?"
+  },
+  {
+    "level": "Staff",
+    "num": 10,
+    "title": "Hogyan mérnéd és javítanád a Core Web Vitals-t egy Angular appban?"
+  },
+  {
+    "level": "Staff",
+    "num": 11,
+    "title": "Forensic architecture analysis során mit nézel meg először egy ismeretlen Angular monorepóban?"
+  },
+  {
+    "level": "Staff",
+    "num": 12,
+    "title": "Hogyan csökkented a backend API törő változtatásainak hatását a frontendeken?"
+  },
+  {
+    "level": "Staff",
+    "num": 13,
+    "title": "Hogyan alakítasz ki multi-team code ownershipot Angular monorepóban?"
+  },
+  {
+    "level": "Staff",
+    "num": 14,
+    "title": "Mikor választanád szervezetileg a classic NgRx Store-t a Signal Store helyett?"
+  },
+  {
+    "level": "Staff",
+    "num": 15,
+    "title": "Hogyan kodifikálnád a RxJS higher-order mapping sztenderdet a csapatban?"
+  },
+  {
+    "level": "Staff",
+    "num": 16,
+    "title": "Mit jelent az error budget / reliability a frontend oldalon, és milyen metrikákat követsz?"
+  },
+  {
+    "level": "Staff",
+    "num": 17,
+    "title": "Mit tartalmaznál egy SPA security review checklistben release előtt?"
+  },
+  {
+    "level": "Staff",
+    "num": 18,
+    "title": "Hogyan skálázod az i18n folyamatot 10+ locale esetén?"
+  },
+  {
+    "level": "Staff",
+    "num": 19,
+    "title": "Milyen akadálymentességi (a11y) acceptance criteria-t tennél a termék Definition of Done-jába, és hogyan ellenőriznéd őket?"
+  },
+  {
+    "level": "Staff",
+    "num": 20,
+    "title": "Hogyan kényszeríted ki a bundle size budgetet a CI-ben, hogy performance regresszió ne csússzon be?"
+  },
+  {
+    "level": "Staff",
+    "num": 21,
+    "title": "Hogyan vezetnél szervezeti migrációs programot NgModule-ról standalone-re?"
+  },
+  {
+    "level": "Staff",
+    "num": 22,
+    "title": "Hogyan vezetnél be signal-first architektúrát legacy RxJS-heavy appba?"
+  },
+  {
+    "level": "Staff",
+    "num": 23,
+    "title": "Hogyan döntesz `@defer`, lazy route és micro-frontend között (döntési mátrix)?"
+  },
+  {
+    "level": "Staff",
+    "num": 24,
+    "title": "Milyen shared library versioning stratégiákat ismersz monorepóban, és mik a trade-offok?"
+  },
+  {
+    "level": "Staff",
+    "num": 25,
+    "title": "Milyen elemekből állna egy frontend observability stack, és miért kell a backend trace-hez kötni?"
+  },
+  {
+    "level": "Staff",
+    "num": 26,
+    "title": "Hogyan kezelnéd a „framework churn”-t (gyors Angular feature hullám v17–v22 között)?"
+  },
+  {
+    "level": "Staff",
+    "num": 27,
+    "title": "Milyen governance szabályokat vezetnél be AI-assisted Angular fejlesztéshez (MCP, agent skills)?"
+  },
+  {
+    "level": "Staff",
+    "num": 28,
+    "title": "Hogyan osztanád meg a felelősséget platform team és product team között Angular ökoszisztémában?"
+  },
+  {
+    "level": "Staff",
+    "num": 29,
+    "title": "Milyen szervezeti és technikai hatása van a hydration mismatch-nek, és hogyan előzöd meg?"
+  },
+  {
+    "level": "Staff",
+    "num": 30,
+    "title": "Mikor vezetnél be BFF-et (Backend for Frontend) az Angular kliens elé?"
+  },
+  {
+    "level": "Staff",
+    "num": 31,
+    "title": "Hogyan nézne ki a tesztpiramis nagy szervezet Angular monorepójában?"
+  },
+  {
+    "level": "Staff",
+    "num": 32,
+    "title": "Milyen frontend „architecture fitness functions” példákat automatizálnál?"
+  },
+  {
+    "level": "Staff",
+    "num": 33,
+    "title": "Hogyan terveznéd az SCSS/token architektúrát dark mode és white-label mellett skálán?"
+  },
+  {
+    "level": "Staff",
+    "num": 34,
+    "title": "Hogyan szerveznél dependency upgrade train-t (Angular + TypeScript + RxJS + Node)?"
+  },
+  {
+    "level": "Staff",
+    "num": 35,
+    "title": "Hogyan dokumentálod a frontend architektúra döntéseket ADR-ben?"
+  },
+  {
+    "level": "Staff",
+    "num": 36,
+    "title": "Hogyan kezelnéd a shell micro-frontend single point of failure kockázatát?"
+  },
+  {
+    "level": "Staff",
+    "num": 37,
+    "title": "Milyen adatvédelmi (PII) szabályokat vezetnél be a frontend logokra és a RUM-ra?"
+  },
+  {
+    "level": "Staff",
+    "num": 38,
+    "title": "Hogyan egyezteted a design tokeneket a Figma/design és a kód között hosszú távon?"
+  },
+  {
+    "level": "Staff",
+    "num": 39,
+    "title": "Milyen migrációs elveket követnél Signal Forms + Resource API hosszú távú bevezetésénél?"
+  },
+  {
+    "level": "Staff",
+    "num": 40,
+    "title": "Miért kezeled a developer experience-t first-class product metrikaként a frontend platformon?"
+  },
+  {
+    "level": "Staff",
+    "num": 41,
+    "title": "Hogyan kezelnéd a csapatok közötti RxJS vs Signals skill gapet?"
+  },
+  {
+    "level": "Staff",
+    "num": 42,
+    "title": "Mikor tennéd org-szinten kötelezővé a Zone.js teljes kikapcsolását?"
+  },
+  {
+    "level": "Staff",
+    "num": 43,
+    "title": "Hogyan igazítanád a belső frontend platform roadmapet az Angular hivatalos roadmaphez?"
+  },
+  {
+    "level": "Staff",
+    "num": 44,
+    "title": "Mi a frontend incident response lépéssor production UI outage esetén?"
+  },
+  {
+    "level": "Staff",
+    "num": 45,
+    "title": "Hogyan csökkented a vendor lock-in kockázatát state/UI library körül?"
+  },
+  {
+    "level": "Staff",
+    "num": 46,
+    "title": "Milyen architektúra döntéseket hoznál óriási listák (10k+ sor) megjelenítésénél?"
+  },
+  {
+    "level": "Staff",
+    "num": 47,
+    "title": "Mikor válassz runtime theme-et (CSS vars) és mikor compile-time white-label buildet multi-brand esetén?"
+  },
+  {
+    "level": "Staff",
+    "num": 48,
+    "title": "Hogyan építenéd be az a11y és security compliance-t a Definition of Done-ba?"
+  },
+  {
+    "level": "Staff",
+    "num": 49,
+    "title": "Milyen szempontok alapján értékelnél egy Senior → Staff promotiont frontend oldalon?"
+  },
+  {
+    "level": "Staff",
+    "num": 50,
+    "title": "Hogyan állítanál fel egy 90 napos tervet egy legacy Angular 14 alkalmazás modern (v20+) platformmá alakítására?"
+  }
+]

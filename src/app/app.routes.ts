@@ -116,6 +116,13 @@ export const routes: Routes = [
             m => m.MersenneComponent
           ),
       },
+      {
+        path: 'playground/components/learning-check',
+        loadComponent: () =>
+          import('./playground/components/learning-check/learning-check.component').then(
+            m => m.LearningCheckComponent
+          ),
+      },
     ],
   },
   {
