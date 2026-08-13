@@ -3,17 +3,31 @@
     <h1 class="knowledge-base-title">{{ pageTitle() }}</h1>
   </header>
 
-  @if (safePdfUrl(); as pdfUrl) {
-    <div class="knowledge-base-viewer">
-      <iframe
-        class="knowledge-base-iframe"
-        [src]="pdfUrl"
-        [attr.title]="pageTitle()"
-      ></iframe>
-    </div>
-  }
+  <div class="knowledge-base-viewer" #viewer>
+    @if (loading()) {
+      <p class="knowledge-base-status">Loading PDF…</p>
+    }
+
+    @if (errorMessage(); as message) {
+      <div class="knowledge-base-error">
+        <p>{{ message }}</p>
+        @if (pdfHref(); as href) {
+          <a mat-flat-button color="primary" [href]="href" target="_blank" rel="noopener noreferrer">
+            Open PDF
+          </a>
+        }
+      </div>
+    }
+
+    <div class="knowledge-base-pages" #pagesHost></div>
+  </div>
 
   <footer class="knowledge-base-footer">
+    @if (pdfHref(); as href) {
+      <a mat-stroked-button [href]="href" target="_blank" rel="noopener noreferrer">
+        Open PDF
+      </a>
+    }
     <button mat-flat-button color="primary" type="button" [routerLink]="['/layout-pages/home']">
       Back
     </button>
