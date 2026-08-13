@@ -67,6 +67,7 @@
     "ngx-clipboard": "^16.0.0",
     "ngx-cookie-service": "^22.0.0",
     "ngx-window-token": "^7.0.0",
+    "pdfjs-dist": "4.10.38",
     "primeicons": "^7.0.0",
     "primeng": "^21.1.9",
     "rxjs": "~7.8.1",
