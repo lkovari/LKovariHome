@@ -32,7 +32,15 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "ignore": [
+                  "bigfiles/frontend-knowledge-base.md",
+                  "bigfiles/backend-knowledge-base.md"
+                ],
+                "output": "/assets"
+              }
             ],
             "styles": [
               "node_modules/bootstrap/scss/bootstrap.scss",
@@ -42,6 +50,9 @@
             ],
             "scripts": [],
             "browser": "src/main.ts",
+            "loader": {
+              ".md": "text"
+            },
             "stylePreprocessorOptions": {
               "sass": {
                 "silenceDeprecations": ["color-functions", "global-builtin", "import", "if-function"]

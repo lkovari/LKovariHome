@@ -6,6 +6,7 @@ import { provideHttpClient, withInterceptors, withXhr } from '@angular/common/ht
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
+import { MARKED_EXTENSIONS, provideMarkdown } from 'ngx-markdown';
 
 import { environment } from './environments/environment';
 import { AppComponent } from './app/app.component';
@@ -13,6 +14,7 @@ import { routes } from './app/app.routes';
 import { httpErrorInterceptor } from './app/shared/services/error-handler/http-error.interceptor';
 import { GlobalErrorHandlerService } from './app/shared/services/error-handler/global-error-handler.service';
 import { provideFaIcons } from './app/shared/fa-icons.initializer';
+import { pandocHeadingIdExtension } from './app/layout-pages/display-knowledge-base/pandoc-heading-id.extension';
 
 if (environment.production) {
   enableProdMode();
@@ -24,6 +26,15 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes, withHashLocation(), withComponentInputBinding(), withDebugTracing()),
     provideFaIcons(),
     provideHttpClient(withXhr(), withInterceptors([httpErrorInterceptor])),
+    provideMarkdown({
+      markedExtensions: [
+        {
+          provide: MARKED_EXTENSIONS,
+          useFactory: pandocHeadingIdExtension,
+          multi: true,
+        },
+      ],
+    }),
     provideAnimations(),
     provideAnimationsAsync(),
     providePrimeNG({

@@ -3,31 +3,27 @@
     <h1 class="knowledge-base-title">{{ pageTitle() }}</h1>
   </header>
 
-  <div class="knowledge-base-viewer" #viewer>
+  <div class="knowledge-base-viewer" #viewer (click)="onViewerClick($event)">
     @if (loading()) {
-      <p class="knowledge-base-status">Loading PDF…</p>
+      <p class="knowledge-base-status">Loading…</p>
     }
 
     @if (errorMessage(); as message) {
       <div class="knowledge-base-error">
         <p>{{ message }}</p>
-        @if (pdfHref(); as href) {
-          <a mat-flat-button color="primary" [href]="href" target="_blank" rel="noopener noreferrer">
-            Open PDF
-          </a>
-        }
       </div>
     }
 
-    <div class="knowledge-base-pages" #pagesHost></div>
+    @if (markdown(); as content) {
+      <markdown
+        class="knowledge-base-markdown"
+        [data]="content"
+        [disableSanitizer]="true"
+      ></markdown>
+    }
   </div>
 
   <footer class="knowledge-base-footer">
-    @if (pdfHref(); as href) {
-      <a mat-stroked-button [href]="href" target="_blank" rel="noopener noreferrer">
-        Open PDF
-      </a>
-    }
     <button mat-flat-button color="primary" type="button" [routerLink]="['/layout-pages/home']">
       Back
     </button>
