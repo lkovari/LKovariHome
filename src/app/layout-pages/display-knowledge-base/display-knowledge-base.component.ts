@@ -11,67 +11,119 @@ import {
   untracked,
   viewChild,
 } from '@angular/core';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { MarkdownComponent } from 'ngx-markdown';
+import { FirebaseError } from 'firebase/app';
+import { KnowledgeBaseFirestoreService } from './knowledge-base-firestore.service';
+import {
+  NetworkLoadError,
+  networkLoadTimeoutMs,
+  withTimeout,
+} from '../../shared/services/network-load/network-load-timeout';
+import { WaitSpinnerService } from '../../shared/services/wait-spinner/wait-spinner.service';
 
-interface KnowledgeBaseEntry {
-  title: string;
-  load: () => Promise<{ default: string }>;
-}
-
-const KNOWLEDGE_BASES: Record<string, KnowledgeBaseEntry> = {
-  angular: {
-    title: 'My collected knowledge base of Angular',
-    load: () => import('../../../assets/bigfiles/frontend-knowledge-base.md'),
-  },
-  dotnet: {
-    title: 'My collected knowledge base of .NET and C#',
-    load: () => import('../../../assets/bigfiles/backend-knowledge-base.md'),
-  },
+const KNOWLEDGE_BASE_TITLES: Record<string, string> = {
+  angular: 'My collected knowledge base of Angular',
+  dotnet: 'My collected knowledge base of .NET and C#',
 };
+
+const EMAIL_SESSION_KEY = 'knowledgeBaseEmail';
 
 @Component({
   selector: 'app-display-knowledge-base',
   templateUrl: './display-knowledge-base.component.html',
   styleUrl: './display-knowledge-base.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, RouterLink, MarkdownComponent],
+  imports: [
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    RouterLink,
+    MarkdownComponent,
+  ],
 })
 export class DisplayKnowledgeBaseComponent {
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly knowledgeBaseStore = inject(KnowledgeBaseFirestoreService);
+  private readonly waitSpinner = inject(WaitSpinnerService);
 
   readonly kind = input.required<string>();
   readonly viewer = viewChild<ElementRef<HTMLElement>>('viewer');
 
-  readonly entry = computed(() => KNOWLEDGE_BASES[this.kind()] ?? null);
-  readonly pageTitle = computed(() => this.entry()?.title ?? '');
+  readonly pageTitle = computed(
+    () => KNOWLEDGE_BASE_TITLES[this.kind()] ?? '',
+  );
+  readonly emailControl = new FormControl('', {
+    nonNullable: true,
+    validators: [Validators.required, Validators.email],
+  });
+  readonly accessEmail = signal('');
   readonly markdown = signal('');
-  readonly loading = signal(false);
   readonly errorMessage = signal('');
 
   private loadGeneration = 0;
 
   constructor() {
+    const storedEmail = sessionStorage.getItem(EMAIL_SESSION_KEY);
+    if (storedEmail) {
+      this.emailControl.setValue(storedEmail);
+      if (this.emailControl.valid) {
+        this.accessEmail.set(storedEmail);
+      }
+    }
+
     this.destroyRef.onDestroy(() => {
       this.loadGeneration += 1;
     });
 
     effect(() => {
-      const entry = this.entry();
-      if (!entry) {
+      const kind = this.kind();
+      const title = KNOWLEDGE_BASE_TITLES[kind];
+      if (!title) {
         untracked(() => {
           void this.router.navigate(['/not-found']);
         });
         return;
       }
 
+      const accessEmail = this.accessEmail();
+      if (!accessEmail) {
+        return;
+      }
+
       const generation = ++this.loadGeneration;
       untracked(() => {
-        void this.loadMarkdown(entry, generation);
+        void this.loadMarkdown(kind, accessEmail, generation);
       });
     });
+  }
+
+  submitEmail(event: Event): void {
+    event.preventDefault();
+    this.emailControl.markAsTouched();
+    if (this.emailControl.invalid) {
+      return;
+    }
+
+    const value = this.emailControl.value.trim().toLowerCase();
+    sessionStorage.setItem(EMAIL_SESSION_KEY, value);
+    this.accessEmail.set(value);
+  }
+
+  retryLoad(): void {
+    const kind = this.kind();
+    const accessEmail = this.accessEmail();
+    if (!KNOWLEDGE_BASE_TITLES[kind] || !accessEmail) {
+      return;
+    }
+    const generation = ++this.loadGeneration;
+    void this.loadMarkdown(kind, accessEmail, generation);
   }
 
   onViewerClick(event: MouseEvent): void {
@@ -112,32 +164,73 @@ export class DisplayKnowledgeBaseComponent {
   }
 
   private async loadMarkdown(
-    entry: KnowledgeBaseEntry,
+    kind: string,
+    email: string,
     generation: number,
   ): Promise<void> {
-    this.loading.set(true);
     this.errorMessage.set('');
     this.markdown.set('');
+    this.waitSpinner.begin();
 
     try {
-      const module = await entry.load();
+      if (!navigator.onLine) {
+        throw new NetworkLoadError(
+          'offline',
+          'You appear to be offline. Check your connection and try again.',
+        );
+      }
+
+      const document = await withTimeout(
+        this.knowledgeBaseStore.getKnowledgeBase(kind),
+        networkLoadTimeoutMs(),
+      );
       if (generation !== this.loadGeneration) {
         return;
       }
-      this.markdown.set(module.default);
+      if (!document) {
+        this.errorMessage.set('The knowledge base was not found.');
+        return;
+      }
+
+      this.markdown.set(document.markdown);
+      void this.knowledgeBaseStore
+        .logAccess({
+          email,
+          locale: navigator.language || document.locale,
+          knowledgeBaseId: kind,
+        })
+        .catch(() => undefined);
     } catch (error: unknown) {
       if (generation !== this.loadGeneration) {
         return;
       }
-      const message =
-        error instanceof Error
-          ? error.message
-          : 'Failed to load the knowledge base.';
-      this.errorMessage.set(message);
+      this.errorMessage.set(knowledgeBaseLoadMessage(error));
     } finally {
-      if (generation === this.loadGeneration) {
-        this.loading.set(false);
-      }
+      this.waitSpinner.end();
     }
   }
+}
+
+function knowledgeBaseLoadMessage(error: unknown): string {
+  if (error instanceof NetworkLoadError) {
+    return error.message;
+  }
+
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+    return 'You appear to be offline. Check your connection and try again.';
+  }
+
+  if (error instanceof FirebaseError) {
+    if (error.code === 'permission-denied') {
+      return 'The knowledge base could not be loaded (permission denied).';
+    }
+    if (
+      error.code === 'unavailable' ||
+      error.code === 'deadline-exceeded'
+    ) {
+      return 'The knowledge base could not be loaded. Check your connection and try again.';
+    }
+  }
+
+  return 'The knowledge base could not be loaded. Please try again.';
 }

@@ -2,11 +2,176 @@
 
 All notable changes to the Knowledge Base display feature are documented here.
 
-Entries are listed in reverse chronological order (newest first).
+Entries are listed in reverse chronological order (newest first). All dated entries below are **Released / Deployed**.
 
 ---
 
-## [Unreleased] — 2026-08-14
+## [Released] — 2026-08-15 — Deployed — Adaptive Firestore load timeout
+
+### Network-aware timeout for knowledge-base Markdown
+
+`getDoc` for `knowledgeBases/{kind}` no longer waits forever. The wait spinner is always released in `finally`. If the load exceeds a timeout derived from the Network Information API, the overlay hides and a Retry-capable error is shown.
+
+#### Timeouts (`networkLoadTimeoutMs`)
+
+The spec’s `navigator.connection.effectiveType` is `slow-2g` | `2g` | `3g` | `4g` (there is no `'5g'` value). Fast 5G/Wi‑Fi is approximated as `4g` plus `downlink >= 10` Mbps.
+
+| Detected quality | Timeout | Spinner |
+|------------------|---------|---------|
+| Offline (`navigator.onLine === false`) | Immediate fail (no wait) | Off |
+| `slow-2g` | 60 s | Off after timeout |
+| `2g`, or `saveData` | 45 s | Off after timeout |
+| `3g` | 20 s | Off after timeout |
+| `4g` | 12 s | Off after timeout |
+| `4g` and downlink ≥ 10 Mbps (5G-class) | 8 s | Off after timeout |
+| API missing (typical desktop) | 15 s | Off after timeout |
+
+Implementation: `withTimeout(getKnowledgeBase(), networkLoadTimeoutMs())` in `src/app/shared/services/network-load/network-load-timeout.ts`.
+
+#### User-facing load errors
+
+| Situation | Message |
+|-----------|---------|
+| Offline | You appear to be offline. Check your connection and try again. |
+| Timeout | The knowledge base took too long to load on this network. Check your connection and try again. |
+| Missing / empty document | The knowledge base was not found. |
+| Firestore `permission-denied` | The knowledge base could not be loaded (permission denied). |
+| Firestore `unavailable` / `deadline-exceeded` | The knowledge base could not be loaded. Check your connection and try again. |
+| Anything else | The knowledge base could not be loaded. Please try again. |
+
+Raw Firebase exception text is not shown. Each error includes a **Retry** button (`retryLoad()`).
+
+Access logging (`accessLogs`) runs **after** the Markdown is on screen and does **not** hold the spinner. Log failures are ignored so a logging outage cannot block reading.
+
+---
+
+## [Released] — 2026-08-15 — Deployed
+
+### Load knowledge-base Markdown from Firestore; email gate; global wait spinner
+
+Moved the Angular and .NET knowledge bases out of the GitHub repository and onto a dedicated Firebase project. Viewing a knowledge base now requires an email address. Long-running loads use a global overlay spinner with a ref-count so concurrent callers share one spinner.
+
+#### Motivation
+
+- Markdown sources in `src/assets/bigfiles/` were still reachable from the public GitHub repo even after `ngx-markdown` replaced PDF.js.
+- Spark-plan **Cloud Storage** is not available (Blaze required since 2026-02-03). Firestore on Spark can store the Markdown as string fields (1 MiB per document). The Frontend (~391 KB) and Backend (~631 KB) files fit in one document each.
+- A format-only email check does not prove the mailbox exists; it is enough to record who opened the viewer. Existence would require a confirmation link (Firebase Auth), which is not part of this change.
+- Several features need a blocking wait UI. A single overlay with `begin()` / `end()` ref-counting avoids per-page spinners fighting each other.
+
+#### Firebase project `knowledgebase-store` (Spark)
+
+This is a **second** Firebase project. Digits continues to use `numbers-55698` via `environment.firebasePuzzleData` and AngularFire compat on the digits route only.
+
+| Item | Value |
+|------|--------|
+| Console | https://console.firebase.google.com/project/knowledgebase-store |
+| Edition | Firestore **Standard** |
+| Security start mode | **Production** (`allow read, write: if false` until custom rules) |
+| Client config | `environment.firebaseKnowledgeBase` in `environment.ts` and `environment.prod.ts` |
+| SDK | Modular `firebase` v11 (`initializeApp(..., 'knowledgebase')` named app) so it does not collide with the Digits default app |
+
+**Collections**
+
+```
+knowledgeBases (manual document IDs)
+  angular
+    markdown: string
+    locale: string          // e.g. "en"
+    updatedAt: timestamp
+  dotnet
+    markdown: string
+    locale: string
+    updatedAt: timestamp
+
+accessLogs (Auto-ID per visit)
+  {autoId}
+    email: string
+    locale: string          // typically navigator.language
+    knowledgeBaseId: string // "angular" | "dotnet"
+    viewedAt: timestamp     // serverTimestamp()
+```
+
+Content lives once in `knowledgeBases`. Each successful open appends a small `accessLogs` row. Do not copy the Markdown onto every access log (size and privacy).
+
+**Security rules** (publish in the Firestore Rules tab):
+
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /knowledgeBases/{id} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /accessLogs/{id} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+  }
+}
+```
+
+Clients may read Markdown and create access-log rows. They cannot list other people’s emails or update knowledge-base documents (edits stay in the Firebase console / Admin). `read: if true` on `knowledgeBases` still means the text is visible in the browser Network tab once displayed — that is inherent to client-side rendering.
+
+#### How the viewer loads content
+
+1. Home → **Modern Angular** or **.Net C#** → `#/layout-pages/display-knowledge-base/angular|dotnet`.
+2. Route providers: `KnowledgeBaseFirestoreService` (lazy with that route).
+3. If `sessionStorage.knowledgeBaseEmail` is a value that passes `Validators.email`, the gate is skipped for the rest of the tab session. Otherwise the user must enter an email.
+4. `submitEmail` uses Angular **`Validators.required`** and **`Validators.email`** (no custom regex). Invalid input never writes Firestore.
+5. `KnowledgeBaseFirestoreService.getKnowledgeBase(kind)` reads `knowledgeBases/{kind}` via `getDoc`.
+6. On success, `ngx-markdown` still renders with `[data]="content"` and `[disableSanitizer]="true"`. Pandoc `{#slug}` ToC behaviour is unchanged (`pandocHeadingIdExtension` + `onViewerClick`).
+7. `logAccess` then `addDoc`s to `accessLogs` with email, locale, `knowledgeBaseId`, and `serverTimestamp()`.
+8. Unknown `:kind` still redirects to `/not-found`. Missing documents show an in-page error.
+
+Service file: `knowledge-base-firestore.service.ts`. It calls `getApps()` / `initializeApp(environment.firebaseKnowledgeBase, 'knowledgebase')` and `getFirestore` on that named app.
+
+#### Email gate details
+
+- Template: Material outline field, `type="email"`, `[formControl]="emailControl"`.
+- `FormControl` validators: `Validators.required`, `Validators.email` (`@angular/forms`). Empty values need `required` because `Validators.email` treats empty as valid.
+- Errors: “Email is required.” / “Please enter a valid email address.” after touch or Continue.
+- Session key: `knowledgeBaseEmail`. Closing the tab clears it; Angular vs .NET in the same tab does not ask twice.
+- This is **format** validation only. Disposable or non-existent mailboxes (e.g. `lala@lila.hu` if the domain has no mailbox) are not rejected. MX lookup or Firebase Auth email-link verification were considered and not implemented here.
+
+#### Removed from the repository (viewer sources)
+
+- Deleted `src/assets/bigfiles/frontend-knowledge-base.md` and `backend-knowledge-base.md`.
+- Removed the `angular.json` assets `ignore` entries that excluded those two files from `dist` (they were ignored so they would not be static URLs while still being bundled as text). Assets are again `"src/favicon.ico"` + `"src/assets"`.
+- The viewer no longer `import()`s `.md` files. `"loader": { ".md": "text" }` remains for any other Markdown imports.
+
+**Not removed:** Learning Check Markdown (`frontend-interview-questions-w-answers.md`, fakes), Labyrinth / Mersenne docs, About Me PDFs.
+
+Git history may still contain the deleted `.md` files until history is rewritten; the working tree and future deploys do not.
+
+#### Global wait spinner (refCount)
+
+| Piece | Role |
+|-------|------|
+| `WaitSpinnerService` (`providedIn: 'root'`) | `refCount` signal; `begin()` +1; `end()` −1 but not below 0; `visible` = `refCount > 0` |
+| `WaitSpinnerComponent` | Full-viewport overlay + `mat-progress-spinner` when `visible()` |
+| `AppComponent` template | `<app-wait-spinner />` next to `<router-outlet />` so every feature area can use it |
+
+`DisplayKnowledgeBaseComponent.loadMarkdown` calls `begin()` before Firestore I/O and `end()` in `finally`, including cancelled generation and errors. Two overlapping loads keep the overlay up until both have ended.
+
+Other features can inject `WaitSpinnerService` and use the same `begin` / `try` / `finally { end() }` pattern.
+
+Specs: `wait-spinner.service.spec.ts` (refCount / visibility); `AppComponent` spec uses `provideNoopAnimations()` because of `MatProgressSpinner`.
+
+#### Files touched (high level)
+
+- `src/environments/environment.ts`, `environment.prod.ts`
+- `src/app/app.routes.ts` (route `providers: [KnowledgeBaseFirestoreService]`)
+- `src/app/app.component.{ts,html,spec.ts}`
+- `src/app/layout-pages/display-knowledge-base/*`
+- `src/app/shared/services/wait-spinner/*`
+- `src/app/shared/components/wait-spinner/*`
+- `angular.json`
+- Deleted knowledge-base `.md` assets
+
+---
+
+## [Released] — 2026-08-14 — Deployed
 
 ### Replace PDF.js with markdown rendering (`ngx-markdown` + `marked`)
 

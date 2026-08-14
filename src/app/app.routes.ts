@@ -4,6 +4,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
 import { NumbersFirestoreService } from './digits/services/numbers-firestore.service';
+import { KnowledgeBaseFirestoreService } from './layout-pages/display-knowledge-base/knowledge-base-firestore.service';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,7 @@ export const routes: Routes = [
           import('./layout-pages/display-knowledge-base/display-knowledge-base.component').then(
             m => m.DisplayKnowledgeBaseComponent
           ),
+        providers: [KnowledgeBaseFirestoreService],
       },
     ],
   },

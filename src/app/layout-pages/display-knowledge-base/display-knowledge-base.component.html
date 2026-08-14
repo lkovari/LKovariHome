@@ -3,25 +3,48 @@
     <h1 class="knowledge-base-title">{{ pageTitle() }}</h1>
   </header>
 
-  <div class="knowledge-base-viewer" #viewer (click)="onViewerClick($event)">
-    @if (loading()) {
-      <p class="knowledge-base-status">Loading…</p>
-    }
+  @if (!accessEmail()) {
+    <form class="knowledge-base-gate" (submit)="submitEmail($event)">
+      <p class="knowledge-base-gate__lead">
+        Enter your email address to open this knowledge base.
+      </p>
+      <mat-form-field appearance="outline" class="knowledge-base-gate__field">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          name="knowledge-base-email"
+          autocomplete="email"
+          [formControl]="emailControl"
+        />
+        @if (emailControl.touched && emailControl.hasError('required')) {
+          <mat-error>Email is required.</mat-error>
+        } @else if (emailControl.touched && emailControl.hasError('email')) {
+          <mat-error>Please enter a valid email address.</mat-error>
+        }
+      </mat-form-field>
+      <button mat-flat-button color="primary" type="submit">Continue</button>
+    </form>
+  } @else {
+    <div class="knowledge-base-viewer" #viewer (click)="onViewerClick($event)">
+      @if (errorMessage(); as message) {
+        <div class="knowledge-base-error">
+          <p>{{ message }}</p>
+          <button mat-stroked-button type="button" (click)="retryLoad()">
+            Retry
+          </button>
+        </div>
+      }
 
-    @if (errorMessage(); as message) {
-      <div class="knowledge-base-error">
-        <p>{{ message }}</p>
-      </div>
-    }
-
-    @if (markdown(); as content) {
-      <markdown
-        class="knowledge-base-markdown"
-        [data]="content"
-        [disableSanitizer]="true"
-      ></markdown>
-    }
-  </div>
+      @if (markdown(); as content) {
+        <markdown
+          class="knowledge-base-markdown"
+          [data]="content"
+          [disableSanitizer]="true"
+        ></markdown>
+      }
+    </div>
+  }
 
   <footer class="knowledge-base-footer">
     <button mat-flat-button color="primary" type="button" [routerLink]="['/layout-pages/home']">

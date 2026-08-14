@@ -2,7 +2,7 @@
 
 Personal portfolio and Angular playground deployed at [https://lkovari.github.io/LKovariHome](https://lkovari.github.io/LKovariHome).
 
-Originally scaffolded with Angular CLI 14; the app now runs **Angular 22.0.4** (standalone components, lazy `loadComponent` routes, signals, Vitest, PrimeNG, Angular Material, Bootstrap, and Firebase for Digits game persistence).
+Originally scaffolded with Angular CLI 14; the app now runs **Angular 22.0.4** (standalone components, lazy `loadComponent` routes, signals, Vitest, PrimeNG, Angular Material, Bootstrap, and Firebase: Digits puzzles on project `numbers-55698`, knowledge-base Markdown on project `knowledgebase-store`).
 
 ---
 
@@ -12,7 +12,7 @@ Originally scaffolded with Angular CLI 14; the app now runs **Angular 22.0.4** (
 |-------|-----------------------------|
 | Framework | **Angular 22.0.4**, RxJS 7.8, TypeScript 6.0, Zone.js 0.16 |
 | UI | **Angular Material 22.0.2**, **PrimeNG 21.1.9** (`@primeng/themes` Aura), Bootstrap 5.3, Font Awesome 6, Flex Layout |
-| Backend / persistence | Firebase 11.10 (`@angular/fire` 20 compat), browser cookies (`ngx-cookie-service` 22) |
+| Backend / persistence | Firebase 11.10 (`@angular/fire` 20 compat for Digits; modular SDK named app `knowledgebase` for knowledge bases), browser cookies (`ngx-cookie-service` 22) |
 | Tooling | **Angular CLI 22.0.4**, ESLint flat config (`eslint.config.js`, angular-eslint 22), Vitest 4 (jsdom), pnpm 10.13, gh-pages |
 
 Runtime Angular version is read from `@angular/core` `VERSION.full` and shown in the header via `AngularVersionComponent`.
@@ -27,7 +27,7 @@ High-level view of bootstrap, routing, shared shell, feature areas, and external
 flowchart TB
   subgraph bootstrap["Bootstrap (main.ts)"]
     BA["bootstrapApplication(AppComponent)"]
-    PR["Providers: zone CD, router, HTTP, animations, PrimeNG Aura, GlobalErrorHandler, FaIconLibrary"]
+    PR["Providers: zone CD, router, HTTP, animations, PrimeNG Aura, GlobalErrorHandler, FaIconLibrary, provideMarkdown"]
   end
 
   BA --> PR
@@ -46,6 +46,7 @@ flowchart TB
     L --> H["home"]
     L --> AM["about-me"]
     L --> AW["awards"]
+    L --> KB["display-knowledge-base/:kind"]
   end
 
   subgraph newsChildren["Angular news children"]
@@ -65,6 +66,7 @@ flowchart TB
     LC["LayoutContentComponent"]
     CHK["ChecklistComponent"]
     AV["AngularVersionComponent"]
+    WS["WaitSpinnerComponent"]
   end
 
   L --> shared
@@ -82,28 +84,33 @@ flowchart TB
 
   subgraph external["External persistence"]
     CK[("Cookie: CookieLKNumbers")]
-    FS[("Firestore /puzzledata")]
+    FS[("Firestore numbers-55698 /puzzledata")]
+    KBFS[("Firestore knowledgebase-store /knowledgeBases + /accessLogs")]
   end
 
   D --> CK
   NFS --> FS
+  KB --> KBFS
 
   subgraph errors["Error pipeline"]
     GEH["GlobalErrorHandlerService"]
     INT["httpErrorInterceptor"]
     ENS["ErrorNotificationService"]
+    WSS["WaitSpinnerService refCount"]
     GEH --> ENS
     INT --> ENS
   end
 
   PR --> errors
+  BA --> WS
+  WS --> WSS
 ```
 
 ### Route map (hash router)
 
 | Area | Shell / entry | Example routes |
 |------|---------------|----------------|
-| **Layout** | `LayoutComponent` (MatSidenav + toolbar) | `#/layout-pages/home`, `#/layout-pages/about-me`, `#/layout-pages/awards` |
+| **Layout** | `LayoutComponent` (MatSidenav + toolbar) | `#/layout-pages/home`, `#/layout-pages/about-me`, `#/layout-pages/awards`, `#/layout-pages/display-knowledge-base/angular`, `#/layout-pages/display-knowledge-base/dotnet` |
 | **Angular news** | `AngularNewsComponent` | `#/angular-news-pages/angular-news-v16-signals`, `#/angular-news-pages/angular-news-v15-standalone` |
 | **Digits** | `DigitsGameComponent` | `#/digits/digits-game` |
 | **Material examples** | `MaterialExamplesLayoutComponent` | `#/material-examples/components/material-examples-main` |
@@ -133,6 +140,12 @@ flowchart LR
     Sidenav[SidenavListComponent]
     LContent[LayoutContentComponent]
     Checklist[ChecklistComponent]
+    WaitSpinner[WaitSpinnerComponent]
+  end
+
+  subgraph overlay["Global overlay"]
+    WSS[WaitSpinnerService]
+    WaitSpinner --> WSS
   end
 
   subgraph errors["Error handling"]
@@ -144,11 +157,96 @@ flowchart LR
   end
 
   AppComponent --> GEH
+  AppComponent --> WaitSpinner
 ```
 
 - **LayoutComponent** — responsive sidenav (Flex Layout `MediaObserver`); redirects `/` → `/layout-pages/home`.
 - **Font Awesome icons** — registered via `provideFaIcons()` in `main.ts` (and test providers).
 - **Error pipeline** — `GlobalErrorHandlerService` + HTTP interceptor funnel errors to `ErrorNotificationService`.
+- **Global wait spinner** — see below. Hosted on `AppComponent` so it covers every route (layout, playground, digits, news).
+
+---
+
+## Global wait spinner
+
+A single full-viewport overlay (`WaitSpinnerComponent` + Angular Material `mat-progress-spinner`) is shown while any caller is waiting. It is **not** tied to the knowledge-base page.
+
+**Ref-count**
+
+| Call | Effect |
+|------|--------|
+| `WaitSpinnerService.begin()` | Increment `refCount`. Overlay becomes visible when count goes from 0 → 1. |
+| `WaitSpinnerService.end()` | Decrement `refCount`, never below 0. Overlay hides when count returns to 0. |
+
+Two overlapping loads (or two features) keep the spinner up until every `begin()` has a matching `end()`. Always pair them in `try` / `finally` so errors still release the count.
+
+```ts
+private readonly waitSpinner = inject(WaitSpinnerService);
+
+this.waitSpinner.begin();
+try {
+  await loadWork();
+} finally {
+  this.waitSpinner.end();
+}
+```
+
+- Service: `src/app/shared/services/wait-spinner/wait-spinner.service.ts` (`providedIn: 'root'`).
+- UI: `src/app/shared/components/wait-spinner/`.
+- Mounted in `app.component.html` next to `<router-outlet />`.
+
+The knowledge-base Markdown fetch already uses this spinner.
+
+---
+
+## Knowledge base (Firestore)
+
+Home links **Modern Angular** and **.Net C#** open `#/layout-pages/display-knowledge-base/angular` and `…/dotnet`. Content is **not** shipped in `src/assets`. The Markdown strings live in Firebase project **`knowledgebase-store`** (Spark), Firestore collection `knowledgeBases`, documents `angular` and `dotnet` (fields `markdown`, `locale`, `updatedAt`).
+
+### Email gate
+
+Opening either knowledge base **requires an email address** before the Markdown is fetched.
+
+- The first screen is a Material form: label **Email**, Continue.
+- Validation uses Angular **`Validators.required`** and **`Validators.email`** (built-in; not a custom regex). Empty → “Email is required.” Invalid shape → “Please enter a valid email address.”
+- A passing address is stored in `sessionStorage` under `knowledgeBaseEmail` for the **current tab**. Angular and .NET in the same tab do not ask twice. Closing the tab clears it.
+- After Continue, `accessLogs` gets a new document: `email`, `locale` (`navigator.language`), `knowledgeBaseId` (`angular` | `dotnet`), `viewedAt` (`serverTimestamp()`). Clients may **create** logs only; they cannot read other visitors’ emails (`allow read: if false` on `accessLogs`).
+- This checks **format**, not that the mailbox exists (e.g. `lala@lila.hu` can still pass). There is no MX lookup and no Firebase Auth confirmation link.
+
+### Load and render
+
+1. `KnowledgeBaseFirestoreService` (modular Firebase named app `knowledgebase`) reads `knowledgeBases/{kind}` with a **network-aware timeout**.
+2. `ngx-markdown` renders the string (Pandoc `{#slug}` ToC + in-panel hash scrolling; see `CHANGELOG.md`).
+3. The global wait spinner runs only while Firestore is fetching Markdown (`begin` / `finally end`). Access logging does not keep the spinner up.
+
+**Timeouts** (Network Information API `effectiveType`; 5G is not a separate type, so downlink ≥ 10 Mbps on `4g` is treated as 5G-class):
+
+| Network | Max wait, then spinner off + error |
+|---------|--------------------------------------|
+| Offline | Immediate |
+| slow-2g | 60 s |
+| 2g or Save-Data | 45 s |
+| 3g | 20 s |
+| 4g | 12 s |
+| 5G-class (`4g` + downlink ≥ 10) | 8 s |
+| Unknown / no API | 15 s |
+
+**Load error messages** (Retry is always offered):
+
+| Cause | Message |
+|-------|---------|
+| Offline | You appear to be offline. Check your connection and try again. |
+| Timeout | The knowledge base took too long to load on this network. Check your connection and try again. |
+| Document missing | The knowledge base was not found. |
+| Permission denied | The knowledge base could not be loaded (permission denied). |
+| Unavailable / deadline | The knowledge base could not be loaded. Check your connection and try again. |
+| Other | The knowledge base could not be loaded. Please try again. |
+
+Helper: `src/app/shared/services/network-load/network-load-timeout.ts` (`networkLoadTimeoutMs`, `withTimeout`).
+
+Digits puzzles stay on Firebase project `numbers-55698`. Do not replace `firebasePuzzleData` with the knowledge-base config.
+
+Learning Check, Labyrinth, Mersenne, and About Me files remain under `src/assets/bigfiles/`. Only the two knowledge-base `.md` sources were removed from the repo.
 
 ---
 

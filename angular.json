@@ -32,15 +32,7 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              {
-                "glob": "**/*",
-                "input": "src/assets",
-                "ignore": [
-                  "bigfiles/frontend-knowledge-base.md",
-                  "bigfiles/backend-knowledge-base.md"
-                ],
-                "output": "/assets"
-              }
+              "src/assets"
             ],
             "styles": [
               "node_modules/bootstrap/scss/bootstrap.scss",

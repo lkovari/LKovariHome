@@ -25,6 +25,36 @@
   color: #283593;
 }
 
+.knowledge-base-gate {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem 1rem;
+  border: 1px solid #c5cae9;
+  border-radius: 0.25rem;
+  background: #fafafa;
+}
+
+.knowledge-base-gate__lead {
+  margin: 0;
+  max-width: 28rem;
+  text-align: center;
+  color: #3949ab;
+}
+
+.knowledge-base-gate__field {
+  width: min(28rem, 100%);
+}
+
+.knowledge-base-gate__error {
+  margin: 0;
+  color: #b71c1c;
+  font-size: 0.85rem;
+}
+
 .knowledge-base-viewer {
   flex: 1 1 auto;
   min-height: 0;
@@ -46,6 +76,10 @@
 }
 
 .knowledge-base-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
   color: #b71c1c;
 }
 
