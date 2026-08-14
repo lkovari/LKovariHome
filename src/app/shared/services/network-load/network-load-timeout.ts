@@ -45,15 +45,14 @@ export function networkLoadTimeoutMs(): number {
   return TIMEOUT_UNKNOWN_MS;
 }
 
-export function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
+export function withTimeout<T>(
+  promise: Promise<T>,
+  timeoutMs: number,
+  timeoutMessage = 'The knowledge base took too long to load on this network. Check your connection and try again.',
+): Promise<T> {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {
-      reject(
-        new NetworkLoadError(
-          'timeout',
-          'The knowledge base took too long to load on this network. Check your connection and try again.',
-        ),
-      );
+      reject(new NetworkLoadError('timeout', timeoutMessage));
     }, timeoutMs);
 
     promise.then(

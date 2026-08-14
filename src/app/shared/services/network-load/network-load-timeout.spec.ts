@@ -70,4 +70,20 @@ describe('withTimeout', () => {
     await assertion;
     vi.useRealTimers();
   });
+
+  it('uses a custom timeout message when provided', async () => {
+    vi.useFakeTimers();
+    const pending = withTimeout(
+      new Promise(() => undefined),
+      20,
+      'Could not verify the email domain in time. Check your connection and try again.',
+    );
+    const assertion = expect(pending).rejects.toMatchObject({
+      message:
+        'Could not verify the email domain in time. Check your connection and try again.',
+    });
+    await vi.advanceTimersByTimeAsync(20);
+    await assertion;
+    vi.useRealTimers();
+  });
 });

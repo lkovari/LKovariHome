@@ -23,6 +23,9 @@
           <mat-error>Please enter a valid email address.</mat-error>
         }
       </mat-form-field>
+      @if (mxError(); as message) {
+        <p class="knowledge-base-gate__error">{{ message }}</p>
+      }
       <button mat-flat-button color="primary" type="submit">Continue</button>
     </form>
   } @else {

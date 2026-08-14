@@ -6,6 +6,40 @@ Entries are listed in reverse chronological order (newest first). All dated entr
 
 ---
 
+## [Released] — 2026-08-15 — Deployed — Email domain MX check
+
+### Reject addresses whose domain has no mail exchanger
+
+`Validators.email` only checks format. Continue now also queries public DNS-over-HTTPS for **MX** records on the domain after `@`. The lookup runs in the browser (no Cloud Function, no API key). A missing exchanger blocks the gate; `sessionStorage` and Firestore are not written.
+
+This proves the **domain** can receive mail, not that the mailbox (`lala@…`) exists. Firebase Auth confirmation links are still not used.
+
+#### Lookup
+
+| Step | Behaviour |
+|------|-----------|
+| Provider | `GET https://cloudflare-dns.com/dns-query?name={domain}&type=MX` (`Accept: application/dns-json`) |
+| Fallback | Same query against `https://dns.google/resolve` if Cloudflare fetch/HTTP/SERVFAIL fails |
+| Timeout | `min(networkLoadTimeoutMs(), 8 s)` via `withTimeout` |
+| Spinner | Global wait spinner for the lookup (`begin` / `finally end`) |
+| Session restore | Existing `sessionStorage.knowledgeBaseEmail` still skips the gate (no second MX check in the same tab) |
+
+NOERROR with usable MX (DNS type 15, not RFC 7505 null MX `0 .`) → continue. Empty Answer, NXDOMAIN (Status 3), or only null MX → reject. A/AAAA implicit MX is **not** accepted.
+
+#### User-facing gate errors
+
+| Situation | Message |
+|-----------|---------|
+| Format (`required` / `email`) | Email is required. / Please enter a valid email address. |
+| No MX / NXDOMAIN / null MX | This email domain cannot receive mail. Please use an address on a domain that accepts email. |
+| Offline | You appear to be offline. Check your connection and try again. |
+| Lookup timeout | Could not verify the email domain in time. Check your connection and try again. |
+| DNS/network failure | Could not verify the email domain. Check your connection and try again. |
+
+Implementation: `src/app/shared/services/email-mx/email-mx-check.ts`, wired in `DisplayKnowledgeBaseComponent.submitEmail`.
+
+---
+
 ## [Released] — 2026-08-15 — Deployed — Adaptive Firestore load timeout
 
 ### Network-aware timeout for knowledge-base Markdown

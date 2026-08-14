@@ -20,6 +20,10 @@ import { MarkdownComponent } from 'ngx-markdown';
 import { FirebaseError } from 'firebase/app';
 import { KnowledgeBaseFirestoreService } from './knowledge-base-firestore.service';
 import {
+  domainHasMailExchanger,
+  emailDomain,
+} from '../../shared/services/email-mx/email-mx-check';
+import {
   NetworkLoadError,
   networkLoadTimeoutMs,
   withTimeout,
@@ -32,6 +36,7 @@ const KNOWLEDGE_BASE_TITLES: Record<string, string> = {
 };
 
 const EMAIL_SESSION_KEY = 'knowledgeBaseEmail';
+const MX_LOOKUP_TIMEOUT_CAP_MS = 8_000;
 
 @Component({
   selector: 'app-display-knowledge-base',
@@ -66,6 +71,7 @@ export class DisplayKnowledgeBaseComponent {
   readonly accessEmail = signal('');
   readonly markdown = signal('');
   readonly errorMessage = signal('');
+  readonly mxError = signal('');
 
   private loadGeneration = 0;
 
@@ -104,16 +110,55 @@ export class DisplayKnowledgeBaseComponent {
     });
   }
 
-  submitEmail(event: Event): void {
+  async submitEmail(event: Event): Promise<void> {
     event.preventDefault();
     this.emailControl.markAsTouched();
+    this.mxError.set('');
     if (this.emailControl.invalid) {
       return;
     }
 
     const value = this.emailControl.value.trim().toLowerCase();
-    sessionStorage.setItem(EMAIL_SESSION_KEY, value);
-    this.accessEmail.set(value);
+    const domain = emailDomain(value);
+    if (!domain) {
+      this.emailControl.setErrors({ email: true });
+      return;
+    }
+
+    this.waitSpinner.begin();
+    try {
+      if (!navigator.onLine) {
+        this.mxError.set(
+          'You appear to be offline. Check your connection and try again.',
+        );
+        return;
+      }
+
+      const acceptsMail = await withTimeout(
+        domainHasMailExchanger(domain),
+        Math.min(networkLoadTimeoutMs(), MX_LOOKUP_TIMEOUT_CAP_MS),
+        'Could not verify the email domain in time. Check your connection and try again.',
+      );
+      if (!acceptsMail) {
+        this.mxError.set(
+          'This email domain cannot receive mail. Please use an address on a domain that accepts email.',
+        );
+        return;
+      }
+
+      sessionStorage.setItem(EMAIL_SESSION_KEY, value);
+      this.accessEmail.set(value);
+    } catch (error: unknown) {
+      if (error instanceof NetworkLoadError) {
+        this.mxError.set(error.message);
+        return;
+      }
+      this.mxError.set(
+        'Could not verify the email domain. Check your connection and try again.',
+      );
+    } finally {
+      this.waitSpinner.end();
+    }
   }
 
   retryLoad(): void {
