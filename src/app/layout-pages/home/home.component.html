@@ -27,18 +27,30 @@
         <app-angular-version />
         <div class="home-knowledge" aria-label="Knowledge base">
           <span class="home-knowledge__eyebrow">Knowledge Base</span>
-          <a
-            class="home-knowledge__link"
-            [routerLink]="['/layout-pages/display-knowledge-base', 'angular']"
-          >
-            Modern Angular
-          </a>
-          <a
-            class="home-knowledge__link"
-            [routerLink]="['/layout-pages/display-knowledge-base', 'dotnet']"
-          >
-            .Net C#
-          </a>
+          <div class="home-knowledge__item">
+            <a
+              class="home-knowledge__link"
+              [routerLink]="['/layout-pages/display-knowledge-base', 'angular']"
+            >
+              Modern Angular
+            </a>
+            @let angularCount = angularReaderCount();
+            @if (angularCount !== null) {
+              <span class="home-knowledge__stat">{{ readerLabel(angularCount) }}</span>
+            }
+          </div>
+          <div class="home-knowledge__item">
+            <a
+              class="home-knowledge__link"
+              [routerLink]="['/layout-pages/display-knowledge-base', 'dotnet']"
+            >
+              .Net C#
+            </a>
+            @let dotnetCount = dotnetReaderCount();
+            @if (dotnetCount !== null) {
+              <span class="home-knowledge__stat">{{ readerLabel(dotnetCount) }}</span>
+            }
+          </div>
         </div>
         <div class="home-knowledge" aria-label="Learning check">
           <span class="home-knowledge__eyebrow">Learning Check</span>

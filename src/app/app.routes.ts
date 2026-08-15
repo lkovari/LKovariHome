@@ -14,6 +14,7 @@ export const routes: Routes = [
       {
         path: 'layout-pages/home',
         loadComponent: () => import('./layout-pages/home/home.component').then(m => m.HomeComponent),
+        providers: [KnowledgeBaseFirestoreService],
       },
       {
         path: 'layout-pages/about-me',

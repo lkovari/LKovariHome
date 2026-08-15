@@ -85,7 +85,7 @@ flowchart TB
   subgraph external["External persistence"]
     CK[("Cookie: CookieLKNumbers")]
     FS[("Firestore numbers-55698 /puzzledata")]
-    KBFS[("Firestore knowledgebase-store /knowledgeBases + /accessLogs")]
+    KBFS[("Firestore knowledgebase-store /knowledgeBases + /accessLogs + /kbStats")]
   end
 
   D --> CK
@@ -211,7 +211,8 @@ Opening either knowledge base **requires an email address** before the Markdown 
 - Validation uses Angular **`Validators.required`** and **`Validators.email`** (built-in; not a custom regex). Empty → “Email is required.” Invalid shape → “Please enter a valid email address.”
 - Continue then looks up **MX** records for the domain via DNS-over-HTTPS (Cloudflare, Google DNS fallback). No usable MX (including NXDOMAIN and RFC 7505 null MX) → “This email domain cannot receive mail. Please use an address on a domain that accepts email.” Lookup timeout / DNS failure / offline show a retryable verify error; the spinner covers the wait (capped at 8 s).
 - A passing address is stored in `sessionStorage` under `knowledgeBaseEmail` for the **current tab**. Angular and .NET in the same tab do not ask twice. Closing the tab clears it. Restoring from `sessionStorage` does not repeat the MX lookup.
-- After Continue, `accessLogs` gets a new document: `email`, `locale` (`navigator.language`), `knowledgeBaseId` (`angular` | `dotnet`), `viewedAt` (`serverTimestamp()`). Clients may **create** logs only; they cannot read other visitors’ emails (`allow read: if false` on `accessLogs`).
+- After a successful open, `logAccess` **upserts** `accessLogs/{sha256(email, locale, knowledgeBaseId)}`: insert on first visit, `viewedAt` update on repeat. Clients cannot **list** other visitors’ emails (`get`/`list` false on `accessLogs`).
+- Unique reader counts live in **`kbStats/angular`** and **`kbStats/dotnet`** (`uniqueVisitorCount`, int64). Home shows them under the Knowledge Base links. A `kbStats/{id}/visitors/{sha256(email, knowledgeBaseId)}` marker ensures one increment per email per knowledge base.
 - MX proves the **domain** can receive mail, not that the local part exists (`lala@gmail.com` can still pass). There is no Firebase Auth confirmation link.
 
 ### Load and render

@@ -1,7 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { FlexModule } from '@angular/flex-layout/flex';
 import { RouterLink } from '@angular/router';
 import { AngularVersionComponent } from '../../shared/components/angular-version/angular-version.component';
+import { KnowledgeBaseFirestoreService } from '../display-knowledge-base/knowledge-base-firestore.service';
 import { HomeUpgradePanelComponent } from './home-upgrade-panel.component';
 
 type MigrationStatus = 'complete' | 'in-progress' | 'pending';
@@ -26,7 +27,11 @@ interface V22Codemod {
     imports: [FlexModule, RouterLink, AngularVersionComponent, HomeUpgradePanelComponent],
 })
 export class HomeComponent implements OnInit {
+  private readonly knowledgeBaseStore = inject(KnowledgeBaseFirestoreService);
+
   public years!: number;
+  readonly angularReaderCount = signal<number | null>(null);
+  readonly dotnetReaderCount = signal<number | null>(null);
 
   readonly officialAngularMigrations: MigrationTrack[] = [
     {
@@ -147,7 +152,21 @@ export class HomeComponent implements OnInit {
   readonly completedProjectTracks = this.projectTracks.filter((track) => track.status === 'complete');
   readonly openProjectTracks = this.projectTracks.filter((track) => track.status !== 'complete');
 
+  constructor() {
+    void this.knowledgeBaseStore
+      .getUniqueVisitorCounts()
+      .then(counts => {
+        this.angularReaderCount.set(counts.angular);
+        this.dotnetReaderCount.set(counts.dotnet);
+      })
+      .catch(() => undefined);
+  }
+
   ngOnInit(): void {
     this.years = new Date().getFullYear();
+  }
+
+  readerLabel(count: number): string {
+    return count === 1 ? '1 reader' : `${count} readers`;
   }
 }

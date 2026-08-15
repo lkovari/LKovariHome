@@ -6,6 +6,91 @@ Entries are listed in reverse chronological order (newest first). All dated entr
 
 ---
 
+## [Released] — 2026-08-15 — Deployed — Access-log upsert and home reader counts
+
+### One row per email + locale + knowledge base; unique emails on Home
+
+`accessLogs` is no longer append-only Auto-ID. `logAccess` writes a deterministic SHA-256 document ID for `email` + `locale` + `knowledgeBaseId` (`setDoc` merge). First visit inserts; the same triple updates `viewedAt` only. Angular vs .NET stay two rows. A different `navigator.language` stays a separate row.
+
+Home reads **`kbStats/angular`** and **`kbStats/dotnet`** (`uniqueVisitorCount`) and shows “N reader(s)” under the Knowledge Base links. That count is **unique email per knowledge base** (locale does not split it). The home page never queries `accessLogs`.
+
+Unique-email tracking uses a private create-only marker at `kbStats/{knowledgeBaseId}/visitors/{sha256(email, knowledgeBaseId)}` (`{ seen: true }`). The first visit writes that marker and `increment(1)` on `uniqueVisitorCount` in one batch. A repeat visit tries to update the marker, which rules deny, so the count does not increase. The client never reads `visitors`.
+
+Access logging still runs after Markdown is on screen, does not hold the spinner, and failures are ignored. Old Auto-ID `accessLogs` rows are not merged; new writes use hashed IDs.
+
+#### Firestore rules (publish in the Rules tab)
+
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /knowledgeBases/{id} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /accessLogs/{id} {
+      allow get, list, delete: if false;
+      allow create: if isAccessLogCreate();
+      allow update: if isAccessLogUpdate();
+    }
+
+    match /kbStats/{id} {
+      allow read: if true;
+      allow delete: if false;
+      allow create: if isKbStatCreate();
+      allow update: if isKbStatIncrement();
+    }
+
+    match /kbStats/{kbId}/visitors/{visitorId} {
+      allow create: if isVisitorCreate();
+      allow get, list, update, delete: if false;
+    }
+  }
+
+  function isAccessLogCreate() {
+    let d = request.resource.data;
+    return d.keys().hasOnly(['email', 'locale', 'knowledgeBaseId', 'viewedAt'])
+      && d.email is string && d.email.size() > 0
+      && d.locale is string && d.locale.size() > 0
+      && d.knowledgeBaseId in ['angular', 'dotnet']
+      && d.viewedAt == request.time;
+  }
+
+  function isAccessLogUpdate() {
+    let d = request.resource.data;
+    let prev = resource.data;
+    return isAccessLogCreate()
+      && d.email == prev.email
+      && d.locale == prev.locale
+      && d.knowledgeBaseId == prev.knowledgeBaseId;
+  }
+
+  function isKbStatCreate() {
+    let d = request.resource.data;
+    return d.keys().hasOnly(['uniqueVisitorCount'])
+      && d.uniqueVisitorCount is number
+      && d.uniqueVisitorCount == 1;
+  }
+
+  function isKbStatIncrement() {
+    let d = request.resource.data;
+    return d.diff(resource.data).affectedKeys().hasOnly(['uniqueVisitorCount'])
+      && d.uniqueVisitorCount is number
+      && d.uniqueVisitorCount == resource.data.uniqueVisitorCount + 1;
+  }
+
+  function isVisitorCreate() {
+    let d = request.resource.data;
+    return d.keys().hasOnly(['seen']) && d.seen == true;
+  }
+}
+```
+
+`accessLogs` and `visitors` stay unlistable. Repeat visits fail the visitor `update` on purpose so the home count stays unique-email. `increment(1)` keeps the Console int64 type; the count may only go up by 1 per allowed write.
+
+---
+
 ## [Released] — 2026-08-15 — Deployed — Email domain MX check
 
 ### Reject addresses whose domain has no mail exchanger
