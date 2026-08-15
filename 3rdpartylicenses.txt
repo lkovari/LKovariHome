@@ -62,21 +62,6 @@ License: "Apache-2.0"
 
 
 --------------------------------------------------------------------------------
-Package: firebase
-License: "Apache-2.0"
-
-
---------------------------------------------------------------------------------
-Package: @firebase/webchannel-wrapper
-License: "Apache-2.0"
-
-
---------------------------------------------------------------------------------
-Package: @firebase/firestore
-License: "Apache-2.0"
-
-
---------------------------------------------------------------------------------
 Package: rxjs
 License: "Apache-2.0"
 
@@ -308,6 +293,21 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+--------------------------------------------------------------------------------
+Package: firebase
+License: "Apache-2.0"
+
+
+--------------------------------------------------------------------------------
+Package: @firebase/webchannel-wrapper
+License: "Apache-2.0"
+
+
+--------------------------------------------------------------------------------
+Package: @firebase/firestore
+License: "Apache-2.0"
+
 
 --------------------------------------------------------------------------------
 Package: @angular/common
