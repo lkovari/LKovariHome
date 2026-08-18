@@ -1,0 +1,1 @@
+import {bJ as qt}from'./main-SJXK2ORQ.js';var n=(()=>{class e{_listeners=[];notify(t,r){for(let o of this._listeners)o(t,r);}listen(t){return this._listeners.push(t),()=>{this._listeners=this._listeners.filter(r=>t!==r);}}ngOnDestroy(){this._listeners=[];}static \u0275fac=function(r){return new(r||e)};static \u0275prov=qt({token:e,factory:e.\u0275fac})}return e})();export{n};
