@@ -220,6 +220,7 @@ Opening either knowledge base **requires an email address** before the Markdown 
 1. `KnowledgeBaseFirestoreService` (modular Firebase named app `knowledgebase`) reads `knowledgeBases/{kind}` with a **network-aware timeout**.
 2. `ngx-markdown` renders the string (Pandoc `{#slug}` ToC + in-panel hash scrolling; see `CHANGELOG.md`).
 3. The global wait spinner runs only while Firestore is fetching Markdown (`begin` / `finally end`). Access logging does not keep the spinner up.
+4. The footer has **Back** (Home) and **Go Top**. **Go Top** smoothly scrolls the markdown panel (`.knowledge-base-viewer`) to the top. It does not navigate, reload the page, or fetch Markdown again. The window is not the scroll container on this route.
 
 **Timeouts** (Network Information API `effectiveType`; 5G is not a separate type, so downlink ≥ 10 Mbps on `4g` is treated as 5G-class):
 

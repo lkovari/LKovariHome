@@ -6,6 +6,14 @@ Entries are listed in reverse chronological order (newest first). All dated entr
 
 ---
 
+## [Released] — 2026-08-18 — Deployed — Footer Go Top
+
+### Scroll the markdown panel without leaving the page
+
+The knowledge-base footer now has **Go Top** next to **Back**. **Back** still navigates to Home. **Go Top** does not navigate, does not change the hash route, and does not reload Markdown. It calls `scrollTo({ top: 0, behavior: 'smooth' })` on `.knowledge-base-viewer`, which is the only scrollport on this page (the window and sidenav content do not scroll). If the viewer is not on screen (email gate), the click is a no-op.
+
+---
+
 ## [Released] — 2026-08-15 — Deployed — Access-log upsert and home reader counts
 
 ### One row per email + locale + knowledge base; unique emails on Home

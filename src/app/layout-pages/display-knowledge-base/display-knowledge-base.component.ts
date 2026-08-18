@@ -171,6 +171,10 @@ export class DisplayKnowledgeBaseComponent {
     void this.loadMarkdown(kind, accessEmail, generation);
   }
 
+  goToTop(): void {
+    this.viewer()?.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   onViewerClick(event: MouseEvent): void {
     const eventTarget = event.target;
     if (!(eventTarget instanceof Element)) {
