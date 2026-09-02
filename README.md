@@ -46,6 +46,9 @@ flowchart TB
     L --> H["home"]
     L --> AM["about-me"]
     L --> AW["awards"]
+    L --> CV["cv-on-dockerhub"]
+    L --> VD["view-dicom"]
+    L --> AA["android-apps"]
     L --> KB["display-knowledge-base/:kind"]
   end
 
@@ -110,7 +113,7 @@ flowchart TB
 
 | Area | Shell / entry | Example routes |
 |------|---------------|----------------|
-| **Layout** | `LayoutComponent` (MatSidenav + toolbar) | `#/layout-pages/home`, `#/layout-pages/about-me`, `#/layout-pages/awards`, `#/layout-pages/display-knowledge-base/angular`, `#/layout-pages/display-knowledge-base/dotnet` |
+| **Layout** | `LayoutComponent` (MatSidenav + toolbar) | `#/layout-pages/home`, `#/layout-pages/about-me`, `#/layout-pages/awards`, `#/layout-pages/cv-on-dockerhub`, `#/layout-pages/view-dicom`, `#/layout-pages/android-apps`, `#/layout-pages/display-knowledge-base/angular`, `#/layout-pages/display-knowledge-base/dotnet` |
 | **Angular news** | `AngularNewsComponent` | `#/angular-news-pages/angular-news-v16-signals`, `#/angular-news-pages/angular-news-v15-standalone` |
 | **Digits** | `DigitsGameComponent` | `#/digits/digits-game` |
 | **Material examples** | `MaterialExamplesLayoutComponent` | `#/material-examples/components/material-examples-main` |
@@ -160,7 +163,7 @@ flowchart LR
   AppComponent --> WaitSpinner
 ```
 
-- **LayoutComponent** — responsive sidenav (Flex Layout `MediaObserver`); redirects `/` → `/layout-pages/home`.
+- **LayoutComponent** — responsive sidenav (Flex Layout `MediaObserver`); redirects `/` → `/layout-pages/home`. Sidenav **View DICOM** (under CV on Dockerhub) opens a thumbnail gallery of ten local veterinary DICOM files and a full-size canvas viewer with Back. Sidenav **Android Apps** (under View DICOM) shows the Google Play developer URL, which opens Play Store in a new tab.
 - **Font Awesome icons** — registered via `provideFaIcons()` in `main.ts` (and test providers).
 - **Error pipeline** — `GlobalErrorHandlerService` + HTTP interceptor funnel errors to `ErrorNotificationService`.
 - **Global wait spinner** — see below. Hosted on `AppComponent` so it covers every route (layout, playground, digits, news).
@@ -854,14 +857,14 @@ Vitest fits this project because most specs are component and service smoke test
 
 **Requirements:** Node **v22.22.3+**, **v24.15.0+**, or **v26+** (Angular CLI 22). Use `nvm use` if `ng test` reports an unsupported Node version.
 
-### What is tested (38 spec files, 58 tests)
+### What is tested (58 spec files, 195 tests)
 
 Tests favour **observable behaviour** over empty “should create” checks where the component has real logic. Many playground and digits specs remain minimal smoke tests for demo components.
 
 #### Routing (`app.routes.spec.ts`)
 
 - Route table: layout pages, digits (Firebase providers), playground, angular news, wildcard redirect to `not-found`
-- Navigation: URL resolution for home, about-me, awards, error, and unknown paths redirecting to `not-found`
+- Navigation: URL resolution for home, about-me, awards, cv-on-dockerhub, view-dicom, android-apps, error, and unknown paths redirecting to `not-found`
 
 #### Layout pages
 
@@ -870,6 +873,12 @@ Tests favour **observable behaviour** over empty “should create” checks wher
 | `home.component.spec.ts` | Copyright year; welcome text in the DOM |
 | `about-me.component.spec.ts` | Profile asset paths; copyright year; profile image and CV link |
 | `awards.component.spec.ts` | Eight award entries; priority image metadata; alt text rendered |
+| `cv-on-dockerhub.component.spec.ts` | Heading, Docker Hub URL, pull command, and clipboard copy |
+| `view-dicom.component.spec.ts` | Ten thumbnails from the catalog; click opens the outlet viewer; Back returns to the grid |
+| `android-apps.component.spec.ts` | Heading and Play Store developer URL; no app cards |
+| `dicom-parser.spec.ts` | Explicit VR little-endian parse of a synthetic 2×2 image, including a dummy sequence |
+| `dicom-window.spec.ts` | Window/level and min–max stretch to 8-bit RGBA |
+| `dicom-image-catalog.spec.ts` | Ten asset paths, skipping the missing `ST000001/SE000002` series |
 | `layout.component.spec.ts` | Redirect `/` → `/layout-pages/home`; no redirect on other URLs; `isScreenXs()` |
 
 #### Error handling and shell pages

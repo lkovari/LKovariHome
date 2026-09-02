@@ -41,6 +41,9 @@ describe('app routes', () => {
           'layout-pages/home',
           'layout-pages/about-me',
           'layout-pages/awards',
+          'layout-pages/cv-on-dockerhub',
+          'layout-pages/view-dicom',
+          'layout-pages/android-apps',
         ])
       );
     });
@@ -116,6 +119,24 @@ describe('app routes', () => {
       const router = await navigate('/layout-pages/awards');
 
       expect(router.url).toBe('/layout-pages/awards');
+    });
+
+    it('navigates to the cv-on-dockerhub page route', async () => {
+      const router = await navigate('/layout-pages/cv-on-dockerhub');
+
+      expect(router.url).toBe('/layout-pages/cv-on-dockerhub');
+    });
+
+    it('navigates to the view-dicom page route', async () => {
+      const router = await navigate('/layout-pages/view-dicom');
+
+      expect(router.url).toBe('/layout-pages/view-dicom');
+    });
+
+    it('navigates to the android-apps page route', async () => {
+      const router = await navigate('/layout-pages/android-apps');
+
+      expect(router.url).toBe('/layout-pages/android-apps');
     });
 
     it('navigates to the error page route', async () => {

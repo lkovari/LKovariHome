@@ -1,0 +1,36 @@
+<div class="view-dicom-content">
+  <div class="align-title">
+    <h4 class="label-title">View DICOM</h4>
+  </div>
+  @if (loading) {
+    <p class="status">Loading images…</p>
+  } @else if (error) {
+    <p class="status">{{ error }}</p>
+  } @else if (selected) {
+    <div class="viewer">
+      <div class="viewer-stage">
+        <canvas #viewerCanvas class="dicom-viewer"></canvas>
+      </div>
+      <div class="viewer-bar">
+        <button
+          mat-stroked-button
+          color="primary"
+          type="button"
+          class="dicom-back"
+          (click)="clearSelection()"
+        >
+          Back
+        </button>
+      </div>
+    </div>
+  } @else {
+    <div class="gallery">
+      @for (thumb of thumbnails; track thumb.id) {
+        <button type="button" class="dicom-thumb" (click)="select(thumb)">
+          <canvas #thumbCanvas class="dicom-thumb-canvas"></canvas>
+          <span class="thumb-label">{{ thumb.label }}</span>
+        </button>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,38 @@
+<div class="cv-dockerhub-content">
+  <div class="cv-dockerhub-screen">
+    <div class="align-title">
+      <h4 class="label-title">CV on Dockerhub</h4>
+    </div>
+    <p>
+      My curriculum vitae is published as a public Docker image on Docker Hub.
+      The image is <code>{{ imageName }}</code>, built for linux/amd64 and linux/arm64, about 26 MB.
+    </p>
+    <p>Download from Docker Hub (with Docker installed):</p>
+    <pre>{{ pullCommand }}</pre>
+    <p>Run:</p>
+    <pre>{{ runCommand }}</pre>
+    <p>Browse URL:</p>
+    <pre><a class="browse-url" [href]="browseUrl" target="_blank" rel="noopener noreferrer">{{ browseUrl }}</a></pre>
+    <div class="actions">
+      <a
+        mat-flat-button
+        color="primary"
+        [href]="dockerHubUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Open on Docker Hub
+      </a>
+      <button
+        mat-stroked-button
+        color="primary"
+        type="button"
+        [matTooltip]="copyPullTooltip"
+        matTooltipPosition="below"
+        (click)="copyPullCommand()"
+      >
+        Copy pull command
+      </button>
+    </div>
+  </div>
+</div>

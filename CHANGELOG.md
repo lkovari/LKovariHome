@@ -6,6 +6,22 @@ Entries are listed in reverse chronological order (newest first). All dated entr
 
 ---
 
+## [Released] — 2026-09-02 — Deployed — Android Apps
+
+### Play Store developer page
+
+The layout sidenav has **Android Apps** immediately under **View DICOM** (`#/layout-pages/android-apps`). The page shows the Google Play developer URL [https://play.google.com/store/apps/dev?id=7897733156879264510](https://play.google.com/store/apps/dev?id=7897733156879264510) as a link that opens that page in a new tab.
+
+---
+
+## [Released] — 2026-09-02 — Deployed — View DICOM
+
+### Thumbnail gallery and outlet-fit viewer
+
+The layout sidenav has **View DICOM** immediately under **CV on Dockerhub** (`#/layout-pages/view-dicom`). The page loads ten uncompressed Explicit VR Little Endian files from `assets/bigfiles/dicom`, draws a thumbnail grid labelled with modality and series description, and opens a selected image on a canvas fitted to the current outlet. **Back** at the bottom returns to the thumbnails. Decoding uses a small in-app parser (no Cornerstone or other imaging libraries). Patient and institution tags are not shown.
+
+---
+
 ## [Released] — 2026-08-18 — Deployed — Footer Go Top
 
 ### Scroll the markdown panel without leaving the page

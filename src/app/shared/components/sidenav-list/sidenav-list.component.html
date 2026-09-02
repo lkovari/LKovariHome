@@ -25,6 +25,27 @@
     </a>
     <a
       mat-list-item
+      [routerLink]="['/layout-pages/cv-on-dockerhub']"
+      (click)="onSidenavClose()"
+    >
+      <fa-icon [icon]="['fab', 'docker']" /><span class="nav-caption">CV on Dockerhub</span>
+    </a>
+    <a
+      mat-list-item
+      [routerLink]="['/layout-pages/view-dicom']"
+      (click)="onSidenavClose()"
+    >
+      <fa-icon [icon]="['fas', 'x-ray']" /><span class="nav-caption">View DICOM</span>
+    </a>
+    <a
+      mat-list-item
+      [routerLink]="['/layout-pages/android-apps']"
+      (click)="onSidenavClose()"
+    >
+      <fa-icon [icon]="['fab', 'android']" /><span class="nav-caption">Android Apps</span>
+    </a>
+    <a
+      mat-list-item
       href="https://lkovari.github.io/KLHome"
       (click)="onSidenavClose()"
     >

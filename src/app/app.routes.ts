@@ -25,6 +25,27 @@ export const routes: Routes = [
         loadComponent: () => import('./layout-pages/awards/awards.component').then(m => m.AwardsComponent),
       },
       {
+        path: 'layout-pages/cv-on-dockerhub',
+        loadComponent: () =>
+          import('./layout-pages/cv-on-dockerhub/cv-on-dockerhub.component').then(
+            m => m.CvOnDockerhubComponent
+          ),
+      },
+      {
+        path: 'layout-pages/view-dicom',
+        loadComponent: () =>
+          import('./layout-pages/view-dicom/view-dicom.component').then(
+            m => m.ViewDicomComponent
+          ),
+      },
+      {
+        path: 'layout-pages/android-apps',
+        loadComponent: () =>
+          import('./layout-pages/android-apps/android-apps.component').then(
+            m => m.AndroidAppsComponent
+          ),
+      },
+      {
         path: 'layout-pages/display-knowledge-base/:kind',
         loadComponent: () =>
           import('./layout-pages/display-knowledge-base/display-knowledge-base.component').then(
