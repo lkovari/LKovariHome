@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { VERSION } from '@angular/core';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faAndroid, faApple } from '@fortawesome/free-brands-svg-icons';
 
 import { HomeComponent } from './home.component';
 import { KnowledgeBaseFirestoreService } from '../display-knowledge-base/knowledge-base-firestore.service';
@@ -23,6 +25,7 @@ describe('HomeComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomeComponent);
+    TestBed.inject(FaIconLibrary).addIcons(faAndroid, faApple);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -50,5 +53,25 @@ describe('HomeComponent', () => {
     const content = fixture.nativeElement.textContent;
     expect(content).toContain('3 readers');
     expect(content).toContain('1 reader');
+  });
+
+  it('renders Android and iOS store links under Mobile Store Presence', () => {
+    const content = fixture.nativeElement.textContent;
+    const androidLink = fixture.nativeElement.querySelector(
+      `a[href="${component.androidStoreUrl}"]`,
+    );
+    const iosLink = fixture.nativeElement.querySelector(
+      `a[href="${component.iosStoreUrl}"]`,
+    );
+
+    expect(content).toContain('Mobile Store Presence');
+    expect(androidLink?.textContent?.trim()).toBe('Android');
+    expect(iosLink?.textContent?.trim()).toBe('iOS');
+    expect(androidLink?.querySelector('.fa-android')).toBeTruthy();
+    expect(iosLink?.querySelector('.fa-apple')).toBeTruthy();
+    expect(androidLink?.getAttribute('target')).toBe('_blank');
+    expect(iosLink?.getAttribute('target')).toBe('_blank');
+    expect(androidLink?.getAttribute('rel')).toBe('noopener noreferrer');
+    expect(iosLink?.getAttribute('rel')).toBe('noopener noreferrer');
   });
 });

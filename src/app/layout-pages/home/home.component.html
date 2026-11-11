@@ -52,6 +52,31 @@
             }
           </div>
         </div>
+        <div class="home-knowledge" aria-label="Mobile store presence">
+          <span class="home-knowledge__eyebrow">Mobile Store Presence</span>
+          <div class="home-knowledge__item">
+            <a
+              class="home-knowledge__link"
+              [href]="androidStoreUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <fa-icon [icon]="['fab', 'android']" />
+              Android
+            </a>
+          </div>
+          <div class="home-knowledge__item">
+            <a
+              class="home-knowledge__link"
+              [href]="iosStoreUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <fa-icon [icon]="['fab', 'apple']" />
+              iOS
+            </a>
+          </div>
+        </div>
         <div class="home-knowledge" aria-label="Learning check">
           <span class="home-knowledge__eyebrow">Learning Check</span>
           <a

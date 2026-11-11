@@ -8,8 +8,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.35rem;
-  padding: 1.25rem 1.5rem;
+  gap: 0.1rem;
+  padding: 0.65rem 1.15rem 0.2rem;
   border-radius: 0.75rem;
   background: linear-gradient(145deg, #eef0fb 0%, #ffffff 55%, #f3e8ff 100%);
   border: 0.0625rem solid rgba(63, 81, 181, 0.22);
@@ -21,6 +21,7 @@
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.14em;
+  line-height: 1;
   text-transform: uppercase;
   color: #5c6bc0;
 }

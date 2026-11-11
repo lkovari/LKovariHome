@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, inject, signal } from '@angular/core';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { FlexModule } from '@angular/flex-layout/flex';
 import { RouterLink } from '@angular/router';
 import { AngularVersionComponent } from '../../shared/components/angular-version/angular-version.component';
@@ -24,12 +25,14 @@ interface V22Codemod {
     templateUrl: './home.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./home.component.scss'],
-    imports: [FlexModule, RouterLink, AngularVersionComponent, HomeUpgradePanelComponent],
+    imports: [FlexModule, RouterLink, FaIconComponent, AngularVersionComponent, HomeUpgradePanelComponent],
 })
 export class HomeComponent implements OnInit {
   private readonly knowledgeBaseStore = inject(KnowledgeBaseFirestoreService);
 
   public years!: number;
+  readonly androidStoreUrl = 'https://play.google.com/store/apps/dev?id=7897733156879264510';
+  readonly iosStoreUrl = 'https://apps.apple.com/hu/developer/laszlo-lajos-kovari/id6821359704';
   readonly angularReaderCount = signal<number | null>(null);
   readonly dotnetReaderCount = signal<number | null>(null);
 
